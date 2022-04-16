@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>minWidth</key>
+	<integer>1</integer>
+	<key>maxWidth</key>
+	<integer>40</integer>
+	<key>minHeight</key>
+	<integer>1</integer>
+	<key>maxHeight</key>
+	<string>40</string>
+	<key>pointColour</key>
+	<string>black</string>
+	<key>pinColour</key>
+	<string>black</string>
+	<key>lineColour</key>
+	<string>grey</string>
+	<key>backgroundColour</key>
+	<string>white</string>
+</dict>
+</plist>

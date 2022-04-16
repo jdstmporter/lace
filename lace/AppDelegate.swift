@@ -11,10 +11,13 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet var window: NSWindow!
-
+    @IBOutlet weak var controller: Controller!
+    
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
+        Defaults.load()
+        
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
