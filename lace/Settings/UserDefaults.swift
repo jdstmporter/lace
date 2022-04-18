@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import AppKit
+
 
 class Defaults {
     let appName : String
@@ -35,9 +37,29 @@ class Defaults {
         get { UserDefaults.standard.object(forKey: key) as? T }
         set { UserDefaults.standard.set(newValue, forKey: key) }
     }
+    
+    public var colours : ViewPartColours {
+        get {
+            let v=ViewPartColours()
+            ViewPart.allCases.forEach { p  in
+                if let c : [CGFloat] = self["Colours-\(p)"] {
+                    v[p]=NSColor(c)
+                }
+            }
+            return v
+        }
+        set {
+            ViewPart.allCases.forEach { p in
+                let c=newValue[p].rgba
+                self["Colours-\(p)"]=c
+            }
+        }
+    }
     public static func load() {
         let u=Defaults()
         u.bootstrap()
     }
+    
+    
     
 }

@@ -8,21 +8,23 @@
 import Foundation
 import AppKit
 
+enum ViewPart : Int, CaseIterable {
+    case Background = 0
+    case Grid = 1
+    case Pin = 2
+    case Line = 3
+}
 
+typealias ViewPartSizes = [ViewPart:Double]
 
 class DrawingView : NSView {
     
-    enum Row : Int, CaseIterable {
-        case Background = 0
-        case Grid = 1
-        case Pin = 2
-        case Line = 3
-    }
-    var wells : [Row:NSColorWell] = [:]
-    var colours : [Row:NSColor] = [:]
     
-    var fields : [Row:NSTextField] = [:]
-    var values : [Row:Double] = [:]
+    var wells : [ViewPart:NSColorWell] = [:]
+    var colours = ViewPartColours()
+    
+    var fields : [ViewPart:NSTextField] = [:]
+    var values : [ViewPart:Double] = [:]
     
     @IBOutlet weak var backgroundColour: NSColorWell!
     @IBOutlet weak var gridColour: NSColorWell!
@@ -34,27 +36,38 @@ class DrawingView : NSView {
     
     @IBOutlet weak var laceView : LaceView!
     
-    func saveColours() {
-        Row.allCases.forEach { row in
-            if let well = wells[row] { colours[row] = well.color }
+    func save() {
+        colours.touch()
+        Defaults().colours=colours
+    }
+    
+    
+    func touch() {
+        ViewPart.allCases.forEach { row in
+            if let well = wells[row] {
+                let c = well.color.calibratedRGB
+                colours[row] = c
+            }
             if let field = fields[row] { values[row] = field.doubleValue }
         }
         
         DispatchQueue.main.async { [self] in
-            laceView.pinColour = colours[.Pin] ?? .black
-            laceView.gridColour = colours[.Grid] ?? .black
-            laceView.lineColour = colours[.Line] ?? .black
-            laceView.backgroundColor = colours[.Background] ?? .white
-            laceView.touch()
+            laceView.colours = colours
         }
         
     }
-    func loadColours() {
-        Row.allCases.forEach { row in
-            if let colour = colours[row] { wells[row]?.color = colour }
+    func loadColours(_ col : ViewPartColours) {
+        col.touch()
+        ViewPart.allCases.forEach { row in
+            if col.has(row)  { wells[row]?.color = colours[row] }
             if let value = values[row] { fields[row]?.doubleValue = value }
         }
+        
+        DispatchQueue.main.async { [self] in
+            laceView.colours = colours
+        }
     }
+    func reloadColours() { self.loadColours(self.colours) }
     
     func initialise() {
         wells[.Background] = backgroundColour
@@ -66,27 +79,38 @@ class DrawingView : NSView {
         fields[.Pin] = pinSize
         fields[.Line] = lineSize
         
+        self.loadColours(Defaults().colours)
+        
+        // set up dummy pricking
         laceView.MaxWidth = 10.0
         laceView.MaxHeight = 10.0
+        laceView.pricking=Pricking(10,10)
+        (0..<5).forEach { n in
+            let p = GridPoint(2*n, 2*n)
+            laceView.pricking.grid.flip(p)
+        }
+        laceView.pricking.lines.append(GridLine(GridPoint(0,0), GridPoint(8,8)))
+        laceView.pricking.lines.append(GridLine(GridPoint(1,1), GridPoint(1,7)))
+        
         laceView.touch()
     }
     
     func colourEvent(_ well : NSColorWell) {
-        if let matched = Row.init(rawValue: well.tag) {
+        if let matched = ViewPart.init(rawValue: well.tag) {
             print("Changed in row \(matched)")
         }
         else { print("Matched somewhere funny") }
-        self.saveColours()
+        self.touch()
         colours.forEach { print("\($0.key) : \($0.value)") }
     }
     
     func sizesEvent(_ field : NSTextField) {
-        self.saveColours()
+        self.touch()
         values.forEach { print("\($0.key) : \($0.value)") }
         
     }
     
-    func colour(_ row : Row) -> NSColor? { colours[row] }
+    func colour(_ row : ViewPart) -> NSColor? { colours[row] }
 
 }
 
@@ -139,6 +163,7 @@ class SettingsPanel : NSPanel, LaunchableItem {
 
     
     @IBAction func backgroundCallback(_ sender: NSColorWell) {
+        sender.color = sender.color.calibratedRGB
         print("Background colour is now \(sender.color)")
         drawingView.colourEvent(sender)
     }

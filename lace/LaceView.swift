@@ -32,18 +32,16 @@ class LaceView : ViewBase {
     var mouseEnabled : Bool = true
     var mouseToGrid : Bool = false
     
-    var gridColour : NSColor = .black {
-        didSet { self.touch() }
+ 
+    var colours = ViewPartColours() {
+        didSet {
+            self.backgroundColor = colours[.Background]
+            self.touch()
+        }
     }
-    var pinColour : NSColor = .black {
-        didSet { self.touch() }
-    }
-    var lineColour : NSColor = .black {
-        didSet { self.touch() }
-    }
-    
     
     var pricking : Pricking = Pricking()
+    
     
     
     func posFor(x: Int, y: Int) -> NSPoint {
@@ -55,12 +53,8 @@ class LaceView : ViewBase {
         return NSPoint(x: xPos, y: yPos)
     }
     
-    
-
- 
-    
-    var MaxWidth : Double = 50.0
-    var MaxHeight : Double = 50.0
+     var MaxWidth : Double = 50.0
+     var MaxHeight : Double = 50.0
     
     
     //var startP : NSPoint?
@@ -73,6 +67,8 @@ class LaceView : ViewBase {
             self.needsDisplay=true
         }
     }
+    
+
     
     func getScaling() {
         let size = self.bounds.size
@@ -93,21 +89,21 @@ class LaceView : ViewBase {
             pricking.grid.xRange.forEach { x in
                 let isPin = pricking.grid[x,y]
                 let radius = isPin ? 5.0 : 1.0
-                let fg = isPin ? pinColour : gridColour
+                let fg = colours[isPin ? .Pin : .Grid]
                 let p = pricking.grid.pos(x, y)
                 point(p,radius: radius,colour: fg)
             }
         }
         
         pricking.lines.forEach { line in
-            self.lineColour.setStroke()
+            self.colours[.Line].setStroke()
             let l = invert(pricking.asScreenLine(line)) // invert(Line(grid: pricking.grid, line: line))
             print("\(line) : \(l)")
             l.path.stroke()
         }
         
         if let line=self.line {
-            self.lineColour.setStroke()
+            self.colours[.Line].setStroke()
             invert(line).path.stroke()
         }
         

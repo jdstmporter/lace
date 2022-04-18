@@ -26,6 +26,9 @@ class Image {
     var width: Int { Int(self.size.width) }
     var height : Int { Int(self.size.height) }
     
+    var MaxWidth : Double = 50.0
+    var MaxHeight : Double = 50.0
+    
     
     init?(grid : Grid,width: Int,height: Int) {
         self.size=NSSize(width: width, height: height)
@@ -47,8 +50,8 @@ class Image {
     }
     
     func draw() {
-        let xs = size.width/(LaceView.MaxWidth+2.0)
-        let ys = size.height/(LaceView.MaxHeight+2.0)
+        let xs = size.width/(self.MaxWidth+2.0)
+        let ys = size.height/(self.MaxHeight+2.0)
         //spacing = Swift.max(xs,ys)
         grid.scale = Swift.max(xs,ys)
         
