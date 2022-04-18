@@ -52,15 +52,14 @@ class ViewBase : NSView, MouseHandler {
         Line(invert(l.start), invert(l.end))
     }
     
-    func point(_ x: Double,_ y: Double,_ radius: Double) {
-        let fg=foregroundColor
+    func point(_ p : NSPoint, radius: Double, colour: NSColor? = nil) {
+        let fg=colour ?? foregroundColor
         fg.setFill()
-        let yy=height-1-y
-        let rect = NSRect(x: x-radius, y: yy-radius, width: 2*radius, height: 2*radius)
+        let yy=height-1-p.y
+        let rect = NSRect(x: p.x-radius, y: yy-radius, width: 2*radius, height: 2*radius)
         let path = NSBezierPath(ovalIn: rect)
         path.fill()
     }
-    
     
     // resize handler
     

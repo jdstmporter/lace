@@ -32,6 +32,17 @@ class LaceView : ViewBase {
     var mouseEnabled : Bool = true
     var mouseToGrid : Bool = false
     
+    var gridColour : NSColor = .black {
+        didSet { self.touch() }
+    }
+    var pinColour : NSColor = .black {
+        didSet { self.touch() }
+    }
+    var lineColour : NSColor = .black {
+        didSet { self.touch() }
+    }
+    
+    
     var pricking : Pricking = Pricking()
     
     
@@ -46,13 +57,12 @@ class LaceView : ViewBase {
     
     
 
+ 
     
-    func radiusFor(_ x : Int, _ y : Int) -> Double {
-        pricking.grid[x,y] ? 5 : 1
-    }
+    var MaxWidth : Double = 50.0
+    var MaxHeight : Double = 50.0
     
-    static let MaxWidth : Double = 50.0
-    static let MaxHeight : Double = 50.0
+    
     //var startP : NSPoint?
     //var endP : NSPoint?
     var line : Line?
@@ -66,8 +76,8 @@ class LaceView : ViewBase {
     
     func getScaling() {
         let size = self.bounds.size
-        let xs = size.width/(LaceView.MaxWidth+2.0)
-        let ys = size.height/(LaceView.MaxHeight+2.0)
+        let xs = size.width/(self.MaxWidth+2.0)
+        let ys = size.height/(self.MaxHeight+2.0)
         //spacing = Swift.max(xs,ys)
         pricking.grid.scale = Swift.max(xs,ys)
     }
@@ -81,21 +91,23 @@ class LaceView : ViewBase {
         
         pricking.grid.yRange.forEach { y in
             pricking.grid.xRange.forEach { x in
-                let radius = self.radiusFor(x,y)
+                let isPin = pricking.grid[x,y]
+                let radius = isPin ? 5.0 : 1.0
+                let fg = isPin ? pinColour : gridColour
                 let p = pricking.grid.pos(x, y)
-                point(p.x,p.y,radius)
+                point(p,radius: radius,colour: fg)
             }
         }
         
         pricking.lines.forEach { line in
-            foregroundColor.setStroke()
+            self.lineColour.setStroke()
             let l = invert(pricking.asScreenLine(line)) // invert(Line(grid: pricking.grid, line: line))
             print("\(line) : \(l)")
             l.path.stroke()
         }
         
         if let line=self.line {
-            foregroundColor.setStroke()
+            self.lineColour.setStroke()
             invert(line).path.stroke()
         }
         

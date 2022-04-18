@@ -38,6 +38,9 @@ class Controller : NSViewController {
         }
         
     }
+    @IBAction func loadPreferences(_ sender: NSMenuItem) {
+        let _ = SettingsPanel.launch()
+    }
     
     func saveCurrent(pick : Bool) {
         do {
