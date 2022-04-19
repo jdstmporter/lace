@@ -36,38 +36,46 @@ class DrawingView : NSView {
     
     @IBOutlet weak var laceView : LaceView!
     
-    func save() {
-        colours.touch()
-        Defaults().colours=colours
-    }
+    
     
     
     func touch() {
         ViewPart.allCases.forEach { row in
-            if let well = wells[row] {
-                let c = well.color.calibratedRGB
-                colours[row] = c
-            }
+            if let well = wells[row] { colours[row] = well.color }
             if let field = fields[row] { values[row] = field.doubleValue }
         }
         
-        DispatchQueue.main.async { [self] in
-            laceView.colours = colours
-        }
+        DispatchQueue.main.async { [self] in laceView.colours = colours }
         
     }
-    func loadColours(_ col : ViewPartColours) {
-        col.touch()
+    
+    func resetColours() {
         ViewPart.allCases.forEach { row in
-            if col.has(row)  { wells[row]?.color = colours[row] }
+            if colours.has(row)  { wells[row]?.color = colours[row] }
             if let value = values[row] { fields[row]?.doubleValue = value }
         }
-        
-        DispatchQueue.main.async { [self] in
-            laceView.colours = colours
-        }
     }
-    func reloadColours() { self.loadColours(self.colours) }
+    
+    
+    func load()  {
+        colours.loadDefault()
+        self.colours.touch()
+        DispatchQueue.main.async { [self] in
+            ViewPart.allCases.forEach { row in
+                if let well=wells[row] { well.color=colours[row] }
+                if let value = values[row] { fields[row]?.doubleValue = value }
+            }
+        }
+        
+    }
+    
+    func save() throws {
+        ViewPart.allCases.forEach { row in
+            if let well=wells[row]  { colours[row]=well.color }
+        }
+        self.colours.touch()
+        try colours.saveDefault()
+    }
     
     func initialise() {
         wells[.Background] = backgroundColour
@@ -79,7 +87,8 @@ class DrawingView : NSView {
         fields[.Pin] = pinSize
         fields[.Line] = lineSize
         
-        self.loadColours(Defaults().colours)
+        self.load()
+        
         
         // set up dummy pricking
         laceView.MaxWidth = 10.0

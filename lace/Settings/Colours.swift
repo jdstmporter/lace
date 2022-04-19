@@ -15,8 +15,8 @@ extension NSColor {
     var sRGB : NSColor { self.usingColorSpace(.sRGB) ?? self }
     var calibratedRGB : NSColor { self.usingColorSpace(.genericRGB) ?? self }
     
-    var rgba : [CGFloat] {
-        guard let c = self.usingColorSpace(.genericRGB) else { return [] }
+    var rgba : [CGFloat]? {
+        guard let c = self.usingColorSpace(.genericRGB) else { return nil }
         let n=c.numberOfComponents
         var a=Array<CGFloat>.init(repeating: 0, count: n)
         a.withUnsafeMutableBufferPointer { p in
@@ -43,6 +43,9 @@ class ViewPartColours : Sequence {
     private var colours : Container = [:]
     
     public init() {}
+    public init(_ other : ViewPartColours) {
+        other.forEach { kv in self.colours[kv.key] = kv.value }
+    }
     
     private func defaultColour(_ p : ViewPart) -> NSColor {
         (p == .Background) ? .white : .black
@@ -58,6 +61,26 @@ class ViewPartColours : Sequence {
     public func touch() {
         ViewPart.allCases.forEach { p in
             if let c=colours[p]?.calibratedRGB { colours[p]=c }
+        }
+    }
+    public func reset() {
+        self.colours.removeAll()
+    }
+    
+    func saveDefault(prefix : String = "Colours-") throws {
+        let d=Defaults()
+        try ViewPart.allCases.forEach { p in
+            try d.setColour(value: self[p], forKey: "\(prefix)\(p)")
+        }
+    }
+    func loadDefault(prefix : String = "Colours-") {
+        self.colours.removeAll()
+        let d=Defaults()
+        ViewPart.allCases.forEach { p in
+            do { self[p]=try d.colour(forKey: "\(prefix)\(p)") }
+            catch(let e) {
+                print("Error loading: \(e) - reverting to default")
+            }
         }
     }
 }

@@ -8,6 +8,11 @@
 import Foundation
 import AppKit
 
+enum DefaultError : Error {
+    case CannotGetKey(String)
+    case BadColourFormat
+}
+
 
 class Defaults {
     let appName : String
@@ -38,23 +43,23 @@ class Defaults {
         set { UserDefaults.standard.set(newValue, forKey: key) }
     }
     
-    public var colours : ViewPartColours {
-        get {
-            let v=ViewPartColours()
-            ViewPart.allCases.forEach { p  in
-                if let c : [CGFloat] = self["Colours-\(p)"] {
-                    v[p]=NSColor(c)
-                }
-            }
-            return v
-        }
-        set {
-            ViewPart.allCases.forEach { p in
-                let c=newValue[p].rgba
-                self["Colours-\(p)"]=c
-            }
-        }
+    func string(forKey key : String) -> String? {
+        UserDefaults.standard.string(forKey: key)
     }
+    func setString(forKey key : String,value: String)  {
+        UserDefaults.standard.setValue(value, forKey: key)
+    }
+    func colour(forKey key : String) throws -> NSColor {
+        guard let components : [CGFloat] = self[key] else { throw DefaultError.CannotGetKey(key) }
+        guard components.count==4 else { throw DefaultError.BadColourFormat }
+        return NSColor(components)
+    }
+    func setColour(value: NSColor,forKey key: String) throws {
+        guard let components = value.rgba, components.count==4 else { throw DefaultError.BadColourFormat }
+        self[key]=components
+                
+    }
+  
     public static func load() {
         let u=Defaults()
         u.bootstrap()

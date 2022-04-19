@@ -267,40 +267,50 @@
                     <outlet property="pinSize" destination="iQa-Jr-mMS" id="5dx-T4-Dhi"/>
                 </connections>
             </view>
-            <toolbar key="toolbar" implicitIdentifier="18B3EAA0-6A0C-48BE-94A4-60F898BF60E9" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="small" id="ASu-FB-Vig">
+            <toolbar key="toolbar" implicitIdentifier="18B3EAA0-6A0C-48BE-94A4-60F898BF60E9" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="ASu-FB-Vig">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="C35FC05E-1D61-44CB-A62F-4647E9C89B00" label="Drawing" paletteLabel="Drawing" tag="-1" image="rectangle.and.pencil.and.ellipsis" catalog="system" title="Drawing" id="HWA-uQ-Ziu">
-                        <size key="minSize" width="88" height="22"/>
-                        <size key="maxSize" width="88" height="22"/>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="2D08FD1C-CC56-4D6F-9CF6-37EF9B30B8D1" label="Grid" paletteLabel="Grid" tag="-1" image="square.grid.4x3.fill" catalog="system" title="Grid" id="ZbX-TM-Mph">
-                        <size key="minSize" width="55" height="20"/>
-                        <size key="maxSize" width="55" height="20"/>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="E715CB35-FD7E-4210-AD56-40734DB7C00A" label="Images" paletteLabel="Images" tag="-1" image="eye.square.fill" catalog="system" title="Exported Image" id="hEH-SJ-2EV">
-                        <size key="minSize" width="122" height="20"/>
-                        <size key="maxSize" width="122" height="20"/>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="C8D7C0BA-86ED-4F23-A625-DECB3141F5A2" label="File locations" paletteLabel="File locations" tag="-1" image="folder.fill" catalog="system" title="File locations" id="HB1-3y-FqN">
-                        <size key="minSize" width="111" height="20"/>
-                        <size key="maxSize" width="111" height="20"/>
-                    </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="kjC-S3-Tqf"/>
+                    <toolbarItem implicitItemIdentifier="C35FC05E-1D61-44CB-A62F-4647E9C89B00" label="Drawing" paletteLabel="Drawing" tag="-1" image="rectangle.and.pencil.and.ellipsis" catalog="system" title="Drawing" sizingBehavior="auto" id="HWA-uQ-Ziu"/>
+                    <toolbarItem implicitItemIdentifier="2D08FD1C-CC56-4D6F-9CF6-37EF9B30B8D1" label="Grid" paletteLabel="Grid" tag="-1" image="square.grid.4x3.fill" catalog="system" title="Grid" sizingBehavior="auto" id="ZbX-TM-Mph"/>
+                    <toolbarItem implicitItemIdentifier="E715CB35-FD7E-4210-AD56-40734DB7C00A" label="Images" paletteLabel="Images" tag="-1" image="eye.square.fill" catalog="system" title="Exported Image" sizingBehavior="auto" id="hEH-SJ-2EV"/>
+                    <toolbarItem implicitItemIdentifier="C8D7C0BA-86ED-4F23-A625-DECB3141F5A2" label="File locations" paletteLabel="File locations" tag="-1" image="folder.fill" catalog="system" title="File locations" sizingBehavior="auto" id="HB1-3y-FqN"/>
+                    <toolbarItem implicitItemIdentifier="2D6954BF-B728-4B9F-A717-B61E1765E200" label="Fonts" paletteLabel="Fonts" tag="-1" image="character.bubble.fill" catalog="system" title="Fonts" sizingBehavior="auto" id="ATN-cY-tFR"/>
                 </allowedToolbarItems>
                 <defaultToolbarItems>
                     <toolbarItem reference="HWA-uQ-Ziu"/>
                     <toolbarItem reference="ZbX-TM-Mph"/>
                     <toolbarItem reference="hEH-SJ-2EV"/>
                     <toolbarItem reference="HB1-3y-FqN"/>
+                    <toolbarItem reference="ATN-cY-tFR"/>
                 </defaultToolbarItems>
             </toolbar>
             <connections>
                 <outlet property="drawingView" destination="UoL-fX-fRw" id="OcW-1z-xpg"/>
             </connections>
-            <point key="canvasLocation" x="-320" y="-1680"/>
+            <point key="canvasLocation" x="-306" y="-1977"/>
         </window>
+        <tabView id="uqx-xD-FHm">
+            <rect key="frame" x="0.0" y="0.0" width="177" height="124"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <font key="font" metaFont="system"/>
+            <tabViewItems>
+                <tabViewItem label="Tab" identifier="" id="xNy-8N-ocq">
+                    <view key="view" id="tcW-5x-UAe">
+                        <rect key="frame" x="10" y="33" width="157" height="78"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                </tabViewItem>
+                <tabViewItem label="View" identifier="" id="6iv-yR-zQi">
+                    <view key="view" id="ez2-jY-HaR">
+                        <rect key="frame" x="10" y="33" width="157" height="78"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                </tabViewItem>
+            </tabViewItems>
+            <point key="canvasLocation" x="-504" y="-1631"/>
+        </tabView>
     </objects>
     <resources>
+        <image name="character.bubble.fill" catalog="system" width="18" height="16"/>
         <image name="eye.square.fill" catalog="system" width="16" height="14"/>
         <image name="folder.fill" catalog="system" width="19" height="14"/>
         <image name="rectangle.and.pencil.and.ellipsis" catalog="system" width="24" height="15"/>
