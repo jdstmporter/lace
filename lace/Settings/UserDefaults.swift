@@ -49,6 +49,12 @@ class Defaults {
     func setString(forKey key : String,value: String)  {
         UserDefaults.standard.setValue(value, forKey: key)
     }
+    func double(forKey key : String) -> Double? {
+        UserDefaults.standard.double(forKey: key)
+    }
+    func setDouble(forKey key : String,value: Double)  {
+        UserDefaults.standard.setValue(value, forKey: key)
+    }
     func colour(forKey key : String) throws -> NSColor {
         guard let components : [CGFloat] = self[key] else { throw DefaultError.CannotGetKey(key) }
         guard components.count==4 else { throw DefaultError.BadColourFormat }

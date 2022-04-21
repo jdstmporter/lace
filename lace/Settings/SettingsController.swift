@@ -132,8 +132,29 @@ class SettingsPanel : NSPanel, LaunchableItem {
     static var panel : SettingsPanel? = nil
     static var nib : NSNib?
     
+    @IBOutlet weak var tabs: NSTabView!
+    @IBOutlet weak var cancel: NSButton!
+    @IBOutlet weak var apply: NSButton!
+    
     var firstTime : Bool = true
     @IBOutlet weak var drawingView: DrawingView!
+    
+    @IBAction func toolbarAction(_ item: NSToolbarItem) {
+        let idx = item.tag
+        guard idx>=0, idx<5 else { return }
+        tabs?.selectTabViewItem(at: idx)
+    }
+    
+    
+    @IBAction func cancelButtonAction(_ button: NSButton) {
+        SettingsPanel.close()
+    }
+    
+   
+    
+    @IBAction func applyButtonAction(_ button: NSButton) {
+        
+    }
     
  
     static func launch() -> SettingsPanel? {
