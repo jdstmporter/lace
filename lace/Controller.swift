@@ -23,6 +23,14 @@ class Controller : NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.drawingArea.backgroundColor = .white
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateEvent(_ :)), name: SettingsPanel.DefaultsUpdated, object: nil)
+    }
+    
+    @objc func updateEvent(_ n : Notification) {
+        DispatchQueue.main.async {
+            self.drawingArea.reload()
+        }
     }
     
 

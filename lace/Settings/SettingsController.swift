@@ -24,7 +24,7 @@ class DrawingView : NSView {
     var colours = ViewPartColours()
     
     var fields : [ViewPart:NSTextField] = [:]
-    var values : [ViewPart:Double] = [:]
+    var values = ViewPartDimensions()
     
     @IBOutlet weak var backgroundColour: NSColorWell!
     @IBOutlet weak var gridColour: NSColorWell!
@@ -52,7 +52,7 @@ class DrawingView : NSView {
     func resetColours() {
         ViewPart.allCases.forEach { row in
             if colours.has(row)  { wells[row]?.color = colours[row] }
-            if let value = values[row] { fields[row]?.doubleValue = value }
+            if values.has(row) { fields[row]?.doubleValue = values[row] }
         }
     }
     
@@ -63,7 +63,7 @@ class DrawingView : NSView {
         DispatchQueue.main.async { [self] in
             ViewPart.allCases.forEach { row in
                 if let well=wells[row] { well.color=colours[row] }
-                if let value = values[row] { fields[row]?.doubleValue = value }
+                if let text = fields[row] { text.doubleValue = values[row] }
             }
         }
         
@@ -72,9 +72,11 @@ class DrawingView : NSView {
     func save() throws {
         ViewPart.allCases.forEach { row in
             if let well=wells[row]  { colours[row]=well.color }
+            if let field=fields[row] { values[row]=field.doubleValue }
         }
         self.colours.touch()
         try colours.saveDefault()
+        try values.saveDefault()
     }
     
     func initialise() {
@@ -125,6 +127,8 @@ class DrawingView : NSView {
 
 
 class SettingsPanel : NSPanel, LaunchableItem {
+    static let DefaultsUpdated = Notification.Name("$_LACE_DEFAULTS_UPDATED_EVENT")
+    
     
     static var lock = NSLock()
     static var nibname : NSNib.Name = NSNib.Name("Preferences")
@@ -153,7 +157,12 @@ class SettingsPanel : NSPanel, LaunchableItem {
    
     
     @IBAction func applyButtonAction(_ button: NSButton) {
-        
+        do {
+            guard let d = self.drawingView else { return }
+            try d.save()
+            NotificationCenter.default.post(name: SettingsPanel.DefaultsUpdated, object: nil)
+        }
+        catch(let e) { print("Error: \(e) while saving defaults") }
     }
     
  

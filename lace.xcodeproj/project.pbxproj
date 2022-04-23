@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E135749128135102005D84D6 /* Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135749028135102005D84D6 /* Dimensions.swift */; };
 		E1383BE727F79C93009DEEFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383BE627F79C93009DEEFA /* AppDelegate.swift */; };
 		E1383BE927F79C96009DEEFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1383BE827F79C96009DEEFA /* Assets.xcassets */; };
 		E1383BEC27F79C96009DEEFA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1383BEA27F79C96009DEEFA /* MainMenu.xib */; };
@@ -29,6 +30,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E135749028135102005D84D6 /* Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dimensions.swift; sourceTree = "<group>"; };
 		E1383BE327F79C93009DEEFA /* lace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1383BE627F79C93009DEEFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1383BE827F79C96009DEEFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -127,6 +129,7 @@
 				E1D51F3B280B383D00995497 /* Preferences.xib */,
 				E1D51F3D280B3C1B00995497 /* SettingsController.swift */,
 				E1BD6A84280E049700430EC4 /* Colours.swift */,
+				E135749028135102005D84D6 /* Dimensions.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 				E1383C05280773AB009DEEFA /* UserDefaults.swift in Sources */,
 				E1D51F40280B3C8F00995497 /* Launchable.swift in Sources */,
 				E1383BFA27F9E304009DEEFA /* Grid.swift in Sources */,
+				E135749128135102005D84D6 /* Dimensions.swift in Sources */,
 				E1383C092808DACC009DEEFA /* FilePicker.swift in Sources */,
 				E1383BF827F8D8D4009DEEFA /* ViewBase.swift in Sources */,
 				E1383BFF27F9F34C009DEEFA /* Printable.swift in Sources */,

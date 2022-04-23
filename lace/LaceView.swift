@@ -32,6 +32,11 @@ class LaceView : ViewBase {
     var mouseEnabled : Bool = true
     var mouseToGrid : Bool = false
     
+    var dimensions = ViewPartDimensions() {
+        didSet {
+            self.touch()
+        }
+    }
  
     var colours = ViewPartColours() {
         didSet {
@@ -42,7 +47,12 @@ class LaceView : ViewBase {
     
     var pricking : Pricking = Pricking()
     
-    
+    func reload() {
+        self.colours.loadDefault()
+        self.dimensions.loadDefault()
+        self.backgroundColor = colours[.Background]
+        self.touch()
+    }
     
     func posFor(x: Int, y: Int) -> NSPoint {
         let yy=Double(y)
@@ -88,7 +98,7 @@ class LaceView : ViewBase {
         pricking.grid.yRange.forEach { y in
             pricking.grid.xRange.forEach { x in
                 let isPin = pricking.grid[x,y]
-                let radius = isPin ? 5.0 : 1.0
+                let radius = dimensions[isPin ? .Pin : .Grid]
                 let fg = colours[isPin ? .Pin : .Grid]
                 let p = pricking.grid.pos(x, y)
                 point(p,radius: radius,colour: fg)
