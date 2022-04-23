@@ -109,7 +109,9 @@ class LaceView : ViewBase {
             self.colours[.Line].setStroke()
             let l = invert(pricking.asScreenLine(line)) // invert(Line(grid: pricking.grid, line: line))
             print("\(line) : \(l)")
-            l.path.stroke()
+            let p=l.path
+            p.lineWidth=dimensions[.Line]
+            p.stroke()
         }
         
         if let line=self.line {

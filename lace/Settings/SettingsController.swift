@@ -45,7 +45,10 @@ class DrawingView : NSView {
             if let field = fields[row] { values[row] = field.doubleValue }
         }
         
-        DispatchQueue.main.async { [self] in laceView.colours = colours }
+        DispatchQueue.main.async { [self] in
+            laceView.colours = colours
+            laceView.dimensions = values
+        }
         
     }
     
