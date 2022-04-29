@@ -9,14 +9,6 @@
 	<key>minHeight</key>
 	<integer>1</integer>
 	<key>maxHeight</key>
-	<string>40</string>
-	<key>pointColour</key>
-	<string>black</string>
-	<key>pinColour</key>
-	<string>black</string>
-	<key>lineColour</key>
-	<string>grey</string>
-	<key>backgroundColour</key>
-	<string>white</string>
+	<integer>40</integer>
 </dict>
 </plist>

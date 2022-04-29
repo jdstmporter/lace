@@ -29,6 +29,7 @@ class Controller : NSViewController {
     
     @objc func updateEvent(_ n : Notification) {
         DispatchQueue.main.async {
+            print("Reloading defaults")
             self.drawingArea.reload()
         }
     }

@@ -12,6 +12,7 @@ class FilePicker {
     typealias Handler = (Bool,String) -> ()
     var savePanel : NSSavePanel
     var path : String
+    var dir : String?
     
     init(def : String?, types : [String] = ["json"]) {
         let ftypes = types.compactMap { UTType(filenameExtension: $0) }
@@ -33,6 +34,7 @@ class FilePicker {
         case .OK:
             guard let url=self.savePanel.url else { return false }
             self.path = url.path
+            self.dir = self.savePanel.directoryURL?.path
             return true
         case .cancel:
             return false
@@ -40,6 +42,8 @@ class FilePicker {
             return false
         }
     }
+    
+    
     
     @discardableResult func runSync() -> Bool {
         let result = savePanel.runModal()

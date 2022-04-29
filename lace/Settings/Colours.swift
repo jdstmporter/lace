@@ -34,9 +34,9 @@ extension NSColor {
     
 }
 
-
-
 class ViewPartColours : Sequence {
+    static let PREFIX = "Colours-"
+    
     typealias Container=[ViewPart:NSColor]
     typealias Iterator = Container.Iterator
     private var values : Container = [:]
@@ -46,9 +46,9 @@ class ViewPartColours : Sequence {
         other.forEach { kv in self.values[kv.key] = kv.value }
     }
     
-    public static func defaults(prefix : String = "Colours-") -> ViewPartColours {
+    public static func defaults() -> ViewPartColours {
         let c=ViewPartColours()
-        c.loadDefault(prefix: prefix)
+        c.loadDefault()
         return c
     }
     
@@ -72,17 +72,15 @@ class ViewPartColours : Sequence {
         self.values.removeAll()
     }
     
-    public func saveDefault(prefix : String = "Colours-") throws {
-        let d=Defaults()
+    public func saveDefault() throws {
         try ViewPart.allCases.forEach { p in
-            try d.setColour(value: self[p], forKey: "\(prefix)\(p)")
+            try Defaults.setColour(value: self[p], forKey: "\(ViewPartColours.PREFIX)\(p)")
         }
     }
-    public func loadDefault(prefix : String = "Colours-") {
+    public func loadDefault() {
         self.values.removeAll()
-        let d=Defaults()
         ViewPart.allCases.forEach { p in
-            do { self[p]=try d.colour(forKey: "\(prefix)\(p)") }
+            do { self[p]=try Defaults.colour(forKey: "\(ViewPartColours.PREFIX)\(p)") }
             catch(let e) {
                 print("Error loading: \(e) - reverting to default")
             }

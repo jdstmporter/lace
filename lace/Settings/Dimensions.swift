@@ -9,6 +9,9 @@ import Foundation
 
 
 class ViewPartDimensions : Sequence {
+    
+    static let PREFIX = "Dimensions-"
+    
     typealias Container=[ViewPart:Double]
     typealias Iterator = Container.Iterator
     private var values : Container = [:]
@@ -28,17 +31,15 @@ class ViewPartDimensions : Sequence {
             if let c=values[p] { values[p]=c }
         }
     }
-    public func saveDefault(prefix : String = "Colours-") throws {
-        let d=Defaults()
+    public func saveDefault() throws {
         ViewPart.allCases.forEach { p in
-            d.setDouble(forKey: "\(prefix)\(p)", value: self[p])
+            Defaults.setDouble(forKey: "\(ViewPartDimensions.PREFIX)\(p)", value: self[p])
         }
     }
-    public func loadDefault(prefix : String = "Colours-") {
+    public func loadDefault() {
         self.values.removeAll()
-        let d=Defaults()
         ViewPart.allCases.forEach { p in
-            if let v = d.double(forKey: "\(prefix)\(p)") { self[p]=v }
+            if let v = Defaults.double(forKey: "\(ViewPartDimensions.PREFIX)\(p)") { self[p]=v }
         }
     }
     public func has(_ p : ViewPart) -> Bool { values[p] != nil }

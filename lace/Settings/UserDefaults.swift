@@ -11,6 +11,7 @@ import AppKit
 enum DefaultError : Error {
     case CannotGetKey(String)
     case BadColourFormat
+    case CannotGetDefaults
 }
 
 
@@ -18,17 +19,19 @@ class Defaults {
     let appName : String
     static let defPList = "defaults"
     
-    public init() {
+    static var the : Defaults?
+    
+    fileprivate init() {
         self.appName = Bundle.main.bundleIdentifier ?? ""
     }
     
-    private func loadDefaults() -> [String:Any]? {
+    fileprivate func loadDefaults() -> [String:Any]? {
         guard let url = Bundle.main.url(forResource: Defaults.defPList, withExtension: "plist") else { return nil }
         if let d = NSDictionary(contentsOf: url) { return d as? [String:Any] }
         return nil
     }
     
-    public func bootstrap() {
+    fileprivate func bootstrap() {
         let defs = UserDefaults.standard
         guard defs.persistentDomain(forName: self.appName)==nil else { return }
 
@@ -38,38 +41,70 @@ class Defaults {
         print("Set persistent domain")
     }
     
+    //fileprivate func reload() {
+    //    UserDefaults.standard.dictionaryRepresentation()
+    //}
+    
     subscript<T>(_ key : String) -> T? {
         get { UserDefaults.standard.object(forKey: key) as? T }
         set { UserDefaults.standard.set(newValue, forKey: key) }
     }
     
-    func string(forKey key : String) -> String? {
-        UserDefaults.standard.string(forKey: key)
+    
+    
+  
+    public static func load() {
+        the=Defaults()
+        the?.bootstrap()
     }
-    func setString(forKey key : String,value: String)  {
-        UserDefaults.standard.setValue(value, forKey: key)
+    
+    static func check() throws -> Defaults {
+        guard the==nil else { return the! }
+        load()
+        guard let t=the else { throw DefaultError.CannotGetDefaults }
+        return t
     }
-    func double(forKey key : String) -> Double? {
-        UserDefaults.standard.double(forKey: key)
-    }
-    func setDouble(forKey key : String,value: Double)  {
-        UserDefaults.standard.setValue(value, forKey: key)
-    }
-    func colour(forKey key : String) throws -> NSColor {
-        guard let components : [CGFloat] = self[key] else { throw DefaultError.CannotGetKey(key) }
+    
+    
+    static func colour(forKey key : String) throws -> NSColor {
+        let it = try check()
+        
+        guard let components : [CGFloat] = it[key] else { throw DefaultError.CannotGetKey(key) }
         guard components.count==4 else { throw DefaultError.BadColourFormat }
         return NSColor(components)
     }
-    func setColour(value: NSColor,forKey key: String) throws {
+    static func setColour(value: NSColor,forKey key: String) throws {
+        let it=try check()
         guard let components = value.rgba, components.count==4 else { throw DefaultError.BadColourFormat }
-        self[key]=components
+        it[key]=components
                 
     }
-  
-    public static func load() {
-        let u=Defaults()
-        u.bootstrap()
+    
+    static func string(forKey key : String) -> String? {
+        UserDefaults.standard.string(forKey: key)
     }
+    static func setString(forKey key : String,value: String)  {
+        UserDefaults.standard.setValue(value, forKey: key)
+    }
+    static func double(forKey key : String) -> Double? {
+        UserDefaults.standard.double(forKey: key)
+    }
+    static func setDouble(forKey key : String,value: Double)  {
+        UserDefaults.standard.setValue(value, forKey: key)
+    }
+    
+    static func get<T>(forKey key : String) ->T? {
+        UserDefaults.standard.object(forKey: key) as? T
+    }
+    static func set<T>(forKey key: String,value: T) {
+        UserDefaults.standard.set(value, forKey: key)
+    }
+    
+    static func remove(forKey key: String) {
+        UserDefaults.standard.removeObject(forKey: key)
+    }
+    
+    
     
     
     
