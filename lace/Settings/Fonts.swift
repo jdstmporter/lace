@@ -39,14 +39,36 @@ enum FontPart : Int, CaseIterable {
     case Comment = 2
 }
 
-class ViewPartFonts : Sequence {
+protocol ViewPartProtocol : Sequence where Iterator == Dictionary<Key, Value>.Iterator {
+    associatedtype Value
+    associatedtype Key : Hashable
+    
+    static var PREFIX : String { get }
+    var values : [Key:Value] { get set }
+    
+    init()
+    
+    func defaultValue(_ : Key) -> Value
+    subscript(_ : Key) -> Value { get set }
+    func has(_ : Key) -> Bool
+    
+    func touch()
+    func reset()
+    
+    func saveDefault() throws
+    func loadDefault()
+}
+
+
+
+class ViewPartFonts {
+    
+    
     static let PREFIX = "Fonts-"
     
     typealias Container=[FontPart:NSFont]
-    typealias Iterator = Container.Iterator
-    private var values : Container = [:]
-    
-    public init() {}
+    typealias Iterator=Container.Iterator
+    internal var values : Container = [:]
     
     public static func defaults() -> ViewPartFonts {
         let c=ViewPartFonts()
@@ -54,7 +76,9 @@ class ViewPartFonts : Sequence {
         return c
     }
     
-    private func defaultValue(_ p : FontPart) -> NSFont {
+    init() {  }
+    
+    internal func defaultValue(_ p : FontPart) -> NSFont {
         var size = NSFont.systemFontSize
         switch p {
         case .Title:
@@ -72,14 +96,10 @@ class ViewPartFonts : Sequence {
         set { values[p] = newValue }
     }
     public func has(_ p : FontPart) -> Bool { values[p] != nil }
-    func makeIterator() -> Iterator { values.makeIterator() }
+    public func makeIterator() -> Iterator { values.makeIterator() }
     
-    public func touch() {
-        
-    }
-    public func reset() {
-        self.values.removeAll()
-    }
+    public func touch() {}
+    public func reset() { self.values.removeAll() }
     
     public func saveDefault() throws {
         try FontPart.allCases.forEach { p in
@@ -98,13 +118,8 @@ class ViewPartFonts : Sequence {
 }
 
 class ViewFonts : NSView, SettingsFacet {
-    func load() {
-        <#code#>
-    }
     
-    func save() throws {
-        <#code#>
-    }
+
     
     enum Fonts : Int, CaseIterable {
         case Title = 0
@@ -120,26 +135,48 @@ class ViewFonts : NSView, SettingsFacet {
     @IBOutlet weak var metadataButton : NSButton!
     @IBOutlet weak var commentButton : NSButton!
     
-    var labels : [NSTextField] = []
-    var fonts : [NSFont] = []
+    var labels : [FontPart:NSTextField] = [:]
+    var fonts = ViewPartFonts()
+    var part : FontPart?
     
     func initialise() {
-        labels = [titleText, metadataText, commentText]
-        fonts = labels.map { $0.font ?? NSFont.labelFont(ofSize: 12)}
+        labels[.Title] = titleText
+        labels[.Metadata] = metadataText
+        labels[.Comment] = commentText
+        
+        self.load()
     }
     
+    func load() {
+        fonts.loadDefault()
+        DispatchQueue.main.async {[self] in
+            FontPart.allCases.forEach { font in
+                if let label=labels[font] { label.font = fonts[font] }
+            }
+        }
+    }
+    
+    func save() throws {
+        FontPart.allCases.forEach { font in
+            if let label=labels[font], let f = label.font { fonts[font] = f }
+        }
+        try self.fonts.saveDefault()
+    }
+    
+    func callback(_ f : NSFont) {
+        guard let p=self.part else { return }
+        self.part=nil
+        fonts[p]=f
+        DispatchQueue.main.async { [self] in labels[p]?.font=f }
+    }
     
     @IBAction func actionCallback(_ button: NSButton!) {
-        let tag=button.tag
-        guard tag>=0, tag<fonts.count else { return }
-        let font=fonts[tag]
-        let callback : FontChanger.Callback = { [self] f in
-            labels[tag].font=f
-            fonts[tag]=f
-        }
+        guard let part=FontPart(rawValue: button.tag) else { return }
+        self.part=part
+        let font=fonts[part]
+        let callback : FontChanger.Callback = { self.callback($0) }
         let fc=FontChanger(callback: callback)
         fc.change(font)
-        
     }
     
 }
