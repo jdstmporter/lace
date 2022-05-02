@@ -11,6 +11,7 @@ import AppKit
 enum DefaultError : Error {
     case CannotGetKey(String)
     case BadColourFormat
+    case BadFontFormat
     case CannotGetDefaults
 }
 
@@ -78,6 +79,18 @@ class Defaults {
         guard let components = value.rgba, components.count==4 else { throw DefaultError.BadColourFormat }
         it[key]=components
                 
+    }
+    
+    static func font(forKey key : String) throws -> NSFont {
+        let it = try check()
+        guard let info : [String:Any] = it[key] else { throw DefaultError.CannotGetKey(key) }
+        guard let f = NSFont(components: info) else { throw DefaultError.BadFontFormat }
+        return f
+    }
+    
+    static func setFont(value: NSFont,forKey key: String) throws {
+        let it=try check()
+        it[key]=value.components
     }
     
     static func string(forKey key : String) -> String? {
