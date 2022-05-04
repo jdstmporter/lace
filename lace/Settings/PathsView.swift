@@ -12,16 +12,16 @@ class PathsView : NSView, SettingsFacet {
     
     @IBOutlet var pathView : NSPathControl!
     
-    var path : String = ""
+    var path : URL = URL.userHome
     
     func update() {
         DispatchQueue.main.async {
-            self.pathView.url = URL(fileURLWithPath: self.path, isDirectory: true)
+            self.pathView.url = self.path
         }
     }
     
     @IBAction func pathChange(_ obj : Any) {
-        let fp = FilePicker(def: self.path, types: [])
+        let fp = FilePicker(url: self.path, types: [])
         guard fp.runSync(), let dir=fp.dir else { return }
         self.path=dir
         self.update()
@@ -29,16 +29,16 @@ class PathsView : NSView, SettingsFacet {
     
     func load() {
         do {
-            self.path = try LoadSaveFiles.RootPath().path
+            self.path = try LoadSaveFiles.RootPath()
         }
         catch {
-            self.path = URL.userHome.path
+            self.path = URL.userHome
         }
         self.update()
     }
     
     func save() throws {
-        Defaults.setString(forKey: "DataDirectory", value: self.path)
+        Defaults.setString(forKey: "DataDirectory", value: self.path.path)
         Defaults.remove(forKey: "LastPath")
     }
     

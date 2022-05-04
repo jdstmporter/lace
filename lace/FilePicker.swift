@@ -8,15 +8,29 @@
 import AppKit
 import UniformTypeIdentifiers
 
+class FilePickerBase {
+    typealias Handler = (Bool,String) -> ()
+    var dir : URL?
+    var url : URL
+    
+    init(def : String?) {
+       url=URL(fileURLWithPath: def ?? "./lace.json")
+   }
+    
+    var path : String { url.path }
+    var dirPath : String? { dir?.path }
+    
+}
+
 class FilePicker {
     typealias Handler = (Bool,String) -> ()
     var savePanel : NSSavePanel
-    var path : String
-    var dir : String?
+    var dir : URL?
+    var url : URL
     
     init(def : String?, types : [String] = ["json"]) {
         let ftypes = types.compactMap { UTType(filenameExtension: $0) }
-        path = def ?? "./lace.json"
+        url = URL(fileURLWithPath: def ?? "./lace.json")
         savePanel=NSSavePanel.init()
         savePanel.showsTagField=false
         savePanel.canCreateDirectories=true
@@ -26,15 +40,23 @@ class FilePicker {
         savePanel.allowedContentTypes=ftypes
         savePanel.allowsOtherFileTypes=false
         savePanel.treatsFilePackagesAsDirectories=false
-        savePanel.nameFieldStringValue=self.path
+        savePanel.nameFieldStringValue=self.url.path
+    }
+    
+    var path : String { url.path }
+    var dirPath : String? { dir?.path }
+    
+    
+    convenience init(url: URL?, types: [String] = ["json"]) {
+        self.init(def: url?.path,types: types)
     }
     
     @discardableResult func handler(_ response : NSApplication.ModalResponse) -> Bool {
         switch response {
         case .OK:
             guard let url=self.savePanel.url else { return false }
-            self.path = url.path
-            self.dir = self.savePanel.directoryURL?.path
+            self.url = url
+            self.dir = self.savePanel.directoryURL
             return true
         case .cancel:
             return false
@@ -42,8 +64,6 @@ class FilePicker {
             return false
         }
     }
-    
-    
     
     @discardableResult func runSync() -> Bool {
         let result = savePanel.runModal()

@@ -492,7 +492,7 @@ Gw
                             </tabViewItem>
                             <tabViewItem label="Images" identifier="" id="UQl-SL-MvU">
                                 <view key="view" id="Nic-Sg-zCw">
-                                    <rect key="frame" x="0.0" y="0.0" width="697" height="343"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="697" height="346"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 </view>
                             </tabViewItem>
@@ -545,7 +545,7 @@ Gw
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Fonts" identifier="" id="G0q-LD-h77">
-                                <view key="view" id="TmV-Pd-HuX" customClass="ViewFonts" customModule="lace" customModuleProvider="target">
+                                <view key="view" id="TmV-Pd-HuX" customClass="FontView" customModule="lace" customModuleProvider="target">
                                     <rect key="frame" x="0.0" y="0.0" width="697" height="346"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -575,7 +575,7 @@ Gw
                                                 <gridCell row="76t-xF-sB9" column="jRU-v5-mIB" id="EKu-he-aC0">
                                                     <button key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PyU-3D-Hh8">
                                                         <rect key="frame" x="73" y="48" width="45" height="32"/>
-                                                        <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" image="a.book.closed.fill" catalog="system" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0Hi-pc-IOh">
+                                                        <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" image="NSActionTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0Hi-pc-IOh">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
@@ -608,7 +608,7 @@ Gw
                                                 <gridCell row="4B8-16-1dn" column="jRU-v5-mIB" id="Ms6-cq-Nis">
                                                     <button key="contentView" verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="i5O-NJ-BTb">
                                                         <rect key="frame" x="73" y="19" width="45" height="32"/>
-                                                        <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" image="a.book.closed.fill" catalog="system" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="S2s-wV-zfB">
+                                                        <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" image="NSActionTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="S2s-wV-zfB">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
@@ -641,7 +641,7 @@ Gw
                                                 <gridCell row="PPV-ek-cob" column="jRU-v5-mIB" id="TFf-iC-fQ4">
                                                     <button key="contentView" verticalHuggingPriority="750" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="Hug-ki-HQg">
                                                         <rect key="frame" x="73" y="-7" width="45" height="32"/>
-                                                        <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" image="a.book.closed.fill" catalog="system" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Gxp-Ab-h5M">
+                                                        <buttonCell key="cell" type="push" title="Change" bezelStyle="rounded" image="NSActionTemplate" imagePosition="only" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Gxp-Ab-h5M">
                                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
@@ -705,12 +705,12 @@ Gw
             </view>
             <toolbar key="toolbar" implicitIdentifier="18B3EAA0-6A0C-48BE-94A4-60F898BF60E9" autosavesConfiguration="NO" allowsUserCustomization="NO" displayMode="iconAndLabel" sizeMode="regular" id="ASu-FB-Vig">
                 <allowedToolbarItems>
-                    <toolbarItem implicitItemIdentifier="C35FC05E-1D61-44CB-A62F-4647E9C89B00" label="Drawing" paletteLabel="Drawing" image="rectangle.and.pencil.and.ellipsis" catalog="system" title="Drawing" sizingBehavior="auto" id="HWA-uQ-Ziu">
+                    <toolbarItem implicitItemIdentifier="C35FC05E-1D61-44CB-A62F-4647E9C89B00" label="Drawing" paletteLabel="Drawing" image="rectangle.and.pencil.and.ellipsis" catalog="system" sizingBehavior="auto" id="HWA-uQ-Ziu">
                         <connections>
                             <action selector="toolbarAction:" target="B8a-bi-XoX" id="wBq-WO-jmS"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="2D08FD1C-CC56-4D6F-9CF6-37EF9B30B8D1" label="Grid" paletteLabel="Grid" tag="1" image="square.grid.4x3.fill" catalog="system" title="Grid" sizingBehavior="auto" id="ZbX-TM-Mph">
+                    <toolbarItem implicitItemIdentifier="2D08FD1C-CC56-4D6F-9CF6-37EF9B30B8D1" label="Grid" paletteLabel="Grid" tag="1" image="square.grid.4x3.fill" catalog="system" sizingBehavior="auto" id="ZbX-TM-Mph">
                         <connections>
                             <action selector="toolbarAction:" target="B8a-bi-XoX" id="F4D-c1-npi"/>
                         </connections>
@@ -720,7 +720,7 @@ Gw
                             <action selector="toolbarAction:" target="B8a-bi-XoX" id="bON-iQ-w6T"/>
                         </connections>
                     </toolbarItem>
-                    <toolbarItem implicitItemIdentifier="C8D7C0BA-86ED-4F23-A625-DECB3141F5A2" label="File locations" paletteLabel="File locations" tag="4" image="folder.fill" catalog="system" title="File locations" sizingBehavior="auto" id="HB1-3y-FqN">
+                    <toolbarItem implicitItemIdentifier="C8D7C0BA-86ED-4F23-A625-DECB3141F5A2" label="File locations" paletteLabel="File locations" tag="3" image="folder.fill" catalog="system" title="File locations" sizingBehavior="auto" id="HB1-3y-FqN">
                         <connections>
                             <action selector="toolbarAction:" target="B8a-bi-XoX" id="8fq-aR-aQh"/>
                         </connections>
@@ -743,7 +743,9 @@ Gw
                 <outlet property="apply" destination="Tjf-1D-uTo" id="Ni3-Wd-Alg"/>
                 <outlet property="cancel" destination="3gY-6F-9EM" id="Z8D-jU-ksT"/>
                 <outlet property="drawingView" destination="Xks-IX-51o" id="ftH-Ix-C8D"/>
+                <outlet property="fontView" destination="TmV-Pd-HuX" id="xQC-Zc-6gT"/>
                 <outlet property="gridView" destination="IvY-JM-QcK" id="MjV-vD-Zrl"/>
+                <outlet property="pathsView" destination="YY2-Bc-nZQ" id="7Bi-UM-BGh"/>
                 <outlet property="tabs" destination="h5k-q9-Tb3" id="0O0-gC-lYo"/>
             </connections>
             <point key="canvasLocation" x="-447.5" y="-2544"/>
@@ -753,9 +755,10 @@ Gw
                 <outlet property="view" destination="TmV-Pd-HuX" id="nHU-R4-lXi"/>
             </connections>
         </viewController>
+        <customObject id="oqI-nR-LTN" customClass="NSFontManager"/>
     </objects>
     <resources>
-        <image name="a.book.closed.fill" catalog="system" width="15" height="16"/>
+        <image name="NSActionTemplate" width="15" height="15"/>
         <image name="character.bubble.fill" catalog="system" width="18" height="16"/>
         <image name="eye.square.fill" catalog="system" width="16" height="14"/>
         <image name="folder.fill" catalog="system" width="19" height="14"/>

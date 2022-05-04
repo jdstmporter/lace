@@ -28,7 +28,7 @@ extension NSFont {
 
 class FontsController : NSViewController {
     
-    var viewFonts : ViewFonts! { view as? ViewFonts }
+    var viewFonts : FontView! { view as? FontView }
     
     
 }
@@ -117,7 +117,7 @@ class ViewPartFonts {
     }
 }
 
-class ViewFonts : NSView, SettingsFacet {
+class FontView : NSView, SettingsFacet, NSFontChanging {
     
 
     
@@ -139,12 +139,21 @@ class ViewFonts : NSView, SettingsFacet {
     var fonts = ViewPartFonts()
     var part : FontPart?
     
+   
+    
     func initialise() {
         labels[.Title] = titleText
         labels[.Metadata] = metadataText
         labels[.Comment] = commentText
         
         self.load()
+        FontPart.allCases.forEach { part in
+            print("Font for \(part) is \(fonts[part])")
+        }
+        
+        
+        
+        print("Set up font manager")
     }
     
     func load() {
@@ -163,21 +172,38 @@ class ViewFonts : NSView, SettingsFacet {
         try self.fonts.saveDefault()
     }
     
-    func callback(_ f : NSFont) {
+    
+    
+    @objc func changeFont(_ sender : NSFontManager?) {
         guard let p=self.part else { return }
+        
+        print("Got return: parameter is \(sender)")
+        guard let fm = sender else { return }
+        let font = fm.convert(self.fonts[p])
+        
+        print("Converted")
+        
+        fonts[p]=font
+        labels[p]?.font=font
+        
         self.part=nil
-        fonts[p]=f
-        DispatchQueue.main.async { [self] in labels[p]?.font=f }
     }
     
     @IBAction func actionCallback(_ button: NSButton!) {
         guard let part=FontPart(rawValue: button.tag) else { return }
         self.part=part
         let font=fonts[part]
-        let callback : FontChanger.Callback = { self.callback($0) }
-        let fc=FontChanger(callback: callback)
-        fc.change(font)
+        print("Changing part \(part) with current font \(font)")
+        
+        NSFontManager.shared.target=self
+        
+        
+        NSFontPanel.shared.setPanelFont(font, isMultiple: false)
+        NSFontPanel.shared.makeKeyAndOrderFront(self)
+       
     }
+    
+    
     
 }
 
@@ -204,11 +230,11 @@ class FontChanger {
     func change(_ font : NSFont) {
         self.font=font
         
-        let panel = NSFontPanel.shared
-        panel.isEnabled=true
-        panel.setPanelFont(self.font, isMultiple: false)
-        panel.worksWhenModal=true
+        NSFontPanel.shared.setPanelFont(self.font, isMultiple: false)
+        //panel.isEnabled=true
+        //panel
+        //panel.worksWhenModal=true
         
-        panel.makeKeyAndOrderFront(self)
+        NSFontPanel.shared.makeKeyAndOrderFront(self)
     }
 }
