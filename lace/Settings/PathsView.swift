@@ -46,6 +46,8 @@ class PathsView : NSView, SettingsFacet {
         self.load()
     }
     
+    func cleanup() {}
+    
     
     
     

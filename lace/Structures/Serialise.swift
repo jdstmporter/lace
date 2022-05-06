@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum PrickingError : Error {
+enum PrickingError : BaseError {
     case PointOutsideArea
     case CannotFindPricking
 }

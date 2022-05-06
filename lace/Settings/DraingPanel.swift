@@ -103,20 +103,24 @@ class DrawingView : NSView, SettingsFacet {
     
     func colourEvent(_ well : NSColorWell) {
         if let matched = ViewPart.init(rawValue: well.tag) {
-            print("Changed in row \(matched)")
+            syslog.debug("Changed in row \(matched)")
         }
-        else { print("Matched somewhere funny") }
+        else { syslog.debug("Matched somewhere funny") }
         self.touch()
-        colours.forEach { print("\($0.key) : \($0.value)") }
+        colours.forEach { syslog.debug("\($0.key) : \($0.value)") }
     }
     
     func sizesEvent(_ field : NSTextField) {
         self.touch()
-        values.forEach { print("\($0.key) : \($0.value)") }
+        values.forEach { syslog.debug("\($0.key) : \($0.value)") }
         
     }
     
     func colour(_ row : ViewPart) -> NSColor? { colours[row] }
+    
+    func cleanup() {
+        NSColorPanel.shared.close()
+    }
 
 }
 

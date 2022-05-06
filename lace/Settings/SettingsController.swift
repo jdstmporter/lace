@@ -19,6 +19,7 @@ protocol SettingsFacet {
     func load()
     func save() throws
     func initialise()
+    func cleanup()
 }
 
 
@@ -41,6 +42,8 @@ class SettingsPanel : NSPanel, LaunchableItem {
     @IBOutlet weak var gridView : GridView!
     @IBOutlet weak var pathsView : PathsView!
     @IBOutlet weak var fontView : FontView!
+    @IBOutlet weak var imagesView: ImagesView!
+    
     
     var panels : [SettingsFacet] = []
     
@@ -61,7 +64,7 @@ class SettingsPanel : NSPanel, LaunchableItem {
         do {
             panels.forEach { p in
                 do { try p.save() }
-                catch(let e) { print("Error: \(e) while saving defaults") }
+                catch(let e) { syslog.error("Error: \(e) while saving defaults") }
             }
             SettingsPanel.close()
             NotificationCenter.default.post(name: SettingsPanel.DefaultsUpdated, object: nil)
@@ -94,7 +97,7 @@ class SettingsPanel : NSPanel, LaunchableItem {
     
     func initialise() {
         if firstTime {
-            panels = [drawingView,gridView,pathsView,fontView]
+            panels = [drawingView,gridView,imagesView,pathsView,fontView]
             
             panels.forEach { $0.initialise() }
             // do first time round things
@@ -109,12 +112,12 @@ class SettingsPanel : NSPanel, LaunchableItem {
     
     @IBAction func backgroundCallback(_ sender: NSColorWell) {
         sender.color = sender.color.calibratedRGB
-        print("Background colour is now \(sender.color)")
+        syslog.debug("Background colour is now \(sender.color)")
         drawingView.colourEvent(sender)
     }
     
     @IBAction func textCallback(_ sender: NSTextField) {
-        print("TEXT EVENT")
+        syslog.debug("TEXT EVENT")
         drawingView.sizesEvent(sender)
     }
     

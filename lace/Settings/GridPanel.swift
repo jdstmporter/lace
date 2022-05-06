@@ -8,7 +8,7 @@
 import Foundation
 import AppKit
 
-enum BoundsError : Error {
+enum BoundsError : BaseError {
     case ListInsufficientlyLong
     case CannotFindDefault
 }
@@ -66,7 +66,7 @@ class GridView : NSView, SettingsFacet {
             guard let def : [Int] = (Defaults.get(forKey: "gridBounds"))  else { throw BoundsError.CannotFindDefault }
             self.gridBounds=try GridBounds(from: def)
         } catch {
-            print("Error loading grid bounds: using default")
+            syslog.error("Error loading grid bounds: using default")
             self.gridBounds=GridBounds()
         }
         self.loadGUI()
@@ -82,4 +82,6 @@ class GridView : NSView, SettingsFacet {
         self.loadGUI()
         
     }
+    
+    func cleanup() {}
 }

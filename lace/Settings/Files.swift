@@ -8,7 +8,7 @@
 import Foundation
 import AppKit
 
-enum FileError : Error {
+enum FileError : BaseError { 
     case CannotFindBundleIdentifier
     case CannotCreateDataDirectory
     case CannotPickLoadFile
@@ -38,25 +38,25 @@ class LoadSaveFiles {
     init()  throws {
        
         var path : String? = Defaults.string(forKey: "DataDirectory")
-        print("Loaded path: \(path ?? "nil")")
+        syslog.debug("Loaded path: \(path ?? "nil")")
         if path == nil {    /* need to set path*/
             guard let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String
             else { throw FileError.CannotFindBundleIdentifier }
             var userHome = URL.userHome
             userHome.appendPathComponent(appName)
             path = userHome.path
-            print("Setting path to \(path!)")
+            syslog.info("Setting file path to \(path!)")
             Defaults.setString(forKey: "DataDirectory", value:path!)
         }
         let fm = FileManager.default
-        print("Checking data directory exists")
+        syslog.debug("Checking data directory exists")
         if !fm.fileExists(atPath: path!) {
-            print("Creating")
+            syslog.debug("Creating")
             try fm.createDirectory(atPath: path!, withIntermediateDirectories: false)
         }
         
         self.root=URL(fileURLWithPath: path!, isDirectory: true)
-        print("Ready with root \(self.root)")
+        syslog.info("Ready with document root \(self.root)")
     }
     
     static func RootPath() throws -> URL {

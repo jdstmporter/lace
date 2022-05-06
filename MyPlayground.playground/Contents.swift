@@ -1,12 +1,8 @@
 import Cocoa
+import OSLog
 
-let c = NSColorSpace.availableColorSpaces(with: .rgb)
-let n = c.map { "\($0)" }
-let col1 = NSColor.blue
-let col2 = NSColor.green
+let cased : [OSLogType] = [ .debug, .info,.error, .default ]
+let vals = cased.map { $0.rawValue }
+vals
 
-let rgb=NSColorSpace.genericRGB
-let rgbn = "\(rgb)"
-let cs = c.first { "\($0)"==rgbn }
-cs?.localizedName
 

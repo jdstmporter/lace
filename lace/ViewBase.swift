@@ -131,11 +131,11 @@ class ViewBase : NSView, MouseHandler {
         let p=self.shouldMoveMouse(self.pos(event))
         if down.interval() < 0.5 && down.distance(p) < 10 {
             self.didClick(down.position)
-            print("CLICK!")
+            syslog.debug("CLICK!")
         }
         else if down.distance(p)>10 {
             self.didDrag(down.position,p)
-            print("DRAG!")
+            syslog.debug("DRAG!")
         }
         self.mouseState=nil
         self.lastPoint=nil

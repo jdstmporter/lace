@@ -8,7 +8,7 @@
 import Foundation
 import AppKit
 
-enum DefaultError : Error {
+enum DefaultError : BaseError {
     case CannotGetKey(String)
     case BadColourFormat
     case BadFontFormat
@@ -36,10 +36,10 @@ class Defaults {
         let defs = UserDefaults.standard
         guard defs.persistentDomain(forName: self.appName)==nil else { return }
 
-        print("Need to bootstrap defaults")
+        syslog.info("About to bootstrap defaults")
         guard let defaults = loadDefaults() else { return }
         defs.setPersistentDomain(defaults, forName: self.appName)
-        print("Set persistent domain")
+        syslog.info("Defaults persistent domain set")
     }
     
     //fileprivate func reload() {

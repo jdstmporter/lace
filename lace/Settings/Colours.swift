@@ -82,7 +82,7 @@ class ViewPartColours : Sequence {
         ViewPart.allCases.forEach { p in
             do { self[p]=try Defaults.colour(forKey: "\(ViewPartColours.PREFIX)\(p)") }
             catch(let e) {
-                print("Error loading: \(e) - reverting to default")
+                syslog.error("Error loading: \(e) - reverting to default")
             }
         }
     }

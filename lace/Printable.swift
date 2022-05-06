@@ -8,7 +8,7 @@
 import Foundation
 import AppKit
 
-enum LaceError : Error {
+enum LaceError : BaseError {
     case CannotGetImageData
     case CannotMakeImage
 }

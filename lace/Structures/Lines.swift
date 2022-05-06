@@ -229,7 +229,7 @@ class Lines : Sequence, Codable {
     }
     func append(_ grid : Grid,_ line: Line) {
         let l=line.asGridLine(grid)
-        print("Appending LINE \(line) : GLINE \(l)")
+        syslog.debug("Appending LINE \(line) : GLINE \(l)")
         self.append(l)
     }
     subscript(_ n : Int) -> GridLine { lines[n] }

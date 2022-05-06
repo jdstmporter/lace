@@ -29,7 +29,7 @@ class Controller : NSViewController {
     
     @objc func updateEvent(_ n : Notification) {
         DispatchQueue.main.async {
-            print("Reloading defaults")
+            syslog.info("Reloading defaults")
             self.drawingArea.reload()
         }
     }
@@ -42,7 +42,7 @@ class Controller : NSViewController {
         if w != self.width || h != self.height {
             self.height=h
             self.width=w
-            print("Changed to \(self.width) x \(self.height)")
+            syslog.debug("Changed to \(self.width) x \(self.height)")
             self.drawingArea.setSize(width: w, height: h)
         }
         
@@ -56,7 +56,7 @@ class Controller : NSViewController {
             guard let p = drawingArea?.pricking else { throw PrickingError.CannotFindPricking }
             try LoadSaveFiles().save(p, pick : pick)
         }
-        catch(let e) { print("Error \(e)")}
+        catch(let e) { syslog.error("Error \(e)")}
     }
     
     @IBAction func doSave(_ item : NSMenuItem?) {
@@ -68,7 +68,7 @@ class Controller : NSViewController {
     }
     
     @IBAction func doExport(_ item: NSMenuItem?) {
-        print("Trying to export")
+        syslog.info("Trying to export")
         let sc = Double(72)*5.0
         let w = Double(drawingArea.pricking.grid.width+2)*sc
         let h = Double(drawingArea.pricking.grid.height+2)*sc
@@ -77,9 +77,9 @@ class Controller : NSViewController {
             guard let v = Image(grid: drawingArea.pricking.grid, width: Int(w), height: Int(h)) else { throw LaceError.CannotMakeImage }
             v.draw()
             try v.save()
-            print("Export may have succeeded")
+            syslog.info("Export may have succeeded")
         }
-        catch(let e) { print("Error: \(e)") }
+        catch(let e) { syslog.error("Error: \(e)") }
     }
     
     

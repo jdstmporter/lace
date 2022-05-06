@@ -108,7 +108,7 @@ class LaceView : ViewBase {
         pricking.lines.forEach { line in
             self.colours[.Line].setStroke()
             let l = invert(pricking.asScreenLine(line)) // invert(Line(grid: pricking.grid, line: line))
-            print("\(line) : \(l)")
+            syslog.debug("\(line) : \(l)")
             let p=l.path
             p.lineWidth=dimensions[.Line]
             p.stroke()
@@ -133,7 +133,7 @@ class LaceView : ViewBase {
     override func didClick(_ at: NSPoint) {
         do {
             let p = try pricking.nearestPoint(to: at)
-            print("Picked \(p)")
+            syslog.debug("Picked \(p)")
             pricking.grid.flip(p)
             self.touch()
         }
@@ -144,7 +144,7 @@ class LaceView : ViewBase {
     
     override func didDrag(_ from: NSPoint, _ to: NSPoint) {
         guard let l=line else { return }
-        print("Appending \(l)")
+        syslog.debug("Appending \(l)")
         pricking.append(l)
         //startP=nil
         //endP=nil

@@ -111,7 +111,7 @@ class ViewPartFonts {
         FontPart.allCases.forEach { p in
             do { self[p]=try Defaults.font(forKey: "\(ViewPartFonts.PREFIX)\(p)") }
             catch(let e) {
-                print("Error loading: \(e) - reverting to default")
+                syslog.error("Error loading: \(e) - reverting to default")
             }
         }
     }
@@ -148,12 +148,8 @@ class FontView : NSView, SettingsFacet, NSFontChanging {
         
         self.load()
         FontPart.allCases.forEach { part in
-            print("Font for \(part) is \(fonts[part])")
+            syslog.debug("Font for \(part) is \(fonts[part])")
         }
-        
-        
-        
-        print("Set up font manager")
     }
     
     func load() {
@@ -177,11 +173,11 @@ class FontView : NSView, SettingsFacet, NSFontChanging {
     @objc func changeFont(_ sender : NSFontManager?) {
         guard let p=self.part else { return }
         
-        print("Got return: parameter is \(sender)")
+        syslog.debug("Got return: parameter is \(String(describing: sender))")
         guard let fm = sender else { return }
         let font = fm.convert(self.fonts[p])
         
-        print("Converted")
+        syslog.debug("Converted font")
         
         fonts[p]=font
         labels[p]?.font=font
@@ -193,7 +189,7 @@ class FontView : NSView, SettingsFacet, NSFontChanging {
         guard let part=FontPart(rawValue: button.tag) else { return }
         self.part=part
         let font=fonts[part]
-        print("Changing part \(part) with current font \(font)")
+        syslog.debug("Changing part \(part) with current font \(font)")
         
         NSFontManager.shared.target=self
         
@@ -201,6 +197,10 @@ class FontView : NSView, SettingsFacet, NSFontChanging {
         NSFontPanel.shared.setPanelFont(font, isMultiple: false)
         NSFontPanel.shared.makeKeyAndOrderFront(self)
        
+    }
+    
+    func cleanup() {
+        NSFontPanel.shared.close()
     }
     
     
