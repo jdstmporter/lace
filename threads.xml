@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<threads xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="threads.xsd">
+    <group material="cotton">
+        <thread>
+            <name>Boll</name>
+            <detail></detail>
+            <windings>12</windings>
+        </thread>
+        <thread>
+            <name>Uwe</name>
+            <detail>Baka</detail>
+            <windings>47</windings>
+        </thread>
+    </group>
+</threads>
+

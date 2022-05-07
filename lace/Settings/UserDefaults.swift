@@ -13,6 +13,15 @@ enum DefaultError : BaseError {
     case BadColourFormat
     case BadFontFormat
     case CannotGetDefaults
+    case CannotGetURL
+    case DocumentHasNoRoot
+}
+
+extension URL {
+    init?(resource r: String, extension ext: String) {
+        guard let url = Bundle.main.url(forResource: r, withExtension: ext) else { return nil }
+        self=url
+    }
 }
 
 

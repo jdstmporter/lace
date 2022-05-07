@@ -14,6 +14,10 @@
 		E135749C281EE480005D84D6 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135749B281EE480005D84D6 /* Fonts.swift */; };
 		E135749E28245909005D84D6 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135749D28245909005D84D6 /* Log.swift */; };
 		E13574A0282499C8005D84D6 /* ImagesPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135749F282499C8005D84D6 /* ImagesPanel.swift */; };
+		E13574A32826DFFC005D84D6 /* Threads.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E13574A12826DFFC005D84D6 /* Threads.xcdatamodeld */; };
+		E13574A62826E38B005D84D6 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13574A52826E38B005D84D6 /* CoreData.swift */; };
+		E13574A82826E39A005D84D6 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13574A72826E39A005D84D6 /* CoreData.framework */; };
+		E13574AA28270BE2005D84D6 /* threads.xml in Resources */ = {isa = PBXBuildFile; fileRef = E13574A928270BE2005D84D6 /* threads.xml */; };
 		E1383BE727F79C93009DEEFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383BE627F79C93009DEEFA /* AppDelegate.swift */; };
 		E1383BE927F79C96009DEEFA /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1383BE827F79C96009DEEFA /* Assets.xcassets */; };
 		E1383BEC27F79C96009DEEFA /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1383BEA27F79C96009DEEFA /* MainMenu.xib */; };
@@ -43,6 +47,10 @@
 		E135749B281EE480005D84D6 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		E135749D28245909005D84D6 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		E135749F282499C8005D84D6 /* ImagesPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesPanel.swift; sourceTree = "<group>"; };
+		E13574A22826DFFC005D84D6 /* Threads.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Threads.xcdatamodel; sourceTree = "<group>"; };
+		E13574A52826E38B005D84D6 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
+		E13574A72826E39A005D84D6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		E13574A928270BE2005D84D6 /* threads.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = threads.xml; sourceTree = "<group>"; };
 		E1383BE327F79C93009DEEFA /* lace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E1383BE627F79C93009DEEFA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E1383BE827F79C96009DEEFA /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -72,15 +80,26 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1383BFD27F9EF3E009DEEFA /* AppKit.framework in Frameworks */,
+				E13574A82826E39A005D84D6 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E13574A42826E36E005D84D6 /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				E13574A52826E38B005D84D6 /* CoreData.swift */,
+			);
+			path = Data;
+			sourceTree = "<group>";
+		};
 		E1383BDA27F79C93009DEEFA = {
 			isa = PBXGroup;
 			children = (
+				E13574A928270BE2005D84D6 /* threads.xml */,
+				E13574A12826DFFC005D84D6 /* Threads.xcdatamodeld */,
 				E1383C0C2809F267009DEEFA /* defaults.plist */,
 				E1383BE527F79C93009DEEFA /* lace */,
 				E1383BE427F79C93009DEEFA /* Products */,
@@ -99,6 +118,7 @@
 		E1383BE527F79C93009DEEFA /* lace */ = {
 			isa = PBXGroup;
 			children = (
+				E13574A42826E36E005D84D6 /* Data */,
 				E1383C032807738B009DEEFA /* Settings */,
 				E1383BE627F79C93009DEEFA /* AppDelegate.swift */,
 				E1383BE827F79C96009DEEFA /* Assets.xcassets */,
@@ -119,6 +139,7 @@
 		E1383BFB27F9EF3E009DEEFA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E13574A72826E39A005D84D6 /* CoreData.framework */,
 				E1383BFC27F9EF3E009DEEFA /* AppKit.framework */,
 			);
 			name = Frameworks;
@@ -214,6 +235,7 @@
 				E1383C0D2809F267009DEEFA /* defaults.plist in Resources */,
 				E1D51F3C280B383D00995497 /* Preferences.xib in Resources */,
 				E1383BEC27F79C96009DEEFA /* MainMenu.xib in Resources */,
+				E13574AA28270BE2005D84D6 /* threads.xml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -233,6 +255,7 @@
 				E13574A0282499C8005D84D6 /* ImagesPanel.swift in Sources */,
 				E1383BF627F79FC8009DEEFA /* Controller.swift in Sources */,
 				E13574982819BDF4005D84D6 /* GridPanel.swift in Sources */,
+				E13574A32826DFFC005D84D6 /* Threads.xcdatamodeld in Sources */,
 				E1383BE727F79C93009DEEFA /* AppDelegate.swift in Sources */,
 				E1383C012803787C009DEEFA /* Lines.swift in Sources */,
 				E1383BF427F79F62009DEEFA /* LaceView.swift in Sources */,
@@ -244,6 +267,7 @@
 				E1383BF827F8D8D4009DEEFA /* ViewBase.swift in Sources */,
 				E1383BFF27F9F34C009DEEFA /* Printable.swift in Sources */,
 				E135749C281EE480005D84D6 /* Fonts.swift in Sources */,
+				E13574A62826E38B005D84D6 /* CoreData.swift in Sources */,
 				E135749A281C92B0005D84D6 /* PathsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -451,6 +475,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		E13574A12826DFFC005D84D6 /* Threads.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E13574A22826DFFC005D84D6 /* Threads.xcdatamodel */,
+			);
+			currentVersion = E13574A22826DFFC005D84D6 /* Threads.xcdatamodel */;
+			path = Threads.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E1383BDB27F79C93009DEEFA /* Project object */;
 }

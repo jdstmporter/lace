@@ -16,6 +16,11 @@ extension Float {
     }
 }
 
+enum CodingError : Error {
+    case BadLaceStyleName
+    case StyleWindingMismatch
+}
+
 enum LaceStyle : CaseIterable {
     case Milanese
     case Bedfordshire
@@ -25,6 +30,8 @@ enum LaceStyle : CaseIterable {
     case Valenceniennes
     case Binche
     case Flanders
+    
+    case Custom
 
     static let windings : [LaceStyle:Int] = [
         .Milanese : 8,
@@ -44,23 +51,67 @@ enum LaceStyle : CaseIterable {
         .Torchon : "Torchon",
         .Valenceniennes : "Valenceniennes",
         .Flanders : "Flanders",
-        .Binche : "Binche"
+        .Binche : "Binche",
+        .Custom : "Custom"
     ]
     
-    var name : String { LaceStyle.names[self] ?? "" }
-    var wrapsPerSpace : Int { LaceStyle.windings[self] ?? 12 }
     
-    init?(_ n : String) {
-        guard let x = (LaceStyle.allCases.first { $0.name == n }) else { return nil }
+    var name : String { LaceStyle.names[self] ?? "" }
+    var str : String { "\(self)" }
+    var wrapsPerSpace : Int { LaceStyle.windings[self] ?? 12 }
+    var isCustom : Bool { self == .Custom }
+    
+    init(_ n : String) {
+        self = (LaceStyle.allCases.first { $0.name == n }) ?? .Custom
+    }
+    init(fromSafeString s : String) throws {
+        guard let x = (LaceStyle.allCases.first { $0.str == s }) else { throw CodingError.BadLaceStyleName }
         self = x
     }
+    
+    
+
+}
+
+struct LaceStyleWithWindingCount : Codable {
+    enum CodingKeys : String, CodingKey {
+        case style
+        case windings
+    }
+    
+    let style : LaceStyle
+    let windings : Int
+    
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let s = try c.decode(String.self, forKey: .style)
+        style=try LaceStyle(fromSafeString: s)
+        windings = style.isCustom ?
+            try c.decode(Int.self, forKey: .windings) : style.wrapsPerSpace
+    }
+    
+    func encode(to encoder: Encoder) throws {
+        var c=encoder.container(keyedBy: CodingKeys.self)
+        try c.encode(style.str,forKey: .style)
+        if style.isCustom { try c.encode(windings,forKey: .windings) }
+    }
+    
+    init(style: LaceStyle, wraps: Int = 12) {
+        self.style=style
+        self.windings = style.isCustom ? wraps : style.wrapsPerSpace
+    }
+    
+    var wrapsPerSpace : Int { style.isCustom ? windings : style.wrapsPerSpace }
+    
     
     func pinSpacingInMM(wrapsPerCM: Int) -> Float {
         let raw = 10.0*Float(self.wrapsPerSpace)/Float(wrapsPerCM)
         return raw.truncated(nDecimals: 1)
     }
     
-    
+}
+
+enum Thread : CaseIterable {
     
 }
 

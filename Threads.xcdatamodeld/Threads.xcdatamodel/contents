@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21D62" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="LaceDataModel">
+    <entity name="DLaceType" representedClassName="DLaceType" syncable="YES" codeGenerationType="class">
+        <attribute name="name" attributeType="String"/>
+        <attribute name="uid" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="wraps" attributeType="Integer 32" minValueString="1" maxValueString="127" defaultValueString="12" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="DThreadType" representedClassName="DThreadType" syncable="YES" codeGenerationType="class">
+        <attribute name="detail" optional="YES" attributeType="String"/>
+        <attribute name="material" optional="YES" attributeType="String"/>
+        <attribute name="name" attributeType="String"/>
+        <attribute name="wraps" attributeType="Integer 32" minValueString="1" maxValueString="127" defaultValueString="30" usesScalarValueType="YES"/>
+    </entity>
+    <fetchRequest name="AllDThreads" entity="DThreadType" includeSubentities="YES" includePropertyValues="YES"/>
+    <elements>
+        <element name="DThreadType" positionX="290.561279296875" positionY="34.26925659179688" width="128" height="103"/>
+        <element name="DLaceType" positionX="-54" positionY="27" width="128" height="88"/>
+    </elements>
+</model>
