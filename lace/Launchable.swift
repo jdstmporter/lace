@@ -32,6 +32,42 @@ extension LaunchableItem {
     }
 }
 
+protocol Openable {
+    func makeKeyAndOrderFront(_: Any?)
+    func performClose(_: Any?)
+    var  isReleasedWhenClosed : Bool { get }
+}
+
+protocol LaunchableSingletonItem : LaunchableItem, Openable {
+    static var item : Self? { get set }
+    func initialise()
+}
+
+extension LaunchableSingletonItem {
+    
+    public static func launch() -> Self? {
+        if item==nil {
+            item=instance()
+            item?.initialise()
+        }
+        item?.makeKeyAndOrderFront(nil)
+        return item
+    }
+    
+    @discardableResult static func close() -> Self? {
+        guard let p=item else { return nil }
+        let release = p.isReleasedWhenClosed
+        p.performClose(nil)
+        if release { item = nil }
+        return item
+    }
+    
+    static func reset() {
+        close()
+        item=nil
+    }
+}
+
 protocol LaunchableKeyedItem : LaunchableItem {
     var title : String { get set}
     func performClose(_ sender : Any?)
@@ -52,8 +88,8 @@ extension LaunchableKeyedItem {
     }
     
     public static func close(uid : UUID) -> Self? {
-        let item=items[uid]
-        item?.performClose(nil)
+        guard let item=items[uid] else { return nil }
+        item.performClose(nil)
         return items[uid] as! Self?
     }
     

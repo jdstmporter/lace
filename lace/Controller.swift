@@ -82,6 +82,10 @@ class Controller : NSViewController {
         catch(let e) { syslog.error("Error: \(e)") }
     }
     
+    @IBAction func doPinSpacingHelper(_ item : NSMenuItem?) {
+        let _ = ThreadCalculator.launch()
+    }
+    
     
     
     

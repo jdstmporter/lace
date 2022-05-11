@@ -1,25 +1,24 @@
-import Cocoa
+import Foundation
 
-let fm = NSFontManager.shared
-let all = fm.availableFonts
-let sp = all.filter { $0.contains(" ")}
-all.forEach { print($0) }
-print("\(all.count) > \(sp.count)")
+extension Int {
+    var f32 : Float { Float(self) }
+}
 
-let f = fm.font(withFamily: "Menlo", traits: .fixedPitchFontMask, weight: 8, size: 12)
+extension Float {
+    
+    var i32 : Int { Int(self) }
+    
+    
+    var truncated : Float {
+        let rnd = (10.0*self).rounded()
+        return rnd/10.0
+    }
+    
+    
+}
 
-f?.familyName
-f?.displayName
-f?.pointSize
-fm.weight(of: f!)
-let m = fm.traits(of: f!)
-m.rawValue
-
-NSFontDescriptor.SymbolicTraits.monoSpace.rawValue
-f?.fontName
-
-let g=NSFont(name: f!.fontName, size: 12)!
-let d=print(g.description)
-
-
+let f : Float = 3.333343325
+let ft = f.truncated(nDecimals: 1)
+let gt = f.truncated
+let s = "\(gt)"
 

@@ -623,6 +623,12 @@
                                     <action selector="doExport:" target="yBv-fZ-8Zb" id="m74-Sn-dwi"/>
                                 </connections>
                             </menuItem>
+                            <menuItem title="Pin-spacing helper" id="Exq-DO-x9i">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="doPinSpacingHelper:" target="yBv-fZ-8Zb" id="nXU-ul-B6H"/>
+                                </connections>
+                            </menuItem>
                             <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
                             <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
