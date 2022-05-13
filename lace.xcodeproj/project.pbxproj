@@ -37,6 +37,8 @@
 		E183608F282A85FB00414F20 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E183608E282A85FB00414F20 /* Calculator.swift */; };
 		E1836093282C0E3200414F20 /* LaceKinds.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1836092282C0E3200414F20 /* LaceKinds.swift */; };
 		E1836095282C643100414F20 /* ThreadInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1836094282C643100414F20 /* ThreadInfo.swift */; };
+		E1836098282ED3DF00414F20 /* Printers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1836097282ED3DF00414F20 /* Printers.swift */; };
+		E183609A282EF88D00414F20 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1836099282EF88D00414F20 /* ApplicationServices.framework */; };
 		E1BD6A85280E049700430EC4 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BD6A84280E049700430EC4 /* Colours.swift */; };
 		E1D51F3C280B383D00995497 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D51F3B280B383D00995497 /* Preferences.xib */; };
 		E1D51F3E280B3C1B00995497 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D51F3D280B3C1B00995497 /* SettingsController.swift */; };
@@ -78,6 +80,8 @@
 		E1836090282B162700414F20 /* Threads.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Threads.swift; sourceTree = "<group>"; };
 		E1836092282C0E3200414F20 /* LaceKinds.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaceKinds.swift; sourceTree = "<group>"; };
 		E1836094282C643100414F20 /* ThreadInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadInfo.swift; sourceTree = "<group>"; };
+		E1836097282ED3DF00414F20 /* Printers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Printers.swift; sourceTree = "<group>"; };
+		E1836099282EF88D00414F20 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		E1BD6A84280E049700430EC4 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		E1D51F3B280B383D00995497 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		E1D51F3D280B3C1B00995497 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
@@ -90,6 +94,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E18360882828039600414F20 /* libsqlite3.tbd in Frameworks */,
+				E183609A282EF88D00414F20 /* ApplicationServices.framework in Frameworks */,
 				E1383BFD27F9EF3E009DEEFA /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -128,6 +133,7 @@
 		E1383BE527F79C93009DEEFA /* lace */ = {
 			isa = PBXGroup;
 			children = (
+				E1836096282ED3C500414F20 /* Printing */,
 				E183608B2829C6F100414F20 /* Extras */,
 				E13574A42826E36E005D84D6 /* Data */,
 				E1383C032807738B009DEEFA /* Settings */,
@@ -150,6 +156,7 @@
 		E1383BFB27F9EF3E009DEEFA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E1836099282EF88D00414F20 /* ApplicationServices.framework */,
 				E18360872828036900414F20 /* libsqlite3.tbd */,
 				E13574A72826E39A005D84D6 /* CoreData.framework */,
 				E1383BFC27F9EF3E009DEEFA /* AppKit.framework */,
@@ -195,6 +202,14 @@
 				E1836094282C643100414F20 /* ThreadInfo.swift */,
 			);
 			path = Extras;
+			sourceTree = "<group>";
+		};
+		E1836096282ED3C500414F20 /* Printing */ = {
+			isa = PBXGroup;
+			children = (
+				E1836097282ED3DF00414F20 /* Printers.swift */,
+			);
+			path = Printing;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -296,6 +311,7 @@
 				E1383BFF27F9F34C009DEEFA /* Printable.swift in Sources */,
 				E135749C281EE480005D84D6 /* Fonts.swift in Sources */,
 				E13574A62826E38B005D84D6 /* CoreData.swift in Sources */,
+				E1836098282ED3DF00414F20 /* Printers.swift in Sources */,
 				E135749A281C92B0005D84D6 /* PathsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
