@@ -2,67 +2,167 @@ import Foundation
 import AppKit
 import UniformTypeIdentifiers
 
-extension PMPrinter {
-    var name : String? {
-        let nu : Unmanaged<CFString>? = PMPrinterGetName(self)
-        return nu?.takeUnretainedValue() as String?
-        
-    }
-    var id : String? {
-        let nu : Unmanaged<CFString>? = PMPrinterGetID(self)
-        return nu?.takeUnretainedValue() as String?
-        
-    }
+enum PrinterError : Error {
+    case GeneralError(OSStatus)
+    case PointerError
+    case PrinterNameError
+    case PrinterIDError
     
-    static func findPrinters() -> [PMPrinter] {
-        var p : Unmanaged<CFArray>?
-        let err = PMServerCreatePrinterList(nil, &p)
-        guard err==0, let ps = p?.takeUnretainedValue() else { return [] }
-        
-        let range=0..<(CFArrayGetCount(ps))
-        return range.compactMap { i in PMPrinter(CFArrayGetValueAtIndex(ps, i)) }
+    static func wrap(_ e : OSStatus) throws {
+        guard e==0 else { throw PrinterError.GeneralError(e) }
     }
+}
+
+
+class PrinterInfo : Sequence,CustomStringConvertible  {
+    typealias Iterator=Array<PMResolution>.Iterator
+    let name : String
+    let id : String
+    let model : String?
+    let mimeTypes : [String]
+    let resolutions : [PMResolution]
+    let printer : PMPrinter
     
-    var resolutions : [PMResolution] {
-        var n : UInt32 = 0
-        let err = PMPrinterGetPrinterResolutionCount(self,&n)
-        guard err==0 else { return [] }
-        let range = 1...n
-        return range.compactMap { idx in
+    init(_ printer: PMPrinter) throws {
+        self.printer=printer
+        
+        let n : Unmanaged<CFString>? = PMPrinterGetName(printer)
+        guard let nn = n?.takeUnretainedValue() as String? else { throw PrinterError.PrinterNameError }
+        self.name=nn
+        
+        let i : Unmanaged<CFString>? = PMPrinterGetID(printer)
+        guard let ii = i?.takeUnretainedValue() as String? else { throw PrinterError.PrinterIDError }
+        self.id=ii
+        
+        var m : Unmanaged<CFString>?
+        try PrinterError.wrap(PMPrinterGetMakeAndModelName(printer, &m))
+        model = m?.takeUnretainedValue() as String?
+        
+        var mi : Unmanaged<CFArray>?
+        try PrinterError.wrap(PMPrinterGetMimeTypes(printer, nil, &mi))
+        if let mRet = mi?.takeUnretainedValue() {
+            let cfs = mRet as! Array<CFString>
+            mimeTypes = cfs.map { $0 as String }
+        }
+        else { mimeTypes=[] }
+        
+        var nr : UInt32 = 0
+        try PrinterError.wrap(PMPrinterGetPrinterResolutionCount(printer,&nr))
+        let range = 1...nr
+        self.resolutions = range.compactMap { idx in
             var res = PMResolution()
-            let e = PMPrinterGetIndexedPrinterResolution(self, idx, &res)
+            let e = PMPrinterGetIndexedPrinterResolution(printer, idx, &res)
             guard e==0 else { return nil }
             return res
         }
     }
     
-    var nResolutions : Int {
-        var n : UInt32 = 0
-        let err = PMPrinterGetPrinterResolutionCount(self,&n)
-        guard err==0 else { return 0 }
-        return numericCast(n)
+    var description: String { "Name : \(name) ID: \(id) Model: \(model ?? "")" }
+    
+    var count : Int { resolutions.count }
+    func makeIterator() -> Array<PMResolution>.Iterator { resolutions.makeIterator() }
+    
+    
+    var isDefault : Bool { PMPrinterIsDefault(self.printer) }
+    func mimeTypeIsSupported(_ mime: String) -> Bool { self.mimeTypes.contains(mime) }
+    
+    private var session: PMPrintSession?
+    private var settings : PMPrintSettings?
+    
+    private func prepare() throws {
+        try PrinterError.wrap(PMCreateSession(&session))
+        try PrinterError.wrap(PMSessionSetCurrentPMPrinter(session!, self.printer))
+        
+        try PrinterError.wrap(PMCreatePrintSettings(&settings))
+        try PrinterError.wrap(PMSessionDefaultPrintSettings(session!, settings!))
     }
-}
-
-var printers = PMPrinter.findPrinters()
-printers.forEach { prt in
-    print(prt.id ?? "-")
-    print("num resolutions = \(prt.nResolutions) ")
-    let chunks = prt.resolutions.map { "\($0.hRes) x \($0.vRes)" }
-    print(chunks.joined(separator: " : "))
-}
-
-printers.forEach { prt in
-    var m : Unmanaged<CFArray>?
-    PMPrinterGetMimeTypes(prt, nil, &m)
-    if let mm = m?.takeUnretainedValue() {
-        let mmm = mm as! Array<CFString>
-        let mmmm = mmm.map { $0 as! String }
-        mmmm.forEach { print($0) }
+    
+    private func setResolution(_ resolution : PMResolution) throws {
+        var res=resolution
+        try PrinterError.wrap(PMPrinterSetOutputResolution(self.printer, settings!, &res))
     }
+    
+    private func release() {
+        PMRelease(&settings)
+        settings=nil
+        PMRelease(&session)
+        session=nil
+    }
+    
+    func print(data: Data, resolution: PMResolution,mime: String = "image/png") throws {
+        guard let prov = CGDataProvider(data: data as CFData) else { return }
+        
+        try self.prepare()
+        try self.setResolution(resolution)
+        try PrinterError.wrap(PMPrinterPrintWithProvider(self.printer, settings!, nil, mime as CFString, prov))
+        self.release()
+        
+    }
+    func print(file: URL, resolution: PMResolution,mime: String = "image/png") throws {
+        
+         var session: PMPrintSession?
+         var settings : PMPrintSettings?
+        
+        try PrinterError.wrap(PMCreateSession(&session))
+        try PrinterError.wrap(PMSessionSetCurrentPMPrinter(session!, self.printer))
+        
+        try PrinterError.wrap(PMCreatePrintSettings(&settings))
+        try PrinterError.wrap(PMSessionDefaultPrintSettings(session!, settings!))
+        
+        //try self.prepare()
+        var res=resolution
+        try PrinterError.wrap(PMPrinterSetOutputResolution(self.printer, settings!, &res))
+        try PrinterError.wrap(PMPrinterPrintWithFile(self.printer, settings!, nil, mime as CFString, file as CFURL))
+        //self.release()
+    }
+    
     
 }
 
+
+class PrintSystem : Sequence {
+    public typealias Iterator=Array<PrinterInfo>.Iterator
+    
+    public private(set) var printers : [PrinterInfo] = []
+    
+    public init() throws {
+        var p : Unmanaged<CFArray>?
+        try PrinterError.wrap(PMServerCreatePrinterList(nil, &p))
+        if let ps = p?.takeUnretainedValue()
+        {
+            let range=0..<(CFArrayGetCount(ps))
+            let printers : [PMPrinter] = range.compactMap { i in PMPrinter(CFArrayGetValueAtIndex(ps, i)) }
+            self.printers = try printers.map { try PrinterInfo($0) }
+        }
+        else { self.printers = [] }
+    }
+    
+    public var defaultPrinter : PrinterInfo? { printers.first { $0.isDefault }}
+    
+    public var count : Int { printers.count }
+    func makeIterator() -> Iterator { printers.makeIterator() }
+    
+    subscript(_ id : String) -> PrinterInfo? { printers.first { $0.id == id } }
+    var def : PrinterInfo? { printers.first { $0.isDefault } }
+    
+    func show() { printers.forEach { print($0.description) } }
+    
+  
+        
+}
+
+
+
+do {
+    let pr=try PrintSystem()
+    pr.show()
+    let p = pr.defaultPrinter!
+    p.resolutions.forEach { print($0) }
+    let res=p.resolutions[0]
+    let u=URL(fileURLWithPath: "/Users/julianporter/Pictures/Excel/78691.jpg")
+    try p.print(file: u, resolution: res, mime: "image/jpg")
+}
+catch(let e) { print(e) }
     
     
     

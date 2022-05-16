@@ -6,6 +6,7 @@
 //
 
 import Cocoa
+import UniformTypeIdentifiers
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -18,8 +19,73 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to initialize your application
         Defaults.load()
         
+        // NSOpenPanel
+        let openPanel = NSOpenPanel()
+        openPanel.allowedContentTypes = [UTType.jpeg] // "com.adobe.pdf"
+        openPanel.allowsMultipleSelection = true
+        if (openPanel.runModal() != NSApplication.ModalResponse.OK) { return }
+        
+        let filePaths: [String] = openPanel.urls.compactMap({ $0.path })
+        filePaths.forEach { self.loadAndPrint(path: $0) }
+        
     }
-
+    
+    func loadAndPrint(path: String) {
+        let pageRanges : [[UInt32]] = [[1,1]]
+        
+        let img = NSImage(contentsOfFile: path)!
+        let nv = NSImageView(image: img)
+        nv.frame=NSRect(origin: CGPoint(), size: img.size)
+        
+        var printInfo = NSPrintInfo()
+        
+        // --- Print Panel ---
+        let printPanel = NSPrintPanel()
+        
+        printPanel.options = [
+            NSPrintPanel.Options.showsCopies,
+            NSPrintPanel.Options.showsPageSetupAccessory
+        ]
+        
+        if printPanel.runModal(with: printInfo) != NSApplication.ModalResponse.OK.rawValue {
+            return
+        }
+        printInfo = printPanel.printInfo
+        let sizeInPoints = printInfo.paperSize
+        print("Size in points is \(sizeInPoints)")
+        
+        
+        let printSettingCPtr = PMPrintSettings(printInfo.pmPrintSettings())
+        let sess=PMPrintSession(printInfo.pmPrintSession())
+        var prin : PMPrinter?
+        PMSessionGetCurrentPrinter(sess, &prin)
+        var r = PMResolution()
+        PMPrinterGetOutputResolution(prin!, printSettingCPtr, &r)
+        print("Resolution is \(r)")
+        
+        var printedPageRanges = Array<Array<UInt32>>()
+        
+        for pageRange in pageRanges {
+            guard let first = pageRange.first else { continue }
+            guard let last = pageRange.last else { continue }
+            
+            if PMSetPageRange(printSettingCPtr, first, last) == OSStatus(kPMValueOutOfRange) { continue }
+            
+            PMSetFirstPage(printSettingCPtr, first, false)
+            PMSetLastPage(printSettingCPtr, last, false)
+            printInfo.updateFromPMPrintSettings()
+            /*
+            let nspo = NSPrintOperation(view: nv, printInfo: printInfo)
+            nspo.jobTitle = path
+            nspo.showsPrintPanel = false
+            if nspo.run() {
+                printedPageRanges.append(pageRange)
+            }
+             */
+        }
+        
+        print("\(path): printed pages in ranges \(printedPageRanges)")
+    }
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
