@@ -41,6 +41,7 @@
 		E183609A282EF88D00414F20 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1836099282EF88D00414F20 /* ApplicationServices.framework */; };
 		E183609F2831B5F400414F20 /* pdf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E183609E2831B5F400414F20 /* pdf.swift */; };
 		E18360A12831B60400414F20 /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E18360A02831B60400414F20 /* PDFKit.framework */; };
+		E18360A32832A2E000414F20 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E18360A22832A2E000414F20 /* ImageIO.framework */; };
 		E1BD6A85280E049700430EC4 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BD6A84280E049700430EC4 /* Colours.swift */; };
 		E1D51F3C280B383D00995497 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D51F3B280B383D00995497 /* Preferences.xib */; };
 		E1D51F3E280B3C1B00995497 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D51F3D280B3C1B00995497 /* SettingsController.swift */; };
@@ -86,6 +87,7 @@
 		E1836099282EF88D00414F20 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = System/Library/Frameworks/ApplicationServices.framework; sourceTree = SDKROOT; };
 		E183609E2831B5F400414F20 /* pdf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pdf.swift; sourceTree = "<group>"; };
 		E18360A02831B60400414F20 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
+		E18360A22832A2E000414F20 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		E1BD6A84280E049700430EC4 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		E1D51F3B280B383D00995497 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		E1D51F3D280B3C1B00995497 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
@@ -101,6 +103,7 @@
 				E183609A282EF88D00414F20 /* ApplicationServices.framework in Frameworks */,
 				E18360A12831B60400414F20 /* PDFKit.framework in Frameworks */,
 				E1383BFD27F9EF3E009DEEFA /* AppKit.framework in Frameworks */,
+				E18360A32832A2E000414F20 /* ImageIO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -161,6 +164,7 @@
 		E1383BFB27F9EF3E009DEEFA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E18360A22832A2E000414F20 /* ImageIO.framework */,
 				E18360A02831B60400414F20 /* PDFKit.framework */,
 				E1836099282EF88D00414F20 /* ApplicationServices.framework */,
 				E18360872828036900414F20 /* libsqlite3.tbd */,
