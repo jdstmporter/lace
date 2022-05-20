@@ -42,6 +42,8 @@
 		E183609F2831B5F400414F20 /* pdf.swift in Sources */ = {isa = PBXBuildFile; fileRef = E183609E2831B5F400414F20 /* pdf.swift */; };
 		E18360A12831B60400414F20 /* PDFKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E18360A02831B60400414F20 /* PDFKit.framework */; };
 		E18360A32832A2E000414F20 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E18360A22832A2E000414F20 /* ImageIO.framework */; };
+		E18360A528384D0500414F20 /* PrintableCG.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18360A428384D0500414F20 /* PrintableCG.swift */; };
+		E18360A728384F8600414F20 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E18360A628384F8600414F20 /* CoreGraphics.framework */; };
 		E1BD6A85280E049700430EC4 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BD6A84280E049700430EC4 /* Colours.swift */; };
 		E1D51F3C280B383D00995497 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D51F3B280B383D00995497 /* Preferences.xib */; };
 		E1D51F3E280B3C1B00995497 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D51F3D280B3C1B00995497 /* SettingsController.swift */; };
@@ -88,6 +90,8 @@
 		E183609E2831B5F400414F20 /* pdf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pdf.swift; sourceTree = "<group>"; };
 		E18360A02831B60400414F20 /* PDFKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = PDFKit.framework; path = System/Library/Frameworks/PDFKit.framework; sourceTree = SDKROOT; };
 		E18360A22832A2E000414F20 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		E18360A428384D0500414F20 /* PrintableCG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintableCG.swift; sourceTree = "<group>"; };
+		E18360A628384F8600414F20 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		E1BD6A84280E049700430EC4 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		E1D51F3B280B383D00995497 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		E1D51F3D280B3C1B00995497 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
@@ -99,6 +103,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E18360A728384F8600414F20 /* CoreGraphics.framework in Frameworks */,
 				E18360882828039600414F20 /* libsqlite3.tbd in Frameworks */,
 				E183609A282EF88D00414F20 /* ApplicationServices.framework in Frameworks */,
 				E18360A12831B60400414F20 /* PDFKit.framework in Frameworks */,
@@ -164,6 +169,7 @@
 		E1383BFB27F9EF3E009DEEFA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E18360A628384F8600414F20 /* CoreGraphics.framework */,
 				E18360A22832A2E000414F20 /* ImageIO.framework */,
 				E18360A02831B60400414F20 /* PDFKit.framework */,
 				E1836099282EF88D00414F20 /* ApplicationServices.framework */,
@@ -219,6 +225,7 @@
 			children = (
 				E1836097282ED3DF00414F20 /* Printers.swift */,
 				E183609E2831B5F400414F20 /* pdf.swift */,
+				E18360A428384D0500414F20 /* PrintableCG.swift */,
 			);
 			path = Printing;
 			sourceTree = "<group>";
@@ -321,6 +328,7 @@
 				E1836093282C0E3200414F20 /* LaceKinds.swift in Sources */,
 				E1383BFF27F9F34C009DEEFA /* Printable.swift in Sources */,
 				E135749C281EE480005D84D6 /* Fonts.swift in Sources */,
+				E18360A528384D0500414F20 /* PrintableCG.swift in Sources */,
 				E183609F2831B5F400414F20 /* pdf.swift in Sources */,
 				E13574A62826E38B005D84D6 /* CoreData.swift in Sources */,
 				E1836098282ED3DF00414F20 /* Printers.swift in Sources */,

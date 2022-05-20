@@ -93,6 +93,8 @@ catch (let e) { print(e) }
  
  */
 
+
+
 func listProps(path p: String) throws {
     let path = NSURL(fileURLWithPath: p)
     
@@ -119,6 +121,14 @@ do {
     
 }
 
+let ed = Date.now
+let df=DateFormatter()
+df.locale=Locale.current
+df.dateFormat="yyyy:MM:dd HH:mm:ss"
+df.timeZone=TimeZone.current
+df.string(from: ed)
+
+NSColorSpace.Model.rgb
 
     
 
