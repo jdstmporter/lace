@@ -69,12 +69,13 @@ class Controller : NSViewController {
     
     @IBAction func doExport(_ item: NSMenuItem?) {
         syslog.info("Trying to export")
-        let sc = Double(72)*5.0
-        let w = Double(drawingArea.pricking.grid.width+2)*sc
-        let h = Double(drawingArea.pricking.grid.height+2)*sc
+        let dpi = 300
+        let spacing = 0.2
+        let w = drawingArea.pricking.grid.width
+        let h = drawingArea.pricking.grid.height
         
         do {
-            guard let v = Image(grid: drawingArea.pricking.grid, width: Int(w), height: Int(h)) else { throw LaceError.CannotMakeImage }
+            guard let v = ImageCG(grid: drawingArea.pricking.grid, width: w, height: h, spacing: spacing,dpi: dpi) else { throw LaceError.CannotMakeImage }
             v.draw()
             try v.save()
             syslog.info("Export may have succeeded")

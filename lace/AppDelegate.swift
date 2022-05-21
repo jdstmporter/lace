@@ -20,6 +20,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         Defaults.load()
         
         // NSOpenPanel
+        //self.doPrinting()
+        printActions()
+    }
+    
+    func doPrinting() {
         let openPanel = NSOpenPanel()
         openPanel.allowedContentTypes = [UTType.jpeg] // "com.adobe.pdf"
         openPanel.allowsMultipleSelection = true
@@ -27,7 +32,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         let filePaths: [String] = openPanel.urls.compactMap({ $0.path })
         filePaths.forEach { self.loadAndPrint(path: $0) }
-        
     }
     
     func loadAndPrint(path: String) {

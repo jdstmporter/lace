@@ -82,26 +82,22 @@ class PNG {
     }
     
     init(size: NSSize,colourModel: String,depth: Int,alpha: Bool,dpi : NSSize) {
-        self.dict[PNG.PixelWidth]=Int(size.width)
-        self.dict[PNG.PixelHeight]=Int(size.height)
+        let dpm=dpi*PNG.InchesPerMetre
+        self.dict[PNG.PixelWidth]=size.widthI
+        self.dict[PNG.PixelHeight]=size.heightI
         self.dict[PNG.Interlace] = 0
-        self.dict[PNG.ResX]=Int(dpi.width*PNG.InchesPerMetre)
-        self.dict[PNG.ResY]=Int(dpi.height*PNG.InchesPerMetre)
+        self.dict[PNG.ResX]=dpm.widthI
+        self.dict[PNG.ResY]=dpm.heightI
       
         self.properties[PNG.MetadataKey] = self.dict
         
-        self.properties[PNG.DPIWidth]=Int(dpi.width)
-        self.properties[PNG.DPIHeight]=Int(dpi.height)
+        self.properties[PNG.DPIWidth]=dpi.widthI
+        self.properties[PNG.DPIHeight]=dpi.heightI
         self.properties[PNG.ColourModel] = colourModel
         self.properties[PNG.Depth] = depth
         self.properties[PNG.HasAlpha] = alpha
     }
     
-    convenience init(bitmap: NSBitmapImageRep,dpi : NSSize) {
-        let sz=NSSize(width:bitmap.pixelsWide,height:bitmap.pixelsHigh)
-        self.init(size: sz,colourModel: bitmap.colorSpaceName.rawValue,
-                  depth: bitmap.bitsPerPixel,alpha: bitmap.hasAlpha,dpi: dpi)
-    }
     
     convenience init(image: CGImage,dpi : NSSize) {
         let sz=NSSize(width:image.width,height:image.height)
@@ -130,6 +126,14 @@ class RenderPNG {
         guard let dest = CGImageDestinationCreateWithURL(path as CFURL,RenderPNG.utype as CFString, 1, self.properties.propertiesCF) else { throw ImageIOError.CannotCreateDestination }
         CGImageDestinationAddImage(dest, image, self.properties.propertiesCF)
         CGImageDestinationFinalize(dest)
+    }
+    
+    func asData() throws -> Data {
+        guard let array=CFDataCreateMutable(kCFAllocatorDefault,0),
+              let dest = CGImageDestinationCreateWithData(array, RenderPNG.utype as CFString, 1, nil) else { throw ImageIOError.CannotCreateDestination }
+        CGImageDestinationAddImage(dest, image, self.properties.propertiesCF)
+        CGImageDestinationFinalize(dest)
+        return array as Data
     }
     
     
