@@ -71,16 +71,16 @@ class ImageCG {
     // then construct the CGImage
     // then pass it over to the renderer
     
-    func save() throws {
+    func renderToLocation(url : URL) throws {
         guard let cg = self.bitmap.cgImage else { throw LaceError.CannotGetImageData }
         let renderer = RenderPNG(image: cg, dpi: self.dpi)
-        try renderer.renderToFile(path: URL(fileURLWithPath: "/Users/julianporter/fred.png"))
+        try renderer.renderToLocation(path: url)
     }
     
-    func asData() throws -> Data {
+    func renderToData() throws -> Data {
         guard let cg = self.bitmap.cgImage else { throw LaceError.CannotGetImageData }
         let renderer = RenderPNG(image: cg, dpi: self.dpi)
-        return try renderer.renderAsData()
+        return try renderer.renderToData()
         
     }
     

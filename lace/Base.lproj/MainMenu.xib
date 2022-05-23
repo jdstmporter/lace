@@ -630,6 +630,12 @@
                                 </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="hB3-LF-h0Y"/>
+                            <menuItem title="Test" id="LNX-VE-Rci">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <connections>
+                                    <action selector="doTest:" target="yBv-fZ-8Zb" id="cts-nt-YCB"/>
+                                </connections>
+                            </menuItem>
                             <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
                                 <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                 <connections>
@@ -781,9 +787,21 @@
             <connections>
                 <outlet property="drawingArea" destination="Jhd-5x-ITq" id="D2F-5k-vrS"/>
                 <outlet property="heightField" destination="gZ8-js-3MG" id="wg7-OT-Ouq"/>
+                <outlet property="testPanel" destination="mQZ-pb-bkg" id="BJ7-Hr-Ivb"/>
                 <outlet property="view" destination="EiT-Mj-1SZ" id="oZH-8m-lm8"/>
                 <outlet property="widthField" destination="fMg-cz-abX" id="qdL-xw-76P"/>
             </connections>
         </viewController>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" frameAutosaveName="" animationBehavior="default" id="heU-WW-anE" customClass="NSPanel">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="2192" y="60" width="276" height="378"/>
+            <rect key="screenRect" x="1920" y="-112" width="2560" height="1415"/>
+            <view key="contentView" id="mQZ-pb-bkg" customClass="PrintableView" customModule="lace" customModuleProvider="target">
+                <rect key="frame" x="0.0" y="0.0" width="276" height="378"/>
+                <autoresizingMask key="autoresizingMask"/>
+            </view>
+            <point key="canvasLocation" x="-91" y="-109"/>
+        </window>
     </objects>
 </document>

@@ -14,6 +14,7 @@ class Controller : NSViewController {
     @IBOutlet weak var heightField : NSTextField!
     @IBOutlet weak var drawingArea : LaceView!
     
+    @IBOutlet weak var testPanel: PrintableView!
     
     
     var width : Int = 1
@@ -77,7 +78,7 @@ class Controller : NSViewController {
         do {
             guard let v = ImageCG(grid: drawingArea.pricking.grid, width: w, height: h, spacing: spacing,dpi: dpi) else { throw LaceError.CannotMakeImage }
             v.draw()
-            try v.save()
+            try v.renderToLocation(url: URL(fileURLWithPath: "/Users/julianporter/fred.png"))
             syslog.info("Export may have succeeded")
         }
         catch(let e) { syslog.error("Error: \(e)") }
@@ -85,6 +86,15 @@ class Controller : NSViewController {
     
     @IBAction func doPinSpacingHelper(_ item : NSMenuItem?) {
         let _ = ThreadCalculator.launch()
+    }
+    
+    @IBAction func doTest(_ item : NSMenuItem?) {
+        if let rep = testPanel.render() {
+            let cg=rep.cgImage!
+            let renderer=RenderPNG(image: cg, dpi: NSSize(width: 300, height: 300))
+            try? renderer.renderToLocation(path: URL(fileURLWithPath: "/Users/julianporter/fred.png"))
+        }
+        testPanel.load(pricking: drawingArea.pricking, spacing: 0.2, dpi: 120)
     }
     
     

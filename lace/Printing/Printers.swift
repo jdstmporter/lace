@@ -7,12 +7,14 @@
 
 import Foundation
 import AppKit
+import UniformTypeIdentifiers
 
 enum PrinterError : Error {
     case GeneralError(OSStatus)
     case PointerError
-    case PrinterNameError
-    case PrinterIDError
+    case CannotGetName
+    case CannotGetID
+    case CannotGetURL
     case DataError(String)
     
     static func wrap(_ e : OSStatus) throws {
@@ -20,44 +22,63 @@ enum PrinterError : Error {
     }
 }
 
+enum PrinterState {
+    case Idle
+    case Processing
+    case Stopped
+    case Unknown
+    case Error(OSStatus)
+    
+    static let maps : [Int:PrinterState] = [
+        kPMPrinterIdle : .Idle,
+        kPMPrinterStopped : .Stopped,
+        kPMPrinterProcessing : .Processing
+    ]
+    
+    init(state : Int) {
+        self = PrinterState.maps[state] ?? .Unknown
+    }
+    init(printer:  PMPrinter) {
+        var state : PMPrinterState = 0
+        let e = PMPrinterGetState(printer, &state)
+        if e==0 {
+            self=PrinterState.maps[numericCast(state)] ?? .Unknown
+        }
+        else { self = .Error(e) }
+    }
+}
 
-class PrinterInfo : Sequence,CustomStringConvertible  {
-    typealias Iterator=Array<PMResolution>.Iterator
+extension NSSize {
+    init(_ res : PMResolution) {
+        self.init(width: res.hRes, height: res.vRes)
+    }
+}
+
+class Printer : Sequence,CustomStringConvertible, Comparable  {
+    static func == (lhs: Printer, rhs: Printer) -> Bool { lhs.id==rhs.id }
+    static func < (lhs: Printer, rhs: Printer) -> Bool { lhs.id<rhs.id }
+    
+    typealias Iterator=Array<NSSize>.Iterator
     let name : String
     let id : String
     let model : String?
-    let url : URL
-    let mimeTypes : [String]
-    let resolutions : [PMResolution]
+    let resolutions : [NSSize]
     let printer : PMPrinter
     
     init(_ printer: PMPrinter) throws {
         self.printer=printer
         
         let n : Unmanaged<CFString>? = PMPrinterGetName(printer)
-        guard let nn = n?.takeUnretainedValue() as String? else { throw PrinterError.PrinterNameError }
+        guard let nn = n?.takeUnretainedValue() as String? else { throw PrinterError.CannotGetName }
         self.name=nn
         
         let i : Unmanaged<CFString>? = PMPrinterGetID(printer)
-        guard let ii = i?.takeUnretainedValue() as String? else { throw PrinterError.PrinterIDError }
+        guard let ii = i?.takeUnretainedValue() as String? else { throw PrinterError.CannotGetID }
         self.id=ii
-        
-        var u : Unmanaged<CFURL>?
-        PMPrinterCopyDeviceURI(printer, &u)
-        guard let url = u?.takeUnretainedValue() else { throw PrinterError.DataError("URL") }
-        self.url=url as URL
         
         var m : Unmanaged<CFString>?
         try PrinterError.wrap(PMPrinterGetMakeAndModelName(printer, &m))
         model = m?.takeUnretainedValue() as String?
-        
-        var mi : Unmanaged<CFArray>?
-        try PrinterError.wrap(PMPrinterGetMimeTypes(printer, nil, &mi))
-        if let mRet = mi?.takeUnretainedValue() {
-            let cfs = mRet as! Array<CFString>
-            mimeTypes = cfs.map { $0 as String }
-        }
-        else { mimeTypes=[] }
         
         var nr : UInt32 = 0
         try PrinterError.wrap(PMPrinterGetPrinterResolutionCount(printer,&nr))
@@ -66,54 +87,21 @@ class PrinterInfo : Sequence,CustomStringConvertible  {
             var res = PMResolution()
             let e = PMPrinterGetIndexedPrinterResolution(printer, idx, &res)
             guard e==0 else { return nil }
-            return res
+            return NSSize(res)
         }
-        
-        
     }
     
-    var printerState: String? {
-        do {
-            var state : PMPrinterState = 0
-            try PrinterError.wrap(PMPrinterGetState(self.printer, &state))
-            let pstate : Int=numericCast(state)
-            switch pstate {
-            case kPMPrinterIdle:
-                return "Idle"
-            case kPMPrinterProcessing:
-                return "Processing"
-            case kPMPrinterStopped:
-                return "Stopped"
-            default:
-                return "Unknown"
-            }
-        }
-        catch { return "Error" }
-    }
-    
-    
-    
+    var status : PrinterState { PrinterState(printer: self.printer) }
     var isDefault : Bool { PMPrinterIsDefault(self.printer) }
-    func mimeTypeIsSupported(_ mime: String) -> Bool { self.mimeTypes.contains(mime) }
-    
     var description: String { "Name : \(name) ID: \(id) Model: \(model ?? "")" }
-    
     var count : Int { resolutions.count }
-    func makeIterator() -> Array<PMResolution>.Iterator { resolutions.makeIterator() }
-    
-    
-
-    
+    func makeIterator() -> Array<NSSize>.Iterator { resolutions.makeIterator() }
+    subscript(_ n : Int) -> NSSize { resolutions[n] }
 }
 
-
-
-
-
 class PrintSystem : Sequence {
-    public typealias Iterator=Array<PrinterInfo>.Iterator
-    
-    public private(set) var printers : [PrinterInfo] = []
+    public typealias Iterator=Array<Printer>.Iterator
+    public private(set) var printers : [Printer] = []
     
     public init() throws {
         var p : Unmanaged<CFArray>?
@@ -122,20 +110,18 @@ class PrintSystem : Sequence {
         {
             let range=0..<(CFArrayGetCount(ps))
             let printers : [PMPrinter] = range.compactMap { i in PMPrinter(CFArrayGetValueAtIndex(ps, i)) }
-            self.printers = try printers.map { try PrinterInfo($0) }
+            self.printers = try printers.map { try Printer($0) }.sorted()
         }
         else { self.printers = [] }
     }
     
-    public var defaultPrinter : PrinterInfo? { printers.first { $0.isDefault }}
+    public var defaultPrinter : Printer? { printers.first { $0.isDefault }}
+    public var defaultPrinterIndex : Int? { printers.firstIndex { $0.isDefault }}
     
-    public var count : Int { printers.count }
+    public var count : Int { printers.count}
     func makeIterator() -> Iterator { printers.makeIterator() }
-    
-    subscript(_ id : String) -> PrinterInfo? { printers.first { $0.id == id } }
-    var def : PrinterInfo? { printers.first { $0.isDefault } }
-    
-    func show() { printers.forEach { print($0.description) } }
+    subscript(_ id : String) -> Printer? { printers.first { $0.id == id } }
+    subscript(_ idx : Int) -> Printer { printers[idx] }
 }
 
 

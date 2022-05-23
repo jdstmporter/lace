@@ -122,13 +122,13 @@ class RenderPNG {
         self.properties=PNG(image: image,dpi: dpi)
     }
     
-    func renderToFile(path : URL) throws {
+    func renderToLocation(path : URL) throws {
         guard let dest = CGImageDestinationCreateWithURL(path as CFURL,RenderPNG.utype as CFString, 1, self.properties.propertiesCF) else { throw ImageIOError.CannotCreateDestination }
         CGImageDestinationAddImage(dest, image, self.properties.propertiesCF)
         CGImageDestinationFinalize(dest)
     }
     
-    func asData() throws -> Data {
+    func renderToData() throws -> Data {
         guard let array=CFDataCreateMutable(kCFAllocatorDefault,0),
               let dest = CGImageDestinationCreateWithData(array, RenderPNG.utype as CFString, 1, nil) else { throw ImageIOError.CannotCreateDestination }
         CGImageDestinationAddImage(dest, image, self.properties.propertiesCF)

@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <window title="Window" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" hidesOnDeactivate="YES" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="jmA-no-Il3" customClass="PrintingPanel" customModule="lace" customModuleProvider="target">
+            <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
+            <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+            <rect key="contentRect" x="2192" y="60" width="552" height="378"/>
+            <rect key="screenRect" x="1920" y="-112" width="2560" height="1415"/>
+            <view key="contentView" id="YZc-w6-Of7">
+                <rect key="frame" x="0.0" y="0.0" width="552" height="378"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="COV-5D-zhI">
+                        <rect key="frame" x="18" y="339" width="160" height="19"/>
+                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Output to file / printer" id="BHQ-U6-NAz">
+                            <font key="font" metaFont="system" size="16"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <box verticalHuggingPriority="750" borderType="line" title="Take resolution from" translatesAutoresizingMaskIntoConstraints="NO" id="23C-OZ-6di">
+                        <rect key="frame" x="17" y="259" width="278" height="64"/>
+                        <view key="contentView" id="4iu-69-LCn">
+                            <rect key="frame" x="3" y="3" width="272" height="46"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="suQ-uj-APo">
+                                    <rect key="frame" x="19" y="25" width="57" height="18"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="17" id="8sh-ug-Ynh"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="radio" title="Printer" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" state="on" inset="2" id="b6L-2y-qEK">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="choiceAction:" target="jmA-no-Il3" id="dCV-ji-JLJ"/>
+                                    </connections>
+                                </button>
+                                <button verticalHuggingPriority="750" tag="1" translatesAutoresizingMaskIntoConstraints="NO" id="1m3-6b-v6M">
+                                    <rect key="frame" x="19" y="4" width="40" height="18"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="17" id="YR6-jy-Qzk"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="radio" title="List" bezelStyle="regularSquare" imagePosition="left" alignment="left" controlSize="small" inset="2" id="fCl-oQ-sJx">
+                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                    </buttonCell>
+                                    <connections>
+                                        <action selector="choiceAction:" target="jmA-no-Il3" id="oJ0-cM-mZ5"/>
+                                    </connections>
+                                </button>
+                                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rJL-Ax-bQM">
+                                    <rect key="frame" x="92" y="22" width="168" height="22"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="160" id="M87-YL-2J9"/>
+                                    </constraints>
+                                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" refusesFirstResponder="YES" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="J03-Vt-oTg" id="juM-ut-7w6">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" id="FeQ-AP-NE5">
+                                            <items>
+                                                <menuItem title="Item 1" state="on" id="J03-Vt-oTg"/>
+                                                <menuItem title="Item 2" id="1GR-kk-RuF"/>
+                                                <menuItem title="Item 3" id="aoI-Ek-lDg"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                    <connections>
+                                        <action selector="printerAction:" target="jmA-no-Il3" id="JkK-K3-By9"/>
+                                    </connections>
+                                </popUpButton>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="rJL-Ax-bQM" firstAttribute="leading" secondItem="suQ-uj-APo" secondAttribute="trailing" constant="20" id="25s-3w-3QM"/>
+                                <constraint firstItem="rJL-Ax-bQM" firstAttribute="centerY" secondItem="suQ-uj-APo" secondAttribute="centerY" id="7Qc-TN-ZZO"/>
+                                <constraint firstItem="1m3-6b-v6M" firstAttribute="leading" secondItem="4iu-69-LCn" secondAttribute="leading" constant="20" symbolic="YES" id="JDd-XQ-IdM"/>
+                                <constraint firstItem="suQ-uj-APo" firstAttribute="top" secondItem="4iu-69-LCn" secondAttribute="top" constant="4" id="QtU-QD-G1f"/>
+                                <constraint firstAttribute="bottom" secondItem="1m3-6b-v6M" secondAttribute="bottom" constant="4" id="Xa6-uU-yhG"/>
+                                <constraint firstItem="1m3-6b-v6M" firstAttribute="top" secondItem="suQ-uj-APo" secondAttribute="bottom" constant="4" id="aJO-E5-LcF"/>
+                                <constraint firstAttribute="trailing" secondItem="rJL-Ax-bQM" secondAttribute="trailing" constant="16" id="f9U-Ay-q0x"/>
+                                <constraint firstItem="suQ-uj-APo" firstAttribute="leading" secondItem="4iu-69-LCn" secondAttribute="leading" constant="20" symbolic="YES" id="xBI-4v-sNy"/>
+                            </constraints>
+                        </view>
+                    </box>
+                    <box title="Resolution" translatesAutoresizingMaskIntoConstraints="NO" id="YFF-Jr-95S">
+                        <rect key="frame" x="321" y="259" width="171" height="52"/>
+                        <view key="contentView" id="6ac-9D-ySp">
+                            <rect key="frame" x="3" y="3" width="165" height="34"/>
+                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <subviews>
+                                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nB9-KW-XF0">
+                                    <rect key="frame" x="16" y="0.0" width="108" height="33"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="27" id="gOf-Ps-GHY"/>
+                                        <constraint firstAttribute="width" constant="100" id="h4K-8Q-hES"/>
+                                    </constraints>
+                                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" controlSize="small" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="I1e-6d-0EE" id="1Bc-T0-sbF">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <menu key="menu" id="ClK-Ra-Hjc">
+                                            <items>
+                                                <menuItem title="Item 1" state="on" id="I1e-6d-0EE"/>
+                                                <menuItem title="Item 2" id="e2G-Q1-PaT"/>
+                                                <menuItem title="Item 3" id="bM1-Ol-AbS"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                    <connections>
+                                        <action selector="resolutionsButton:" target="jmA-no-Il3" id="WyZ-iQ-5sK"/>
+                                    </connections>
+                                </popUpButton>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="m56-AI-ojh">
+                                    <rect key="frame" x="126" y="10" width="21" height="14"/>
+                                    <textFieldCell key="cell" controlSize="small" lineBreakMode="clipping" title="dpi" id="8Q5-V8-wh2">
+                                        <font key="font" metaFont="smallSystem"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="m56-AI-ojh" firstAttribute="leading" secondItem="nB9-KW-XF0" secondAttribute="trailing" constant="8" id="Kgl-Mj-MIN"/>
+                                <constraint firstItem="nB9-KW-XF0" firstAttribute="centerY" secondItem="6ac-9D-ySp" secondAttribute="centerY" id="NkB-YZ-NZq"/>
+                                <constraint firstAttribute="trailing" secondItem="m56-AI-ojh" secondAttribute="trailing" constant="20" symbolic="YES" id="dOE-aI-ZaL"/>
+                                <constraint firstItem="m56-AI-ojh" firstAttribute="centerY" secondItem="nB9-KW-XF0" secondAttribute="centerY" id="k1E-MI-eay"/>
+                                <constraint firstItem="nB9-KW-XF0" firstAttribute="leading" secondItem="6ac-9D-ySp" secondAttribute="leading" constant="20" symbolic="YES" id="o7a-Zc-hNS"/>
+                            </constraints>
+                        </view>
+                    </box>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="YFF-Jr-95S" firstAttribute="leading" secondItem="23C-OZ-6di" secondAttribute="trailing" constant="32" id="JTq-oN-jKU"/>
+                    <constraint firstItem="23C-OZ-6di" firstAttribute="top" secondItem="COV-5D-zhI" secondAttribute="bottom" constant="16" id="KVE-ha-xZO"/>
+                    <constraint firstItem="YFF-Jr-95S" firstAttribute="bottom" secondItem="23C-OZ-6di" secondAttribute="bottom" id="Rae-7h-ep4"/>
+                    <constraint firstItem="COV-5D-zhI" firstAttribute="top" secondItem="YZc-w6-Of7" secondAttribute="top" constant="20" id="RzT-zA-cMe"/>
+                    <constraint firstItem="YFF-Jr-95S" firstAttribute="height" secondItem="23C-OZ-6di" secondAttribute="height" multiplier="0.8" id="SNz-mS-Hwi"/>
+                    <constraint firstItem="COV-5D-zhI" firstAttribute="leading" secondItem="YZc-w6-Of7" secondAttribute="leading" constant="20" id="i0A-XY-dtF"/>
+                    <constraint firstItem="23C-OZ-6di" firstAttribute="leading" secondItem="COV-5D-zhI" secondAttribute="leading" id="nAy-tt-fYY"/>
+                </constraints>
+            </view>
+            <connections>
+                <outlet property="listButton" destination="1m3-6b-v6M" id="3JC-y7-IHX"/>
+                <outlet property="printerButton" destination="suQ-uj-APo" id="kTn-Ea-2mu"/>
+                <outlet property="printers" destination="rJL-Ax-bQM" id="OoB-Ev-DNz"/>
+                <outlet property="resolutions" destination="nB9-KW-XF0" id="S2u-a9-3zo"/>
+                <outlet property="view" destination="YZc-w6-Of7" id="9Qw-Ma-I8Z"/>
+            </connections>
+            <point key="canvasLocation" x="-98" y="147"/>
+        </window>
+    </objects>
+</document>
