@@ -69,6 +69,9 @@ class Controller : NSViewController {
     }
     
     @IBAction func doExport(_ item: NSMenuItem?) {
+        let _ = PrintingPanel.launch()
+        
+        /*
         syslog.info("Trying to export")
         let dpi = 300
         let spacing = 0.2
@@ -82,6 +85,7 @@ class Controller : NSViewController {
             syslog.info("Export may have succeeded")
         }
         catch(let e) { syslog.error("Error: \(e)") }
+         */
     }
     
     @IBAction func doPinSpacingHelper(_ item : NSMenuItem?) {

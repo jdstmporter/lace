@@ -18,16 +18,7 @@ func numericCast<T>(_ f : CGFloat) -> T
 where T : BinaryInteger
 { T(f) }
 
-extension NSSize {
-    var widthI : Int { numericCast(width) }
-    var heightI : Int { numericCast(height) }
-    var area : Int { widthI*heightI }
-    
-    init(side: Int) { self.init(width: side,height: side) }
-    
-    static func * (_ s : NSSize,_ f : Double) -> NSSize { NSSize(width: s.width*f,height: s.height*f) }
-    static func * (_ s : NSSize,_ i : Int) -> NSSize { s*Double(i) }
-}
+
 
 
 

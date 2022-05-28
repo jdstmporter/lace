@@ -22,37 +22,7 @@ enum PrinterError : Error {
     }
 }
 
-enum PrinterState {
-    case Idle
-    case Processing
-    case Stopped
-    case Unknown
-    case Error(OSStatus)
-    
-    static let maps : [Int:PrinterState] = [
-        kPMPrinterIdle : .Idle,
-        kPMPrinterStopped : .Stopped,
-        kPMPrinterProcessing : .Processing
-    ]
-    
-    init(state : Int) {
-        self = PrinterState.maps[state] ?? .Unknown
-    }
-    init(printer:  PMPrinter) {
-        var state : PMPrinterState = 0
-        let e = PMPrinterGetState(printer, &state)
-        if e==0 {
-            self=PrinterState.maps[numericCast(state)] ?? .Unknown
-        }
-        else { self = .Error(e) }
-    }
-}
 
-extension NSSize {
-    init(_ res : PMResolution) {
-        self.init(width: res.hRes, height: res.vRes)
-    }
-}
 
 class Printer : Sequence,CustomStringConvertible, Comparable  {
     static func == (lhs: Printer, rhs: Printer) -> Bool { lhs.id==rhs.id }
@@ -91,7 +61,6 @@ class Printer : Sequence,CustomStringConvertible, Comparable  {
         }
     }
     
-    var status : PrinterState { PrinterState(printer: self.printer) }
     var isDefault : Bool { PMPrinterIsDefault(self.printer) }
     var description: String { "Name : \(name) ID: \(id) Model: \(model ?? "")" }
     var count : Int { resolutions.count }

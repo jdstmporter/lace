@@ -26,11 +26,7 @@ enum ImageIOError : Error {
 }
 
 typealias DataDict = [String:Any]
-
-extension NSSize {
-    func mult(_ f : Double) -> NSSize { NSSize(width: f*width, height: f*height) }
-    func div(_ f : Double) -> NSSize { NSSize(width: width/f, height: height/f) }
-}
+ 
 extension CGColorSpaceModel {
     
     var name : String {

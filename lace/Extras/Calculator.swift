@@ -8,10 +8,6 @@
 import Foundation
 import AppKit
 
-extension Int {
-    var f32 : Float { Float(self) }
-}
-
 
 class ThreadCalculatorView : NSView {
     typealias Callback = (ThreadInfo) -> ()
@@ -95,7 +91,7 @@ class ThreadCalculatorView : NSView {
             self.cascade(stage: .Kind)
         case .Kind:
             guard let selected = laceKind.titleOfSelectedItem else { return }
-            let kind = LaceKind(selected)
+            let kind = LaceKind(selected) ?? .Custom
             let editable = kind == .Custom
             let n = kind.wrapsPerSpace
             laceKindWinding.isEditable=editable

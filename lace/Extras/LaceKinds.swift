@@ -54,8 +54,9 @@ enum LaceKind : CaseIterable {
     var wrapsPerSpace : Int { LaceKind.windings[self] ?? 12 }
     var isCustom : Bool { self == .Custom }
     
-    init(_ n : String) {
-        self = (LaceKind.allCases.first { $0.name == n }) ?? .Custom
+    init?(_ n : String) {
+        guard let k = (LaceKind.allCases.first { $0.name == n }) else { return nil }
+        self = k
     }
     init(fromSafeString s : String) throws {
         guard let x = (LaceKind.allCases.first { $0.str == s }) else { throw CodingError.BadLaceStyleName }
