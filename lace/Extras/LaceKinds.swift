@@ -9,10 +9,6 @@ import Foundation
 
 
 
-enum CodingError : Error {
-    case BadLaceStyleName
-    case StyleWindingMismatch
-}
 
 enum LaceKind : CaseIterable {
     case Milanese
@@ -59,7 +55,7 @@ enum LaceKind : CaseIterable {
         self = k
     }
     init(fromSafeString s : String) throws {
-        guard let x = (LaceKind.allCases.first { $0.str == s }) else { throw CodingError.BadLaceStyleName }
+        guard let x = (LaceKind.allCases.first { $0.str == s }) else { throw LaceError.BadLaceStyleName }
         self = x
     }
     
@@ -69,3 +65,4 @@ enum LaceKind : CaseIterable {
 
 
 
+ 

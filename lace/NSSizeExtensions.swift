@@ -31,3 +31,27 @@ extension Int {
     func clip(_ min: Int,_ max: Int) -> Int  { Swift.min(max,Swift.max(min,self))}
 }
 
+extension Float {
+    
+    var i32 : Int { Int(self) }
+    
+    func truncated(nDecimals: Int) -> Float {
+//        let factor : Float = (0..<nDecimals).reduce(1.0) { (res,_) in 10.0*res }
+//        let rnd = (self*factor).rounded().i32
+ //       return rnd.f32/factor
+        let factor : Float = (0..<nDecimals).reduce(1.0) { (res,_) in 10.0*res }
+        return roundf(factor*self)/factor
+    }
+    var truncated : Decimal {
+        var d=Decimal.init(Double(self))
+        var e = Decimal.init(0.0)
+        NSDecimalRound(&e, &d, 1, .plain)
+        return e
+    }
+}
+
+extension Array {
+    var copy : [Element] { self.map { $0 } }
+    var asStrings : [String] { self.map { "\($0)" } }
+}
+

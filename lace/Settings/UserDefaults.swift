@@ -8,14 +8,6 @@
 import Foundation
 import AppKit
 
-enum DefaultError : BaseError {
-    case CannotGetKey(String)
-    case BadColourFormat
-    case BadFontFormat
-    case CannotGetDefaults
-    case CannotGetURL
-    case DocumentHasNoRoot
-}
 
 extension URL {
     init?(resource r: String, extension ext: String) {

@@ -17,9 +17,10 @@ protocol ThreadCalcDelegate {
     var threadWinding : Int { get set }
     var laceKindWinding : Int { get set }
     var pinSpacing : String { get set }
+    var pinSpacingFloat : Float { get }
     
     func setThreads(items : [String])
-    
+    func reset()
     
    
 }
@@ -42,7 +43,7 @@ class ThreadCalc {
     public private(set) var storedSearch : String = ""
     public private(set) var matchingThreads : Threads.ThreadGroup = []
     public private(set) var matchedThreads : Threads.ThreadGroup = []
-    public private(set) var pinSeparation : Decimal?
+    public private(set) var pinSeparation : Decimal = 0
     
     private var threadMode : ThreadMode = .Library
     private var spaceMode : SpaceMode = .Kind
@@ -57,11 +58,13 @@ class ThreadCalc {
     
     public func reset() {
         info = ThreadInfo()
+        delegate.reset()
+        
         selectedMaterial = ""
         storedSearch=""
         matchedThreads.removeAll()
         matchingThreads.removeAll()
-        pinSeparation=nil
+        pinSeparation=0
     }
     
     public func setMode(thread: ThreadMode) {
@@ -190,9 +193,9 @@ class ThreadCalc {
                     self.pinSeparation=v
                 }
             case .CustomSpace:
-                let f = Float(self.delegate.pinSpacing)
-                self.pinSeparation=f?.truncated
+                self.pinSeparation = self.delegate.pinSpacingFloat.truncated
             }
+            print("Set pin separation to \(self.pinSeparation)")
         }
             
   

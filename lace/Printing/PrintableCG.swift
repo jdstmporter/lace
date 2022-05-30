@@ -9,10 +9,7 @@ import Foundation
 import CoreGraphics
 import AppKit
 
-enum LaceError : BaseError {
-    case CannotGetImageData
-    case CannotMakeImage
-}
+
 
 func numericCast<T>(_ f : CGFloat) -> T
 where T : BinaryInteger

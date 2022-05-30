@@ -21,9 +21,7 @@ extension Bool : Defaultable { static var zero: Bool { false } }
 extension NSSize : Defaultable { static var zero: NSSize { NSSize() } }
 extension String : Defaultable { static var zero: String { "" } }
 
-enum ImageIOError : Error {
-    case CannotCreateDestination
-}
+
 
 typealias DataDict = [String:Any]
  
@@ -119,14 +117,14 @@ class RenderPNG {
     }
     
     func renderToLocation(path : URL) throws {
-        guard let dest = CGImageDestinationCreateWithURL(path as CFURL,RenderPNG.utype as CFString, 1, self.properties.propertiesCF) else { throw ImageIOError.CannotCreateDestination }
+        guard let dest = CGImageDestinationCreateWithURL(path as CFURL,RenderPNG.utype as CFString, 1, self.properties.propertiesCF) else { throw FileError.CannotCreateDestination }
         CGImageDestinationAddImage(dest, image, self.properties.propertiesCF)
         CGImageDestinationFinalize(dest)
     }
     
     func renderToData() throws -> Data {
         guard let array=CFDataCreateMutable(kCFAllocatorDefault,0),
-              let dest = CGImageDestinationCreateWithData(array, RenderPNG.utype as CFString, 1, nil) else { throw ImageIOError.CannotCreateDestination }
+              let dest = CGImageDestinationCreateWithData(array, RenderPNG.utype as CFString, 1, nil) else { throw FileError.CannotCreateDestination }
         CGImageDestinationAddImage(dest, image, self.properties.propertiesCF)
         CGImageDestinationFinalize(dest)
         return array as Data

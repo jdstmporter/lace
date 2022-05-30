@@ -13,13 +13,13 @@ import OSLog
 public protocol Loggable {
     var str : String { get }
 }
-
 public protocol BaseError : Error, Loggable {}
 
 extension BaseError {
     public var str : String { "\(self)" }
 }
 extension String : BaseError {}
+
 
 
 public class SysLog {

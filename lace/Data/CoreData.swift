@@ -8,16 +8,6 @@
 import Foundation
 import SQLite3
 
-enum SQLiteError : Error {
-    case GeneralError(Int32)
-    case CannotOpenDatabase
-    case CannotPrepareQueryStatement
-    case UnknownDataType(Int32)
-    
-    static func wrap(_ code : Int32) throws {
-        if code != SQLITE_OK { throw SQLiteError.GeneralError(code) }
-    }
-}
 
 struct SQLite3Row {
     var fields : [String:Any?]
@@ -38,7 +28,7 @@ class SQLite3Loader {
     init(path : String) throws {
         var db : OpaquePointer?
         try SQLiteError.wrap(path.withCString { sqlite3_open($0, &db) })
-        if let db = db { self.db=db } else { throw SQLiteError.CannotOpenDatabase }
+        if let db = db { self.db=db } else { throw SQLiteError.CannotOpenDatabase } 
     }
     convenience init(url: URL) throws {
         try self.init(path: url.path)

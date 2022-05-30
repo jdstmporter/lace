@@ -26,8 +26,8 @@ func loadAndPrint(data: Data) {
         return
     }
     printInfo = printPanel.printInfo
-    let sizeInPoints = printInfo.paperSize
-    print("Size in points is \(sizeInPoints)")
+    //let sizeInPoints = printInfo.paperSize
+    //print("Size in points is \(sizeInPoints)")
     
     let printSettingCPtr = PMPrintSettings(printInfo.pmPrintSettings())
     let sess=PMPrintSession(printInfo.pmPrintSession())

@@ -8,10 +8,7 @@
 import Foundation
 import AppKit
 
-enum BoundsError : BaseError {
-    case ListInsufficientlyLong
-    case CannotFindDefault
-}
+
 
 struct GridBounds {
     
@@ -21,12 +18,12 @@ struct GridBounds {
     var maxHeight : Int = 50
     
     init() {}
-    init(from array: [Int]) throws {
-        guard array.count>=4 else { throw BoundsError.ListInsufficientlyLong }
-        minWidth=array[0]
-        minHeight=array[1]
-        maxWidth=array[2]
-        maxHeight=array[3]
+    init(from array: [Int]) {
+        let n=array.count
+        if n>0 { minWidth = array[0] }
+        if n>1 { minHeight = array[1] }
+        if n>2 { maxWidth = array[2] }
+        if n>3 { maxHeight = array[3] }
     }
     
     var asArray : [Int] { [minWidth,minHeight, maxWidth,maxHeight] }
@@ -63,8 +60,8 @@ class GridView : NSView, SettingsFacet {
     
     func load() {
         do {
-            guard let def : [Int] = (Defaults.get(forKey: "gridBounds"))  else { throw BoundsError.CannotFindDefault }
-            self.gridBounds=try GridBounds(from: def)
+            guard let def : [Int] = (Defaults.get(forKey: "gridBounds"))  else { throw DefaultError.CannotFindDefault }
+            self.gridBounds=GridBounds(from: def)
         } catch {
             syslog.error("Error loading grid bounds: using default")
             self.gridBounds=GridBounds()

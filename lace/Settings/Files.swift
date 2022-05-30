@@ -8,12 +8,7 @@
 import Foundation
 import AppKit
 
-enum FileError : BaseError { 
-    case CannotFindBundleIdentifier
-    case CannotCreateDataDirectory
-    case CannotPickLoadFile
-    case CannotPickSaveFile
-}
+
 
 extension URL {
     static var userHome : URL { URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true) }
@@ -41,7 +36,7 @@ class LoadSaveFiles {
         syslog.debug("Loaded path: \(path ?? "nil")")
         if path == nil {    /* need to set path*/
             guard let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String
-            else { throw FileError.CannotFindBundleIdentifier }
+            else { throw FileError.CannotFindBundleIdentifier } 
             var userHome = URL.userHome
             userHome.appendPathComponent(appName)
             path = userHome.path

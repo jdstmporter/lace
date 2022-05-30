@@ -9,18 +9,6 @@ import Foundation
 import AppKit
 import UniformTypeIdentifiers
 
-enum PrinterError : Error {
-    case GeneralError(OSStatus)
-    case PointerError
-    case CannotGetName
-    case CannotGetID
-    case CannotGetURL
-    case DataError(String)
-    
-    static func wrap(_ e : OSStatus) throws {
-        guard e==0 else { throw PrinterError.GeneralError(e) }
-    }
-}
 
 
 

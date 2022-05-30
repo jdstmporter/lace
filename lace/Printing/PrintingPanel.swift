@@ -16,6 +16,9 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
     var material : String { materialKind.titleOfSelectedItem ?? "" }
     var searchString: String { search.stringValue }
     var pinSpacing : String { get { pinSpace.stringValue } set { pinSpace.stringValue=newValue }}
+    var pinSpacingFloat: Float { pinSpace.floatValue }
+    
+    func reset() {}
     
     var threadWinding: Int {
         get { threadWind.integerValue }
@@ -32,6 +35,7 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
     }
     
     
+    
     @IBOutlet weak var search: NSSearchField!
     @IBOutlet weak var materialKind: NSPopUpButton!
     @IBOutlet weak var threadKind: NSPopUpButton!
@@ -43,16 +47,21 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
     static var panel : PrintingPanel? = nil
     var firstTime : Bool = true
     var printSystem : PrintSystem?
+    var displayedResolutions : [Int] = []
     
     
     var info = ThreadInfo()
     var selectedMaterial : String = ""
     var matchingThreads : Threads.ThreadGroup = []
     var matchedThreads : Threads.ThreadGroup = []
-    var pinSeparation : Decimal?
+    var pinSeparation : Decimal = 0
+    var printerResolutionDPI : Int = 0
+    var printerResolutionDPM : Int { Int(printerResolutionDPI.f32 * PrintingPanel.InchesPerMetre) }
     
+    static let InchesPerMetre : Float = 39.3701
     static let defaultResolutions : [Int] = [72,150,300,600,720,1200,2400]
     var calc : ThreadCalc?
+    var pricking: Pricking?
     
     @IBOutlet weak var view : NSView!
     @IBOutlet weak var printers : NSPopUpButton!
@@ -122,15 +131,48 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
             self.calc?.setMode(space: .CustomSpace)
         }
     }
+    
+    
+    
+    
     @IBAction func closeAction(_ sender: Any) {
         PrintingPanel.close()
     }
     
+    private func makeImage(pricking: Pricking) -> NSBitmapImageRep? {
+        let view = PrintableView(frame: NSRect())
+        let sp = (self.calc?.pinSeparation ?? 0) as NSDecimalNumber
+        view.load(pricking: pricking, spacing: sp.doubleValue, dpi: printerResolutionDPI)
+        return view.render()
+    }
     
+    
+    @IBAction func imageToFile(_ sender: Any) {
+        guard let pricking = self.pricking else { return }
+        guard let image = makeImage(pricking: pricking)?.cgImage else { return }
+        let renderer = RenderPNG(image: image, dpi: NSSize(side: self.printerResolutionDPI))
+        
+        let fd = FilePicker(def : "../pricking.png",types : ["png"])
+        if fd.runSync() {
+            try? renderer.renderToLocation(path: fd.url)
+        }
+        
+    }
+    
+    @IBAction func imageToPrinter(_ sender: Any) {
+        guard let pricking = self.pricking else { return }
+        guard let image = makeImage(pricking: pricking)?.cgImage else { return }
+        let renderer = RenderPNG(image: image, dpi: NSSize(side: self.printerResolutionDPI))
+        guard let data = try? renderer.renderToData() else { return }
+        loadAndPrint(data: data)
+    }
     
     
     
     @IBAction func resolutionsButton(_ sender: NSPopUpButton) {
+        let idx=resolutions.indexOfSelectedItem
+        guard idx>=0, idx<displayedResolutions.count else { return }
+        printerResolutionDPI = displayedResolutions[idx]
     }
     
     
@@ -141,24 +183,25 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
         }
         else {
             printers.isEnabled = false
+            displayedResolutions=PrintingPanel.defaultResolutions.copy
             resolutions.removeAllItems()
-            resolutions.addItems(withTitles: PrintingPanel.defaultResolutions.map { "\($0)" } )
+            resolutions.addItems(withTitles: displayedResolutions.asStrings )
             resolutions.selectItem(at: 0)
         }
     }
     
     @IBAction func printerAction(_ button: NSPopUpButton!) {
         guard let pr = printSystem?[printers.indexOfSelectedItem] else { return }
-        let res = pr.resolutions.map { $0.width.description }
+        displayedResolutions = pr.resolutions.map { $0.widthI }
         resolutions.removeAllItems()
-        resolutions.addItems(withTitles: res)
+        resolutions.addItems(withTitles: displayedResolutions.asStrings)
         resolutions.selectItem(at: 0)
     }
     
-    static func launch() -> PrintingPanel? {
+    static func launch(pricking: Pricking) -> PrintingPanel? {
         if panel==nil {
             panel=instance()
-            panel?.initialise()
+            panel?.initialise(pricking: pricking)
             
         }
         panel?.makeKeyAndOrderFront(nil)
@@ -171,7 +214,7 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
         return panel
     }
     
-    func initialise() {
+    func initialise(pricking: Pricking?) {
         if firstTime {
             printSystem = try? PrintSystem()
             printers.removeAllItems()
@@ -206,6 +249,7 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
             //NotificationCenter.default.addObserver(self, selector: #selector(colourChanged(_:)), name: //NSColorPanel.colorDidChangeNotification, object: nil)
             firstTime=false
         }
+        self.pricking=pricking
 
     }
 }

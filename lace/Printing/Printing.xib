@@ -383,6 +383,9 @@ Gw
 Gw
 </string>
                         </buttonCell>
+                        <connections>
+                            <action selector="imageToPrinter:" target="jmA-no-Il3" id="Wyj-0o-0oY"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="w9a-Y0-VpA">
                         <rect key="frame" x="329" y="301" width="84" height="32"/>
@@ -392,6 +395,9 @@ Gw
                         <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" image="doc.text.image" catalog="system" imagePosition="right" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="pIS-EM-A77">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                             <font key="font" metaFont="system"/>
+                            <connections>
+                                <action selector="imageToFile:" target="jmA-no-Il3" id="7Qm-fN-hyc"/>
+                            </connections>
                         </buttonCell>
                     </button>
                 </subviews>

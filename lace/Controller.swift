@@ -69,7 +69,7 @@ class Controller : NSViewController {
     }
     
     @IBAction func doExport(_ item: NSMenuItem?) {
-        let _ = PrintingPanel.launch()
+        let _ = PrintingPanel.launch(pricking: self.drawingArea.pricking)
         
         /*
         syslog.info("Trying to export")
