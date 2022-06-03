@@ -8,14 +8,33 @@
 import AppKit
 
 
+
 class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
     
-    var laceKindName: String { laceKindList.titleOfSelectedItem ?? "" }
-    var threadName: String { threadKind.titleOfSelectedItem ?? "" }
+    //var defaults = PrintDefaults()
+    
+    var laceKindName: String {
+        get {laceKindList.titleOfSelectedItem ?? "" }
+        set { laceKindList.selectItem(withTitle: newValue) }
+    }
+    var laceKind : LaceKind {
+        get { LaceKind(laceKindList.titleOfSelectedItem) }
+        set { laceKindList.selectItem(withTitle: newValue.name) }
+    }
+    var threadName: String {
+        get { threadKind.titleOfSelectedItem ?? "" }
+        set { threadKind.selectItem(withTitle: newValue) }
+    }
     var threadIndex: Int { threadKind.indexOfSelectedItem }
-    var material : String { materialKind.titleOfSelectedItem ?? "" }
+    var material : String {
+        get { materialKind.titleOfSelectedItem ?? "" }
+        set { materialKind.selectItem(withTitle: newValue) }
+    }
     var searchString: String { search.stringValue }
-    var pinSpacing : String { get { pinSpace.stringValue } set { pinSpace.stringValue=newValue }}
+    var pinSpacing : String {
+        get { pinSpace.stringValue }
+        set { pinSpace.stringValue=newValue }
+    }
     var pinSpacingFloat: Float { pinSpace.floatValue }
     
     func reset() {}
@@ -32,6 +51,52 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
         threadKind.removeAllItems()
         threadKind.addItems(withTitles: items)
         threadKind.selectItem(at: 0)
+    }
+    var printerOrList : Bool {
+        get { printers.isEnabled }
+        set {
+            printerButton.state = newValue ? .on : .off
+            choiceAction(nil)
+        }
+    }
+    var resolution : Int {
+        get { printerResolutionDPI }
+        set {
+            resolutions.selectItem(withTitle: newValue.description)
+            resolutionsButton(nil)
+        }
+    }
+    var printer : String {
+        get { printers.titleOfSelectedItem ?? "" }
+        set {
+            printers.selectItem(withTitle: newValue)
+            printerAction(nil)
+        }
+    }
+    var threadMode : ThreadMode {
+        get { threadFromLibrary.state == .on ? .Library : .Custom }
+        set {
+            let state : NSButton.StateValue = (newValue == .Library) ? .on : .off
+            threadFromLibrary.state = state
+            threadChoice(nil)
+        }
+    }
+    var spaceMode : SpaceMode {
+        get {
+            (laceKindButton.state == .on) ? .Kind :
+            (customWindings.state == .on) ? .CustomKind : .CustomSpace
+        }
+        set {
+            switch newValue {
+            case .Kind:
+                laceKindButton.state = .on
+            case .CustomKind:
+                customWindings.state = .on
+            case .CustomSpace:
+                customMeasurement.state = .on
+            }
+            laceKindChoice(nil)
+        }
     }
     
     
@@ -57,10 +122,11 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
     var pinSeparation : Decimal = 0
     var printerResolutionDPI : Int = 0
     var printerResolutionDPM : Int { Int(printerResolutionDPI.f32 * PrintingPanel.InchesPerMetre) }
+    var printerresolutionDPISize : NSSize { NSSize(side: printerResolutionDPI) }
     
     static let InchesPerMetre : Float = 39.3701
     static let defaultResolutions : [Int] = [72,150,300,600,720,1200,2400]
-    var calc : ThreadCalc?
+    var calc : ThreadCalc = ThreadCalc()
     var pricking: Pricking?
     
     @IBOutlet weak var view : NSView!
@@ -79,103 +145,89 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
     @IBOutlet weak var threadList: NSPopUpButtonCell!
     
     @IBAction func materialKindEvent(_ sender: Any!) {
-        self.calc?.threadAction(.Material)
+        self.calc.threadAction(.Material)
     }
     @IBAction func searchAction(_ sender: Any!) {
-        self.calc?.threadAction(.Search)
+        self.calc.threadAction(.Search)
     }
     @IBAction func threadAction(_ sender: Any!) {
-        self.calc?.threadAction(.Thread)
+        self.calc.threadAction(.Thread)
     }
     @IBAction func laceKindAction(_ sender: Any!) {
-        self.calc?.threadAction(.Lace)
+        self.calc.threadAction(.Lace)
     }
     @IBAction func pinSpaceCustomAction(_ sender: Any!) {
-        self.calc?.threadAction(.Space)
+        self.calc.threadAction(.Space)
     }
+  
     @IBAction func threadChoice(_ sender: Any!) {
-        if threadFromLibrary.state == .on {
+        let mode = threadMode
+        switch mode {
+        case .Library:
             materialKind.isEnabled=true
             threadKind.isEnabled=true
             threadWind.isEditable=false
-            self.calc?.setMode(thread: .Library)
-
-        }
-        else {
+        case .Custom:
             materialKind.isEnabled=false
             threadKind.isEnabled=false
             threadWind.isEditable=true
-            self.calc?.setMode(thread: .Custom)
-
         }
+        self.calc.setMode(thread: mode)
     }
+ 
     @IBAction func laceKindChoice(_ sender: Any!) {
-        if laceKindButton.state == .on {
+        let mode=spaceMode
+        switch mode {
+        case .Kind:
             laceKindList.isEnabled=true
             kindWind.isEditable=false
             pinSpace.isEditable=false
-            self.calc?.setMode(space: .Kind)
-
-        }
-        else if customWindings.state == .on {
+        case .CustomKind:
             laceKindList.isEnabled=false
             kindWind.isEditable=true
             pinSpace.isEditable=false
-            self.calc?.setMode(space: .CustomKind)
-
-        }
-        else if customMeasurement.state == .on {
+        case .CustomSpace:
             laceKindList.isEnabled=false
             kindWind.isEditable=false
             pinSpace.isEditable=true
-            self.calc?.setMode(space: .CustomSpace)
         }
+        self.calc.setMode(space: mode)
     }
-    
-    
-    
-    
+ 
     @IBAction func closeAction(_ sender: Any) {
         PrintingPanel.close()
     }
     
-    private func makeImage(pricking: Pricking) -> NSBitmapImageRep? {
+    private func makeImage() -> RenderPNG? {
+        guard let pricking = self.pricking else { return nil }
         let view = PrintableView(frame: NSRect())
-        let sp = (self.calc?.pinSeparation ?? 0) as NSDecimalNumber
-        view.load(pricking: pricking, spacing: sp.doubleValue, dpi: printerResolutionDPI)
-        return view.render()
+        let sp = self.calc.pinSeparation.doubleValue/1000.0
+        view.load(pricking: pricking, spacingInM: sp, dpM: printerResolutionDPM)
+        guard let cg = view.render()?.cgImage else { return nil }
+        return RenderPNG(image: cg, dpi: printerresolutionDPISize)
     }
     
     
     @IBAction func imageToFile(_ sender: Any) {
-        guard let pricking = self.pricking else { return }
-        guard let image = makeImage(pricking: pricking)?.cgImage else { return }
-        let renderer = RenderPNG(image: image, dpi: NSSize(side: self.printerResolutionDPI))
-        
+        guard let renderer = makeImage() else { return }
         let fd = FilePicker(def : "../pricking.png",types : ["png"])
         if fd.runSync() {
             try? renderer.renderToLocation(path: fd.url)
         }
-        
     }
     
     @IBAction func imageToPrinter(_ sender: Any) {
-        guard let pricking = self.pricking else { return }
-        guard let image = makeImage(pricking: pricking)?.cgImage else { return }
-        let renderer = RenderPNG(image: image, dpi: NSSize(side: self.printerResolutionDPI))
+        guard let renderer = makeImage() else { return }
         guard let data = try? renderer.renderToData() else { return }
         loadAndPrint(data: data)
     }
-    
-    
-    
-    @IBAction func resolutionsButton(_ sender: NSPopUpButton) {
+ 
+    @IBAction func resolutionsButton(_ sender: NSPopUpButton!) {
         let idx=resolutions.indexOfSelectedItem
         guard idx>=0, idx<displayedResolutions.count else { return }
         printerResolutionDPI = displayedResolutions[idx]
     }
-    
-    
+ 
     @IBAction func choiceAction(_ button: NSButton!) {
         if printerButton.state == .on {
             printers.isEnabled = true
@@ -223,13 +275,13 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
             printers.selectItem(at: sel)
             choiceAction(nil)
             
-            calc=ThreadCalc(self)
+            calc=ThreadCalc()
+            calc.delegate=self
             
             threadFromLibrary.state = .on
             let mk = Threads.groups()
             materialKind.removeAllItems()
             materialKind.addItems(withTitles: mk)
-            
             
             laceKindButton.state = .on
             let items = LaceKind.allCases.map { $0.name }
@@ -237,13 +289,8 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
             laceKindList.addItems(withTitles: items)
             threadChoice(nil)
             laceKindChoice(nil)
-            self.calc?.threadAction()
-            
-            
-            
-            
-            
-            
+            self.calc.threadAction()
+         
             // do first time round things
             
             //NotificationCenter.default.addObserver(self, selector: #selector(colourChanged(_:)), name: //NSColorPanel.colorDidChangeNotification, object: nil)

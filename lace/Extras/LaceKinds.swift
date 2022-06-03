@@ -50,14 +50,19 @@ enum LaceKind : CaseIterable {
     var wrapsPerSpace : Int { LaceKind.windings[self] ?? 12 }
     var isCustom : Bool { self == .Custom }
     
-    init?(_ n : String) {
-        guard let k = (LaceKind.allCases.first { $0.name == n }) else { return nil }
-        self = k
+    init(_ n : String?) {
+        self = (LaceKind.allCases.first { $0.name == n }) ?? .Custom
     }
     init(fromSafeString s : String) throws {
         guard let x = (LaceKind.allCases.first { $0.str == s }) else { throw LaceError.BadLaceStyleName }
         self = x
     }
+    
+    static var count : Int { LaceKind.allCases.count }
+    init(index: Int) {
+        self = (0..<LaceKind.count).contains(index) ? LaceKind.allCases[index] : .Custom
+    }
+    var index : Int { LaceKind.allCases.firstIndex(of: self) ?? LaceKind.count }
     
     
 

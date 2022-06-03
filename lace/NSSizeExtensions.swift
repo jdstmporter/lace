@@ -8,6 +8,27 @@
 import Foundation
 import AppKit
 
+extension NSPopUpButton {
+    
+    @discardableResult func selectSafe(item: String) -> Bool {
+        if self.itemTitles.contains(item) {
+            self.selectItem(withTitle: item)
+            return true
+        }
+        else {
+            self.selectItem(at: 0)
+            return false
+        }
+    }
+}
+
+extension NSButton {
+    var status : Bool {
+        get { self.state == .on }
+        set { self.state = newValue ? .on : .off }
+    }
+}
+
 extension NSSize {
     init(_ res : PMResolution) { self.init(width: res.hRes, height: res.vRes) }
     init(side: Int) { self.init(width: side,height: side) }
@@ -27,7 +48,7 @@ extension NSSize {
 
 extension Int {
     var f32 : Float { Float(self) }
-    
+    var double : Double { Double(self) }
     func clip(_ min: Int,_ max: Int) -> Int  { Swift.min(max,Swift.max(min,self))}
 }
 
@@ -49,9 +70,20 @@ extension Float {
         return e
     }
 }
+extension Double {
+    var float : Float { Float(self) }
+}
 
 extension Array {
     var copy : [Element] { self.map { $0 } }
     var asStrings : [String] { self.map { "\($0)" } }
 }
 
+extension Decimal {
+    var doubleValue : Double { (self as NSDecimalNumber).doubleValue }
+    var floatValue : Float { self.doubleValue.float }
+    
+    init(_ string: String) {
+        self = NSDecimalNumber(string: string) as Decimal
+    }
+}

@@ -11,22 +11,7 @@ import AppKit
 
 class PrintableView : NSImageView {
     
- 
-    
     var pricking : Pricking = Pricking()
-
-    
-    
-    func load(pricking: Pricking,spacing: Double,dpi: Int) {
-        let w = Double((pricking.grid.width+2)*dpi)*spacing
-        let h = Double((pricking.grid.height+2)*dpi)*spacing
-        
-        self.pricking=pricking
-        self.bounds = NSRect(x: 0, y: 0, width: w, height: h)
-        
-        self.pricking.grid.scale = Double(dpi)*spacing
-        self.touch()
-    }
     
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
@@ -38,6 +23,21 @@ class PrintableView : NSImageView {
         super.init(coder: coder)
         self.isEditable=true
     }
+    
+    func load(pricking: Pricking,spacingInM: Double,dpM : Int) {
+        let sc = Double(dpM)*spacingInM
+        
+        let w = (pricking.grid.width.double+2)*sc
+        let h = (pricking.grid.height.double+2)*sc
+        
+        self.pricking=pricking
+        self.bounds = NSRect(x: 0, y: 0, width: w, height: h)
+        
+        self.pricking.grid.scale = sc
+        self.touch()
+    }
+    
+    
     
     func render() -> NSBitmapImageRep? {
         guard let rep=self.bitmapImageRepForCachingDisplay(in: bounds) else { return nil }

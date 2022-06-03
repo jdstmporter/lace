@@ -29,7 +29,7 @@ struct ThreadInfo {
     public var laceKindName : String {
         get { laceKind.name }
         set {
-            laceKind = LaceKind(newValue) ?? .Custom
+            laceKind = LaceKind(newValue)
             if !laceKind.isCustom { laceKindWraps = laceKind.wrapsPerSpace }
         }
     }

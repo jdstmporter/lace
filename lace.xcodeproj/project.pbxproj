@@ -13,7 +13,6 @@
 		E135749A281C92B0005D84D6 /* PathsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1357499281C92B0005D84D6 /* PathsView.swift */; };
 		E135749C281EE480005D84D6 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135749B281EE480005D84D6 /* Fonts.swift */; };
 		E135749E28245909005D84D6 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135749D28245909005D84D6 /* Log.swift */; };
-		E13574A0282499C8005D84D6 /* ImagesPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135749F282499C8005D84D6 /* ImagesPanel.swift */; };
 		E13574A62826E38B005D84D6 /* CoreData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13574A52826E38B005D84D6 /* CoreData.swift */; };
 		E13574AA28270BE2005D84D6 /* threads.xml in Resources */ = {isa = PBXBuildFile; fileRef = E13574A928270BE2005D84D6 /* threads.xml */; };
 		E1383BE727F79C93009DEEFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383BE627F79C93009DEEFA /* AppDelegate.swift */; };
@@ -43,7 +42,6 @@
 		E18360A32832A2E000414F20 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E18360A22832A2E000414F20 /* ImageIO.framework */; };
 		E18360A528384D0500414F20 /* PrintableCG.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18360A428384D0500414F20 /* PrintableCG.swift */; };
 		E18360A728384F8600414F20 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E18360A628384F8600414F20 /* CoreGraphics.framework */; };
-		E18360A92839823B00414F20 /* ImageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18360A82839823B00414F20 /* ImageTest.swift */; };
 		E18360AB2839978900414F20 /* PrintFromData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18360AA2839978900414F20 /* PrintFromData.swift */; };
 		E18360AD283A6F6700414F20 /* ViewApproach.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18360AC283A6F6700414F20 /* ViewApproach.swift */; };
 		E18360AF283A94A300414F20 /* Printing.xib in Resources */ = {isa = PBXBuildFile; fileRef = E18360AE283A94A300414F20 /* Printing.xib */; };
@@ -64,7 +62,6 @@
 		E1357499281C92B0005D84D6 /* PathsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathsView.swift; sourceTree = "<group>"; };
 		E135749B281EE480005D84D6 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		E135749D28245909005D84D6 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
-		E135749F282499C8005D84D6 /* ImagesPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagesPanel.swift; sourceTree = "<group>"; };
 		E13574A52826E38B005D84D6 /* CoreData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData.swift; sourceTree = "<group>"; };
 		E13574A72826E39A005D84D6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E13574A928270BE2005D84D6 /* threads.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = threads.xml; sourceTree = "<group>"; };
@@ -217,7 +214,6 @@
 				E13574972819BDF4005D84D6 /* GridPanel.swift */,
 				E1357499281C92B0005D84D6 /* PathsView.swift */,
 				E135749B281EE480005D84D6 /* Fonts.swift */,
-				E135749F282499C8005D84D6 /* ImagesPanel.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -335,7 +331,6 @@
 				E1EBD81C284149A200D8E10C /* Calc.swift in Sources */,
 				E1383C0B2809AC30009DEEFA /* Files.swift in Sources */,
 				E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */,
-				E13574A0282499C8005D84D6 /* ImagesPanel.swift in Sources */,
 				E1383BF627F79FC8009DEEFA /* Controller.swift in Sources */,
 				E13574982819BDF4005D84D6 /* GridPanel.swift in Sources */,
 				E1383BE727F79C93009DEEFA /* AppDelegate.swift in Sources */,
@@ -354,7 +349,6 @@
 				E18360A528384D0500414F20 /* PrintableCG.swift in Sources */,
 				E183609F2831B5F400414F20 /* PNG.swift in Sources */,
 				E13574A62826E38B005D84D6 /* CoreData.swift in Sources */,
-				E18360A92839823B00414F20 /* ImageTest.swift in Sources */,
 				E1EBD81E2844021500D8E10C /* Errors.swift in Sources */,
 				E1EBD81A283D7A9900D8E10C /* NSSizeExtensions.swift in Sources */,
 				E1836098282ED3DF00414F20 /* Printers.swift in Sources */,

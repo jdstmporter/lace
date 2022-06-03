@@ -7,11 +7,25 @@
 
 import Foundation
 
-protocol ThreadCalcDelegate {
-    var laceKindName : String { get }
-    var threadName : String { get }
+public enum ThreadMode : Int {
+    case Library = 0
+    case Custom = 1
+    
+    init(_ r : Int) { self = ThreadMode.init(rawValue: r) ?? .Library }
+}
+public enum SpaceMode : Int {
+    case Kind = 0
+    case CustomKind = 1
+    case CustomSpace = 2
+    
+    init(_ r : Int) { self = SpaceMode.init(rawValue: r) ?? .Kind }
+}
+
+public protocol ThreadCalcDelegate {
+    var laceKindName : String { get set }
+    var threadName : String { get set }
     var threadIndex : Int { get }
-    var material : String { get }
+    var material : String { get set }
     var searchString : String { get }
     
     var threadWinding : Int { get set }
@@ -22,21 +36,71 @@ protocol ThreadCalcDelegate {
     func setThreads(items : [String])
     func reset()
     
-   
+    var threadMode : ThreadMode { get set }
+    var spaceMode : SpaceMode { get set }
+    
+    var printerOrList : Bool { get set }
+    var printer : String { get set }
+    var resolution : Int { get set }
+    
+    var dict : [String:Any] { get set }
+}
+
+extension ThreadCalcDelegate {
+    
+    public var dict : [String:Any] {
+        get {
+            var d = [String:Any]()
+            d["laceKindName"]=laceKindName
+            d["threadName"]=threadName
+            d["material"]=material
+            d["threadWinding"]=threadWinding
+            d["lacekindWinding"]=laceKindWinding
+            d["pinSpacing"]=pinSpacing
+            d["threadMode"]=threadMode.rawValue
+            d["spaceMode"]=spaceMode.rawValue
+            return d
+        }
+        set(d) {
+            laceKindName=d["laceKindName"] as? String ?? ""
+            threadName=d["threadName"] as? String ?? ""
+            material=d["material"] as? String ?? ""
+            threadWinding=d["threadWinding"] as? Int ?? 0
+            laceKindWinding=d["laceKindWinding"] as? Int ?? 0
+            pinSpacing=d["pinSpacing"] as? String ?? ""
+            threadMode = ThreadMode(d["threadMode"] as? Int ?? 0)
+            spaceMode = SpaceMode(d["spaceMode"] as? Int ?? 0)
+        }
+    }
+}
+
+fileprivate class ThreadCalcDelegateDummy : ThreadCalcDelegate {
+
+    var laceKindName : String { get { "" } set {} }
+    var threadName : String { get { "" } set {} }
+    var threadIndex : Int { 0 }
+    var material : String { get { "" } set {} }
+    var searchString : String { "" }
+    
+    var threadWinding : Int { get { 0 } set {} }
+    var laceKindWinding : Int { get{ 0 } set {} }
+    var pinSpacing : String { get { "" } set {} }
+    var pinSpacingFloat : Float { 0 }
+    
+    var threadMode: ThreadMode { get { .Library} set {} }
+    var spaceMode: SpaceMode { get { .Kind}  set {} }
+    var printerOrList: Bool { get { true } set {} }
+    var printer: String { get {""} set {} }
+    var resolution : Int { get {0} set {}}
+    
+    func setThreads(items : [String]) {}
+    func reset() {}
 }
 
 class ThreadCalc {
     public typealias Callback = (ThreadInfo) -> ()
     
-    public enum ThreadMode {
-        case Library
-        case Custom
-    }
-    public enum SpaceMode {
-        case Kind
-        case CustomKind
-        case CustomSpace
-    }
+    
     
     public private(set) var info = ThreadInfo()
     public private(set) var selectedMaterial : String = ""
@@ -45,15 +109,15 @@ class ThreadCalc {
     public private(set) var matchedThreads : Threads.ThreadGroup = []
     public private(set) var pinSeparation : Decimal = 0
     
-    private var threadMode : ThreadMode = .Library
-    private var spaceMode : SpaceMode = .Kind
+    public private(set) var threadMode : ThreadMode = .Library
+    public private(set) var spaceMode : SpaceMode = .Kind
     
     
     
     public var delegate : ThreadCalcDelegate
     
-    public init(_ d : ThreadCalcDelegate) {
-        self.delegate=d
+    public init() {
+        self.delegate=ThreadCalcDelegateDummy()
     }
     
     public func reset() {
@@ -173,7 +237,7 @@ class ThreadCalc {
             switch spaceMode {
             case .Kind:
                 let selected = delegate.laceKindName
-                guard let kind = LaceKind(selected) else { return }
+                let kind = LaceKind(selected)
                 self.delegate.laceKindWinding = kind.wrapsPerSpace
                 info.laceKind=kind
             case .CustomKind:
