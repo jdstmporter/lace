@@ -99,7 +99,7 @@ fileprivate class ThreadCalcDelegateDummy : ThreadCalcDelegate {
 
 class ThreadCalc {
     public typealias Callback = (ThreadInfo) -> ()
-    
+    public static let SettingsKey = "printingDefaults"
     
     
     public private(set) var info = ThreadInfo()
@@ -112,17 +112,20 @@ class ThreadCalc {
     public private(set) var threadMode : ThreadMode = .Library
     public private(set) var spaceMode : SpaceMode = .Kind
     
-    
-    
     public var delegate : ThreadCalcDelegate
     
     public init() {
         self.delegate=ThreadCalcDelegateDummy()
     }
+    public init(_ d : ThreadCalcDelegate) {
+        self.delegate=d
+    }
     
     public func reset() {
         info = ThreadInfo()
         delegate.reset()
+        self.loadSettings()
+        
         
         selectedMaterial = ""
         storedSearch=""
@@ -142,26 +145,7 @@ class ThreadCalc {
     private var changedThread : Bool = false
     
     
-    private func doSearch() {
-        let searchString=self.delegate.searchString
-        if searchString.count>0 {
-            do {
-                let regex=try NSRegularExpression(pattern: searchString, options: [.caseInsensitive,.ignoreMetacharacters])
-                let t=self.matchingThreads.filter { thread in
-                    let d = thread.description
-                    return regex.numberOfMatches(in: d, range: NSMakeRange(0, d.count)) > 0
-                }
-                self.matchedThreads=t
-            }
-            catch {}
-        }
-        else {
-            self.matchedThreads=Array(self.matchingThreads)
-        }
-        let matching = matchedThreads.map { $0.description }
-        self.delegate.setThreads(items: matching)
-        self.storedSearch=searchString
-    }
+    
     
    
     
@@ -261,10 +245,20 @@ class ThreadCalc {
             }
             print("Set pin separation to \(self.pinSeparation)")
         }
-            
-  
-        
+        self.saveSettings()
     }
+    
+    internal func saveSettings() {
+        let defs = self.delegate.dict
+        Defaults.set(forKey: ThreadCalc.SettingsKey, value: defs)
+    }
+    internal func loadSettings() {
+        if let defs : [String:Any] = Defaults.get(forKey: ThreadCalc.SettingsKey) {
+            self.delegate.dict=defs
+        }
+    }
+    
+    
     
 
     

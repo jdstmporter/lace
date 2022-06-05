@@ -275,8 +275,8 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
             printers.selectItem(at: sel)
             choiceAction(nil)
             
-            calc=ThreadCalc()
-            calc.delegate=self
+            calc=ThreadCalc(self)
+            calc.reset()
             
             threadFromLibrary.state = .on
             let mk = Threads.groups()
