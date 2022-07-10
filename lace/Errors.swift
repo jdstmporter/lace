@@ -28,6 +28,7 @@ enum LaceError : BaseError {
     case CannotMakeImage
     case BadLaceStyleName
     case StyleWindingMismatch
+    case CannotFindThreadsCSV
 }
 enum SQLiteError : BaseError {
     case GeneralError(Int32)

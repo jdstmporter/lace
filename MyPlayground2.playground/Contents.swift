@@ -1,135 +1,99 @@
-import Foundation
-import AppKit
-import UniformTypeIdentifiers
-import ImageIO
+import Cocoa
+import TabularData
 
-func sourceTypes() -> [String] {
-    let a = CGImageSourceCopyTypeIdentifiers()
-    return a as! Array<String>
+class ThreadKind : CustomStringConvertible {
+    
+    public private(set) var name : String
+    public private(set) var  detail : String?
+    public private(set) var  wraps : Int
+    
+    init(name: String="",detail: String? = nil,wraps : Int=12) {
+        self.name=name
+        self.detail=detail
+        self.wraps=wraps
+    }
+    
+    
+    
+    init?(_ row : CSVLoader.Row) {
+        guard let n : String = row["name",String.self] else { return nil }
+        self.name=n
+        self.detail=row["detail",String.self]
+        let w : Int? = row["wraps",Int.self]
+        self.wraps=numericCast(w ?? 12)
+    }
+    
+    
+    func setName(_ n : String,_ d : String? = nil) {
+        self.name=n
+        self.detail=d
+    }
+    func setCustom() { setName("Custom") }
+    
+    func setWrapping(_ w : Int) {
+        self.wraps=w
+    }
+    
+    var description: String { "\(name) \(detail ?? "")" }
 }
-func destinationTypes() -> [String] {
-    let a = CGImageDestinationCopyTypeIdentifiers()
-    return a as! Array<String>
+
+class CSVLoader {
+typealias Row = DataFrame.Row
+
+static let NILs = Set([""])
+static let TRUEs = Set(["true"])
+static let FALSEs = Set(["false"])
+static let types : [String:CSVType] = ["material": .string,
+                                "name": .string,
+                                "detail": .string,
+                                "wraps" : .integer]
+static let readOptions = CSVReadingOptions(hasHeaderRow: true, nilEncodings: NILs, trueEncodings: TRUEs, falseEncodings: FALSEs, floatingPointType: .double, ignoresEmptyLines: true, usesQuoting: true, usesEscaping: true)
+
+static let DetailColumn = ColumnID.init("detail", String.self)
+static let NameColumn = ColumnID.init("name", String.self)
+
+
+var groups : [String] = []
+    var threads : [String:[ThreadKind]] = [:]
+
+required init(path : URL) throws {
+    let g=try DataFrame(contentsOfCSVFile: path,
+                        columns: nil, rows: nil, types: CSVLoader.types,
+                        options: CSVLoader.readOptions).sorted(on: CSVLoader.NameColumn, CSVLoader.DetailColumn, order: .ascending)
+    g.rows.forEach { print($0.description) }
+    
+    let mats = Set(g.rows.compactMap { $0["material",String.self] })
+    print(mats.debugDescription)
+    
+    var thr = [String:[ThreadKind]]()
+    mats.forEach { thr[$0]=[] }
+    mats.forEach { m in
+        let chunk=g.rows.filter { $0["material",String.self]==m }
+        thr[m]=chunk.compactMap { ThreadKind($0) }
+    }
+    
+    print(thr.debugDescription)
+    //mats.forEach { m in
+    //    let chunk = g.filter(on: CSVLoader.MaterialColumn) { $0==m }
+    //    thr[m]=chunk.rows.compactMap { ThreadKind($0) }
+    //}
+    
+    //self.grid=g
+    self.groups=Array(mats).sorted()
+    self.threads=thr //thr.mapValues { rows in rows.compactMap { ThreadKind($0) } }
 }
 
-
-
-
-enum KError : Error {
-    case Src
-    case Img
-    case Prop
-    case Ty
-    case Dst
+convenience init(path: String) throws {
+    try self.init(path: URL(fileURLWithPath: path))
 }
-
-let CGImagePropertyDPIWidth = kCGImagePropertyDPIWidth as String
-let CGImagePropertyDPIHeight = kCGImagePropertyDPIHeight as String
-let CGImagePropertyTIFFDictionary = kCGImagePropertyTIFFDictionary as String
-let CGImagePropertyTIFFXResolution = kCGImagePropertyTIFFXResolution as String
-let CGImagePropertyTIFFYResolution = kCGImagePropertyTIFFYResolution as String
-
-let CGImagePropertyJFIFDictionary = kCGImagePropertyJFIFDictionary as String
-let CGImagePropertyJFIFXDensity = kCGImagePropertyJFIFXDensity as String
-let CGImagePropertyJFIFYDensity = kCGImagePropertyJFIFYDensity as String
-let CGImagePropertyJFIFVersion = kCGImagePropertyJFIFVersion as String
-
-do {
-    let path = NSURL(fileURLWithPath: "/Users/julianporter/Pictures/Excel/Ropponmatsu_II_244.jpg")
-    
-    let info = [
-        kCGImageSourceShouldCache : true,
-        kCGImageSourceShouldAllowFloat : true
-    ]
-    guard let src = CGImageSourceCreateWithURL(path as CFURL, info as CFDictionary) else { throw KError.Src }
-    guard let image = CGImageSourceCreateImageAtIndex(src, 0, nil) else { throw KError.Img }
-    guard let ky = CGImageSourceCopyPropertiesAtIndex(src,0, nil) else { throw KError.Prop }
-    
-    guard let ty = CGImageSourceGetType(src) else { throw KError.Ty }
-    let dpi : Int = 300
-    var keys = ky as? [String:Any] ?? [String:Any]()
-    keys[CGImagePropertyDPIWidth] = dpi
-    keys[CGImagePropertyDPIHeight] = dpi
-    
-    var exifDictionary = keys[CGImagePropertyTIFFDictionary] as? [String:Any] ?? [String:Any]()
-    exifDictionary[CGImagePropertyTIFFXResolution] = dpi
-    exifDictionary[CGImagePropertyTIFFYResolution] = dpi
-    keys[CGImagePropertyTIFFDictionary] = exifDictionary
-
-    var jfifDictionary = keys[CGImagePropertyJFIFDictionary] as? [String:Any] ?? [String:Any]()
-    jfifDictionary[CGImagePropertyJFIFXDensity] = dpi
-    jfifDictionary[CGImagePropertyJFIFYDensity] = dpi
-    jfifDictionary[CGImagePropertyJFIFVersion ] = 1
-    keys[CGImagePropertyJFIFDictionary] = jfifDictionary
-
-    
-    let path2 = NSURL(fileURLWithPath: "/Users/julianporter/Pictures/Excel/Ropponmatsu_II_301.jpg")
-    guard let dest = CGImageDestinationCreateWithURL(path2 as CFURL, ty, 1, keys as CFDictionary?) else { throw KError.Dst }
-    CGImageDestinationAddImage(dest, image, keys as CFDictionary?)
-    CGImageDestinationFinalize(dest)
-}
-catch (let e) { print(e) }
-
-/*
- Image property dictionaries
- EXIF -> JPG and TIF and some PNGs
- TIFF -> Same as EXIF
- JFIF -> some JPG
- PMG  -> PNG
- 
- For PNG, minimum is
- DPIWidth
- DPIHeight
- PixelWidth
- PixelHeight
- ColorModel = RGB
- HasAlpha = 0 or 1
- Depth
- PNG {
-    InterlaceType = 0
-    XPixelsPerMetre
-    YPixelsPerMetry
- }
- 
- */
-
-
-
-func listProps(path p: String) throws {
-    let path = NSURL(fileURLWithPath: p)
-    
-    let info = [
-        kCGImageSourceShouldCache : true,
-        kCGImageSourceShouldAllowFloat : true
-    ]
-    guard let src = CGImageSourceCreateWithURL(path as CFURL, info as CFDictionary) else { throw KError.Src }
-    //guard let image = CGImageSourceCreateImageAtIndex(src, 0, nil) else { throw KError.Img }
-    guard let ky = CGImageSourceCopyPropertiesAtIndex(src,0, nil) else { throw KError.Prop }
-    
-    guard let ty = CGImageSourceGetType(src) else { throw KError.Ty }
-    let keys = ky as? [String:Any] ?? [String:Any]()
-    
-    print(p)
-    print("Type is \(ty)")
-    keys.forEach { print("\($0.key) == \($0.value)")}
 }
 
 do {
-    try listProps(path:"/Users/julianporter/Pictures/portia.png")
-    try listProps(path:"/Users/julianporter/Pictures/midi.png")
-    try listProps(path:"/Users/julianporter/Pictures/me.png")
-    
+    let c=try CSVLoader(path: "/Users/julianporter/Workspace/XCode/Lace/lace/threads.csv")
+    c.groups.forEach { g in
+        print("Group \(g)")
+        let t=c.threads[g] ?? []
+        t.forEach { print("\($0)") }
+    }
 }
-
-let ed = Date.now
-let df=DateFormatter()
-df.locale=Locale.current
-df.dateFormat="yyyy:MM:dd HH:mm:ss"
-df.timeZone=TimeZone.current
-df.string(from: ed)
-
-NSColorSpace.Model.rgb
-
-    
-
-
+catch(let e) { print("\(e)") }

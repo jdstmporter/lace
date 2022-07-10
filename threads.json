@@ -1,0 +1,13 @@
+{"items" : [{
+    "material" : "cotton",
+    "name" : "Boll",
+    "detail" : "",
+    "wraps" : 12
+},
+    {
+        "material" : "cotton",
+        "name" : "Uwe",
+        "detail" : "Boxer",
+        "wraps" : 47
+    }
+]}

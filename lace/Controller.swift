@@ -98,7 +98,7 @@ class Controller : NSViewController {
             let renderer=RenderPNG(image: cg, dpi: NSSize(width: 300, height: 300))
             try? renderer.renderToLocation(path: URL(fileURLWithPath: "/Users/julianporter/fred.png"))
         }
-        testPanel.load(pricking: drawingArea.pricking, spacing: 0.2, dpi: 120)
+        testPanel.load(pricking: drawingArea.pricking, spacingInM: 0.2, dpM: 120)
     }
     
     

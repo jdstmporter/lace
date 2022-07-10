@@ -21,7 +21,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // NSOpenPanel
         //self.doPrinting()
-        printActions()
+        //printActions()
     }
     
     func doPrinting() {

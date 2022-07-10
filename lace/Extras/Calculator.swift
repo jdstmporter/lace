@@ -91,7 +91,7 @@ class ThreadCalculatorView : NSView {
             self.cascade(stage: .Kind)
         case .Kind:
             guard let selected = laceKind.titleOfSelectedItem else { return }
-            let kind = LaceKind(selected) ?? .Custom
+            let kind = LaceKind(selected)
             let editable = kind == .Custom
             let n = kind.wrapsPerSpace
             laceKindWinding.isEditable=editable
