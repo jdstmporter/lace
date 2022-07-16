@@ -19,6 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to initialize your application
         Defaults.load()
         
+        
         // NSOpenPanel
         //self.doPrinting()
         //printActions()

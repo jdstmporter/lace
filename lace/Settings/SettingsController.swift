@@ -111,7 +111,7 @@ class SettingsPanel : NSPanel, LaunchableItem {
 
     
     @IBAction func backgroundCallback(_ sender: NSColorWell) {
-        sender.color = sender.color.calibratedRGB
+        sender.color = sender.color.deviceRGB
         syslog.debug("Background colour is now \(sender.color)")
         drawingView.colourEvent(sender)
     }

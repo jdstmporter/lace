@@ -11,6 +11,8 @@
 		E10DDC292879E53A003A5C9C /* JSON.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10DDC282879E53A003A5C9C /* JSON.swift */; };
 		E10DDC2B287B1E90003A5C9C /* threads.csv in Resources */ = {isa = PBXBuildFile; fileRef = E10DDC2A287B1E90003A5C9C /* threads.csv */; };
 		E10DDC2D287B222D003A5C9C /* CSV.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10DDC2C287B222D003A5C9C /* CSV.swift */; };
+		E10DDC2F2882DD55003A5C9C /* CGApproach.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10DDC2E2882DD55003A5C9C /* CGApproach.swift */; };
+		E10DDC31288342AE003A5C9C /* Displays.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10DDC30288342AE003A5C9C /* Displays.swift */; };
 		E135749128135102005D84D6 /* Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135749028135102005D84D6 /* Dimensions.swift */; };
 		E13574962815BE45005D84D6 /* DraingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13574952815BE45005D84D6 /* DraingPanel.swift */; };
 		E13574982819BDF4005D84D6 /* GridPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13574972819BDF4005D84D6 /* GridPanel.swift */; };
@@ -64,6 +66,8 @@
 		E10DDC282879E53A003A5C9C /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		E10DDC2A287B1E90003A5C9C /* threads.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = threads.csv; sourceTree = "<group>"; };
 		E10DDC2C287B222D003A5C9C /* CSV.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CSV.swift; sourceTree = "<group>"; };
+		E10DDC2E2882DD55003A5C9C /* CGApproach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGApproach.swift; sourceTree = "<group>"; };
+		E10DDC30288342AE003A5C9C /* Displays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Displays.swift; sourceTree = "<group>"; };
 		E135749028135102005D84D6 /* Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dimensions.swift; sourceTree = "<group>"; };
 		E13574952815BE45005D84D6 /* DraingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraingPanel.swift; sourceTree = "<group>"; };
 		E13574972819BDF4005D84D6 /* GridPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPanel.swift; sourceTree = "<group>"; };
@@ -253,6 +257,8 @@
 				E18360AC283A6F6700414F20 /* ViewApproach.swift */,
 				E18360AE283A94A300414F20 /* Printing.xib */,
 				E18360B0283A950600414F20 /* PrintingPanel.swift */,
+				E10DDC2E2882DD55003A5C9C /* CGApproach.swift */,
+				E10DDC30288342AE003A5C9C /* Displays.swift */,
 			);
 			path = Printing;
 			sourceTree = "<group>";
@@ -361,9 +367,11 @@
 				E1383BF827F8D8D4009DEEFA /* ViewBase.swift in Sources */,
 				E1836093282C0E3200414F20 /* LaceKinds.swift in Sources */,
 				E135749C281EE480005D84D6 /* Fonts.swift in Sources */,
+				E10DDC31288342AE003A5C9C /* Displays.swift in Sources */,
 				E18360A528384D0500414F20 /* PrintableCG.swift in Sources */,
 				E183609F2831B5F400414F20 /* PNG.swift in Sources */,
 				E13574A62826E38B005D84D6 /* SQLITE3.swift in Sources */,
+				E10DDC2F2882DD55003A5C9C /* CGApproach.swift in Sources */,
 				E1EBD81E2844021500D8E10C /* Errors.swift in Sources */,
 				E10DDC2D287B222D003A5C9C /* CSV.swift in Sources */,
 				E1EBD81A283D7A9900D8E10C /* NSSizeExtensions.swift in Sources */,

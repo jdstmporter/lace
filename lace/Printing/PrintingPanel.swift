@@ -200,10 +200,10 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
     
     private func makeImage() -> RenderPNG? {
         guard let pricking = self.pricking else { return nil }
-        let view = PrintableView(frame: NSRect())
+        //self.view.addSubview(view)
         let sp = self.calc.pinSeparation.doubleValue/1000.0
-        view.load(pricking: pricking, spacingInM: sp, dpM: printerResolutionDPM)
-        guard let cg = view.render()?.cgImage else { return nil }
+        let view=CGPrintable(pricking: pricking, spacingInMetres: sp, dotsPerMetre: printerResolutionDPM)
+        guard let cg = view.renderCG() else { return nil } //view.render()?.cgImage else { return nil }
         return RenderPNG(image: cg, dpi: printerresolutionDPISize)
     }
     
@@ -239,6 +239,7 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
             resolutions.removeAllItems()
             resolutions.addItems(withTitles: displayedResolutions.asStrings )
             resolutions.selectItem(at: 0)
+            resolutionsButton(nil)
         }
     }
     
@@ -248,6 +249,7 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
         resolutions.removeAllItems()
         resolutions.addItems(withTitles: displayedResolutions.asStrings)
         resolutions.selectItem(at: 0)
+        resolutionsButton(nil)
     }
     
     static func launch(pricking: Pricking) -> PrintingPanel? {

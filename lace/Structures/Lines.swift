@@ -171,6 +171,8 @@ struct Line : CustomStringConvertible, Codable {
         return path
     }
     
+    
+    
     func asGridLine(_ grid : Grid) -> GridLine {
         GridLine(grid,self)
     }

@@ -100,7 +100,7 @@ class PrintableView : NSImageView {
             pricking.grid.xRange.forEach { x in
                 let isPin = pricking.grid[x,y]
                 let radius = dimensions[isPin ? .Pin : .Grid]
-                let fg = colours[isPin ? .Pin : .Grid]
+                let fg : NSColor = colours[isPin ? .Pin : .Grid]
                 let p = pricking.grid.pos(x, y)
                 point(p,radius: radius,colour: fg)
             }
