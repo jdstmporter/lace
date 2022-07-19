@@ -24,6 +24,7 @@ extension NSSize {
     static func /(_ lhs : NSSize,_ rhs: NSSize) -> NSSize {
         NSSize(width: lhs.width/rhs.width, height: lhs.height/rhs.height)
     }
+    var mean : Double { (self.width + self.height)*0.5 }
 }
 
 class Display : CustomStringConvertible {
@@ -33,7 +34,7 @@ class Display : CustomStringConvertible {
     
     init(screen id: CGDirectDisplayID) {
         self.id=id
-        self.size = 0.0001*CGDisplayScreenSize(id)
+        self.size = 0.001*CGDisplayScreenSize(id)
         self.rect = CGDisplayBounds(id).size
     }
     
@@ -52,9 +53,10 @@ class Display : CustomStringConvertible {
     }
     
     var resolutionDPM : NSSize { self.rect/self.size }
-    
     func convertToMetres(pixels: NSSize) -> NSSize { pixels/self.resolutionDPM }
     func convertToPixels(metres: NSSize) -> NSSize { metres*self.resolutionDPM }
+    
+    var dotsPerMetre : Double { self.resolutionDPM.mean }
     
     var description: String { "\(self.id) : rect = \(self.rect) size = \(self.size) dpm = \(self.resolutionDPM)"}
     

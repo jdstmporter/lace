@@ -34,6 +34,13 @@ class Controller : NSViewController {
                 let r=kv.value as? NSValue
                 print("\(kv.key) = \(r)")
             }
+            
+            if let ds=Display(window: w) {
+                let res = ds.resolutionDPM
+                print("Screen resolution is \(res) dpM, size is \(ds.size), rect is \(ds.rect)")
+                
+            }
+            else { print ("No resolition information")}
         }
         
         else { syslog.say("No Window") }
