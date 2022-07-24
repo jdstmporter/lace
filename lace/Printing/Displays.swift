@@ -47,8 +47,8 @@ class Display : CustomStringConvertible {
         self.init(screen: id)
     }
     
-    convenience init?(window : NSWindow) {
-        guard let id=window.screen?.displayID else { return nil }
+    convenience init?(window : NSWindow?) {
+        guard let id=window?.screen?.displayID else { return nil }
         self.init(screen: id)
     }
     

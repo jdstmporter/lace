@@ -18,6 +18,7 @@ class CGPrintable {
     let frame : NSRect
     var context : CGContext!
     var colours : ViewPartColours
+    let dimensionScaling : Double
     
     init(pricking: Pricking,spacingInMetres spM: Double,dotsPerMetre dpM: Int) {
         
@@ -32,6 +33,11 @@ class CGPrintable {
         self.size = NSSize.init(width: w, height: h)
         self.frame = NSRect(origin: NSPoint(), size: self.size)
         self.pricking.grid.scale=sc
+        
+        let app = NSApplication.shared
+        let win = app.mainWindow
+        let display = Display(window: win) ?? Display()
+        dimensionScaling = Double(dpM)/display.dotsPerMetre
     }
     
     
@@ -96,14 +102,14 @@ class CGPrintable {
         pricking.grid.yRange.forEach { y in
             pricking.grid.xRange.forEach { x in
                 let isPin = pricking.grid[x,y]
-                let radius = dimensions[isPin ? .Pin : .Grid]
+                let radius = dimensions[isPin ? .Pin : .Grid]*self.dimensionScaling
                 let fg : CGColor = self.colours[isPin ? .Pin : .Grid]
                 let p = pricking.grid.pos(x, y)
                 point(p,radius: radius,colour: fg)
             }
         }
         
-        self.context.setLineWidth(self.dimensions[.Line])
+        self.context.setLineWidth(self.dimensions[.Line]*self.dimensionScaling)
         pricking.lines.forEach { line in
             let l = invert(pricking.asScreenLine(line)) // invert(Line(grid: pricking.grid, line: line))
             syslog.debug("\(line) : \(l)")
