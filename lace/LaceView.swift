@@ -48,8 +48,8 @@ class LaceView : ViewBase {
     var pricking : Pricking = Pricking()
     
     func reload() {
-        self.colours.loadDefault()
-        self.dimensions.loadDefault()
+        self.colours.update()
+        self.dimensions.update()
         self.backgroundColor = colours[.Background]
         self.touch()
     }

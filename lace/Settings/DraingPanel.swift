@@ -52,7 +52,7 @@ class DrawingView : NSView, SettingsFacet {
     
     
     func load()  {
-        colours.loadDefault()
+        colours.update()
         self.colours.touch()
         DispatchQueue.main.async { [self] in
             ViewPart.allCases.forEach { row in
@@ -70,8 +70,8 @@ class DrawingView : NSView, SettingsFacet {
         }
         self.colours.touch()
         self.values.touch()
-        try colours.saveDefault()
-        try values.saveDefault()
+        try colours.commit()
+        values.commit()
     }
     
     func initialise() {

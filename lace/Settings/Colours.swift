@@ -46,22 +46,25 @@ class ViewPartColours : Sequence {
     static var White : NSColor { .white.deviceRGB }
     static var Black : NSColor { .black.deviceRGB }
     
-    public init() {}
+    public init() { self.update() }
     public init(_ other : ViewPartColours) {
         other.forEach { kv in self.values[kv.key] = kv.value }
     }
     
     public var colourSpace : CGColorSpace { CGColorSpaceCreateDeviceRGB() }
     
-    public static func defaults() -> ViewPartColours {
-        let c=ViewPartColours()
-        c.loadDefault()
-        return c
-    }
+    //public static func defaults() -> ViewPartColours {
+     //   let c=ViewPartColours()
+    //    c.update()
+    //    return c
+    //}
     
     private func defaultValue(_ p : ViewPart) -> NSColor {
         (p == .Background) ? ViewPartColours.White : ViewPartColours.Black
     }
+    private func key(_ p : ViewPart) -> String { "\(ViewPartColours.PREFIX)\(p)" }
+    public func load(_ p : ViewPart) throws -> NSColor  { try Defaults.colour(forKey: key(p))}
+    public func save(_ p : ViewPart,_ v : NSColor) throws { try Defaults.setColour(value: v,forKey:key(p)) }
     
     public subscript(_ p : ViewPart) -> NSColor {
         get { values[p] ?? defaultValue(p) }
@@ -81,15 +84,13 @@ class ViewPartColours : Sequence {
         self.values.removeAll()
     }
     
-    public func saveDefault() throws {
-        try ViewPart.allCases.forEach { p in
-            try Defaults.setColour(value: self[p], forKey: "\(ViewPartColours.PREFIX)\(p)")
-        }
+    public func commit() throws {
+        try ViewPart.allCases.forEach { p in try self.save(p, self[p]) }
     }
-    public func loadDefault() {
-        self.values.removeAll()
+    public func update() {
+        self.reset()
         ViewPart.allCases.forEach { p in
-            do { self[p]=try Defaults.colour(forKey: "\(ViewPartColours.PREFIX)\(p)") }
+            do { self[p]=try self.load(p) }
             catch(let e) {
                 syslog.error("Error loading: \(e) - reverting to default")
             }

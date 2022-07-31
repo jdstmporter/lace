@@ -16,12 +16,16 @@ class ViewPartDimensions : Sequence {
     typealias Iterator = Container.Iterator
     private var values : Container = [:]
     
-    public required init() {}
+    public required init() { self.update() }
     public required init(_ other : ViewPartDimensions) {
         other.forEach { kv in self.values[kv.key] = kv.value }
     }
     
     private func defaultValue(_ p : ViewPart) -> Double { 1.0 }
+    private func key(_ p : ViewPart) -> String { "\(ViewPartDimensions.PREFIX)\(p)" }
+    public func load(_ p : ViewPart) -> Double? { Defaults.double(forKey: key(p))}
+    public func save(_ p : ViewPart,_ v : Double) { Defaults.setDouble(forKey: key(p), value: v) }
+    
     public subscript(_ p : ViewPart) -> Double {
         get { values[p] ?? defaultValue(p) }
         set { values[p] = newValue }
@@ -31,15 +35,13 @@ class ViewPartDimensions : Sequence {
             if let c=values[p] { values[p]=c }
         }
     }
-    public func saveDefault() throws {
-        ViewPart.allCases.forEach { p in
-            Defaults.setDouble(forKey: "\(ViewPartDimensions.PREFIX)\(p)", value: self[p])
-        }
+    public func commit() {
+        ViewPart.allCases.forEach { p in self.save(p,self[p]) }
     }
-    public func loadDefault() {
-        self.values.removeAll()
+    public func update() {
+        self.reset()
         ViewPart.allCases.forEach { p in
-            if let v = Defaults.double(forKey: "\(ViewPartDimensions.PREFIX)\(p)") { self[p]=v }
+            if let v = self.load(p) { self[p]=v }
         }
     }
     public func has(_ p : ViewPart) -> Bool { values[p] != nil }
