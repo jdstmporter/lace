@@ -52,6 +52,7 @@ class DrawingView : NSView, SettingsFacet {
     
     
     func load()  {
+        self.laceView.dimensions=ViewPartsDimensionsTransient.defaults()
         colours.update()
         self.colours.touch()
         DispatchQueue.main.async { [self] in

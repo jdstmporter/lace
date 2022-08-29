@@ -32,11 +32,15 @@ class LaceView : ViewBase {
     var mouseEnabled : Bool = true
     var mouseToGrid : Bool = false
     
-    var dimensions = ViewPartDimensions() {
-        didSet {
-            self.touch()
-        }
+    var dimensions : DimensionSetterProtocol? {
+        didSet { self.touch() }
     }
+    
+   // var dimensions = ViewPartDimensions() {
+    //    didSet {
+    //        self.touch()
+    //    }
+    //}
  
     var colours = ViewPartColours() {
         didSet {
@@ -49,7 +53,7 @@ class LaceView : ViewBase {
     
     func reload() {
         self.colours.update()
-        self.dimensions.update()
+        self.dimensions?.update()
         self.backgroundColor = colours[.Background]
         self.touch()
     }
@@ -98,7 +102,7 @@ class LaceView : ViewBase {
         pricking.grid.yRange.forEach { y in
             pricking.grid.xRange.forEach { x in
                 let isPin = pricking.grid[x,y]
-                let radius = dimensions[isPin ? .Pin : .Grid]
+                let radius = dimensions?[isPin ? .Pin : .Grid] ?? 1.0
                 let fg : NSColor = colours[isPin ? .Pin : .Grid]
                 let p = pricking.grid.pos(x, y)
                 point(p,radius: radius,colour: fg)
@@ -110,7 +114,7 @@ class LaceView : ViewBase {
             let l = invert(pricking.asScreenLine(line)) // invert(Line(grid: pricking.grid, line: line))
             syslog.debug("\(line) : \(l)")
             let p=l.path
-            p.lineWidth=dimensions[.Line]
+            p.lineWidth=dimensions?[.Line] ?? 1.0
             p.stroke()
         }
         

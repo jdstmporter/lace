@@ -47,17 +47,8 @@ class ViewPartColours : Sequence {
     static var Black : NSColor { .black.deviceRGB }
     
     public init() { self.update() }
-    public init(_ other : ViewPartColours) {
-        other.forEach { kv in self.values[kv.key] = kv.value }
-    }
     
     public var colourSpace : CGColorSpace { CGColorSpaceCreateDeviceRGB() }
-    
-    //public static func defaults() -> ViewPartColours {
-     //   let c=ViewPartColours()
-    //    c.update()
-    //    return c
-    //}
     
     private func defaultValue(_ p : ViewPart) -> NSColor {
         (p == .Background) ? ViewPartColours.White : ViewPartColours.Black
