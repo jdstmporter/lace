@@ -17,12 +17,12 @@ class CGPrintable {
     let size : NSSize
     let frame : NSRect
     var context : CGContext!
-    var colours : ViewPartColours
+    var colours : ViewColours
     let dimensionScaling : Double
     
     init(pricking: Pricking,spacingInMetres spM: Double,dotsPerMetre dpM: Int) {
         
-        self.colours = ViewPartColours()
+        self.colours = ViewColours()
         
         let sc = Double(dpM)*spM
         
@@ -42,7 +42,7 @@ class CGPrintable {
     
     
     
-    var dimensions = ViewPartDimensions() {
+    var dimensions = ViewDimensions() {
         didSet {
             //self.touch()
         }
@@ -52,7 +52,7 @@ class CGPrintable {
 
     
     func renderCG() -> CGImage? {
-        guard let gc = CGContext.init(data: nil, width: self.size.widthI, height: self.size.heightI, bitsPerComponent: 8, bytesPerRow: 0, space: colours.colourSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue) else { return nil }
+        guard let gc = CGContext.init(data: nil, width: self.size.widthI, height: self.size.heightI, bitsPerComponent: 8, bytesPerRow: 0, space: ViewColours.colourSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue) else { return nil }
         self.context=gc
         self.draw()
         guard let image = self.context.makeImage() else { return nil }
@@ -89,21 +89,21 @@ class CGPrintable {
     }
     
     func clear() {
-        self.context.setFillColor(self.colours[.Background])
+        self.context.setFillColor(self.colours[.Background].cgColor)
         self.context.fill(self.frame)
     }
     
     func draw() {
         self.clear()
         
-        self.context.setStrokeColor(self.colours[.Line])
+        self.context.setStrokeColor(self.colours[.Line].cgColor)
         self.context.stroke(NSRect(x: 0, y: 0, width: self.size.width-1, height: self.size.height-1))
         
         pricking.grid.yRange.forEach { y in
             pricking.grid.xRange.forEach { x in
                 let isPin = pricking.grid[x,y]
                 let radius = dimensions[isPin ? .Pin : .Grid]*self.dimensionScaling
-                let fg : CGColor = self.colours[isPin ? .Pin : .Grid]
+                let fg : CGColor = self.colours[isPin ? .Pin : .Grid].cgColor
                 let p = pricking.grid.pos(x, y)
                 point(p,radius: radius,colour: fg)
             }

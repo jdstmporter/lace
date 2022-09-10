@@ -22,7 +22,10 @@ protocol MouseHandler {
 }
 
 
-
+enum LaceViewMode {
+    case Temporary
+    case Permanent
+}
 
 class LaceView : ViewBase {
     
@@ -32,17 +35,19 @@ class LaceView : ViewBase {
     var mouseEnabled : Bool = true
     var mouseToGrid : Bool = false
     
-    var dimensions : DimensionSetterProtocol? {
-        didSet { self.touch() }
-    }
-    
-   // var dimensions = ViewPartDimensions() {
-    //    didSet {
-    //        self.touch()
-    //    }
+    //var dimensions : DimensionSetterProtocol? {
+    //    didSet { self.touch() }
     //}
+    
+
+    
+    var dimensions = ViewDimensions() {
+        didSet {
+            self.touch()
+        }
+    }
  
-    var colours = ViewPartColours() {
+    var colours = ViewColours() {
         didSet {
             self.backgroundColor = colours[.Background]
             self.touch()
@@ -52,8 +57,9 @@ class LaceView : ViewBase {
     var pricking : Pricking = Pricking()
     
     func reload() {
-        self.colours.update()
-        self.dimensions?.update()
+        self.colours.reload()
+        //self.dimensions?.update()
+        self.dimensions.reload()
         self.backgroundColor = colours[.Background]
         self.touch()
     }
@@ -102,7 +108,8 @@ class LaceView : ViewBase {
         pricking.grid.yRange.forEach { y in
             pricking.grid.xRange.forEach { x in
                 let isPin = pricking.grid[x,y]
-                let radius = dimensions?[isPin ? .Pin : .Grid] ?? 1.0
+                //let radius = dimensions?[isPin ? .Pin : .Grid] ?? 1.0
+                let radius = dimensions[isPin ? .Pin : .Grid]
                 let fg : NSColor = colours[isPin ? .Pin : .Grid]
                 let p = pricking.grid.pos(x, y)
                 point(p,radius: radius,colour: fg)
@@ -114,7 +121,8 @@ class LaceView : ViewBase {
             let l = invert(pricking.asScreenLine(line)) // invert(Line(grid: pricking.grid, line: line))
             syslog.debug("\(line) : \(l)")
             let p=l.path
-            p.lineWidth=dimensions?[.Line] ?? 1.0
+            //p.lineWidth=dimensions?[.Line] ?? 1.0
+            p.lineWidth=dimensions[.Line]
             p.stroke()
         }
         

@@ -47,13 +47,13 @@ class PrintableView : NSImageView {
     
     
     
-    var dimensions = ViewPartDimensions() {
+    var dimensions = ViewDimensions() {
         didSet {
             self.touch()
         }
     }
  
-    var colours = ViewPartColours() {
+    var colours = ViewColours() {
         didSet {
             self.backgroundColor = colours[.Background]
             self.touch()

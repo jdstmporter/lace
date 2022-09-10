@@ -12,10 +12,11 @@ class DrawingView : NSView, SettingsFacet {
     
     
     var wells : [ViewPart:NSColorWell] = [:]
-    var colours = ViewPartColours()
+    var colours = ViewColours(mode : .Temporary)
     
     var fields : [ViewPart:NSTextField] = [:]
-    var values = ViewPartDimensions()
+    //var values = ViewPartDimensions()
+    var values = ViewDimensions(mode: .Temporary)
     
     @IBOutlet weak var backgroundColour: NSColorWell!
     @IBOutlet weak var gridColour: NSColorWell!
@@ -46,15 +47,16 @@ class DrawingView : NSView, SettingsFacet {
     func resetColours() {
         ViewPart.allCases.forEach { row in
             if colours.has(row)  { wells[row]?.color = colours[row] }
-            if values.has(row) { fields[row]?.doubleValue = values[row] }
+            //if values.has(row) { fields[row]?.doubleValue = values[row] }
         }
+        values.revert()
     }
     
     
     func load()  {
-        self.laceView.dimensions=ViewPartsDimensionsTransient.defaults()
-        colours.update()
-        self.colours.touch()
+        //self.laceView.dimensions=ViewPartsDimensionsTransient.defaults()
+        self.laceView.dimensions=self.values
+        colours.commit()
         DispatchQueue.main.async { [self] in
             ViewPart.allCases.forEach { row in
                 if let well=wells[row] { well.color=colours[row] }
@@ -67,12 +69,12 @@ class DrawingView : NSView, SettingsFacet {
     func save() throws {
         ViewPart.allCases.forEach { row in
             if let well=wells[row]  { colours[row]=well.color }
-            if let field=fields[row] { values[row]=field.doubleValue }
+            //if let field=fields[row] { values[row]=field.doubleValue }
         }
-        self.colours.touch()
-        self.values.touch()
-        try colours.commit()
-        values.commit()
+        
+        //self.values.touch()
+        self.colours.commit()
+        self.values.commit()
     }
     
     func initialise() {
@@ -108,12 +110,12 @@ class DrawingView : NSView, SettingsFacet {
         }
         else { syslog.debug("Matched somewhere funny") }
         self.touch()
-        colours.forEach { syslog.debug("\($0.key) : \($0.value)") }
+        ViewPart.allCases.forEach { syslog.debug("\($0) : \(self.colours[$0])") }
     }
     
     func sizesEvent(_ field : NSTextField) {
         self.touch()
-        values.forEach { syslog.debug("\($0.key) : \($0.value)") }
+        //values.forEach { syslog.debug("\($0.key) : \($0.value)") }
         
     }
     

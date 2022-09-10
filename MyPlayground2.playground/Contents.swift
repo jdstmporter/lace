@@ -1,23 +1,50 @@
-import Cocoa
-import CoreGraphics
+import AppKit
+import Foundation
 
-let r=NSColor.red
-let w=NSColor.white
-let b=NSColor.black
+protocol DefaultValue : CustomStringConvertible {
+    associatedtype V
+    static var zero : V { get }
+    
+    var kind : Any.Type { get }
+    var kindname : String { get }
+}
 
-let rc=r.cgColor
-let wc=w.cgColor
-let bc=b.cgColor
+extension DefaultValue {
+    var kind : Any.Type { type(of: self as Any) }
+    var kindname : String { "\(self.kind)"}
+}
 
-let rcs=rc.colorSpace
-let wcs=wc.colorSpace
-let bcs=bc.colorSpace
+extension  Double : DefaultValue {}
+extension NSColor : DefaultValue {
+    static var zero: NSColor { .black  }
+    
+    var sRGB : NSColor { self.usingColorSpace(.sRGB) ?? self }
+    var genericRGB : NSColor { self.usingColorSpace(.genericRGB) ?? self }
+    var deviceRGB : NSColor { self.usingColorSpace(.deviceRGB) ?? self }
+    
+    var rgba : [CGFloat]? {
+        guard let c = self.usingColorSpace(.deviceRGB) else { return nil }
+        let n=c.numberOfComponents
+        var a=Array<CGFloat>.init(repeating: 0, count: n)
+        a.withUnsafeMutableBufferPointer { p in
+            if let b = p.baseAddress {
+                c.getComponents(b)
+            }
+        }
+        return a
+        
+    }
 
-let cs=CGColorSpaceCreateDeviceRGB()
-let rcc=rc.converted(to: cs, intent: .defaultIntent, options: nil)
-let wcc=wc.converted(to: cs, intent: .defaultIntent, options: nil)
-let bcc=bc.converted(to: cs, intent: .defaultIntent, options: nil)
+    convenience init(_ c: [CGFloat]) {
+        self.init(colorSpace: .deviceRGB,components: c,count: c.count )
+    }
+}
 
-let rgb = NSColorSpace.deviceRGB
-let cgrgb = rgb.cgColorSpace
+func tellMe<P>(_ val: P) {
+    let t=type(of: val as Any)
+    if t==String.self { print ("String") }
+    else { print("Other: \(t)") }
+}
 
+tellMe("fred")
+tellMe(5.0)

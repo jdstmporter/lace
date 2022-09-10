@@ -62,10 +62,10 @@
             filePath = "lace/LaceView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "48"
-            endingLineNumber = "48"
-            landmarkName = "LaceView"
-            landmarkType = "3">
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "colours"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -78,9 +78,9 @@
             filePath = "lace/LaceView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "41"
-            endingLineNumber = "41"
-            landmarkName = "mouseToGrid"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "dimensions"
             landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>

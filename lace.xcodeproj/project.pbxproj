@@ -35,6 +35,8 @@
 		E1383C092808DACC009DEEFA /* FilePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383C082808DACC009DEEFA /* FilePicker.swift */; };
 		E1383C0B2809AC30009DEEFA /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383C0A2809AC30009DEEFA /* Files.swift */; };
 		E1383C0D2809F267009DEEFA /* defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = E1383C0C2809F267009DEEFA /* defaults.plist */; };
+		E17FBEDC28CB9FAA00408D89 /* viewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17FBEDB28CB9FAA00408D89 /* viewDefaults.swift */; };
+		E17FBEE628CD3F8D00408D89 /* common.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17FBEE528CD3F8D00408D89 /* common.swift */; };
 		E18360882828039600414F20 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E18360872828036900414F20 /* libsqlite3.tbd */; };
 		E183608A2828555A00414F20 /* threads.db in Resources */ = {isa = PBXBuildFile; fileRef = E18360892828555A00414F20 /* threads.db */; };
 		E183608D2829C72100414F20 /* Calculator.xib in Resources */ = {isa = PBXBuildFile; fileRef = E183608C2829C72100414F20 /* Calculator.xib */; };
@@ -93,6 +95,11 @@
 		E1383C082808DACC009DEEFA /* FilePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePicker.swift; sourceTree = "<group>"; };
 		E1383C0A2809AC30009DEEFA /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
 		E1383C0C2809F267009DEEFA /* defaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = defaults.plist; sourceTree = "<group>"; };
+		E17FBEDB28CB9FAA00408D89 /* viewDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewDefaults.swift; sourceTree = "<group>"; };
+		E17FBEDE28CD3E5F00408D89 /* colourParts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = colourParts.swift; sourceTree = "<group>"; };
+		E17FBEE028CD3EA600408D89 /* dimParts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dimParts.swift; sourceTree = "<group>"; };
+		E17FBEE228CD3F1200408D89 /* genericParts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = genericParts.swift; sourceTree = "<group>"; };
+		E17FBEE528CD3F8D00408D89 /* common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = common.swift; sourceTree = "<group>"; };
 		E18360872828036900414F20 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		E18360892828555A00414F20 /* threads.db */ = {isa = PBXFileReference; lastKnownFileType = file; path = threads.db; sourceTree = "<group>"; };
 		E183608C2829C72100414F20 /* Calculator.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Calculator.xib; sourceTree = "<group>"; };
@@ -172,6 +179,7 @@
 		E1383BE527F79C93009DEEFA /* lace */ = {
 			isa = PBXGroup;
 			children = (
+				E17FBEDD28CD3E3600408D89 /* Legacy */,
 				E1836096282ED3C500414F20 /* Printing */,
 				E183608B2829C6F100414F20 /* Extras */,
 				E13574A42826E36E005D84D6 /* Data */,
@@ -220,18 +228,38 @@
 		E1383C032807738B009DEEFA /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				E17FBEE428CD3F6400408D89 /* LaceView */,
 				E1383C04280773AB009DEEFA /* UserDefaults.swift */,
 				E1383C0A2809AC30009DEEFA /* Files.swift */,
 				E1D51F3B280B383D00995497 /* Preferences.xib */,
 				E1D51F3D280B3C1B00995497 /* SettingsController.swift */,
-				E1BD6A84280E049700430EC4 /* Colours.swift */,
-				E135749028135102005D84D6 /* Dimensions.swift */,
 				E13574952815BE45005D84D6 /* DraingPanel.swift */,
 				E13574972819BDF4005D84D6 /* GridPanel.swift */,
 				E1357499281C92B0005D84D6 /* PathsView.swift */,
 				E135749B281EE480005D84D6 /* Fonts.swift */,
+				E17FBEDB28CB9FAA00408D89 /* viewDefaults.swift */,
 			);
 			path = Settings;
+			sourceTree = "<group>";
+		};
+		E17FBEDD28CD3E3600408D89 /* Legacy */ = {
+			isa = PBXGroup;
+			children = (
+				E17FBEDE28CD3E5F00408D89 /* colourParts.swift */,
+				E17FBEE028CD3EA600408D89 /* dimParts.swift */,
+				E17FBEE228CD3F1200408D89 /* genericParts.swift */,
+			);
+			path = Legacy;
+			sourceTree = "<group>";
+		};
+		E17FBEE428CD3F6400408D89 /* LaceView */ = {
+			isa = PBXGroup;
+			children = (
+				E135749028135102005D84D6 /* Dimensions.swift */,
+				E1BD6A84280E049700430EC4 /* Colours.swift */,
+				E17FBEE528CD3F8D00408D89 /* common.swift */,
+			);
+			path = LaceView;
 			sourceTree = "<group>";
 		};
 		E183608B2829C6F100414F20 /* Extras */ = {
@@ -344,6 +372,7 @@
 				E18360AD283A6F6700414F20 /* ViewApproach.swift in Sources */,
 				E18360AB2839978900414F20 /* PrintFromData.swift in Sources */,
 				E1D51F3E280B3C1B00995497 /* SettingsController.swift in Sources */,
+				E17FBEDC28CB9FAA00408D89 /* viewDefaults.swift in Sources */,
 				E13574962815BE45005D84D6 /* DraingPanel.swift in Sources */,
 				E135749E28245909005D84D6 /* Log.swift in Sources */,
 				E1BD6A85280E049700430EC4 /* Colours.swift in Sources */,
@@ -372,6 +401,7 @@
 				E183609F2831B5F400414F20 /* PNG.swift in Sources */,
 				E13574A62826E38B005D84D6 /* SQLITE3.swift in Sources */,
 				E10DDC2F2882DD55003A5C9C /* CGApproach.swift in Sources */,
+				E17FBEE628CD3F8D00408D89 /* common.swift in Sources */,
 				E1EBD81E2844021500D8E10C /* Errors.swift in Sources */,
 				E10DDC2D287B222D003A5C9C /* CSV.swift in Sources */,
 				E1EBD81A283D7A9900D8E10C /* NSSizeExtensions.swift in Sources */,

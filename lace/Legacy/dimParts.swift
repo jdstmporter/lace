@@ -1,23 +1,29 @@
 //
-//  Dimensions.swift
+//  dimParts.swift
 //  lace
 //
-//  Created by Julian Porter on 22/04/2022.
+//  Created by Julian Porter on 10/09/2022.
 //
 
 import Foundation
 
-
 protocol DimensionSetterProtocol {
-    
+
     subscript(_: ViewPart) -> Double {get}
-    
     func update()
     mutating func copy(_ o : DimensionSetterProtocol)
-    
-
 }
 
+protocol DimensionSetterProtocol2 {
+
+    subscript(_: ViewPart) -> Double {get}
+    
+    //func get(_ : ViewPart) -> Double
+    //func set(_: ViewPart,_ : Double)
+    func reload()
+    func revert()
+    func commit()
+}
 
 protocol ViewPartContainer : Sequence where Iterator == Container.Iterator {
     associatedtype Entry
@@ -41,6 +47,79 @@ protocol ViewPartContainer : Sequence where Iterator == Container.Iterator {
     func commit() throws
 }
 
+/*
+class ViewDimensions : DimensionSetterProtocol2 {
+    static let PREFIX = "Dimensions-"
+    
+    typealias Container=[ViewPart:Double]
+    typealias Iterator = Container.Iterator
+    private var values : Container = [:]
+    private var temps : Container = [:]
+    private var mode : LaceViewMode
+    
+    private func key(_ p : ViewPart) -> String { "\(ViewDimensions.PREFIX)\(p)" }
+    public func load(_ p : ViewPart) -> Double? { Defaults.double(forKey: key(p))}
+    public func save(_ p : ViewPart,_ v : Double) { Defaults.setDouble(forKey: key(p), value: v) }
+    public func has(_ p : ViewPart) -> Bool { values[p] != nil }
+    
+    public init(_ mode : LaceViewMode = .Permanent) {
+        self.mode=mode
+        self.reload()
+    }
+    
+    public func reset() {
+        self.values.removeAll()
+        self.temps.removeAll()
+    }
+    public func reload() {
+        self.reset()
+        ViewPart.allCases.forEach { p in
+            if let v = self.load(p) { self.values[p]=v }
+        }
+    }
+    public func revert() {
+        self.temps.removeAll()
+    }
+    
+    private func defaultValue(_ p : ViewPart) -> Double { 1.0 }
+    private func value(_ p : ViewPart) -> Double { self.values[p] ?? defaultValue(p) }
+    
+    subscript(_ p: ViewPart) -> Double {
+        get {
+            switch self.mode {
+            case .Permanent:
+                return self.value(p)
+            case .Temporary:
+                return self.temps[p] ?? self.value(p)
+            }
+        }
+        set {
+            switch self.mode {
+            case .Permanent:
+                self.values[p]=newValue
+            case .Temporary:
+                self.temps[p]=newValue
+            }
+        }
+    }
+ 
+    
+    
+    func commit() {
+        self.values.merge(self.temps)
+        ViewPart.allCases.forEach { p in
+            if let v = self.temps[p] {
+                self.values[p]=v
+                self.save(p,v)
+            }
+        }
+        self.revert()
+    }
+    
+    static var instance : ViewDimensions { ViewDimensions() }
+    
+}
+*/
 
 class ViewPartsDimensionsTransient : DimensionSetterProtocol {
     
@@ -121,4 +200,7 @@ class ViewPartDimensions : DimensionSetterProtocol, Sequence {
     
     public static func defaults() -> DimensionSetterProtocol { ViewPartDimensions() }
 }
+
+
+
 
