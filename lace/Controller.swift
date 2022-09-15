@@ -24,31 +24,9 @@ class Controller : NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.drawingArea.backgroundColor = .white
-        self.drawingArea.dimensions=ViewDimensions(mode: .Temporary)
+        self.drawingArea.delegate=ViewDelegate(mode: .Permanent)
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateEvent(_ :)), name: SettingsPanel.DefaultsUpdated, object: nil)
-        
-        
-//        if let w=self.view.window {
-//            let d=w.deviceDescription
-//            d.forEach { kv in
-//                let r=kv.value as? NSValue
-//                print("\(kv.key) = \(r)")
-//            }
-//
-//            if let ds=Display(window: w) {
-//                let res = ds.resolutionDPM
-//                print("Screen resolution is \(res) dpM, size is \(ds.size), rect is \(ds.rect)")
-//
-//            }
-//            else { print ("No resolition information")}
-//        }
-//
-//        else { syslog.say("No Window") }
-//        let id = CGMainDisplayID()
-//        let sz = CGDisplayScreenSize(id)
-//        let bd = CGDisplayBounds(id)
-//        print("Display \(id) has size \(sz) and bounds \(bd)")
     }
     
     @objc func updateEvent(_ n : Notification) {
@@ -93,22 +71,6 @@ class Controller : NSViewController {
     
     @IBAction func doExport(_ item: NSMenuItem?) {
         let _ = PrintingPanel.launch(pricking: self.drawingArea.pricking)
-        
-        /*
-        syslog.info("Trying to export")
-        let dpi = 300
-        let spacing = 0.2
-        let w = drawingArea.pricking.grid.width
-        let h = drawingArea.pricking.grid.height
-        
-        do {
-            guard let v = ImageCG(grid: drawingArea.pricking.grid, width: w, height: h, spacing: spacing,dpi: dpi) else { throw LaceError.CannotMakeImage }
-            v.draw()
-            try v.renderToLocation(url: URL(fileURLWithPath: "/Users/julianporter/fred.png"))
-            syslog.info("Export may have succeeded")
-        }
-        catch(let e) { syslog.error("Error: \(e)") }
-         */
     }
     
     @IBAction func doPinSpacingHelper(_ item : NSMenuItem?) {

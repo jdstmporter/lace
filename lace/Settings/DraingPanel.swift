@@ -12,11 +12,8 @@ class DrawingView : NSView, SettingsFacet {
     
     
     var wells : [ViewPart:NSColorWell] = [:]
-    var colours = ViewColours(mode : .Temporary)
-    
     var fields : [ViewPart:NSTextField] = [:]
-    //var values = ViewPartDimensions()
-    var values = ViewDimensions(mode: .Temporary)
+   var delegate : ViewDelegate = ViewDelegate(mode: .Temporary)
     
     @IBOutlet weak var backgroundColour: NSColorWell!
     @IBOutlet weak var gridColour: NSColorWell!
@@ -33,48 +30,39 @@ class DrawingView : NSView, SettingsFacet {
     
     func touch() {
         ViewPart.allCases.forEach { row in
-            if let well = wells[row] { colours[row] = well.color }
-            if let field = fields[row] { values[row] = field.doubleValue }
+            if let well = wells[row] { delegate.set(row,well.color) }
+            if let field = fields[row] { delegate.set(row,field.doubleValue) }
         }
         
         DispatchQueue.main.async { [self] in
-            laceView.colours = colours
-            laceView.dimensions = values
+            laceView.delegate = delegate
         }
         
     }
     
-    func resetColours() {
+    func revert() {
+        self.delegate.revert()
         ViewPart.allCases.forEach { row in
-            if colours.has(row)  { wells[row]?.color = colours[row] }
-            //if values.has(row) { fields[row]?.doubleValue = values[row] }
+            let has = delegate.has(row)
+            if has.colour { wells[row]?.color = delegate[row].colour }
+            if has.dimension { fields[row]?.doubleValue = delegate[row].dimension }
         }
-        values.revert()
     }
     
     
     func load()  {
-        //self.laceView.dimensions=ViewPartsDimensionsTransient.defaults()
-        self.laceView.dimensions=self.values
-        colours.commit()
+        self.laceView.reload()
         DispatchQueue.main.async { [self] in
             ViewPart.allCases.forEach { row in
-                if let well=wells[row] { well.color=colours[row] }
-                if let text = fields[row] { text.doubleValue = values[row] }
+                if let well = wells[row] { well.color = delegate[row].colour }
+                if let text = fields[row] { text.doubleValue = delegate[row].dimension }
             }
         }
         
     }
     
     func save() throws {
-        ViewPart.allCases.forEach { row in
-            if let well=wells[row]  { colours[row]=well.color }
-            //if let field=fields[row] { values[row]=field.doubleValue }
-        }
-        
-        //self.values.touch()
-        self.colours.commit()
-        self.values.commit()
+        self.delegate.commit()
     }
     
     func initialise() {
@@ -110,16 +98,14 @@ class DrawingView : NSView, SettingsFacet {
         }
         else { syslog.debug("Matched somewhere funny") }
         self.touch()
-        ViewPart.allCases.forEach { syslog.debug("\($0) : \(self.colours[$0])") }
+        ViewPart.allCases.forEach { syslog.debug("\($0) : \(self.delegate[$0].colour)") }
     }
     
     func sizesEvent(_ field : NSTextField) {
         self.touch()
-        //values.forEach { syslog.debug("\($0.key) : \($0.value)") }
-        
     }
     
-    func colour(_ row : ViewPart) -> NSColor? { colours[row] }
+    func colour(_ row : ViewPart) -> NSColor? { self.delegate[row].colour }
     
     func cleanup() {
         NSColorPanel.shared.close()

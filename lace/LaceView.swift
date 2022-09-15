@@ -27,6 +27,70 @@ enum LaceViewMode {
     case Permanent
 }
 
+protocol LaceViewDelegate {
+    typealias ViewData = (colour: NSColor,dimension: Double)
+    
+    var dimensions : ViewDimensions { get set }
+    var colours : ViewColours { get set }
+    var mode : LaceViewMode { get set }
+    
+    subscript(_ v : ViewPart) -> ViewData { get }
+    mutating func set(_ v : ViewPart, _ c : NSColor)
+    mutating func set(_ v : ViewPart, _ d : Double)
+    
+    mutating func has(_ v : ViewPart) -> (colour: Bool,dimension: Bool)
+    
+    mutating func reload()
+    mutating func commit()
+    mutating func revert()
+}
+
+extension LaceViewDelegate {
+    
+    var mode : LaceViewMode {
+        get { dimensions.mode }
+        set {
+            dimensions.mode=newValue
+            colours.mode=newValue
+        }
+    }
+    
+    mutating func reload() {
+        self.dimensions.reload()
+        self.colours.reload()
+    }
+    mutating func commit() {
+        self.dimensions.commit()
+        self.colours.commit()
+    }
+    mutating func revert() {
+        self.dimensions.revert()
+        self.colours.revert()
+    }
+    
+    subscript(_ v : ViewPart) -> ViewData {
+        let c=self.colours[v]
+        let d=self.dimensions[v]
+        return ViewData(colour: c,dimension: d)
+    }
+    mutating func set(_ v : ViewPart, _ c : NSColor) { self.colours[v]=c }
+    mutating func set(_ v : ViewPart, _ d : Double) { self.dimensions[v]=d }
+    
+    mutating func has(_ v : ViewPart) -> (colour: Bool,dimension: Bool) {
+        (colour: self.colours.has(v), dimension: self.dimensions.has(v))
+    }
+}
+
+class ViewDelegate : LaceViewDelegate {
+    var dimensions : ViewDimensions
+    var colours : ViewColours
+    
+    init(mode : LaceViewMode = .Permanent) {
+        self.dimensions=ViewDimensions(mode: mode)
+        self.colours=ViewColours(mode: mode)
+    }
+}
+
 class LaceView : ViewBase {
     
     //var grid : Grid = Grid(width: 1, height: 1)
@@ -35,32 +99,12 @@ class LaceView : ViewBase {
     var mouseEnabled : Bool = true
     var mouseToGrid : Bool = false
     
-    //var dimensions : DimensionSetterProtocol? {
-    //    didSet { self.touch() }
-    //}
-    
-
-    
-    var dimensions = ViewDimensions() {
-        didSet {
-            self.touch()
-        }
-    }
- 
-    var colours = ViewColours() {
-        didSet {
-            self.backgroundColor = colours[.Background]
-            self.touch()
-        }
-    }
-    
+    var delegate : LaceViewDelegate = ViewDelegate() { didSet { self.reload() }}
     var pricking : Pricking = Pricking()
     
     func reload() {
-        self.colours.reload()
-        //self.dimensions?.update()
-        self.dimensions.reload()
-        self.backgroundColor = colours[.Background]
+        self.delegate.reload()
+        self.backgroundColor = self.delegate[.Background].colour
         self.touch()
     }
     
@@ -88,8 +132,6 @@ class LaceView : ViewBase {
         }
     }
     
-
-    
     func getScaling() {
         let size = self.bounds.size
         let xs = size.width/(self.MaxWidth+2.0)
@@ -97,7 +139,6 @@ class LaceView : ViewBase {
         //spacing = Swift.max(xs,ys)
         pricking.grid.scale = Swift.max(xs,ys)
     }
-    
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
@@ -108,26 +149,25 @@ class LaceView : ViewBase {
         pricking.grid.yRange.forEach { y in
             pricking.grid.xRange.forEach { x in
                 let isPin = pricking.grid[x,y]
-                //let radius = dimensions?[isPin ? .Pin : .Grid] ?? 1.0
-                let radius = dimensions[isPin ? .Pin : .Grid]
-                let fg : NSColor = colours[isPin ? .Pin : .Grid]
+                let pinData = self.delegate[isPin ? .Pin : .Grid]
+                let radius = pinData.dimension
+                let fg : NSColor = pinData.colour
                 let p = pricking.grid.pos(x, y)
                 point(p,radius: radius,colour: fg)
             }
         }
         
         pricking.lines.forEach { line in
-            self.colours[.Line].setStroke()
+            self.delegate[.Line].colour.setStroke()
             let l = invert(pricking.asScreenLine(line)) // invert(Line(grid: pricking.grid, line: line))
             syslog.debug("\(line) : \(l)")
             let p=l.path
-            //p.lineWidth=dimensions?[.Line] ?? 1.0
-            p.lineWidth=dimensions[.Line]
+            p.lineWidth=self.delegate[.Line].dimension
             p.stroke()
         }
         
         if let line=self.line {
-            self.colours[.Line].setStroke()
+            self.delegate[.Line].colour.setStroke()
             invert(line).path.stroke()
         }
         
