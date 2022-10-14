@@ -38,28 +38,42 @@ extension NSColor {
 
 extension NSColor : HasDefault { public static var zero : NSColor { .black }}
 
+/*class ViewColours : P {
+    static let PREFIX = "Colours-"
+    typealias Element = NSColor
+    
+    var values : Container = [:]
+    
+    public func load(_ p : ViewPart) -> Element?  { try? Defaults.colour(forKey: key(p))}
+    func adjustToSet(_ e: NSColor) -> NSColor { e.deviceRGB }
+    
+    init() {
+        ViewPart.allCases.forEach { p in
+            if let v = self.load(p) { self.values[p]=self.adjustToSet(v) }
+        }
+    }
+    static func defaultValue(_ p : ViewPart) -> Element {
+        (p == .Background) ? .white.deviceRGB : .black.deviceRGB
+    }
+    public static var colourSpace : CGColorSpace { CGColorSpaceCreateDeviceRGB() }
+}
 
-class ViewColours : P {
+class ViewColoursMutable : PMutable {
     
     static let PREFIX = "Colours-"
     typealias Element = NSColor
     
     var values : Container = [:]
     var temps : Container = [:]
-    var mode : LaceViewMode = .Permanent
     
     public func load(_ p : ViewPart) -> Element?  { try? Defaults.colour(forKey: key(p))}
     public func save(_ p : ViewPart,_ v : Element) { try? Defaults.setColour(value: v,forKey:key(p)) }
     
-    
-    
-    required init(mode: LaceViewMode) {
-        self.mode=mode
+    init() {
         ViewPart.allCases.forEach { p in
             if let v = self.load(p) { self.values[p]=self.adjustToSet(v) }
         }
     }
-    convenience init() { self.init(mode: .Permanent) }
     
     func adjustToSet(_ e: NSColor) -> NSColor { e.deviceRGB }
 
@@ -68,24 +82,5 @@ class ViewColours : P {
     }
     public static var colourSpace : CGColorSpace { CGColorSpaceCreateDeviceRGB() }
 }
-
-class PartAttributes {
-    
-    private var colours : ViewColours
-    private var dimensions : ViewDimensions
-    
-    func reset() { colours.reset() ; dimensions.reset() }
-    func reload() { colours.reload() ; dimensions.reload() }
-    func revert() { colours.revert() ; dimensions.revert() }
-    func commit() { colours.commit() ; dimensions.commit() }
-    
-    init(mode: LaceViewMode) {
-        self.colours=ViewColours(mode: mode)
-        self.dimensions=ViewDimensions(mode: mode)
-    }
-    
-    subscript(colour p: ViewPart) -> NSColor { get { self.colours[p] } set { self.colours[p]=newValue } }
-    subscript(dimension p: ViewPart) -> Double { get { self.dimensions[p] } set {  self.dimensions[p]=newValue } }
-    
-}
+ */
 

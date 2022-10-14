@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="20037" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="21225" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="20037"/>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21225"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -344,7 +345,7 @@ Gw
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <gridView xPlacement="leading" yPlacement="bottom" rowAlignment="none" translatesAutoresizingMaskIntoConstraints="NO" id="z9h-Zn-rdb">
-                                            <rect key="frame" x="32" y="193" width="266" height="70"/>
+                                            <rect key="frame" x="32" y="193" width="372" height="70"/>
                                             <rows>
                                                 <gridRow id="fxg-kF-j45"/>
                                                 <gridRow id="wtL-dT-r9g"/>
@@ -354,6 +355,7 @@ Gw
                                                 <gridColumn id="Hw4-At-eCO"/>
                                                 <gridColumn xPlacement="center" id="ky1-a2-gRb"/>
                                                 <gridColumn xPlacement="center" id="jTO-lW-1T6"/>
+                                                <gridColumn id="ybI-tg-bc2"/>
                                             </columns>
                                             <gridCells>
                                                 <gridCell row="fxg-kF-j45" column="Hw4-At-eCO" id="xJv-Jj-ADE"/>
@@ -371,6 +373,16 @@ Gw
                                                     <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P4Y-aP-lww">
                                                         <rect key="frame" x="185" y="54" width="63" height="16"/>
                                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Maximum" id="JcB-4P-7uk">
+                                                            <font key="font" usesAppearanceFont="YES"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                </gridCell>
+                                                <gridCell row="fxg-kF-j45" column="ybI-tg-bc2" id="g43-bD-JSR">
+                                                    <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fph-mo-gXK">
+                                                        <rect key="frame" x="270" y="54" width="101" height="16"/>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Default for new" id="Ouu-zR-7Y0">
                                                             <font key="font" usesAppearanceFont="YES"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -421,6 +433,20 @@ Gw
                                                         </connections>
                                                     </textField>
                                                 </gridCell>
+                                                <gridCell row="wtL-dT-r9g" column="ybI-tg-bc2" id="ymI-hA-C2w">
+                                                    <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ie6-fu-s5e">
+                                                        <rect key="frame" x="272" y="27" width="100" height="21"/>
+                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" placeholderString="1" drawsBackground="YES" id="r38-Lp-P3U">
+                                                            <numberFormatter key="formatter" formatterBehavior="custom10_4" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="3" id="zOz-DO-lQS">
+                                                                <real key="minimum" value="1"/>
+                                                                <real key="maximum" value="100"/>
+                                                            </numberFormatter>
+                                                            <font key="font" usesAppearanceFont="YES"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                </gridCell>
                                                 <gridCell row="VrS-Yn-lkg" column="Hw4-At-eCO" id="bvS-EA-1tx">
                                                     <textField key="contentView" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="x0h-6Q-sXH">
                                                         <rect key="frame" x="-2" y="0.0" width="58" height="16"/>
@@ -465,6 +491,20 @@ Gw
                                                         </connections>
                                                     </textField>
                                                 </gridCell>
+                                                <gridCell row="VrS-Yn-lkg" column="ybI-tg-bc2" id="Dtc-dW-LlS">
+                                                    <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pf3-rn-vGV">
+                                                        <rect key="frame" x="272" y="0.0" width="100" height="21"/>
+                                                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" placeholderString="1" drawsBackground="YES" id="oS2-Rg-RnW">
+                                                            <numberFormatter key="formatter" formatterBehavior="custom10_4" formatWidth="-1" minimumIntegerDigits="1" maximumIntegerDigits="3" id="oIV-AD-WKn">
+                                                                <real key="minimum" value="1"/>
+                                                                <real key="maximum" value="100"/>
+                                                            </numberFormatter>
+                                                            <font key="font" usesAppearanceFont="YES"/>
+                                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                </gridCell>
                                             </gridCells>
                                         </gridView>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Pau-Ww-cEf">
@@ -483,6 +523,8 @@ Gw
                                         <constraint firstItem="z9h-Zn-rdb" firstAttribute="top" secondItem="Pau-Ww-cEf" secondAttribute="bottom" constant="32" id="vg3-8e-3h4"/>
                                     </constraints>
                                     <connections>
+                                        <outlet property="defaultColumns" destination="pf3-rn-vGV" id="YWp-JB-FIH"/>
+                                        <outlet property="defaultRows" destination="ie6-fu-s5e" id="stu-zg-Ven"/>
                                         <outlet property="maxColumns" destination="ZGJ-sV-hic" id="zLf-xU-22y"/>
                                         <outlet property="maxRows" destination="Tav-LV-sgD" id="kxi-u3-N0w"/>
                                         <outlet property="minColumns" destination="jd5-XJ-bwP" id="y6f-v7-VgH"/>

@@ -14,8 +14,8 @@
             filePath = "lace/AppDelegate.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
+            startingLineNumber = "25"
+            endingLineNumber = "25"
             landmarkName = "applicationDidFinishLaunching(_:)"
             landmarkType = "7">
          </BreakpointContent>
@@ -30,9 +30,343 @@
             filePath = "lace/Controller.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "30"
-            endingLineNumber = "30"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
             landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7878AB70-7928-40D2-837A-1037B50BC20F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lace/Settings/UserDefaults.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "53"
+            endingLineNumber = "53"
+            landmarkName = "subscript(_:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "7878AB70-7928-40D2-837A-1037B50BC20F - 46028e679eedf146"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "lace.Defaults.subscript.getter : &lt;&#x3c4;_0_0&gt;(Swift.String) -&gt; Swift.Optional&lt;&#x3c4;_0_0&gt;"
+                  moduleName = "lace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/julianporter/Workspace/XCode/Lace/lace/lace/Settings/UserDefaults.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "122">
+               </Location>
+               <Location
+                  uuid = "7878AB70-7928-40D2-837A-1037B50BC20F - 46028e679eedf146"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "lace.Defaults.subscript.getter : &lt;&#x3c4;_0_0&gt;(Swift.String) -&gt; Swift.Optional&lt;&#x3c4;_0_0&gt;"
+                  moduleName = "lace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/julianporter/Workspace/XCode/Lace/lace/lace/Settings/UserDefaults.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "53"
+                  endingLineNumber = "53"
+                  offsetFromSymbolStart = "571">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "197ACDCD-9972-4DE8-8148-263E1CFE1AC2"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lace/Settings/LaceView/common.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
+            landmarkName = "reload()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "38C4429E-78B2-4791-93B3-29BF9AE14888"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lace/Settings/LaceView/common.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "95"
+            endingLineNumber = "95"
+            landmarkName = "reload()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "F7AAA2E3-3B88-4D38-8326-1A860B7CD37E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lace/ViewBase.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "167"
+            endingLineNumber = "167"
+            landmarkName = "mouseMoved(with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "7EA43444-A816-4E20-92CF-0F18F5D36B55"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lace/ViewBase.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "180"
+            endingLineNumber = "180"
+            landmarkName = "mouseEntered(with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2B989F0D-5B2E-4AE0-AE4F-0C881ECC4AD1"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lace/ViewBase.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "173"
+            endingLineNumber = "173"
+            landmarkName = "mouseExited(with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "41013EEC-A256-4104-A5E1-7AB8B44DEF8E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lace/ViewBase.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "157"
+            endingLineNumber = "157"
+            landmarkName = "mouseDragged(with:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "41013EEC-A256-4104-A5E1-7AB8B44DEF8E - 13cbe57716ef08be"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "lace.ViewBase.mouseDragged(with: __C.NSEvent) -&gt; ()"
+                  moduleName = "lace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/julianporter/Workspace/XCode/Lace/lace/lace/ViewBase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "150"
+                  endingLineNumber = "150"
+                  offsetFromSymbolStart = "173">
+               </Location>
+               <Location
+                  uuid = "41013EEC-A256-4104-A5E1-7AB8B44DEF8E - 13cbe57716ef08be"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "lace.ViewBase.mouseDragged(with: __C.NSEvent) -&gt; ()"
+                  moduleName = "lace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/julianporter/Workspace/XCode/Lace/lace/lace/ViewBase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "150"
+                  endingLineNumber = "150"
+                  offsetFromSymbolStart = "237">
+               </Location>
+               <Location
+                  uuid = "41013EEC-A256-4104-A5E1-7AB8B44DEF8E - 13cbe57716ef08be"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "lace.ViewBase.mouseDragged(with: __C.NSEvent) -&gt; ()"
+                  moduleName = "lace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/julianporter/Workspace/XCode/Lace/lace/lace/ViewBase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "150"
+                  endingLineNumber = "150"
+                  offsetFromSymbolStart = "570">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9316C919-7FEA-4CE0-BD89-04B79CF9E5D7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lace/ViewBase.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "130"
+            endingLineNumber = "130"
+            landmarkName = "mouseDown(with:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "29CA124A-E6B6-4D09-A0F8-3248C2E0AD45"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lace/ViewBase.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "138"
+            endingLineNumber = "138"
+            landmarkName = "mouseUp(with:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "29CA124A-E6B6-4D09-A0F8-3248C2E0AD45 - e2fd99503d480f2f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "lace.ViewBase.mouseUp(with: __C.NSEvent) -&gt; ()"
+                  moduleName = "lace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/julianporter/Workspace/XCode/Lace/lace/lace/ViewBase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "131"
+                  endingLineNumber = "131"
+                  offsetFromSymbolStart = "273">
+               </Location>
+               <Location
+                  uuid = "29CA124A-E6B6-4D09-A0F8-3248C2E0AD45 - e2fd99503d480f2f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "lace.ViewBase.mouseUp(with: __C.NSEvent) -&gt; ()"
+                  moduleName = "lace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/julianporter/Workspace/XCode/Lace/lace/lace/ViewBase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "131"
+                  endingLineNumber = "131"
+                  offsetFromSymbolStart = "355">
+               </Location>
+               <Location
+                  uuid = "29CA124A-E6B6-4D09-A0F8-3248C2E0AD45 - e2fd99503d480f2f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "lace.ViewBase.mouseUp(with: __C.NSEvent) -&gt; ()"
+                  moduleName = "lace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/julianporter/Workspace/XCode/Lace/lace/lace/ViewBase.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "131"
+                  endingLineNumber = "131"
+                  offsetFromSymbolStart = "1231">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "FB3A16EA-1524-469B-B583-283A1230FE77"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lace/LaceView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
+            landmarkName = "updateTrackingAreas()"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "FB3A16EA-1524-469B-B583-283A1230FE77 - f5706ae23f825d28"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "lace.LaceView.updateTrackingAreas() -&gt; ()"
+                  moduleName = "lace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/julianporter/Workspace/XCode/Lace/lace/lace/LaceView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "195"
+                  endingLineNumber = "195"
+                  offsetFromSymbolStart = "39">
+               </Location>
+               <Location
+                  uuid = "FB3A16EA-1524-469B-B583-283A1230FE77 - 3aa7014128f0b782"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.NSTrackingArea) -&gt; () in lace.LaceView.updateTrackingAreas() -&gt; ()"
+                  moduleName = "lace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/julianporter/Workspace/XCode/Lace/lace/lace/LaceView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "195"
+                  endingLineNumber = "195"
+                  offsetFromSymbolStart = "50">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "69D3BEC2-40D2-4BDC-BAF5-8326F4366A51"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lace/LaceView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "265"
+            endingLineNumber = "265"
+            landmarkName = "updateTrackingAreas()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

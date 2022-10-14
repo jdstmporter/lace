@@ -28,8 +28,10 @@ struct GridBounds {
     
     var asArray : [Int] { [minWidth,minHeight, maxWidth,maxHeight] }
     
+    func clip(width: Int) -> Int { Swift.min(Swift.max(minWidth,width),maxWidth) }
+    func clip(height: Int) -> Int { Swift.min(Swift.max(minHeight,height),maxHeight) }
 }
-    
+   
 
 class GridView : NSView, SettingsFacet {
     
@@ -37,6 +39,12 @@ class GridView : NSView, SettingsFacet {
     @IBOutlet weak var maxRows : NSTextField!
     @IBOutlet weak var minColumns : NSTextField!
     @IBOutlet weak var maxColumns : NSTextField!
+    
+    @IBOutlet weak var defaultRows : NSTextField!
+    @IBOutlet weak var defaultColumns : NSTextField!
+    
+    var dW : Int = 1
+    var dH : Int = 1
     
     var gridBounds = GridBounds()
     
@@ -46,6 +54,9 @@ class GridView : NSView, SettingsFacet {
             maxRows.integerValue=gridBounds.maxHeight
             minColumns.integerValue=gridBounds.minWidth
             maxColumns.integerValue=gridBounds.maxWidth
+            
+            defaultRows.integerValue=dH
+            defaultColumns.integerValue=dW
         }
     }
     
@@ -55,6 +66,8 @@ class GridView : NSView, SettingsFacet {
         if field==maxRows { gridBounds.maxHeight=Swift.max(m,gridBounds.minHeight) }
         if field==minColumns { gridBounds.minWidth=Swift.min(m,gridBounds.maxWidth) }
         if field==maxColumns { gridBounds.maxWidth=Swift.max(m,gridBounds.minWidth) }
+        if field==defaultRows { dH = gridBounds.clip(height: m) }
+        if field==defaultColumns { dW = gridBounds.clip(width: m) }
         self.loadGUI()
     }
     
@@ -66,16 +79,22 @@ class GridView : NSView, SettingsFacet {
             syslog.error("Error loading grid bounds: using default")
             self.gridBounds=GridBounds()
         }
+        self.dW = Defaults.get(forKey: "GridSize-width") ?? 1
+        self.dH = Defaults.get(forKey: "GridSize-height") ?? 1
         self.loadGUI()
     }
     
     func save() throws {
         let arr = self.gridBounds.asArray
         Defaults.set(forKey: "gridBounds", value: arr)
+        Defaults.set(forKey: "GridSize-width", value: dW)
+        Defaults.set(forKey: "GridSize-hight", value: dH)
     }
     
     func initialise() {
         self.gridBounds = GridBounds()
+        self.dW=1
+        self.dH=1
         self.loadGUI()
         
     }

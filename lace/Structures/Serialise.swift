@@ -12,9 +12,17 @@ enum PrickingError : BaseError {
     case CannotFindPricking
 }
 
+enum HistoryActions {
+    case Void
+    case Pin(_ : GridPoint)
+    case Line(_ : Line)
+}
+
 struct Pricking : Codable {
     let grid : Grid
     let lines : Lines
+    
+    var history : [HistoryActions] = []
     
     enum CodingKeys : String, CodingKey {
         case grid
@@ -60,8 +68,52 @@ struct Pricking : Codable {
         return p
     }
     
-    func append(_ line : Line) {
+    func nearestPoint(to point: NSPoint, distance : inout Double) throws -> GridPoint {
+        let p = try nearestPoint(to: point)
+        let pos = grid.pos(p)
+        distance = hypot(pos.x-point.x,pos.y-point.y)
+        return p
+    }
+    
+    func snap(point: NSPoint) throws -> NSPoint {
+        let p = try nearestPoint(to: point)
+        return grid.pos(p)
+    }
+    
+    func snap(line: Line) -> Line {
+        let gr = line.asGridLine(grid)
+        return Line(grid: grid,line: gr)
+    }
+    func snap(_ from: NSPoint,_ to: NSPoint) -> Line {
+        let gr = Line(from,to).asGridLine(grid)
+        return Line(grid: grid,line: gr)
+    }
+    func snap(_ p : NSPoint) -> GridPoint { grid.nearest(p) }
+    
+    mutating func append(_ line : Line) {
         lines.append(grid, line)
+        self.history.append(.Line(line))
+    }
+    mutating func append(_ point : GridPoint) {
+        self.grid.flip(point)
+        self.history.append(.Pin(point))
+    }
+    
+    mutating func clearHistory() {
+        self.history.removeAll()
+    }
+    
+    mutating func undo() {
+        guard let action=self.history.last else { return }
+        switch action {
+        case .Pin(let p):
+            self.grid.flip(p)
+        case .Line(let l):
+            self.lines.append(self.grid,l)
+        default:
+            break
+        }
+        self.history.removeLast()
     }
     
     func asScreenLine(_ line : GridLine) -> Line { Line(grid: grid, line: line) }

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="21G72" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="1">
+    <entity name="Material" representedClassName="Material" syncable="YES" codeGenerationType="class">
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <relationship name="threads" toMany="YES" deletionRule="Nullify" destinationEntity="Thread" inverseName="material" inverseEntity="Thread"/>
+    </entity>
+    <entity name="Thread" representedClassName="Thread" syncable="YES" codeGenerationType="class">
+        <attribute name="detail" optional="YES" attributeType="String"/>
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <attribute name="wraps" attributeType="Integer 32" defaultValueString="12" usesScalarValueType="YES"/>
+        <relationship name="material" maxCount="1" deletionRule="Nullify" destinationEntity="Material" inverseName="threads" inverseEntity="Material"/>
+    </entity>
+    <fetchRequest name="FetchAllMaterials" entity="Material"/>
+    <fetchRequest name="FetchAllThreads" entity="Thread"/>
+</model>

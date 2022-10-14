@@ -92,71 +92,10 @@ class SQLite3Loader {
     }
 }
 
-class ThreadKind : CustomStringConvertible {
-    
-    public private(set) var name : String
-    public private(set) var  detail : String?
-    public private(set) var  wraps : Int
-    
-    init(name: String="",detail: String? = nil,wraps : Int=12) {
-        self.name=name
-        self.detail=detail
-        self.wraps=wraps
-    }
-    
-    init?(_ row : SQLite3Row) {
-        guard let n : String = row["name"] else { return nil }
-        self.name=n
-        self.detail=row["detail"]
-        let w : Int32? = row["windings"]
-        self.wraps=numericCast(w ?? 12)
-    }
-    
-    init?(_ row : CSVLoader.Row) {
-        guard let n : String = row["name",String.self] else { return nil }
-        self.name=n
-        self.detail=row["detail",String.self]
-        let w : Int32? = row["wraps",Int32.self]
-        self.wraps=numericCast(w ?? 12)
-    }
-    
-    
-    func setName(_ n : String,_ d : String? = nil) {
-        self.name=n
-        self.detail=d
-    }
-    func setCustom() { setName("Custom") }
-    
-    func setWrapping(_ w : Int) {
-        self.wraps=w
-    }
-    
-    var description: String { "\(name) \(detail ?? "")" }
-}
 
-protocol IThreads : Sequence where Iterator == Array<String>.Iterator {
-    typealias ThreadGroup=[ThreadKind]
-    
-    
-    var threads : [String:ThreadGroup] { get set }
-    var groups : [String] { get set }
-    
-    init(path : URL) throws
-    subscript(_ : String) -> ThreadGroup { get }
-    var count : Int { get }
-    
 
-}
 
-extension IThreads {
-    subscript(_ g : String) -> ThreadGroup { threads[g] ?? [] }
-    func makeIterator() -> Iterator { self.groups.makeIterator() }
-    var count : Int { groups.count }
-    
-    
-}
-
-class Threads : IThreads {
+class DBThreads : IThreads {
     
     static let DBName = "threads"
     static let DBExt = "db"
@@ -167,21 +106,21 @@ class Threads : IThreads {
     var groups : [String] = []
     
     
-    
     func add(material : String,thread: ThreadKind) {
         if threads[material]==nil { threads[material]=[] }
         threads[material]?.append(thread)
     }
     
+    
     convenience init() throws  {
 
-            guard let url=URL(resource: Threads.DBName, extension: Threads.DBExt) else { throw DefaultError.CannotGetURL }
+            guard let url=URL(resource: Self.DBName, extension: Self.DBExt) else { throw DefaultError.CannotGetURL }
         try self.init(path: url)
     }
     
     required init(path: URL) throws {
             let db=try SQLite3Loader(url: path)
-            let rows = try db.query(sql: Threads.QuerySQL)
+            let rows = try db.query(sql: Self.QuerySQL)
         
             var gs = Set<String>()
             rows.forEach { row in
@@ -195,9 +134,11 @@ class Threads : IThreads {
         
     }
     
-    static var the : Threads?
-    static func load() -> Threads? {
-        if the==nil { the=try? Threads() }
+    
+    
+    static var the : DBThreads?
+    static func load() -> DBThreads? {
+        if the==nil { the=try? DBThreads() }
         return the
     }
     static func groups() -> [String] { load()?.groups ?? [] }

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>DMC Cordonnet Special</string>
+		<key>detail</key>
+		<string>60</string>
+		<key>windings</key>
+		<integer>24</integer>
+		<key>material</key>
+		<string>cotton</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>DMC Cordonnet Special</string>
+		<key>detail</key>
+		<string>80</string>
+		<key>windings</key>
+		<integer>30</integer>
+		<key>material</key>
+		<string>cotton</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>DMC Cordonnet Special</string>
+		<key>detail</key>
+		<string>100</string>
+		<key>windings</key>
+		<integer>32</integer>
+		<key>material</key>
+		<string>cotton</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>DMC Perlé</string>
+		<key>detail</key>
+		<string>12</string>
+		<key>windings</key>
+		<integer>21</integer>
+		<key>material</key>
+		<string>cotton</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>DMC Speial Dentelles</string>
+		<key>detail</key>
+		<string>80</string>
+		<key>windings</key>
+		<integer>30</integer>
+		<key>material</key>
+		<string>cotton</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Presencia Finca</string>
+		<key>detail</key>
+		<string>30</string>
+		<key>windings</key>
+		<integer>27</integer>
+		<key>material</key>
+		<string>cotton</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Presencia Finca</string>
+		<key>detail</key>
+		<string>40</string>
+		<key>windings</key>
+		<integer>29</integer>
+		<key>material</key>
+		<string>cotton</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>Presencia Finca</string>
+		<key>detail</key>
+		<string>80</string>
+		<key>windings</key>
+		<integer>43</integer>
+		<key>material</key>
+		<string>cotton</string>
+	</dict>
+</array>
+</plist>

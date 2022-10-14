@@ -25,6 +25,7 @@ extension NSSize {
         NSSize(width: lhs.width/rhs.width, height: lhs.height/rhs.height)
     }
     var mean : Double { (self.width + self.height)*0.5 }
+    var max : Double { Swift.max(self.width,self.height) }
 }
 
 class Display : CustomStringConvertible {
@@ -55,6 +56,9 @@ class Display : CustomStringConvertible {
     var resolutionDPM : NSSize { self.rect/self.size }
     func convertToMetres(pixels: NSSize) -> NSSize { pixels/self.resolutionDPM }
     func convertToPixels(metres: NSSize) -> NSSize { metres*self.resolutionDPM }
+    
+    var resolution : Double { self.resolutionDPM.max }
+    func convertToPixels(metres: CGFloat) -> CGFloat { metres*self.resolution }
     
     var dotsPerMetre : Double { self.resolutionDPM.mean }
     

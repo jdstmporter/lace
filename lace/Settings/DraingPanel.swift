@@ -13,7 +13,7 @@ class DrawingView : NSView, SettingsFacet {
     
     var wells : [ViewPart:NSColorWell] = [:]
     var fields : [ViewPart:NSTextField] = [:]
-   var delegate : ViewDelegate = ViewDelegate(mode: .Temporary)
+    private var delegate : ViewDelegate = ViewDelegate(.Temp)
     
     @IBOutlet weak var backgroundColour: NSColorWell!
     @IBOutlet weak var gridColour: NSColorWell!
@@ -34,19 +34,18 @@ class DrawingView : NSView, SettingsFacet {
             if let field = fields[row] { delegate.set(row,field.doubleValue) }
         }
         
-        DispatchQueue.main.async { [self] in
-            laceView.delegate = delegate
-        }
+        laceView.touch()
         
     }
     
     func revert() {
-        self.delegate.revert()
+        delegate.revert()
         ViewPart.allCases.forEach { row in
-            let has = delegate.has(row)
-            if has.colour { wells[row]?.color = delegate[row].colour }
-            if has.dimension { fields[row]?.doubleValue = delegate[row].dimension }
+            wells[row]?.color = delegate[row].colour
+            fields[row]?.doubleValue = delegate[row].dimension
         }
+        laceView.touch()
+        
     }
     
     
@@ -62,7 +61,8 @@ class DrawingView : NSView, SettingsFacet {
     }
     
     func save() throws {
-        self.delegate.commit()
+        delegate.commit()
+        self.touch()
     }
     
     func initialise() {
@@ -79,8 +79,9 @@ class DrawingView : NSView, SettingsFacet {
         
         
         // set up dummy pricking
-        laceView.MaxWidth = 10.0
-        laceView.MaxHeight = 10.0
+        //laceView.MaxWidth = 10.0
+        //laceView.MaxHeight = 10.0
+        laceView.spacingInMetres = 0.005 // 5 mm
         laceView.pricking=Pricking(10,10)
         (0..<5).forEach { n in
             let p = GridPoint(2*n, 2*n)
@@ -89,7 +90,10 @@ class DrawingView : NSView, SettingsFacet {
         laceView.pricking.lines.append(GridLine(GridPoint(0,0), GridPoint(8,8)))
         laceView.pricking.lines.append(GridLine(GridPoint(1,1), GridPoint(1,7)))
         
-        laceView.touch()
+        DispatchQueue.main.async { [self] in
+            laceView.setDelegate(delegate)
+            laceView.touch()
+        }
     }
     
     func colourEvent(_ well : NSColorWell) {

@@ -37,6 +37,13 @@ extension NSView {
 
 class ViewBase : NSView, MouseHandler {
     
+    var mainTracker : NSTrackingArea?
+    
+    func initialise() {
+        mainTracker = NSTrackingArea(rect: self.bounds,options:[.mouseEnteredAndExited,.mouseMoved,.activeInKeyWindow], owner: self)
+        self.addTrackingArea(mainTracker!)
+    }
+    
     // Draweing functions
     
     @IBInspectable var foregroundColor: NSColor = .black {
@@ -106,6 +113,7 @@ class ViewBase : NSView, MouseHandler {
     func didClick(_ at : NSPoint) {}
     func didDrag(_ from : NSPoint,_ to : NSPoint) {}
     func didCancel() {}
+    func didMove(_ p : NSPoint) {}
     
     func isDragging(_ from : NSPoint,_ to : NSPoint) {}
     
@@ -155,17 +163,20 @@ class ViewBase : NSView, MouseHandler {
     
     override func rightMouseDown(with event: NSEvent) {  }
     override func rightMouseUp(with event: NSEvent) {  }
-    override func mouseMoved(with event: NSEvent) {  }
+    override func mouseMoved(with event: NSEvent) {
+        let p=self.pos(event)
+        self.didMove(p)
+    }
     
     override func mouseExited(with event: NSEvent) {
-        //debugPrint("Exit")
+        debugPrint("Exit")
         window?.acceptsMouseMovedEvents=wasAcceptingMouseEvents
         self.mouseState=nil
         self.didCancel()
  
     }
     override func mouseEntered(with event: NSEvent) {
-        //debugPrint("Enter")
+        debugPrint("Enter")
         wasAcceptingMouseEvents=window?.acceptsMouseMovedEvents ?? false
         window?.acceptsMouseMovedEvents=true
         window?.makeFirstResponder(self)

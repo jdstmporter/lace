@@ -29,6 +29,8 @@ class Grid : Codable {
     var data : [[Bool]]
     
     
+    
+    
     init(width : Int, height: Int) {
         self.width=width
         self.height=height
@@ -99,6 +101,7 @@ class Grid : Codable {
     func forEachX(_ f : (Int) -> Void ) { xRange.forEach { f($0) } }
     func forEachY(_ f : (Int) -> Void ) { yRange.forEach { f($0) } }
     
+  
     
     
 }

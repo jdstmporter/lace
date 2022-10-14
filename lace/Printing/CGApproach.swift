@@ -20,6 +20,8 @@ class CGPrintable {
     var colours : ViewColours
     let dimensionScaling : Double
     
+    public static var colourSpace : CGColorSpace { CGColorSpaceCreateDeviceRGB() }
+    
     init(pricking: Pricking,spacingInMetres spM: Double,dotsPerMetre dpM: Int) {
         
         self.colours = ViewColours()
@@ -52,7 +54,7 @@ class CGPrintable {
 
     
     func renderCG() -> CGImage? {
-        guard let gc = CGContext.init(data: nil, width: self.size.widthI, height: self.size.heightI, bitsPerComponent: 8, bytesPerRow: 0, space: ViewColours.colourSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue) else { return nil }
+        guard let gc = CGContext.init(data: nil, width: self.size.widthI, height: self.size.heightI, bitsPerComponent: 8, bytesPerRow: 0, space: Self.colourSpace, bitmapInfo: CGImageAlphaInfo.noneSkipFirst.rawValue) else { return nil }
         self.context=gc
         self.draw()
         guard let image = self.context.makeImage() else { return nil }

@@ -49,7 +49,10 @@ class Defaults {
     //}
     
     subscript<T>(_ key : String) -> T? {
-        get { UserDefaults.standard.object(forKey: key) as? T }
+        get {
+            guard let x = UserDefaults.standard.object(forKey: key) else { return nil }
+            return x as? T
+        }
         set { UserDefaults.standard.set(newValue, forKey: key) }
     }
     
