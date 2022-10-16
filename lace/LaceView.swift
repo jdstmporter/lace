@@ -185,7 +185,7 @@ class LaceView : ViewBase {
     var mouseEnabled : Bool = true
     var mouseToGrid : Bool = false
     //var delegateLoaded : Bool = false
-    var mustSetTracker : Bool = false
+    
     var tracker : [NSTrackingArea] = []
     
     public private(set) var delegate : ViewDelegate?
@@ -226,7 +226,7 @@ class LaceView : ViewBase {
     func setSize(width: Int,height: Int) {
         DispatchQueue.main.async {
             self.pricking=Pricking(width,height)
-            self.mustSetTracker=true
+            self.needsTrackerUpdate=true
             self.needsDisplay=true
         }
     }
@@ -237,15 +237,19 @@ class LaceView : ViewBase {
         //let ys = size.height/(self.MaxHeight+2.0)
         //pricking.grid.scale = Swift.max(xs,ys)
         
-        pricking.grid.scale = Display().convertToPixels(metres: self.spacingInMetres)
+        pricking.grid.scale = Display.current.convertToPixels(metres: self.spacingInMetres)
     }
     func setSpacing(inMetres: CGFloat) {
         self.spacingInMetres=inMetres
         self.getScaling()
+        self.needsTrackerUpdate=true
         self.touch()
     }
     
     override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+      
+        
         self.tracker.forEach { self.removeTrackingArea($0) }
         self.tracker.removeAll()
         
@@ -262,7 +266,7 @@ class LaceView : ViewBase {
                 self.tracker.append(area)
             }
         }
-        self.mustSetTracker=false
+        self.needsTrackerUpdate=false
     }
     
     func invert(_ el : ExtendedLine) -> ExtendedLine {
@@ -279,7 +283,10 @@ class LaceView : ViewBase {
         
         
         self.getScaling()
-        if self.mustSetTracker { self.updateTrackingAreas() }
+        if self.needsTrackerUpdate {
+            self.updateTrackingAreas()
+            self.needsTrackerUpdate=false
+        }
         
         let pin=delegate[.Pin]
         let grid=delegate[.Grid]

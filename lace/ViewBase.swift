@@ -38,10 +38,10 @@ extension NSView {
 class ViewBase : NSView, MouseHandler {
     
     var mainTracker : NSTrackingArea?
+    var needsTrackerUpdate : Bool = false
     
     func initialise() {
-        mainTracker = NSTrackingArea(rect: self.bounds,options:[.mouseEnteredAndExited,.mouseMoved,.activeInKeyWindow], owner: self)
-        self.addTrackingArea(mainTracker!)
+        needsTrackerUpdate=true
     }
     
     // Draweing functions
@@ -70,12 +70,29 @@ class ViewBase : NSView, MouseHandler {
     
     // resize handler
     
+    override func updateTrackingAreas() {
+        if let m=self.mainTracker { self.removeTrackingArea(m) }
+        
+        let mt = NSTrackingArea(rect: self.bounds,
+                                options:[.mouseEnteredAndExited,.mouseMoved,.activeInKeyWindow],
+                                owner: self)
+        self.addTrackingArea(mt)
+        self.mainTracker=mt
+    }
+    
     
     override func viewDidEndLiveResize() {
         super.viewDidEndLiveResize()
+        self.needsTrackerUpdate=true
         self.touch()
         
     }
+    
+    
+    
+    
+    
+    
 
     
     // mouse handlers

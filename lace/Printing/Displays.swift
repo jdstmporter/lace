@@ -71,4 +71,10 @@ class Display : CustomStringConvertible {
         guard err == .success else { return [] }
         return ids.prefix(numericCast(n)).map { Display(screen: $0) }
     }
+    
+    static var the : Display!
+    static var current : Display {
+        if the==nil { the=Display() }
+        return the
+    }
 }
