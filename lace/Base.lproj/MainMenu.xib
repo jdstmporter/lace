@@ -841,17 +841,27 @@
                                     <constraints>
                                         <constraint firstAttribute="width" constant="150" id="3B6-Au-Ym9"/>
                                     </constraints>
-                                    <sliderCell key="cell" controlSize="mini" state="on" alignment="left" minValue="1" maxValue="10" doubleValue="4" tickMarkPosition="above" numberOfTickMarks="10" allowsTickMarkValuesOnly="YES" sliderType="linear" id="SDS-uA-lYw"/>
+                                    <sliderCell key="cell" controlSize="mini" continuous="YES" refusesFirstResponder="YES" state="on" alignment="left" minValue="1" maxValue="10" doubleValue="4" tickMarkPosition="above" numberOfTickMarks="10" sliderType="linear" id="SDS-uA-lYw"/>
                                     <connections>
                                         <action selector="updateZoom:" target="yBv-fZ-8Zb" id="DDT-BN-B0G"/>
                                     </connections>
                                 </slider>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bNa-ao-FNT">
+                                    <rect key="frame" x="497" y="40" width="28" height="11"/>
+                                    <textFieldCell key="cell" controlSize="mini" lineBreakMode="clipping" title="Label" id="Nq4-bY-qNj">
+                                        <font key="font" metaFont="miniSystem"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
                             </subviews>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="J3T-yg-PVw" secondAttribute="bottom" constant="4" id="6uZ-SC-XMp"/>
                                 <constraint firstItem="1Ax-wH-pLJ" firstAttribute="leading" secondItem="UN8-xP-jA5" secondAttribute="trailing" constant="16" id="EdJ-bp-toj"/>
+                                <constraint firstItem="bNa-ao-FNT" firstAttribute="centerX" secondItem="UN8-xP-jA5" secondAttribute="centerX" id="MhZ-E9-QyN"/>
                                 <constraint firstAttribute="trailing" secondItem="1Ax-wH-pLJ" secondAttribute="trailing" constant="8" id="SzX-cj-kfR"/>
                                 <constraint firstItem="J3T-yg-PVw" firstAttribute="leading" secondItem="IDk-Fl-yht" secondAttribute="leading" constant="8" id="VQU-Ih-63o"/>
+                                <constraint firstItem="UN8-xP-jA5" firstAttribute="top" secondItem="bNa-ao-FNT" secondAttribute="bottom" constant="2" id="cEu-Vm-Sfx"/>
                                 <constraint firstItem="J3T-yg-PVw" firstAttribute="top" secondItem="IDk-Fl-yht" secondAttribute="top" constant="4" id="ma8-6E-Jr2"/>
                                 <constraint firstItem="1Ax-wH-pLJ" firstAttribute="centerY" secondItem="IDk-Fl-yht" secondAttribute="centerY" id="w5A-f7-1h0"/>
                                 <constraint firstItem="1Ax-wH-pLJ" firstAttribute="centerY" secondItem="UN8-xP-jA5" secondAttribute="centerY" id="yrk-il-Q5Y"/>
@@ -872,12 +882,13 @@
                     <constraint firstItem="Jhd-5x-ITq" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="pCB-7t-7Y9"/>
                 </constraints>
             </view>
-            <point key="canvasLocation" x="-1" y="15"/>
+            <point key="canvasLocation" x="-247" y="-172"/>
         </window>
         <viewController id="yBv-fZ-8Zb" customClass="Controller" customModule="lace" customModuleProvider="target">
             <connections>
                 <outlet property="drawingArea" destination="Jhd-5x-ITq" id="D2F-5k-vrS"/>
                 <outlet property="heightField" destination="gZ8-js-3MG" id="wg7-OT-Ouq"/>
+                <outlet property="scaleField" destination="bNa-ao-FNT" id="BmB-Gt-f1f"/>
                 <outlet property="styleMenu" destination="hjN-Kf-Hh9" id="86Y-36-3aL"/>
                 <outlet property="view" destination="EiT-Mj-1SZ" id="oZH-8m-lm8"/>
                 <outlet property="widthField" destination="fMg-cz-abX" id="qdL-xw-76P"/>

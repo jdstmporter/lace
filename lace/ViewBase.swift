@@ -173,8 +173,10 @@ class ViewBase : NSView, MouseHandler {
     override func mouseDragged(with event: NSEvent) {
         guard let down = mouseState else { return }
         let p=self.shouldMoveMouse(self.pos(event))
-        if self.locationIsValid(p) { self.lastPoint=p }
-        if let l=self.lastPoint { self.isDragging(down.position,l) }
+        if down.distance(p) > 10 {
+            if self.locationIsValid(p) { self.lastPoint=p }
+            if let l=self.lastPoint { self.isDragging(down.position,l) }
+        }
         
     }
     

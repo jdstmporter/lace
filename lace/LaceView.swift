@@ -176,6 +176,23 @@ struct ExtendedLine : CustomStringConvertible {
     
 }
 
+class AtomicFlag {
+    
+    private static var queue = DispatchQueue(label: "AtomicFlag",qos: .userInteractive)
+    private var _flag : Bool = false
+    
+    func set() { Self.queue.sync { [self] in self._flag=true }}
+    func clear() { Self.queue.sync { [self] in self._flag=false }}
+    func test() -> Bool { Self.queue.sync { [self] in self._flag }}
+    func testAndClear() -> Bool {
+        Self.queue.sync { [self] in
+            let v = self._flag
+            self._flag=false
+            return v
+        }
+    }
+}
+
 
 class LaceView : ViewBase {
     
@@ -232,11 +249,6 @@ class LaceView : ViewBase {
     }
     
     func getScaling() {
-        //let size = self.bounds.size
-        //let xs = size.width/(self.MaxWidth+2.0)
-        //let ys = size.height/(self.MaxHeight+2.0)
-        //pricking.grid.scale = Swift.max(xs,ys)
-        
         pricking.grid.scale = Display.current.convertToPixels(metres: self.spacingInMetres)
     }
     func setSpacing(inMetres: CGFloat) {

@@ -16,7 +16,7 @@ class Controller : NSViewController {
     @IBOutlet weak var heightField : NSTextField!
     @IBOutlet weak var styleMenu: NSPopUpButton!
     @IBOutlet weak var drawingArea : LaceView!
-    
+    @IBOutlet weak var scaleField : NSTextField!
     //@IBOutlet weak var testPanel: PrintableView!
     
     
@@ -40,6 +40,7 @@ class Controller : NSViewController {
         styleMenu.addItems(withTitles: items)
         
         styleMenu.selectItem(at: LaceKind.Torchon.index)
+        self.updateZoom(self.zoomField)
     }
     
     @objc func updateEvent(_ n : Notification) {
@@ -51,7 +52,9 @@ class Controller : NSViewController {
     
     @IBAction func updateZoom(_ s : NSSlider) {
         DispatchQueue.main.async { [self] in
-            self.drawingArea.setSpacing(inMetres: zoomField.doubleValue/1000.0)
+            let sc=zoomField.doubleValue/1000.0
+            self.drawingArea.setSpacing(inMetres: sc)
+            self.scaleField.stringValue=String(format: "spacing = %.1f mm", sc*1000.0)
         }
     }
     
