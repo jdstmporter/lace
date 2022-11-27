@@ -8,11 +8,15 @@
 import Foundation
 import AppKit
 
-enum ViewPart : Int, CaseIterable {
+public enum ViewPart : Int, CaseIterable {
     case Background = 0
     case Grid = 1
     case Pin = 2
     case Line = 3
+    
+    case Title = 4
+    case Metadata = 5
+    case Comment = 6
 }
 
 protocol SettingsFacet {

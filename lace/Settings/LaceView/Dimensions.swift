@@ -16,48 +16,8 @@ extension Dictionary {
     }
 }
 
-extension Double : HasDefault { }
 
-/*
-
-class ViewDimensions : P {
-    static let PREFIX = "Dimensions-"
-    typealias Element = Double
-    
-    var values : Container = [:]
-
-    public func load(_ p : ViewPart) -> Element?  { Defaults.double(forKey: key(p))}
-    
-    
-    required init() {
-        ViewPart.allCases.forEach { p in
-            if let v = self.load(p) { self.values[p]=v }
-        }
-    }
-    func adjustToSet(_ e: Double) -> Double { e }
-    
-    static func defaultValue(_ p : ViewPart) -> Element { 1.0 }
+extension Double : HasDefault {
+    public static func def(_ v : ViewPart) -> Double { 1 }
 }
 
-class ViewDimensionsMutable : PMutable {
-    
-    static let PREFIX = "Dimensions-"
-    typealias Element = Double
-    
-    var values : Container = [:]
-    var temps : Container = [:]
-    
-    public func load(_ p : ViewPart) -> Element?  { Defaults.double(forKey: key(p))}
-    public func save(_ p : ViewPart,_ v : Element) { Defaults.setDouble(forKey:key(p), value: v) }
-    
-    required init() {
-        ViewPart.allCases.forEach { p in
-            if let v = self.load(p) { self.values[p]=v }
-        }
-    }
-    func adjustToSet(_ e: Double) -> Double { e }
-    
-    static func defaultValue(_ p : ViewPart) -> Element { 1.0 }
-}
-
-*/

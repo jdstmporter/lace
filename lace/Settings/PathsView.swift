@@ -38,7 +38,7 @@ class PathsView : NSView, SettingsFacet {
     }
     
     func save() throws {
-        Defaults.setString(forKey: "DataDirectory", value: self.path.path)
+        try Defaults.write("DataDirectory", self.path.path)
         Defaults.remove(forKey: "LastPath")
     }
     

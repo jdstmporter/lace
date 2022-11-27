@@ -18,6 +18,7 @@ extension URL {
 
 
 
+
 class Defaults {
     let appName : String
     static let defPList = "defaults"
@@ -48,17 +49,18 @@ class Defaults {
     //    UserDefaults.standard.dictionaryRepresentation()
     //}
     
-    subscript<T>(_ key : String) -> T? {
+    subscript<T>(_ key : String) -> T? where T : Decodable {
         get {
             guard let x = UserDefaults.standard.object(forKey: key) else { return nil }
-            return x as? T
+            return dec(x)
         }
-        set { UserDefaults.standard.set(newValue, forKey: key) }
+        set {
+            if let nv=newValue, let e = enc(nv) {
+                UserDefaults.standard.set(e, forKey: key)
+            }
+        }
     }
     
-    
-    
-  
     public static func load() {
         the=Defaults()
         the?.bootstrap()
@@ -71,46 +73,15 @@ class Defaults {
         return t
     }
     
-    
-    static func colour(forKey key : String) throws -> NSColor {
+    static func read<T>(_ key: String) throws -> T where T : Decodable {
         let it = try check()
-        
-        guard let components : [CGFloat] = it[key] else { throw DefaultError.CannotGetKey(key) }
-        guard components.count==4 else { throw DefaultError.BadColourFormat }
-        return NSColor(components)
+        guard let c : T = it[key] else { throw DefaultError.CannotDecodeKey(key) }
+        return c
     }
-    static func setColour(value: NSColor,forKey key: String) throws {
-        let it=try check()
-        guard let components = value.rgba, components.count==4 else { throw DefaultError.BadColourFormat }
-        it[key]=components
-                
-    }
-    
-    static func font(forKey key : String) throws -> NSFont {
+    static func write<T>(_ key: String,_ value : T) throws where T : Decodable {
         let it = try check()
-        guard let info : [String:Any] = it[key] else { throw DefaultError.CannotGetKey(key) }
-        guard let f = NSFont(components: info) else { throw DefaultError.BadFontFormat }
-        return f
+        it[key]=value
     }
-    
-    static func setFont(value: NSFont,forKey key: String) throws {
-        let it=try check()
-        it[key]=value.components
-    }
-    
-    static func string(forKey key : String) -> String? {
-        UserDefaults.standard.string(forKey: key)
-    }
-    static func setString(forKey key : String,value: String)  {
-        UserDefaults.standard.setValue(value, forKey: key)
-    }
-    static func double(forKey key : String) -> Double? {
-        UserDefaults.standard.double(forKey: key)
-    }
-    static func setDouble(forKey key : String,value: Double)  {
-        UserDefaults.standard.setValue(value, forKey: key)
-    }
-    
     static func get<T>(forKey key : String) ->T? {
         UserDefaults.standard.object(forKey: key) as? T
     }

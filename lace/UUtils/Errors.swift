@@ -49,6 +49,8 @@ enum DefaultError : BaseError {
     case CannotGetURL
     case DocumentHasNoRoot
     case CannotFindDefault
+    case CannotDecodeKey(String)
+    case CannotEncodeValueForKey(String)
 }
 
 enum FileError : BaseError {

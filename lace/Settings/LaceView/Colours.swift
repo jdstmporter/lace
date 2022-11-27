@@ -36,51 +36,28 @@ extension NSColor {
     
 }
 
-extension NSColor : HasDefault { public static var zero : NSColor { .black }}
-
-/*class ViewColours : P {
-    static let PREFIX = "Colours-"
-    typealias Element = NSColor
-    
-    var values : Container = [:]
-    
-    public func load(_ p : ViewPart) -> Element?  { try? Defaults.colour(forKey: key(p))}
-    func adjustToSet(_ e: NSColor) -> NSColor { e.deviceRGB }
-    
-    init() {
-        ViewPart.allCases.forEach { p in
-            if let v = self.load(p) { self.values[p]=self.adjustToSet(v) }
-        }
+extension NSColor : HasDefault {
+    public static var zero : NSColor { .black }
+    public static func def(_ v : ViewPart) -> NSColor {
+        (v == .Background) ? .white.deviceRGB : .black.deviceRGB
     }
-    static func defaultValue(_ p : ViewPart) -> Element {
-        (p == .Background) ? .white.deviceRGB : .black.deviceRGB
-    }
-    public static var colourSpace : CGColorSpace { CGColorSpaceCreateDeviceRGB() }
 }
 
-class ViewColoursMutable : PMutable {
-    
-    static let PREFIX = "Colours-"
-    typealias Element = NSColor
-    
-    var values : Container = [:]
-    var temps : Container = [:]
-    
-    public func load(_ p : ViewPart) -> Element?  { try? Defaults.colour(forKey: key(p))}
-    public func save(_ p : ViewPart,_ v : Element) { try? Defaults.setColour(value: v,forKey:key(p)) }
-    
-    init() {
-        ViewPart.allCases.forEach { p in
-            if let v = self.load(p) { self.values[p]=self.adjustToSet(v) }
+extension NSFont : HasDefault {
+    public static var zero : NSFont { NSFont.systemFont(ofSize: NSFont.systemFontSize) }
+    public static func def(_ v : ViewPart) -> NSFont {
+        var size = NSFont.systemFontSize
+        switch v {
+        case .Title:
+            size+=2
+        case .Metadata:
+            break
+        case .Comment:
+            size=NSFont.smallSystemFontSize
+        default:
+            break
         }
+        return NSFont.systemFont(ofSize: size)
     }
-    
-    func adjustToSet(_ e: NSColor) -> NSColor { e.deviceRGB }
-
-    static func defaultValue(_ p : ViewPart) -> Element {
-        (p == .Background) ? .white.deviceRGB : .black.deviceRGB
-    }
-    public static var colourSpace : CGColorSpace { CGColorSpaceCreateDeviceRGB() }
 }
- */
 

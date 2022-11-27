@@ -10,111 +10,52 @@ import Foundation
 protocol HasDefault {
     associatedtype V
     static var zero : V { get }
+    static func def(_ : ViewPart) -> V
 }
 
-/*
-
-protocol P {
-    associatedtype Element
-    
-    static var PREFIX : String { get }
-    typealias Container = [ViewPart:Element]
-    
-    var values : Container { get set }
-    
-    
-    func key(_ : ViewPart) -> String
-    func has(_ : ViewPart) -> Bool
-    func load(_ : ViewPart) -> Element?
-    //func save(_ : ViewPart,_ : Element)
-    
-    static func defaultValue(_ : ViewPart) -> Element
-    
-    mutating func copy<O>(_ other : O)
-    where O: P, O.Element==Self.Element
-    
-    mutating func reset()
-    mutating func reload()
-    //mutating func commit()
-    
-    func value(_ : ViewPart) -> Element
-    func adjustToSet(_ e : Element) -> Element
-    subscript(_ : ViewPart) -> Element { get }
+public protocol Nameable {
+    var str : String { get }
 }
 
-extension P {
-    func key(_ p : ViewPart) -> String { "\(Self.PREFIX)\(p)" }
-    func has(_ p : ViewPart) -> Bool { values[p] != nil }
-    
-    mutating func copy<O>(_ other : O)
-    where O: P, O.Element==Self.Element
-    {
-        self.reset()
-        ViewPart.allCases.forEach { p in self.values[p]=other[p] }
-    }
-    
-    mutating func reset() { self.values.removeAll() }
-    mutating func reload() {
-        self.reset()
-        ViewPart.allCases.forEach { p in
-            if let v = self.load(p) { self.values[p]=v }
-        }
-    }
-    
-    func value(_ p : ViewPart) -> Element { self.values[p] ?? Self.defaultValue(p) }
-    subscript(_ p: ViewPart) -> Element { self.value(p) }
-            
+extension UInt32 : Nameable {
+    var hex : String { String(format: "%08x",self) }
+    public var str : String { hex }
 }
 
-
-protocol PMutable : P {
-
-    var temps : Container { get set }
-    
-    func save(_ : ViewPart,_ : Element)
-    
-    mutating func revert()
-    mutating func commit()
-    
-
-    func adjustToSet(_ e : Element) -> Element
-    subscript(_ : ViewPart) -> Element { get set }
+extension Int32 : Nameable {
+    var hex : String { UInt32(truncatingIfNeeded: self).hex }
+    public var str : String { hex }
 }
 
-extension PMutable {
-    
-    mutating func reset() {
-        self.values.removeAll()
-        self.temps.removeAll()
-    }
-    mutating func reload() {
-        self.reset()
-        ViewPart.allCases.forEach { p in
-            if let v = self.load(p) { self.values[p]=v }
-        }
-    }
-    mutating func revert() { self.temps.removeAll() }
-    mutating func commit() {
-        self.values.merge(self.temps)
-        ViewPart.allCases.forEach { p in
-            if let v = self.temps[p] {
-                self.values[p]=v
-                self.save(p,v)
-            }
-        }
-        self.revert()
-    }
-    
-    subscript(_ p: ViewPart) -> Element {
-        get { self.temps[p] ?? self.value(p) }
-        set {
-            let v=self.adjustToSet(newValue)
-            self.temps[p]=v
-        }
-    }
+extension Int: Nameable { public var str : String { "\(self)" }}
+extension String : Nameable { public var str : String { self } }
+extension Bool : Nameable { public var str : String { self ? "ON" : "OFF" } }
+
+public protocol NameableEnumeration : CaseIterable, Hashable, Nameable {
+    init?(_ : String)
 }
 
-*/
-
-
-
+extension NameableEnumeration {
+    public init?(_ name : String) {
+        if let item = (Self.allCases.first { $0.str==name }) { self=item }
+        else { return nil }
+    }
+    public var str : String { "\(self)" }
+}
+    
+enum Tabs : NameableEnumeration {
+    case Dimensions
+    case Colours
+    case Fonts
+    case Files
+    
+    typealias DataMaker = (_ : DataMode) -> any DataProtocol
+    
+    static var kinds : [Tabs : DataMaker] = [ .Dimensions : { ViewDimensions($0) },
+                                                 .Colours :  { ViewColours($0) }]
+    func handler(_ m : DataMode) -> (any DataProtocol)? {
+        guard let mkr = Tabs.kinds[self] else { return nil }
+        return mkr(m)
+    }
+    
+}

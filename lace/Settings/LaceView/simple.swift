@@ -8,41 +8,40 @@
 import Foundation
 import AppKit
 
+
+
 enum DataMode {
     case Defaults
     case Temp
 }
 
 protocol ViewData {
-    associatedtype Element
+    associatedtype Element where Element : Decodable, Element : HasDefault
     typealias Container = [ViewPart:Element]
+    
+    var mode : DataMode { get set }
+    var values : Container { get set }
     
     static var PREFIX : String { get }
     func key(_ : ViewPart) -> String
     
-    var mode : DataMode { get }
-    var values : Container { get set }
     
-    func load(_ : ViewPart) -> Element?
-    func save(_ : ViewPart,_ : Element)
-    
-    func adjustToSet(_ : Element) -> Element
-    
-    static func defaultValue(_ : ViewPart) -> Element
-    func value(_ : ViewPart) -> Element
-    subscript(_ : ViewPart) -> Element { get set }
-    
+    init(_ mode : DataMode)
+    subscript(_ p : ViewPart) -> Element { get set }
     mutating func revert()
     mutating func commit()
     
+    func load(_ : ViewPart) -> Element?
+    func save(_ : ViewPart,_ : Element)
+    func adjustToSet(_ : Element) -> Element
     
 }
 
 extension ViewData {
+    
     func key(_ p : ViewPart) -> String { "\(Self.PREFIX)\(p)" }
-    func value(_ p : ViewPart) -> Element {
-         self.load(p) ?? Self.defaultValue(p)
-    }
+    
+    func value(_ p : ViewPart) -> Element { self.load(p) ?? (Element.def(p) as! Self.Element) }
     subscript(_ p: ViewPart) -> Element {
         get {
             let v=self.value(p)
@@ -64,45 +63,50 @@ extension ViewData {
         self.revert()
     }
     
+    func load(_ p : ViewPart) -> Element? { try? Defaults.read(key(p)) }
+    func save(_ p : ViewPart,_ v : Element) { try? Defaults.write(key(p),v) }
     
+    func adjustToSet(_ v: Element) -> Element { v }
 }
 
 
 
+
+
 class ViewDimensions : ViewData {
-    static let PREFIX = "Dimensions-"
     typealias Element = Double
+    static var PREFIX : String { "Dimensions-" }
     
+    var mode: DataMode = .Defaults
+    var values: Container = [ViewPart:Element]()
     
-    var values : Container = [:]
-    let mode : DataMode
-    
-    init(_ mode : DataMode = .Defaults) { self.mode=mode }
-    
-    static func defaultValue(_ p : ViewPart) -> Element { 1.0 }
-    public func load(_ p : ViewPart) -> Element?  { Defaults.double(forKey: key(p))}
-    public func save(_ p : ViewPart,_ v : Element) { Defaults.setDouble(forKey:key(p), value: v) }
-    
-    public func adjustToSet(_ v : Double) -> Double { v }
+    required init(_ mode : DataMode) { self.mode=mode }
     
 }
 
 
 
 class ViewColours : ViewData {
-    static let PREFIX = "Colours-"
     typealias Element = NSColor
+    static var PREFIX : String { "Colours-" }
     
-    var values : Container = [:]
-    let mode : DataMode
+    var mode: DataMode = .Defaults
+    var values: Container = [ViewPart:Element]()
     
-    init(_ mode : DataMode = .Defaults) { self.mode=mode }
-    
-    static func defaultValue(_ p : ViewPart) -> Element { (p == .Background) ? .white.deviceRGB : .black.deviceRGB }
-    public func load(_ p : ViewPart) -> Element?  { try? Defaults.colour(forKey: key(p))}
-    public func save(_ p : ViewPart,_ v : Element) { try? Defaults.setColour(value: v,forKey:key(p)) }
+    required init(_ mode : DataMode) { self.mode=mode }
     
     func adjustToSet(_ e: NSColor) -> NSColor { e.deviceRGB }
+}
+
+class ViewFonts : ViewData {
+    typealias Element = NSFont
+
+    static var PREFIX : String { "Fonts-" }
+    
+    var mode: DataMode = .Defaults
+    var values: Container = [ViewPart:Element]()
+    
+    required init(_ mode : DataMode) { self.mode=mode }
 }
 
 

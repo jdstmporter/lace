@@ -14,6 +14,7 @@ protocol Defaultable {
     static var zero : Self { get }
 }
 
+
 extension Int : Defaultable { static var zero: Int { 0 } }
 extension Float : Defaultable { static var zero: Float { 0 } }
 extension Double : Defaultable { static var zero: Double { 0 } }
