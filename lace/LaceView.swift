@@ -205,18 +205,20 @@ class LaceView : ViewBase {
     
     var tracker : [NSTrackingArea] = []
     
-    public private(set) var delegate : ViewDelegate?
+    public private(set) var cols : ViewColours?
+    public private(set) var dims : ViewDimensions?
     
     var pricking : Pricking = Pricking()
     
-    func setDelegate(_ d : ViewDelegate)  {
-        self.delegate = d
+    func setDelegates(_ c : ViewColours, _ d : ViewDimensions)  {
+        self.cols = c
+        self.dims = d
         self.reload()
     }
     
     func reload() {
-        guard let delegate=self.delegate else { return }
-        self.backgroundColor = delegate[.Background].colour
+        guard let cols=self.cols else { return }
+        self.backgroundColor = cols[.Background]
         self.touch()
     }
     
@@ -289,7 +291,7 @@ class LaceView : ViewBase {
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        guard let delegate=self.delegate else { return }
+        guard let cols=self.cols, let dims=self.dims else { return }
         self.clear()
         
         
@@ -300,24 +302,22 @@ class LaceView : ViewBase {
             self.needsTrackerUpdate=false
         }
         
-        let pin=delegate[.Pin]
-        let grid=delegate[.Grid]
+     
         
         pricking.grid.yRange.forEach { y in
             pricking.grid.xRange.forEach { x in
                 let isPin = pricking.grid[x,y]
-                let pinData = isPin ? pin : grid
-                let radius = pinData.dimension
-                let fg : NSColor = pinData.colour
+                let pinData : ViewPart = isPin ? .Pin : .Grid
+                let radius = dims[pinData]
+                let fg : NSColor = cols[pinData]
                 let p = pricking.grid.pos(x, y)
                 point(p,radius: radius,colour: fg)
                 
             }
         }
         
-        let lVals=delegate[.Line]
-        let stroke=lVals.colour
-        let width=lVals.dimension
+        let stroke=cols[.Line]
+        let width=dims[.Line]
         pricking.lines.forEach { line in
             stroke.setStroke()
             let l = invert(pricking.asScreenLine(line)) // invert(Line(grid: pricking.grid, line: line))

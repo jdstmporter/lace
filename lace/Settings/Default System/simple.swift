@@ -22,8 +22,8 @@ protocol ViewData {
     var mode : DataMode { get set }
     var values : Container { get set }
     
-    static var PREFIX : String { get }
-    func key(_ : ViewPart) -> String
+    static var PREFIX : DefaultKind { get }
+    
     
     
     init(_ mode : DataMode)
@@ -38,8 +38,6 @@ protocol ViewData {
 }
 
 extension ViewData {
-    
-    func key(_ p : ViewPart) -> String { "\(Self.PREFIX)\(p)" }
     
     func value(_ p : ViewPart) -> Element { self.load(p) ?? (Element.def(p) as! Self.Element) }
     subscript(_ p: ViewPart) -> Element {
@@ -63,19 +61,15 @@ extension ViewData {
         self.revert()
     }
     
-    func load(_ p : ViewPart) -> Element? { try? Defaults.read(key(p)) }
-    func save(_ p : ViewPart,_ v : Element) { try? Defaults.write(key(p),v) }
+    func load(_ p : ViewPart) -> Element? { Defaults.GetPart(kind:Self.PREFIX,part: p) }
+    func save(_ p : ViewPart,_ v : Element) { Defaults.SetPart(kind:Self.PREFIX,part: p,value: v) }
     
     func adjustToSet(_ v: Element) -> Element { v }
 }
 
-
-
-
-
 class ViewDimensions : ViewData {
     typealias Element = Double
-    static var PREFIX : String { "Dimensions-" }
+    static var PREFIX = DefaultKind.Dimension
     
     var mode: DataMode = .Defaults
     var values: Container = [ViewPart:Element]()
@@ -84,11 +78,9 @@ class ViewDimensions : ViewData {
     
 }
 
-
-
 class ViewColours : ViewData {
     typealias Element = NSColor
-    static var PREFIX : String { "Colours-" }
+    static var PREFIX = DefaultKind.Colour
     
     var mode: DataMode = .Defaults
     var values: Container = [ViewPart:Element]()
@@ -100,8 +92,7 @@ class ViewColours : ViewData {
 
 class ViewFonts : ViewData {
     typealias Element = NSFont
-
-    static var PREFIX : String { "Fonts-" }
+    static var PREFIX = DefaultKind.Font
     
     var mode: DataMode = .Defaults
     var values: Container = [ViewPart:Element]()
@@ -110,34 +101,4 @@ class ViewFonts : ViewData {
 }
 
 
-class ViewDelegate {
-    var colours : ViewColours
-    var dimensions : ViewDimensions
-    
-    init(_ mode : DataMode = .Defaults) {
-        colours=ViewColours(mode)
-        dimensions=ViewDimensions(mode)
-    }
-    
-    func set(_ row : ViewPart,_ colour : NSColor) { colours[row]=colour }
-    func set(_ row : ViewPart,_ dim : Double) { dimensions[row]=dim }
-    
-    func revert() {
-        self.colours.revert()
-        self.dimensions.revert()
-    }
-    func commit() {
-        self.colours.commit()
-        self.dimensions.commit()
-    }
-    subscript(_ row : ViewPart) -> (colour: NSColor, dimension: Double) {
-        (colour: self.colours[row], dimension: self.dimensions[row])
-    }
-    
-    static var the : [DataMode : ViewDelegate] = [:]
-    static func load(_ m : DataMode = .Defaults) -> ViewDelegate {
-        if the[m]==nil { the[m]=ViewDelegate(m) }
-        return the[m]!
-    }
-}
 

@@ -10,21 +10,7 @@ import AppKit
 
 // title, metadata comments
 
-extension NSFont {
-    
-    var components : [String:Any] {
-        var out : [String:Any] = [:]
-        out["Name"]=self.fontName
-        out["Size"] = self.pointSize
-        return out
-    }
-    
-    convenience init?(components c: [String:Any]) {
-        guard let name = c["Name"] as? String else { return  nil }
-        let size = c["Size"] as? CGFloat ?? 12.0
-        self.init(name: name, size: size)
-    }
-}
+
 
 
 

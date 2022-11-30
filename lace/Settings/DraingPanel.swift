@@ -13,7 +13,8 @@ class DrawingView : NSView, SettingsFacet {
     
     var wells : [ViewPart:NSColorWell] = [:]
     var fields : [ViewPart:NSTextField] = [:]
-    private var delegate : ViewDelegate = ViewDelegate(.Temp)
+    private var cols = ViewColours(.Temp)
+    private var dims = ViewDimensions(.Temp)
     
     @IBOutlet weak var backgroundColour: NSColorWell!
     @IBOutlet weak var gridColour: NSColorWell!
@@ -30,8 +31,8 @@ class DrawingView : NSView, SettingsFacet {
     
     func touch() {
         ViewPart.allCases.forEach { row in
-            if let well = wells[row] { delegate.set(row,well.color) }
-            if let field = fields[row] { delegate.set(row,field.doubleValue) }
+            if let well = wells[row] { cols[row]=well.color }
+            if let field = fields[row] { dims[row]=field.doubleValue }
         }
         
         laceView.touch()
@@ -39,10 +40,11 @@ class DrawingView : NSView, SettingsFacet {
     }
     
     func revert() {
-        delegate.revert()
+        cols.revert()
+        dims.revert()
         ViewPart.allCases.forEach { row in
-            wells[row]?.color = delegate[row].colour
-            fields[row]?.doubleValue = delegate[row].dimension
+            wells[row]?.color = cols[row]
+            fields[row]?.doubleValue = dims[row]
         }
         laceView.touch()
         
@@ -53,15 +55,16 @@ class DrawingView : NSView, SettingsFacet {
         self.laceView.reload()
         DispatchQueue.main.async { [self] in
             ViewPart.allCases.forEach { row in
-                if let well = wells[row] { well.color = delegate[row].colour }
-                if let text = fields[row] { text.doubleValue = delegate[row].dimension }
+                if let well = wells[row] { well.color = cols[row] }
+                if let text = fields[row] { text.doubleValue = dims[row] }
             }
         }
         
     }
     
     func save() throws {
-        delegate.commit()
+        cols.commit()
+        dims.commit()
         self.touch()
     }
     
@@ -91,7 +94,7 @@ class DrawingView : NSView, SettingsFacet {
         laceView.pricking.lines.append(GridLine(GridPoint(1,1), GridPoint(1,7)))
         
         DispatchQueue.main.async { [self] in
-            laceView.setDelegate(delegate)
+            laceView.setDelegates(cols,dims)
             laceView.touch()
         }
     }
@@ -102,14 +105,14 @@ class DrawingView : NSView, SettingsFacet {
         }
         else { syslog.debug("Matched somewhere funny") }
         self.touch()
-        ViewPart.allCases.forEach { syslog.debug("\($0) : \(self.delegate[$0].colour)") }
+        ViewPart.allCases.forEach { syslog.debug("\($0) : \(self.cols[$0])") }
     }
     
     func sizesEvent(_ field : NSTextField) {
         self.touch()
     }
     
-    func colour(_ row : ViewPart) -> NSColor? { self.delegate[row].colour }
+    func colour(_ row : ViewPart) -> NSColor? { self.cols[row] }
     
     func cleanup() {
         NSColorPanel.shared.close()

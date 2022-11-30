@@ -65,6 +65,7 @@
 		E1D51F3E280B3C1B00995497 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D51F3D280B3C1B00995497 /* SettingsController.swift */; };
 		E1D51F40280B3C8F00995497 /* Launchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D51F3F280B3C8F00995497 /* Launchable.swift */; };
 		E1DFD09B2932DC690075D971 /* decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DFD09A2932DC690075D971 /* decodable.swift */; };
+		E1DFD09E293802DD0075D971 /* enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DFD09D293802DD0075D971 /* enums.swift */; };
 		E1EBD81A283D7A9900D8E10C /* NSSizeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBD819283D7A9900D8E10C /* NSSizeExtensions.swift */; };
 		E1EBD81C284149A200D8E10C /* Calc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBD81B284149A200D8E10C /* Calc.swift */; };
 		E1EBD81E2844021500D8E10C /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBD81D2844021500D8E10C /* Errors.swift */; };
@@ -145,6 +146,7 @@
 		E1D51F3D280B3C1B00995497 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		E1D51F3F280B3C8F00995497 /* Launchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launchable.swift; sourceTree = "<group>"; };
 		E1DFD09A2932DC690075D971 /* decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = decodable.swift; sourceTree = "<group>"; };
+		E1DFD09D293802DD0075D971 /* enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enums.swift; sourceTree = "<group>"; };
 		E1EBD819283D7A9900D8E10C /* NSSizeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSSizeExtensions.swift; sourceTree = "<group>"; };
 		E1EBD81B284149A200D8E10C /* Calc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calc.swift; sourceTree = "<group>"; };
 		E1EBD81D2844021500D8E10C /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -268,9 +270,9 @@
 		E1383C032807738B009DEEFA /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				E1DFD09C2938016F0075D971 /* Default System */,
 				E11B738C28EC6461005AC2C9 /* Core Data */,
 				E17FBEE428CD3F6400408D89 /* LaceView */,
-				E1383C04280773AB009DEEFA /* UserDefaults.swift */,
 				E1383C0A2809AC30009DEEFA /* Files.swift */,
 				E1D51F3B280B383D00995497 /* Preferences.xib */,
 				E1D51F3D280B3C1B00995497 /* SettingsController.swift */,
@@ -298,8 +300,6 @@
 			children = (
 				E135749028135102005D84D6 /* Dimensions.swift */,
 				E1BD6A84280E049700430EC4 /* Colours.swift */,
-				E17FBEE528CD3F8D00408D89 /* common.swift */,
-				E11B739228EF4D3D005AC2C9 /* simple.swift */,
 				E11B739428F21BB0005AC2C9 /* simple2.swift */,
 			);
 			path = LaceView;
@@ -341,9 +341,20 @@
 				E1D51F3F280B3C8F00995497 /* Launchable.swift */,
 				E135749D28245909005D84D6 /* Log.swift */,
 				E1EBD81D2844021500D8E10C /* Errors.swift */,
-				E1DFD09A2932DC690075D971 /* decodable.swift */,
 			);
 			path = UUtils;
+			sourceTree = "<group>";
+		};
+		E1DFD09C2938016F0075D971 /* Default System */ = {
+			isa = PBXGroup;
+			children = (
+				E11B739228EF4D3D005AC2C9 /* simple.swift */,
+				E1DFD09A2932DC690075D971 /* decodable.swift */,
+				E17FBEE528CD3F8D00408D89 /* common.swift */,
+				E1383C04280773AB009DEEFA /* UserDefaults.swift */,
+				E1DFD09D293802DD0075D971 /* enums.swift */,
+			);
+			path = "Default System";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -441,6 +452,7 @@
 				E1EBD81C284149A200D8E10C /* Calc.swift in Sources */,
 				E1383C0B2809AC30009DEEFA /* Files.swift in Sources */,
 				E11B739728F3242A005AC2C9 /* PLIST.swift in Sources */,
+				E1DFD09E293802DD0075D971 /* enums.swift in Sources */,
 				E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */,
 				E1383BF627F79FC8009DEEFA /* Controller.swift in Sources */,
 				E11B739528F21BB0005AC2C9 /* simple2.swift in Sources */,

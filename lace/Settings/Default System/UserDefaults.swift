@@ -93,9 +93,17 @@ class Defaults {
         UserDefaults.standard.removeObject(forKey: key)
     }
     
+    static func GetPart<T>(kind : DefaultKind,part : ViewPart) -> T? where T : Decodable {
+        return try? read(Key(kind,part))
+    }
+    static func SetPart<T>(kind : DefaultKind,part : ViewPart,value : T) where T : Decodable {
+        try? write(Key(kind,part), value)
+    }
     
-    
-    
-    
-    
+ 
 }
+
+
+
+
+

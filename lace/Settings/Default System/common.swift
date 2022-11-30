@@ -31,7 +31,7 @@ extension Int: Nameable { public var str : String { "\(self)" }}
 extension String : Nameable { public var str : String { self } }
 extension Bool : Nameable { public var str : String { self ? "ON" : "OFF" } }
 
-public protocol NameableEnumeration : CaseIterable, Hashable, Nameable {
+public protocol NameableEnumeration : CaseIterable, Hashable, Nameable, Decodable {
     init?(_ : String)
 }
 
@@ -41,21 +41,13 @@ extension NameableEnumeration {
         else { return nil }
     }
     public var str : String { "\(self)" }
-}
     
-enum Tabs : NameableEnumeration {
-    case Dimensions
-    case Colours
-    case Fonts
-    case Files
-    
-    typealias DataMaker = (_ : DataMode) -> any DataProtocol
-    
-    static var kinds : [Tabs : DataMaker] = [ .Dimensions : { ViewDimensions($0) },
-                                                 .Colours :  { ViewColours($0) }]
-    func handler(_ m : DataMode) -> (any DataProtocol)? {
-        guard let mkr = Tabs.kinds[self] else { return nil }
-        return mkr(m)
+    public static func dec(x: Any) -> Self? {
+        guard let name = x as? String else { return nil }
+        return Self(name)
     }
-    
+    public func enc() -> Any? {
+        self.str
+    }
 }
+    
