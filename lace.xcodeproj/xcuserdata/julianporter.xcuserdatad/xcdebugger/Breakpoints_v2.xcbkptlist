@@ -284,8 +284,8 @@
             filePath = "lace/LaceView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "267"
-            endingLineNumber = "267"
+            startingLineNumber = "270"
+            endingLineNumber = "270"
             landmarkName = "updateTrackingAreas()"
             landmarkType = "7">
             <Locations>
@@ -332,8 +332,8 @@
             filePath = "lace/LaceView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "283"
-            endingLineNumber = "283"
+            startingLineNumber = "286"
+            endingLineNumber = "286"
             landmarkName = "updateTrackingAreas()"
             landmarkType = "7">
          </BreakpointContent>

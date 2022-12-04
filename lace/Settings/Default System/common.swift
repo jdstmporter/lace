@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AppKit
 
 protocol HasDefault {
     associatedtype V
@@ -17,19 +18,67 @@ public protocol Nameable {
     var str : String { get }
 }
 
-extension UInt32 : Nameable {
+extension UInt32 : Nameable, HasDefault {
     var hex : String { String(format: "%08x",self) }
     public var str : String { hex }
+    static func def(_ : ViewPart) -> UInt32 { zero }
 }
 
-extension Int32 : Nameable {
+extension Int32 : Nameable, HasDefault {
     var hex : String { UInt32(truncatingIfNeeded: self).hex }
     public var str : String { hex }
+    static func def(_ : ViewPart) -> Int32 { zero }
+}
+extension Double : Nameable, HasDefault {
+    public static func def(_ v : ViewPart) -> Double { 1 }
+    public var str : String { description }
 }
 
-extension Int: Nameable { public var str : String { "\(self)" }}
-extension String : Nameable { public var str : String { self } }
-extension Bool : Nameable { public var str : String { self ? "ON" : "OFF" } }
+extension NSColor : Nameable, HasDefault {
+    public static var zero : NSColor { .black }
+    public static func def(_ v : ViewPart) -> NSColor {
+        (v == .Background) ? .white.deviceRGB : .black.deviceRGB
+    }
+    public var str : String { rgba?.description ?? "[]" }
+}
+extension NSFont : Nameable, HasDefault {
+    public static var zero : NSFont { NSFont.systemFont(ofSize: NSFont.systemFontSize) }
+    public static func def(_ v : ViewPart) -> NSFont {
+        var size = NSFont.systemFontSize
+        switch v {
+        case .Title:
+            size+=2
+        case .Metadata:
+            break
+        case .Comment:
+            size=NSFont.smallSystemFontSize
+        default:
+            break
+        }
+        return NSFont.systemFont(ofSize: size)
+    }
+    public var str : String { components?.description ?? "[:]" }
+}
+extension URL : Nameable, HasDefault {
+    public static var zero : URL { URL(".") }
+    public static func def(_ : ViewPart) -> URL { zero }
+    public var str : String { path }
+}
+
+
+
+extension Int: Nameable, HasDefault {
+    public var str : String { description }
+    public static func def(_ : ViewPart) -> Int { zero }
+}
+extension String : Nameable, HasDefault {
+    public var str : String { self }
+    public static func def(_ : ViewPart) -> String { zero }
+}
+extension Bool : Nameable, HasDefault {
+    public var str : String { self ? "ON" : "OFF" }
+    public static func def(_ : ViewPart) -> Bool { false }
+}
 
 public protocol NameableEnumeration : CaseIterable, Hashable, Nameable, Decodable {
     init?(_ : String)

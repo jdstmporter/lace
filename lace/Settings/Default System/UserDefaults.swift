@@ -9,14 +9,6 @@ import Foundation
 import AppKit
 
 
-extension URL {
-    init?(resource r: String, extension ext: String) {
-        guard let url = Bundle.main.url(forResource: r, withExtension: ext) else { return nil }
-        self=url
-    }
-}
-
-
 
 
 class Defaults {
@@ -98,6 +90,9 @@ class Defaults {
     }
     static func SetPart<T>(kind : DefaultKind,part : ViewPart,value : T) where T : Decodable {
         try? write(Key(kind,part), value)
+    }
+    static func RemovePart(kind : DefaultKind,part : ViewPart) {
+        remove(forKey: Key(kind,part))
     }
     
  

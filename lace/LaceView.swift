@@ -205,20 +205,20 @@ class LaceView : ViewBase {
     
     var tracker : [NSTrackingArea] = []
     
-    public private(set) var cols : ViewColours?
+    public private(set) var colours : ViewColours?
     public private(set) var dims : ViewDimensions?
     
     var pricking : Pricking = Pricking()
     
     func setDelegates(_ c : ViewColours, _ d : ViewDimensions)  {
-        self.cols = c
+        self.colours = c
         self.dims = d
         self.reload()
     }
     
     func reload() {
-        guard let cols=self.cols else { return }
-        self.backgroundColor = cols[.Background]
+        guard let colours=self.colours else { return }
+        self.backgroundColor = colours[.Background]
         self.touch()
     }
     
@@ -253,12 +253,15 @@ class LaceView : ViewBase {
     func getScaling() {
         pricking.grid.scale = Display.current.convertToPixels(metres: self.spacingInMetres)
     }
+    
     func setSpacing(inMetres: CGFloat) {
         self.spacingInMetres=inMetres
         self.getScaling()
         self.needsTrackerUpdate=true
         self.touch()
     }
+    
+    /// drawing functions
     
     override func updateTrackingAreas() {
         super.updateTrackingAreas()
@@ -291,7 +294,7 @@ class LaceView : ViewBase {
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        guard let cols=self.cols, let dims=self.dims else { return }
+        guard let colours=self.colours, let dims=self.dims else { return }
         self.clear()
         
         
@@ -309,14 +312,14 @@ class LaceView : ViewBase {
                 let isPin = pricking.grid[x,y]
                 let pinData : ViewPart = isPin ? .Pin : .Grid
                 let radius = dims[pinData]
-                let fg : NSColor = cols[pinData]
+                let fg : NSColor = colours[pinData]
                 let p = pricking.grid.pos(x, y)
                 point(p,radius: radius,colour: fg)
                 
             }
         }
         
-        let stroke=cols[.Line]
+        let stroke=colours[.Line]
         let width=dims[.Line]
         pricking.lines.forEach { line in
             stroke.setStroke()
@@ -342,6 +345,7 @@ class LaceView : ViewBase {
         //}
     }
     
+    /// Mouse stuff
     
     
     override func didClick(_ at: NSPoint) {

@@ -27,6 +27,9 @@ public enum ViewPart : Int, CaseIterable, Nameable {
     case Metadata = 5
     case Comment = 6
     
+    case LastPath = 7
+    case DataDirectory = 8
+    
     public var str : String { "\(self)" }
 }
 

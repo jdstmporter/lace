@@ -17,7 +17,3 @@ extension Dictionary {
 }
 
 
-extension Double : HasDefault {
-    public static func def(_ v : ViewPart) -> Double { 1 }
-}
-

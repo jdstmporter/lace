@@ -10,7 +10,6 @@
 		E10DDC2F2882DD55003A5C9C /* CGApproach.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10DDC2E2882DD55003A5C9C /* CGApproach.swift */; };
 		E10DDC31288342AE003A5C9C /* Displays.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10DDC30288342AE003A5C9C /* Displays.swift */; };
 		E11B739328EF4D3D005AC2C9 /* simple.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11B739228EF4D3D005AC2C9 /* simple.swift */; };
-		E11B739528F21BB0005AC2C9 /* simple2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11B739428F21BB0005AC2C9 /* simple2.swift */; };
 		E11B739728F3242A005AC2C9 /* PLIST.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11B739628F3242A005AC2C9 /* PLIST.swift */; };
 		E11B739928F32476005AC2C9 /* threads.plist in Resources */ = {isa = PBXBuildFile; fileRef = E11B739828F32476005AC2C9 /* threads.plist */; };
 		E11B739B28F4C873005AC2C9 /* threadTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11B739A28F4C873005AC2C9 /* threadTypes.swift */; };
@@ -22,7 +21,7 @@
 		E11B73AA28FC993A005AC2C9 /* pricker32.png in Resources */ = {isa = PBXBuildFile; fileRef = E11B73A628FC993A005AC2C9 /* pricker32.png */; };
 		E11B73AB28FC993A005AC2C9 /* pricker64.png in Resources */ = {isa = PBXBuildFile; fileRef = E11B73A728FC993A005AC2C9 /* pricker64.png */; };
 		E11B73AC28FC993A005AC2C9 /* pricker1024.png in Resources */ = {isa = PBXBuildFile; fileRef = E11B73A828FC993A005AC2C9 /* pricker1024.png */; };
-		E135749128135102005D84D6 /* Dimensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135749028135102005D84D6 /* Dimensions.swift */; };
+		E135749128135102005D84D6 /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135749028135102005D84D6 /* DictionaryExtensions.swift */; };
 		E13574962815BE45005D84D6 /* DraingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13574952815BE45005D84D6 /* DraingPanel.swift */; };
 		E13574982819BDF4005D84D6 /* GridPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13574972819BDF4005D84D6 /* GridPanel.swift */; };
 		E135749A281C92B0005D84D6 /* PathsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1357499281C92B0005D84D6 /* PathsView.swift */; };
@@ -81,7 +80,6 @@
 		E11B738E28EC64C9005AC2C9 /* LaceModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LaceModel.xcdatamodel; sourceTree = "<group>"; };
 		E11B739028EC6527005AC2C9 /* core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = core.swift; sourceTree = "<group>"; };
 		E11B739228EF4D3D005AC2C9 /* simple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simple.swift; sourceTree = "<group>"; };
-		E11B739428F21BB0005AC2C9 /* simple2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simple2.swift; sourceTree = "<group>"; };
 		E11B739628F3242A005AC2C9 /* PLIST.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLIST.swift; sourceTree = "<group>"; };
 		E11B739828F32476005AC2C9 /* threads.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = threads.plist; sourceTree = "<group>"; };
 		E11B739A28F4C873005AC2C9 /* threadTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = threadTypes.swift; sourceTree = "<group>"; };
@@ -93,7 +91,7 @@
 		E11B73A628FC993A005AC2C9 /* pricker32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pricker32.png; path = lace/Assets.xcassets/pricker32.png; sourceTree = "<group>"; };
 		E11B73A728FC993A005AC2C9 /* pricker64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pricker64.png; path = lace/Assets.xcassets/pricker64.png; sourceTree = "<group>"; };
 		E11B73A828FC993A005AC2C9 /* pricker1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pricker1024.png; path = lace/Assets.xcassets/pricker1024.png; sourceTree = "<group>"; };
-		E135749028135102005D84D6 /* Dimensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Dimensions.swift; sourceTree = "<group>"; };
+		E135749028135102005D84D6 /* DictionaryExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
 		E13574952815BE45005D84D6 /* DraingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraingPanel.swift; sourceTree = "<group>"; };
 		E13574972819BDF4005D84D6 /* GridPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPanel.swift; sourceTree = "<group>"; };
 		E1357499281C92B0005D84D6 /* PathsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathsView.swift; sourceTree = "<group>"; };
@@ -298,9 +296,7 @@
 		E17FBEE428CD3F6400408D89 /* LaceView */ = {
 			isa = PBXGroup;
 			children = (
-				E135749028135102005D84D6 /* Dimensions.swift */,
 				E1BD6A84280E049700430EC4 /* Colours.swift */,
-				E11B739428F21BB0005AC2C9 /* simple2.swift */,
 			);
 			path = LaceView;
 			sourceTree = "<group>";
@@ -337,6 +333,7 @@
 		E1DFD0992932DC0F0075D971 /* UUtils */ = {
 			isa = PBXGroup;
 			children = (
+				E135749028135102005D84D6 /* DictionaryExtensions.swift */,
 				E1EBD819283D7A9900D8E10C /* NSSizeExtensions.swift */,
 				E1D51F3F280B3C8F00995497 /* Launchable.swift */,
 				E135749D28245909005D84D6 /* Log.swift */,
@@ -455,7 +452,6 @@
 				E1DFD09E293802DD0075D971 /* enums.swift in Sources */,
 				E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */,
 				E1383BF627F79FC8009DEEFA /* Controller.swift in Sources */,
-				E11B739528F21BB0005AC2C9 /* simple2.swift in Sources */,
 				E13574982819BDF4005D84D6 /* GridPanel.swift in Sources */,
 				E1383BE727F79C93009DEEFA /* AppDelegate.swift in Sources */,
 				E1383C012803787C009DEEFA /* Lines.swift in Sources */,
@@ -464,7 +460,7 @@
 				E1D51F40280B3C8F00995497 /* Launchable.swift in Sources */,
 				E1383BFA27F9E304009DEEFA /* Grid.swift in Sources */,
 				E1836095282C643100414F20 /* ThreadInfo.swift in Sources */,
-				E135749128135102005D84D6 /* Dimensions.swift in Sources */,
+				E135749128135102005D84D6 /* DictionaryExtensions.swift in Sources */,
 				E183608F282A85FB00414F20 /* Calculator.swift in Sources */,
 				E11B739328EF4D3D005AC2C9 /* simple.swift in Sources */,
 				E1383C092808DACC009DEEFA /* FilePicker.swift in Sources */,

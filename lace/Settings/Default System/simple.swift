@@ -35,6 +35,8 @@ protocol ViewData {
     func save(_ : ViewPart,_ : Element)
     func adjustToSet(_ : Element) -> Element
     
+    func has(_ : ViewPart) -> Bool
+    
 }
 
 extension ViewData {
@@ -47,7 +49,8 @@ extension ViewData {
         }
         set {
             let v=self.adjustToSet(newValue)
-            self.values[p]=v
+            if self.mode == .Defaults { self.save(p,v) }
+            else { self.values[p]=v }
         }
     }
     mutating func revert() { self.values.removeAll() }
@@ -63,8 +66,17 @@ extension ViewData {
     
     func load(_ p : ViewPart) -> Element? { Defaults.GetPart(kind:Self.PREFIX,part: p) }
     func save(_ p : ViewPart,_ v : Element) { Defaults.SetPart(kind:Self.PREFIX,part: p,value: v) }
+    func del(_ p : ViewPart) { Defaults.RemovePart(kind: Self.PREFIX, part: p) }
+    
+    func readAndClear(_ p : ViewPart) -> Element? {
+        let v = load(p)
+        del(p)
+        return v
+    }
     
     func adjustToSet(_ v: Element) -> Element { v }
+    
+    func has(_ p : ViewPart) -> Bool { load(p) != nil }
 }
 
 class ViewDimensions : ViewData {
@@ -98,6 +110,18 @@ class ViewFonts : ViewData {
     var values: Container = [ViewPart:Element]()
     
     required init(_ mode : DataMode) { self.mode=mode }
+}
+
+class ViewPaths : ViewData {
+    typealias Element = URL
+    static var PREFIX = DefaultKind.URL
+    
+    var mode: DataMode = .Defaults
+    var values: Container = [ViewPart:Element]()
+    
+    required init(_ mode : DataMode) { self.mode=mode }
+    
+    
 }
 
 

@@ -64,6 +64,8 @@ class ViewPartFonts {
         return c
     }
     
+    var fonts = ViewFonts(.Temp)
+    
     init() {  }
     
     internal func defaultValue(_ p : FontPart) -> NSFont {
@@ -79,30 +81,18 @@ class ViewPartFonts {
         return NSFont.systemFont(ofSize: size)
     }
     
-    public subscript(_ p : FontPart) -> NSFont {
-        get { values[p] ?? defaultValue(p) }
-        set { values[p] = newValue }
+    public subscript(_ p : ViewPart) -> NSFont {
+        get { fonts[p] }
+        set { fonts[p] = newValue }
     }
-    public func has(_ p : FontPart) -> Bool { values[p] != nil }
+    public func has(_ p : ViewPart) -> Bool { fonts.has(p) }
     public func makeIterator() -> Iterator { values.makeIterator() }
     
     public func touch() {}
     public func reset() { self.values.removeAll() }
     
-    public func saveDefault() throws {
-        try FontPart.allCases.forEach { p in
-            try Defaults.setFont(value: self[p], forKey: "\(ViewPartFonts.PREFIX)\(p)")
-        }
-    }
-    public func loadDefault() {
-        self.values.removeAll()
-        FontPart.allCases.forEach { p in
-            do { self[p]=try Defaults.font(forKey: "\(ViewPartFonts.PREFIX)\(p)") }
-            catch(let e) {
-                syslog.error("Error loading: \(e) - reverting to default")
-            }
-        }
-    }
+    public func saveDefault() throws { fonts.commit() }
+    public func loadDefault() { self.fonts.revert() }
 }
 
 class FontView : NSView, SettingsFacet, NSFontChanging {
@@ -123,10 +113,10 @@ class FontView : NSView, SettingsFacet, NSFontChanging {
     @IBOutlet weak var metadataButton : NSButton!
     @IBOutlet weak var commentButton : NSButton!
     
-    var labels : [FontPart:NSTextField] = [:]
-    var fonts = ViewPartFonts()
-    var part : FontPart?
-    
+    var labels : [ViewPart:NSTextField] = [:]
+    var fonts = ViewFonts(.Temp)
+    var part : ViewPart?
+    static let AllParts : [ViewPart] = [.Title,.Metadata,.Comment]
    
     
     func initialise() {
@@ -135,25 +125,23 @@ class FontView : NSView, SettingsFacet, NSFontChanging {
         labels[.Comment] = commentText
         
         self.load()
-        FontPart.allCases.forEach { part in
-            syslog.debug("Font for \(part) is \(fonts[part])")
-        }
+    
     }
     
     func load() {
-        fonts.loadDefault()
+        fonts.revert()
         DispatchQueue.main.async {[self] in
-            FontPart.allCases.forEach { font in
+            FontView.AllParts.forEach { font in
                 if let label=labels[font] { label.font = fonts[font] }
             }
         }
     }
     
     func save() throws {
-        FontPart.allCases.forEach { font in
+        FontView.AllParts.forEach { font in
             if let label=labels[font], let f = label.font { fonts[font] = f }
         }
-        try self.fonts.saveDefault()
+        self.fonts.commit()
     }
     
     
@@ -174,7 +162,7 @@ class FontView : NSView, SettingsFacet, NSFontChanging {
     }
     
     @IBAction func actionCallback(_ button: NSButton!) {
-        guard let part=FontPart(rawValue: button.tag) else { return }
+        guard let part=ViewPart(rawValue: button.tag) else { return }
         self.part=part
         let font=fonts[part]
         syslog.debug("Changing part \(part) with current font \(font)")

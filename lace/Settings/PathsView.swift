@@ -11,8 +11,10 @@ import AppKit
 class PathsView : NSView, SettingsFacet {
     
     @IBOutlet var pathView : NSPathControl!
+
+    var lsf = ViewPaths(.Defaults)
     
-    var path : URL = URL.userHome
+    var path : URL { lsf[.LastPath] }
     
     func update() {
         DispatchQueue.main.async {
@@ -23,23 +25,17 @@ class PathsView : NSView, SettingsFacet {
     @IBAction func pathChange(_ obj : Any) {
         let fp = FilePicker(url: self.path, types: [])
         guard fp.runSync(), let dir=fp.dir else { return }
-        self.path=dir
+        self.lsf[.LastPath]=dir
         self.update()
     }
     
     func load() {
-        do {
-            self.path = try LoadSaveFiles.RootPath()
-        }
-        catch {
-            self.path = URL.userHome
-        }
         self.update()
     }
     
     func save() throws {
-        try Defaults.write("DataDirectory", self.path.path)
-        Defaults.remove(forKey: "LastPath")
+        let p = lsf.readAndClear(.LastPath) ?? URL.def(.LastPath)
+        lsf[.DataDirectory]=p.asDirectory()
     }
     
     func initialise() {

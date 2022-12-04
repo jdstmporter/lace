@@ -10,66 +10,67 @@ import AppKit
 
 
 
-extension URL {
-    static var userHome : URL { URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true) }
-}
+
 
 class LoadSaveFiles {
     
-    let root : URL
     
-    var lastPath : String {
-        get {
-            let s : String? = Defaults.string(forKey:"LastPath")
-            return s ?? self.root.path
-        }
-        set { Defaults.setString(forKey:"LastPath",value: newValue) }
-    }
-    var isLastPathSet : Bool {
-        let s : String? = Defaults.string(forKey:"LastPath")
-        return s != nil
+    private var urls : ViewPaths = ViewPaths(.Defaults)
+    
+    
+    init() {}
+    
+    func initialisePaths(_ u : URL) {
+        self.urls[.LastPath]=u
+        self.urls[.DataDirectory]=u.asDirectory()
     }
     
-    init()  throws {
-       
-        var path : String? = Defaults.string(forKey: "DataDirectory")
-        syslog.debug("Loaded path: \(path ?? "nil")")
-        if path == nil {    /* need to set path*/
+    func fixDataRoot() throws {
+        if !urls.has(.DataDirectory) {    /* need to set path*/
             guard let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String
-            else { throw FileError.CannotFindBundleIdentifier } 
-            var userHome = URL.userHome
-            userHome.appendPathComponent(appName)
-            path = userHome.path
-            syslog.info("Setting file path to \(path!)")
-            Defaults.setString(forKey: "DataDirectory", value:path!)
+            else { throw FileError.CannotFindBundleIdentifier }
+            var p = URL.userHome
+            p.appendPathComponent(appName)
+            syslog.info("Setting file path to \(p)")
+            self.initialisePaths(p)
         }
+    }
+    
+    func fixDataDirectory() throws {
+        var root : URL = self.urls[.DataDirectory]
+        syslog.debug("Loaded path: \(root)")
         let fm = FileManager.default
         syslog.debug("Checking data directory exists")
-        if !fm.fileExists(atPath: path!) {
+        if !fm.fileExists(at: root) {
             syslog.debug("Creating")
-            try fm.createDirectory(atPath: path!, withIntermediateDirectories: false)
+            try fm.createDirectory(at: root, withIntermediateDirectories: false)
         }
-        
-        self.root=URL(fileURLWithPath: path!, isDirectory: true)
-        syslog.info("Ready with document root \(self.root)")
+        syslog.info("Ready with document root \(root)")
     }
     
-    static func RootPath() throws -> URL {
-        try LoadSaveFiles().root
+    func initialise()  throws {
+        try fixDataRoot()
+        try fixDataDirectory()
     }
+    
+    //static func RootPath() throws -> URL {
+     //   try LoadSaveFiles().root
+    //}
+    
     
     func load<T>(pick: Bool) throws -> T
     where T : Codable
     {
         if pick {
-            let picker = FileReadPicker(def: self.lastPath)
+            let picker = FileReadPicker(def: self.urls[.LastPath])
             guard picker.runSync() else {
                 throw FileError.CannotPickLoadFile
             }
-            self.lastPath=picker.path
+            self.urls[.LastPath]=picker.url
         }
         
-        let d = try Data(contentsOf: URL(fileURLWithPath: self.lastPath))
+        
+        let d = try Data(contentsOf: self.urls[.LastPath])
         let decoder=JSONDecoder()
         return try decoder.decode(T.self, from: d)
     }
@@ -77,18 +78,18 @@ class LoadSaveFiles {
     func save<T>(_ data : T,pick: Bool,compact: Bool=true) throws
     where T : Codable
     {
-        if pick || !self.isLastPathSet {
-            let picker = FilePicker(def: self.lastPath)
+        if pick || !urls.has(.LastPath) {
+            let picker = FilePicker(def: self.urls[.LastPath])
             guard picker.runSync() else {
                 throw FileError.CannotPickSaveFile
             }
-            self.lastPath=picker.path
+            self.urls[.LastPath]=picker.url
         }
         
         let encoder=JSONEncoder()
         if !compact { encoder.outputFormatting = .prettyPrinted }
         let d = try encoder.encode(data)
-        try d.write(to: URL(fileURLWithPath: self.lastPath))
+        try d.write(to: self.urls[.LastPath])
     }
     
 }

@@ -52,10 +52,10 @@ extension NSFont : Decodable {
 extension URL : Decodable {
     public static func dec(x: Any) -> URL? {
         guard let path = x as? String else { return nil }
-        return URL(fileURLWithPath: path)
+        return URL(path)
     }
     public func enc() -> Any? {
-        self.path
+        self.relativePath
     }
 }
 

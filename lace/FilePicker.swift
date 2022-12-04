@@ -43,6 +43,10 @@ class FilePicker {
         savePanel.nameFieldStringValue=self.url.path
     }
     
+    convenience init (def : URL?) {
+        self.init(def: def?.str)
+    }
+    
     var path : String { url.path }
     var dirPath : String? { dir?.path }
     
@@ -76,10 +80,12 @@ class FileReadPicker {
     typealias Handler = (Bool,String) -> ()
     var loadPanel : NSOpenPanel
     var path : String
+    var url : URL
     
     init(def : String?, types : [String] = ["json"]) {
         let ftypes = types.compactMap { UTType(filenameExtension: $0) }
         path = def ?? "./lace.json"
+        url = URL(path)
         loadPanel=NSOpenPanel.init()
         loadPanel.canChooseFiles=true
         loadPanel.canChooseDirectories=false
@@ -96,11 +102,16 @@ class FileReadPicker {
         loadPanel.nameFieldStringValue=self.path
     }
     
+    convenience init (def : URL?) {
+        self.init(def: def?.str)
+    }
+    
     @discardableResult func handler(_ response : NSApplication.ModalResponse) -> Bool {
         switch response {
         case .OK:
             guard let url=self.loadPanel.urls.first else { return false }
             self.path = url.path
+            self.url = url
             return true
         case .cancel:
             return false

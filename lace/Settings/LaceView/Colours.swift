@@ -9,13 +9,7 @@ import Foundation
 import AppKit
 import CoreGraphics
 
-typealias Serialised = [String : Any]
 
-protocol Parameter {
-    associatedtype V
-    var serialised : Serialised? { get }
-    static func load(_ : Serialised) -> V?
-}
 
 extension NSColor  {
     
@@ -38,42 +32,9 @@ extension NSColor  {
         self.init(colorSpace: .deviceRGB,components: c,count: c.count )
     }
 }
-extension NSColor : Parameter {
-    static func load(_ p : Serialised) -> NSColor? {
-        guard let rgba=p["rgba"] as? [CGFloat] else { return nil }
-        return NSColor(rgba)
-    }
-    var serialised: Serialised? {
-        guard let rgba = self.rgba else { return nil}
-        return ["rgba" : rgba]
-    }
-    
-    
-}
-extension NSColor : HasDefault {
-    public static var zero : NSColor { .black }
-    public static func def(_ v : ViewPart) -> NSColor {
-        (v == .Background) ? .white.deviceRGB : .black.deviceRGB
-    }
-}
 
-extension NSFont : HasDefault {
-    public static var zero : NSFont { NSFont.systemFont(ofSize: NSFont.systemFontSize) }
-    public static func def(_ v : ViewPart) -> NSFont {
-        var size = NSFont.systemFontSize
-        switch v {
-        case .Title:
-            size+=2
-        case .Metadata:
-            break
-        case .Comment:
-            size=NSFont.smallSystemFontSize
-        default:
-            break
-        }
-        return NSFont.systemFont(ofSize: size)
-    }
-}
+
+
 
 extension NSFont {
     convenience init?(components c: [String:Any]) {
@@ -90,27 +51,37 @@ extension NSFont {
     }
 }
 
+extension URL {
+    init?(resource r: String, extension ext: String) {
+        guard let url = Bundle.main.url(forResource: r, withExtension: ext) else { return nil }
+        self=url
+    }
+    init( _ s : String) { self.init(fileURLWithPath: s) }
+    func asDirectory() -> URL { URL(fileURLWithPath: self.path, isDirectory: true) }
+    static var userHome : URL { URL(fileURLWithPath: NSHomeDirectory(), isDirectory: true) }
+}
 
-extension NSFont : Parameter {
+extension FileManager {
+    func fileExists(at: URL) -> Bool { fileExists(atPath: at.path) }
+}
+
+struct FileInfo {
+    let exists : Bool
+    let dir: Bool
     
-    var serialised : Serialised? { self.components }
-
-    static func load(_ s: Serialised) -> NSFont? { NSFont(components: s) }
-}
-
-extension Double : Parameter {
-    var serialised : Serialised? { ["value" : self] }
-    static func load(_ s : Serialised) -> Double? {
-        guard let v=s["value"] as? Double else { return nil }
-        return v
+    init(at: URL) {
+        var d = ObjCBool(false)
+        self.exists = FileManager.default.fileExists(atPath: at.path, isDirectory: &d)
+        self.dir=d.boolValue
     }
-}
-extension String : Parameter {
-    var serialised : Serialised? { ["value" : self] }
-    static func load(_ s : Serialised) -> String? {
-        guard let v=s["value"] as? String else { return nil }
-        return v
+    init(exists: Bool,dir: Bool) {
+        self.exists=exists
+        self.dir=dir
     }
+    var existsAsDir : Bool { exists && dir }
+    var existsAsNonDir : Bool { exists && !dir }
 }
+
+
 
 
