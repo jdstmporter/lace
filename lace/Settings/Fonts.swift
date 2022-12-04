@@ -118,6 +118,9 @@ class FontView : NSView, SettingsFacet, NSFontChanging {
     var part : ViewPart?
     static let AllParts : [ViewPart] = [.Title,.Metadata,.Comment]
    
+    func setLabel(_ p : ViewPart) {
+        labels[p]?.stringValue = fonts[p].description
+    }
     
     func initialise() {
         labels[.Title] = titleText
@@ -129,23 +132,37 @@ class FontView : NSView, SettingsFacet, NSFontChanging {
     }
     
     func load() {
-        fonts.revert()
+        self.fonts.revert()
         DispatchQueue.main.async {[self] in
-            FontView.AllParts.forEach { font in
-                if let label=labels[font] { label.font = fonts[font] }
-            }
+            FontView.AllParts.forEach { self.setLabel($0) }
         }
     }
     
     func save() throws {
-        FontView.AllParts.forEach { font in
-            if let label=labels[font], let f = label.font { fonts[font] = f }
-        }
         self.fonts.commit()
     }
     
     
+ 
     
+    @IBAction func actionCallback(_ button: NSButton!) {
+        guard let part=ViewPart(rawValue: button.tag) else { return }
+        self.part=part
+        let font=fonts[part]
+        syslog.debug("Changing part \(part) with current font \(font)")
+        
+        NSFontManager.shared.target=self
+        NSFontPanel.shared.setPanelFont(font, isMultiple: false)
+        NSFontPanel.shared.makeKeyAndOrderFront(self)
+       
+    }
+    
+    func cleanup() {
+        NSFontPanel.shared.close()
+    }
+    
+    /// Callback from NSFontManager
+    ///
     @objc func changeFont(_ sender : NSFontManager?) {
         guard let p=self.part else { return }
         
@@ -156,61 +173,11 @@ class FontView : NSView, SettingsFacet, NSFontChanging {
         syslog.debug("Converted font")
         
         fonts[p]=font
-        labels[p]?.font=font
+        self.setLabel(p)
         
         self.part=nil
     }
     
-    @IBAction func actionCallback(_ button: NSButton!) {
-        guard let part=ViewPart(rawValue: button.tag) else { return }
-        self.part=part
-        let font=fonts[part]
-        syslog.debug("Changing part \(part) with current font \(font)")
-        
-        NSFontManager.shared.target=self
-        
-        
-        NSFontPanel.shared.setPanelFont(font, isMultiple: false)
-        NSFontPanel.shared.makeKeyAndOrderFront(self)
-       
-    }
-    
-    func cleanup() {
-        NSFontPanel.shared.close()
-    }
-    
-    
     
 }
 
-class FontChanger {
-    typealias Callback = (NSFont) -> ()
-    
-    var font : NSFont!
-    var callback : Callback!
-    
-    init(callback : @escaping Callback) {
-        self.callback=callback
-        
-        let fm = NSFontManager.shared
-        fm.target=self
-        fm.action=#selector(changeFont(_:))
-    }
-    
-    @objc func changeFont(_ sender : Any?) {
-        guard let fm = sender as? NSFontManager, let fo = self.font else { return }
-        let f = fm.convert(fo)
-        callback?(f)
-    }
-    
-    func change(_ font : NSFont) {
-        self.font=font
-        
-        NSFontPanel.shared.setPanelFont(self.font, isMultiple: false)
-        //panel.isEnabled=true
-        //panel
-        //panel.worksWhenModal=true
-        
-        NSFontPanel.shared.makeKeyAndOrderFront(self)
-    }
-}
