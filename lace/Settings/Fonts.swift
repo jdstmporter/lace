@@ -64,7 +64,7 @@ class ViewPartFonts {
         return c
     }
     
-    var fonts = ViewFonts(.Temp)
+    var fonts = ViewFonts()
     
     init() {  }
     
@@ -114,12 +114,12 @@ class FontView : NSView, SettingsFacet, NSFontChanging {
     @IBOutlet weak var commentButton : NSButton!
     
     var labels : [ViewPart:NSTextField] = [:]
-    var fonts = ViewFonts(.Temp)
+    var fonts = ViewFonts()
     var part : ViewPart?
     static let AllParts : [ViewPart] = [.Title,.Metadata,.Comment]
    
     func setLabel(_ p : ViewPart) {
-        labels[p]?.stringValue = fonts[p].description
+        labels[p]?.stringValue = fonts[p].humanName
     }
     
     func initialise() {

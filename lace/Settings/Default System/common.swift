@@ -47,7 +47,7 @@ extension NSFont : Nameable, HasDefault {
         var size = NSFont.systemFontSize
         switch v {
         case .Title:
-            size+=2
+            size=NSFont.systemFontSize(for: .large)
         case .Metadata:
             break
         case .Comment:

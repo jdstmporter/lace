@@ -41,7 +41,7 @@ class Defaults {
     //    UserDefaults.standard.dictionaryRepresentation()
     //}
     
-    subscript<T>(_ key : String) -> T? where T : Decodable {
+    subscript<T>(_ key : String) -> T? where T : EncDec {
         get {
             guard let x = UserDefaults.standard.object(forKey: key) else { return nil }
             return dec(x)
@@ -65,12 +65,12 @@ class Defaults {
         return t
     }
     
-    static func read<T>(_ key: String) throws -> T where T : Decodable {
+    static func read<T>(_ key: String) throws -> T where T : EncDec {
         let it = try check()
         guard let c : T = it[key] else { throw DefaultError.CannotDecodeKey(key) }
         return c
     }
-    static func write<T>(_ key: String,_ value : T) throws where T : Decodable {
+    static func write<T>(_ key: String,_ value : T) throws where T : EncDec {
         let it = try check()
         it[key]=value
     }
@@ -85,10 +85,10 @@ class Defaults {
         UserDefaults.standard.removeObject(forKey: key)
     }
     
-    static func GetPart<T>(kind : DefaultKind,part : ViewPart) -> T? where T : Decodable {
+    static func GetPart<T>(kind : DefaultKind,part : ViewPart) -> T? where T : EncDec {
         return try? read(Key(kind,part))
     }
-    static func SetPart<T>(kind : DefaultKind,part : ViewPart,value : T) where T : Decodable {
+    static func SetPart<T>(kind : DefaultKind,part : ViewPart,value : T) where T : EncDec {
         try? write(Key(kind,part), value)
     }
     static func RemovePart(kind : DefaultKind,part : ViewPart) {

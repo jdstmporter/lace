@@ -49,6 +49,10 @@ extension NSFont {
         out["size"] = size
         return out
     }
+    var humanName : String {
+        let name=self.displayName ?? self.familyName ?? self.fontName
+        return "\(name) \(self.pointSize)"
+    }
 }
 
 extension URL {

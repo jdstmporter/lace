@@ -13,8 +13,8 @@ class DrawingView : NSView, SettingsFacet {
     
     var wells : [ViewPart:NSColorWell] = [:]
     var fields : [ViewPart:NSTextField] = [:]
-    private var cols = ViewColours(.Temp)
-    private var dims = ViewDimensions(.Temp)
+    //private var cols = ViewColours(.Temp)
+    //private var dims = ViewDimensions(.Temp)
     
     @IBOutlet weak var backgroundColour: NSColorWell!
     @IBOutlet weak var gridColour: NSColorWell!
@@ -27,6 +27,14 @@ class DrawingView : NSView, SettingsFacet {
     @IBOutlet weak var laceView : LaceView!
     
     
+    var dims : ViewDimensions! {
+        get { laceView?.dims }
+        set { laceView?.dims = newValue }
+    }
+    var cols : ViewColours! {
+        get { laceView?.colours }
+        set { laceView?.colours = newValue }
+    }
     
     
     func touch() {
@@ -41,7 +49,7 @@ class DrawingView : NSView, SettingsFacet {
     
     func revert() {
         cols.revert()
-        dims.revert()
+        laceView?.dims.revert()
         ViewPart.allCases.forEach { row in
             wells[row]?.color = cols[row]
             fields[row]?.doubleValue = dims[row]
@@ -94,7 +102,7 @@ class DrawingView : NSView, SettingsFacet {
         laceView.pricking.lines.append(GridLine(GridPoint(1,1), GridPoint(1,7)))
         
         DispatchQueue.main.async { [self] in
-            laceView.setDelegates(cols,dims)
+            //laceView.setDelegates(cols,dims)
             laceView.touch()
         }
     }

@@ -15,8 +15,8 @@ import AppKit
 class LoadSaveFiles {
     
     
-    private var urls : ViewPaths = ViewPaths(.Defaults)
-    
+    private var urls : ViewPaths = ViewPaths()
+    var root: URL { urls[.DataDirectory] }
     
     init() {}
     
@@ -37,7 +37,6 @@ class LoadSaveFiles {
     }
     
     func fixDataDirectory() throws {
-        var root : URL = self.urls[.DataDirectory]
         syslog.debug("Loaded path: \(root)")
         let fm = FileManager.default
         syslog.debug("Checking data directory exists")

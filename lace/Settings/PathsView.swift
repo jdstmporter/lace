@@ -12,7 +12,7 @@ class PathsView : NSView, SettingsFacet {
     
     @IBOutlet var pathView : NSPathControl!
 
-    var lsf = ViewPaths(.Defaults)
+    var lsf = ViewPaths()
     
     var path : URL { lsf[.LastPath] }
     

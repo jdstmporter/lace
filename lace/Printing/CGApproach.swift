@@ -24,7 +24,7 @@ class CGPrintable {
     
     init(pricking: Pricking,spacingInMetres spM: Double,dotsPerMetre dpM: Int) {
         
-        self.colours = ViewColours(.Defaults)
+        self.colours = ViewColours()
         
         let sc = Double(dpM)*spM
         
@@ -44,7 +44,7 @@ class CGPrintable {
     
     
     
-    var dimensions = ViewDimensions(.Defaults) {
+    var dimensions = ViewDimensions() {
         didSet {
             //self.touch()
         }

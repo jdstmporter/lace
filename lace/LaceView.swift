@@ -205,19 +205,21 @@ class LaceView : ViewBase {
     
     var tracker : [NSTrackingArea] = []
     
-    public private(set) var colours : ViewColours?
-    public private(set) var dims : ViewDimensions?
+    //public private(set) var colours : ViewColours?
+    //public private(set) var dims : ViewDimensions?
+    public var dims : ViewDimensions = ViewDimensions()
+    public var colours : ViewColours = ViewColours()
     
     var pricking : Pricking = Pricking()
     
-    func setDelegates(_ c : ViewColours, _ d : ViewDimensions)  {
-        self.colours = c
-        self.dims = d
-        self.reload()
-    }
+    //func setDelegates(_ c : ViewColours2, _ d : ViewDimensions2)  {
+    //    self.colours = c
+    //    self.dims = d
+    //    self.reload()
+    //}
     
     func reload() {
-        guard let colours=self.colours else { return }
+        //guard let colours=self.colours else { return }
         self.backgroundColor = colours[.Background]
         self.touch()
     }
@@ -294,7 +296,7 @@ class LaceView : ViewBase {
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
-        guard let colours=self.colours, let dims=self.dims else { return }
+        //guard let colours=self.colours else { return } //, let dims=self.dims else { return }
         self.clear()
         
         

@@ -27,7 +27,7 @@ class Controller : NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.drawingArea.backgroundColor = .white
-        self.drawingArea.setDelegate(ViewDelegate())
+        //self.drawingArea.setDelegate(ViewDelegate())
         self.drawingArea.initialise()
         
         self.width = Defaults.get(forKey: "\(Self.prefix)width") ?? 1

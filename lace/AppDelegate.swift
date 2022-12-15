@@ -14,9 +14,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet var window: NSWindow!
     @IBOutlet weak var controller: Controller!
     
-   
-    
-
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         Defaults.load()
@@ -27,6 +24,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         //printActions()
     }
     
+    /*
     func doPrinting() {
         let openPanel = NSOpenPanel()
         openPanel.allowedContentTypes = [UTType.jpeg] // "com.adobe.pdf"
@@ -36,7 +34,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         let filePaths: [String] = openPanel.urls.compactMap({ $0.path })
         filePaths.forEach { self.loadAndPrint(path: $0) }
     }
-    
     func loadAndPrint(path: String) {
         let pageRanges : [[UInt32]] = [[1,1]]
         
@@ -93,7 +90,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         print("\(path): printed pages in ranges \(printedPageRanges)")
     }
-    func applicationWillTerminate(_ aNotification: Notification) {
+    */
+     
+     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
 

@@ -2,13 +2,13 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>minWidth</key>
+	<key>Size::minWidth</key>
 	<integer>1</integer>
-	<key>maxWidth</key>
+	<key>Size::maxWidth</key>
 	<integer>40</integer>
-	<key>minHeight</key>
+	<key>Size::minHeight</key>
 	<integer>1</integer>
-	<key>maxHeight</key>
+	<key>Size::maxHeight</key>
 	<integer>40</integer>
 </dict>
 </plist>

@@ -9,11 +9,14 @@ import Foundation
 import AppKit
 
 
-
+/*
 enum DataMode {
     case Defaults
     case Temp
 }
+ */
+
+/*
 
 protocol ViewData {
     associatedtype Element where Element : Decodable, Element : HasDefault
@@ -123,6 +126,8 @@ class ViewPaths : ViewData {
     
     
 }
+ 
+ */
 
 
 

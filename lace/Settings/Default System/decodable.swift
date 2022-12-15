@@ -8,25 +8,32 @@
 import Foundation
 import AppKit
 
-public protocol Decodable {
+public protocol Dec {
     static func dec(_ : Any) -> Self?
+}
+public protocol Enc {
     func enc() -> Any?
 }
-public extension Decodable {
+
+public extension Enc {
     func enc() -> Any? { self as Any }
-    
+}
+public extension Dec {
     static func dec(_ x: Any) -> Self? {
         guard let m=x as? Self else { return nil }
         return m
     }
 }
 
-extension Int : Decodable {}
-extension Bool : Decodable {}
-extension Double : Decodable {}
-extension String : Decodable {}
+public protocol EncDec : Enc, Dec {}
 
-extension NSColor : Decodable {
+
+extension Int : EncDec {}
+extension Bool : EncDec {}
+extension Double : EncDec {}
+extension String : EncDec {}
+
+extension NSColor : EncDec {
     public static func dec(x: Any) -> NSColor? {
         guard let components = x as? [CGFloat] else { return nil }
         guard components.count==4 else { return nil }
@@ -38,7 +45,7 @@ extension NSColor : Decodable {
     }
 }
 
-extension NSFont : Decodable {
+extension NSFont : EncDec {
     public static func dec(x: Any) -> NSFont? {
         guard let info = x as? [String:Any] else { return nil }
         guard let f = NSFont(components: info) else { return nil }
@@ -49,7 +56,7 @@ extension NSFont : Decodable {
     }
 }
 
-extension URL : Decodable {
+extension URL : EncDec {
     public static func dec(x: Any) -> URL? {
         guard let path = x as? String else { return nil }
         return URL(path)
@@ -60,7 +67,7 @@ extension URL : Decodable {
 }
 
 
-func dec<T>(_ x : Any) -> T? where T : Decodable { T.dec(x) }
-func enc<T>(_ v : T) -> Any? where T : Decodable { v.enc() }
+func dec<T>(_ x : Any) -> T? where T : EncDec { T.dec(x) }
+func enc<T>(_ v : T) -> Any? where T : EncDec { v.enc() }
 
 
