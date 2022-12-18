@@ -9,11 +9,17 @@ import Foundation
 import AppKit
 
 class DrawingView : NSView, SettingsFacet, NSFontChanging {
+    
+    
     static let AllParts : [ViewPart] = [.Title,.Metadata,.Comment]
+    static let AllGrids : [ViewPart] = [.GridRows,.GridCols]
     
     var wells : [ViewPart:NSColorWell] = [:]
     var fields : [ViewPart:NSTextField] = [:]
     var labels : [ViewPart:NSTextField] = [:]
+    
+    var gridRows : [RangeParts:NSTextField] = [:]
+    var gridCols : [RangeParts:NSTextField] = [:]
     //private var cols = ViewColours(.Temp)
     //private var dims = ViewDimensions(.Temp)
     
@@ -32,6 +38,14 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
     @IBOutlet weak var metadataButton : NSButton!
     @IBOutlet weak var commentButton : NSButton!
     
+    @IBOutlet weak var minRows : NSTextField!
+    @IBOutlet weak var maxRows : NSTextField!
+    @IBOutlet weak var minColumns : NSTextField!
+    @IBOutlet weak var maxColumns : NSTextField!
+    
+    @IBOutlet weak var defaultRows : NSTextField!
+    @IBOutlet weak var defaultColumns : NSTextField!
+    
     @IBOutlet weak var laceView : LaceView!
     
     
@@ -46,10 +60,17 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
     var fonts : ViewFonts = ViewFonts()
     var part : ViewPart?
     
+    
     func touch() {
         ViewPart.allCases.forEach { row in
             if let well = wells[row] { cols[row]=well.color }
             if let field = fields[row] { dims[row]=field.doubleValue }
+        }
+        
+        AllGrids.forEach { row in
+           RangeParts.forEach { part in
+               let i = (row == .GridRows) ? gridRows : gridCols
+               grids[row][part] = i[part].integerValue
         }
         
         laceView.touch()
@@ -107,6 +128,14 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
         labels[.Title] = titleText
         labels[.Metadata] = metadataText
         labels[.Comment] = commentText
+        
+        gridRows[.Min] = minRows
+        gridRows[.Max] = maxRows
+        gridRows[.Value] = defaultRows
+        
+        gridCols[.Min] = minColumns
+        gridCols[.Max] = maxColumns
+        gridCols[.Value] = defaultColumns
         
         self.load()
         

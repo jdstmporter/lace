@@ -31,6 +31,58 @@ struct GridBounds {
     func clip(width: Int) -> Int { Swift.min(Swift.max(minWidth,width),maxWidth) }
     func clip(height: Int) -> Int { Swift.min(Swift.max(minHeight,height),maxHeight) }
 }
+
+extension ClosedRange<Int> {
+    func clamp(_ v : Int) -> Int { Swift.max(self.lowerBound,Swift.min(self.upperBound,v)) }
+        
+}
+
+enum RangeParts : CaseIterable {
+    case Min
+    case Max
+    case Value
+}
+
+struct ValueInRange {
+    var parts : [RangeParts:Int]
+    
+    init(_ mi: Int, _ ma : Int, value: Int) {
+        self.parts = [.Min: mi,.Max: ma,.Value: value]
+    }
+    init() { self.init(1,1,value:1) }
+    
+    var min : Int {
+        get { self[.Min] }
+    }
+    var max : Int {
+        get { self[.Max] }
+    }
+    var value : Int {
+        get { self[.Value] }
+    }
+    
+    subscript(_ part: RangeParts) -> Int {
+        get { self.parts[part] ?? 1 }
+        set { self.parts[part]=newValue }
+    }
+    
+    var isValid : Bool { self[.Min]<self[.Value] && self[.Value]<=self[.Max] }
+}
+
+extension ValueInRange : EncDec {
+    public static func dec(x: Any) -> ValueInRange? {
+        guard let cpts = x as? [Int] else { return nil }
+        guard cpts.count == 3 else { return nil }
+        return ValueInRange(cpts[0],cpts[1],value: cpts[2])
+    }
+    public func enc() -> Any? { [self.min,self.value,self.max] }
+}
+extension ValueInRange : Nameable, HasDefault {
+    public static var zero: ValueInRange { ValueInRange() }
+    public static func def(_ v : ViewPart) -> ValueInRange { zero }
+    public var str : String { "\(min):\(value):\(max)"}
+    
+}
    
 
 class GridView : NSView, SettingsFacet {
