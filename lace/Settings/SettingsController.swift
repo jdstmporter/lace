@@ -36,7 +36,6 @@ class SettingsPanel : NSPanel, LaunchableItem {
     @IBOutlet weak var drawingView: DrawingView!
     @IBOutlet weak var gridView : GridView!
     @IBOutlet weak var pathsView : PathsView!
-    @IBOutlet weak var fontView : FontView!
 
     
     
@@ -93,7 +92,7 @@ class SettingsPanel : NSPanel, LaunchableItem {
     
     func initialise() {
         if firstTime {
-            panels = [drawingView,gridView,pathsView,fontView]
+            panels = [drawingView,gridView,pathsView]
             
             panels.forEach { $0.initialise() }
             // do first time round things

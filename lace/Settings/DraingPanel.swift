@@ -8,11 +8,12 @@
 import Foundation
 import AppKit
 
-class DrawingView : NSView, SettingsFacet {
-    
+class DrawingView : NSView, SettingsFacet, NSFontChanging {
+    static let AllParts : [ViewPart] = [.Title,.Metadata,.Comment]
     
     var wells : [ViewPart:NSColorWell] = [:]
     var fields : [ViewPart:NSTextField] = [:]
+    var labels : [ViewPart:NSTextField] = [:]
     //private var cols = ViewColours(.Temp)
     //private var dims = ViewDimensions(.Temp)
     
@@ -23,6 +24,13 @@ class DrawingView : NSView, SettingsFacet {
     @IBOutlet weak var gridSize: NSTextField!
     @IBOutlet weak var pinSize: NSTextField!
     @IBOutlet weak var lineSize: NSTextField!
+    @IBOutlet weak var titleText : NSTextField!
+    @IBOutlet weak var metadataText : NSTextField!
+    @IBOutlet weak var commentText : NSTextField!
+    
+    @IBOutlet weak var titleButton : NSButton!
+    @IBOutlet weak var metadataButton : NSButton!
+    @IBOutlet weak var commentButton : NSButton!
     
     @IBOutlet weak var laceView : LaceView!
     
@@ -35,7 +43,8 @@ class DrawingView : NSView, SettingsFacet {
         get { laceView?.colours }
         set { laceView?.colours = newValue }
     }
-    
+    var fonts : ViewFonts = ViewFonts()
+    var part : ViewPart?
     
     func touch() {
         ViewPart.allCases.forEach { row in
@@ -46,6 +55,9 @@ class DrawingView : NSView, SettingsFacet {
         laceView.touch()
         
     }
+    func setLabel(_ p : ViewPart) {
+        labels[p]?.stringValue = fonts[p].humanName
+    }
     
     func revert() {
         cols.revert()
@@ -55,17 +67,22 @@ class DrawingView : NSView, SettingsFacet {
             fields[row]?.doubleValue = dims[row]
         }
         laceView.touch()
+        fonts.revert()
+        Self.AllParts.forEach { self.setLabel($0) }
         
     }
     
     
+    
     func load()  {
         self.laceView.reload()
-        DispatchQueue.main.async { [self] in
+        self.fonts.revert()
+        DispatchQueue.main.async {[self] in
             ViewPart.allCases.forEach { row in
                 if let well = wells[row] { well.color = cols[row] }
                 if let text = fields[row] { text.doubleValue = dims[row] }
             }
+            Self.AllParts.forEach { self.setLabel($0) }
         }
         
     }
@@ -73,6 +90,7 @@ class DrawingView : NSView, SettingsFacet {
     func save() throws {
         cols.commit()
         dims.commit()
+        fonts.commit()
         self.touch()
     }
     
@@ -85,6 +103,10 @@ class DrawingView : NSView, SettingsFacet {
         fields[.Grid] = gridSize
         fields[.Pin] = pinSize
         fields[.Line] = lineSize
+        
+        labels[.Title] = titleText
+        labels[.Metadata] = metadataText
+        labels[.Comment] = commentText
         
         self.load()
         
@@ -124,6 +146,37 @@ class DrawingView : NSView, SettingsFacet {
     
     func cleanup() {
         NSColorPanel.shared.close()
+        NSFontPanel.shared.close()
+    }
+    
+    @IBAction func fontEvent(_ button: NSButton!) {
+        guard let part=ViewPart(rawValue: button.tag) else { return }
+        self.part=part
+        let font=fonts[part]
+        syslog.debug("Changing part \(part) with current font \(font)")
+        
+        NSFontManager.shared.target=self
+        NSFontPanel.shared.setPanelFont(font, isMultiple: false)
+        NSFontPanel.shared.makeKeyAndOrderFront(self)
+       
+    }
+    
+    
+    
+    /// Callback from NSFontManager
+    ///
+    @objc func changeFont(_ sender : NSFontManager?) {
+        guard let p=self.part else { return }
+        
+        syslog.debug("Got return: parameter is \(String(describing: sender))")
+        guard let fm = sender else { return }
+        let font = fm.convert(self.fonts[p])
+        
+        syslog.debug("Converted font")
+        
+        fonts[p]=font
+        self.setLabel(p)
+        self.part=nil
     }
 
 }
