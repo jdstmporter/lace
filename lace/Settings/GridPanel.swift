@@ -40,47 +40,57 @@ extension ClosedRange<Int> {
 enum RangeParts : CaseIterable {
     case Min
     case Max
-    case Value
+    case Marker
 }
 
-struct ValueInRange {
+enum OrderError : Error {
+    case MaxBelowMin
+    case MarkerBelowMin
+    case MarkerAboveMax
+    case ZeroNotAllowed
+}
+
+struct IntervalWithMarker {
+    
+    static func defaults(_ p : RangeParts) -> Int { 1 }
+    
     var parts : [RangeParts:Int]
     
-    init(_ mi: Int, _ ma : Int, value: Int) {
-        self.parts = [.Min: mi,.Max: ma,.Value: value]
+    func verify() throws {
+        guard min<=max else { throw OrderError.MaxBelowMin }
+        guard min<=marker else { throw OrderError.MarkerBelowMin }
+        guard marker<=max else { throw OrderError.MarkerAboveMax }
+        guard min>0 else { throw OrderError.ZeroNotAllowed }
     }
-    init() { self.init(1,1,value:1) }
     
-    var min : Int {
-        get { self[.Min] }
+    init(_ mi: Int, _ ma : Int, mark: Int) {
+        self.parts = [.Min: mi,.Max: ma,.Marker: mark]
     }
-    var max : Int {
-        get { self[.Max] }
-    }
-    var value : Int {
-        get { self[.Value] }
-    }
+    init() { self.init(1,1,mark:1) }
+    
+    var min : Int { self[.Min] }
+    var max : Int { self[.Max] }
+    var marker : Int { self[.Marker] }
     
     subscript(_ part: RangeParts) -> Int {
-        get { self.parts[part] ?? 1 }
+        get { self.parts[part] ?? Self.defaults(part) }
         set { self.parts[part]=newValue }
     }
     
-    var isValid : Bool { self[.Min]<self[.Value] && self[.Value]<=self[.Max] }
 }
 
-extension ValueInRange : EncDec {
-    public static func dec(x: Any) -> ValueInRange? {
+extension IntervalWithMarker : EncDec {
+    public static func dec(x: Any) -> IntervalWithMarker? {
         guard let cpts = x as? [Int] else { return nil }
         guard cpts.count == 3 else { return nil }
-        return ValueInRange(cpts[0],cpts[1],value: cpts[2])
+        return IntervalWithMarker(cpts[0],cpts[1],mark: cpts[2])
     }
-    public func enc() -> Any? { [self.min,self.value,self.max] }
+    public func enc() -> Any? { [self.min,self.marker,self.max] }
 }
-extension ValueInRange : Nameable, HasDefault {
-    public static var zero: ValueInRange { ValueInRange() }
-    public static func def(_ v : ViewPart) -> ValueInRange { zero }
-    public var str : String { "\(min):\(value):\(max)"}
+extension IntervalWithMarker : Nameable, HasDefault {
+    public static var zero: IntervalWithMarker { IntervalWithMarker() }
+    public static func def(_ v : ViewPart) -> IntervalWithMarker { zero }
+    public var str : String { "\(min):\(marker):\(max)"}
     
 }
    

@@ -8,8 +8,35 @@
 import Foundation
 import AppKit
 
-class DrawingView : NSView, SettingsFacet, NSFontChanging {
+struct GridViews {
+    static let AllGrids : [ViewPart] = [.GridRows,.GridCols]
     
+    var parts : [RangeParts:NSTextField]
+    
+    init(min : NSTextField,max : NSTextField,mark: NSTextField) {
+        parts=[.Min : min, .Max : max, .Marker : mark]
+    }
+    
+    subscript(_ part : RangeParts) -> NSTextField? { parts[part] }
+    
+    func updateViews(_ grid: IntervalWithMarker) {
+        RangeParts.allCases.forEach { part in
+            parts[part]?.integerValue = grid[part]
+        }
+    }
+    func updateGrid( grid: inout IntervalWithMarker) {
+        RangeParts.allCases.forEach { part in
+            if let view = parts[part] {
+                grid[part] = view.integerValue
+            }
+        }
+    }
+    func reset() {
+        updateViews(IntervalWithMarker())
+    }
+}
+
+class DrawingView : NSView, SettingsFacet, NSFontChanging {
     
     static let AllParts : [ViewPart] = [.Title,.Metadata,.Comment]
     static let AllGrids : [ViewPart] = [.GridRows,.GridCols]
@@ -18,8 +45,8 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
     var fields : [ViewPart:NSTextField] = [:]
     var labels : [ViewPart:NSTextField] = [:]
     
-    var gridRows : [RangeParts:NSTextField] = [:]
-    var gridCols : [RangeParts:NSTextField] = [:]
+    var gridRows : GridViews!
+    var gridCols : GridViews!
     //private var cols = ViewColours(.Temp)
     //private var dims = ViewDimensions(.Temp)
     
@@ -60,6 +87,8 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
     var fonts : ViewFonts = ViewFonts()
     var part : ViewPart?
     
+    var grids : [ViewPart:IntervalWithMarker] = [:]
+    var gridViews : [ViewPart:GridViews] = [:]
     
     func touch() {
         ViewPart.allCases.forEach { row in
@@ -67,10 +96,11 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
             if let field = fields[row] { dims[row]=field.doubleValue }
         }
         
-        AllGrids.forEach { row in
-           RangeParts.forEach { part in
-               let i = (row == .GridRows) ? gridRows : gridCols
-               grids[row][part] = i[part].integerValue
+        
+        Self.AllGrids.forEach { row in
+            if let views = gridViews[row], var part = grids[row] {
+                views.updateGrid(grid: &part)
+            }
         }
         
         laceView.touch()
@@ -87,6 +117,9 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
             wells[row]?.color = cols[row]
             fields[row]?.doubleValue = dims[row]
         }
+        
+        Self.AllGrids.forEach { gridViews[$0]?.reset() }
+        
         laceView.touch()
         fonts.revert()
         Self.AllParts.forEach { self.setLabel($0) }
@@ -104,6 +137,11 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
                 if let text = fields[row] { text.doubleValue = dims[row] }
             }
             Self.AllParts.forEach { self.setLabel($0) }
+            Self.AllGrids.forEach { part in
+                if let grid = self.grids[part], var views=self.gridViews[part] {
+                    views.updateViews(grid)
+                }
+            }
         }
         
     }
@@ -129,13 +167,14 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
         labels[.Metadata] = metadataText
         labels[.Comment] = commentText
         
-        gridRows[.Min] = minRows
-        gridRows[.Max] = maxRows
-        gridRows[.Value] = defaultRows
+        gridRows = GridViews(min:minRows,max:maxRows,mark:defaultRows)
+        gridCols = GridViews(min:minColumns,max:maxColumns,mark:defaultColumns)
+         
+        gridViews[.GridRows] = gridRows
+        gridViews[.GridCols] = gridCols
         
-        gridCols[.Min] = minColumns
-        gridCols[.Max] = maxColumns
-        gridCols[.Value] = defaultColumns
+        grids[.GridRows] = IntervalWithMarker()
+        grids[.GridCols] = IntervalWithMarker()
         
         self.load()
         
