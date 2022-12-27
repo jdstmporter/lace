@@ -8,6 +8,10 @@
 import Foundation
 import AppKit
 
+protocol BaseData2 {
+    
+}
+
 
 protocol ViewData2 {
     associatedtype Element where Element : EncDec, Element : HasDefault
@@ -116,4 +120,5 @@ class ViewPaths : ViewData2 {
     required init() {  }
     
     
+   
 }

@@ -15,7 +15,7 @@ enum PrickingError : BaseError {
 enum HistoryActions {
     case Void
     case Pin(_ : GridPoint)
-    case Line(_ : Line)
+    case Line(_ : ScreenLine)
 }
 
 struct Pricking : Codable {
@@ -80,17 +80,17 @@ struct Pricking : Codable {
         return grid.pos(p)
     }
     
-    func snap(line: Line) -> Line {
+    func snap(line: ScreenLine) -> ScreenLine {
         let gr = line.asGridLine(grid)
-        return Line(grid: grid,line: gr)
+        return ScreenLine(grid: grid,line: gr)
     }
-    func snap(_ from: NSPoint,_ to: NSPoint) -> Line {
-        let gr = Line(from,to).asGridLine(grid)
-        return Line(grid: grid,line: gr)
+    func snap(_ from: NSPoint,_ to: NSPoint) -> ScreenLine {
+        let gr = ScreenLine(from,to).asGridLine(grid)
+        return ScreenLine(grid: grid,line: gr)
     }
     func snap(_ p : NSPoint) -> GridPoint { grid.nearest(p) }
     
-    mutating func append(_ line : Line) {
+    mutating func append(_ line : ScreenLine) {
         lines.append(grid, line)
         self.history.append(.Line(line))
     }
@@ -116,7 +116,7 @@ struct Pricking : Codable {
         self.history.removeLast()
     }
     
-    func asScreenLine(_ line : GridLine) -> Line { Line(grid: grid, line: line) }
+    func asScreenLine(_ line : GridLine) -> ScreenLine { ScreenLine(grid: grid, line: line) }
     
     
     

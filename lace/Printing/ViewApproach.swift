@@ -77,8 +77,8 @@ class PrintableView : NSImageView {
     func invert(_ p : NSPoint) -> NSPoint {
         NSPoint(x: p.x, y: height-1-p.y)
     }
-    func invert(_ l : Line) -> Line {
-        Line(invert(l.start), invert(l.end))
+    func invert(_ l : ScreenLine) -> ScreenLine {
+        ScreenLine(invert(l.start), invert(l.end))
     }
     
     func point(_ p : NSPoint, radius: Double, colour: NSColor? = nil) {

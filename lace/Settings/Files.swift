@@ -10,85 +10,101 @@ import AppKit
 
 
 
-
-
-class LoadSaveFiles {
-    
-    
+class FileRoot {
     private var urls : ViewPaths = ViewPaths()
+    
     var root: URL { urls[.DataDirectory] }
+    var hasRoot : Bool { ViewPaths().has(.DataDirectory) }
     
-    init() {}
-    
-    func initialisePaths(_ u : URL) {
-        self.urls[.LastPath]=u
+    public func update(root u : URL) {
         self.urls[.DataDirectory]=u.asDirectory()
+        self.commit()
     }
     
-    func fixDataRoot() throws {
-        if !urls.has(.DataDirectory) {    /* need to set path*/
-            guard let appName = Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String
-            else { throw FileError.CannotFindBundleIdentifier }
+    private func appName() -> String {
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? "LaceApp"
+    }
+    
+    init() {
+        if !self.hasRoot {    /* need to set path*/
             var p = URL.userHome
-            p.appendPathComponent(appName)
+            p.appendPathComponent(self.appName())
             syslog.info("Setting file path to \(p)")
-            self.initialisePaths(p)
+            self.update(root: p)
         }
-    }
-    
-    func fixDataDirectory() throws {
+        
         syslog.debug("Loaded path: \(root)")
         let fm = FileManager.default
         syslog.debug("Checking data directory exists")
         if !fm.fileExists(at: root) {
             syslog.debug("Creating")
-            try fm.createDirectory(at: root, withIntermediateDirectories: false)
+            do {
+                try fm.createDirectory(at: root, withIntermediateDirectories: false)
+            }
+            catch {
+                // default fallback
+                self.update(root: URL.userHome)
+            }
         }
         syslog.info("Ready with document root \(root)")
+        
     }
     
-    func initialise()  throws {
-        try fixDataRoot()
-        try fixDataDirectory()
+    
+    
+    public func commit() { self.urls.commit() }
+    
+    
+    static var the : FileRoot!
+    static func load() -> FileRoot {
+        if the==nil { the=FileRoot() }
+        return the
     }
+    public static var path: URL { load().root }
+    
+    
+    
+}
+
+class LoadSaveFile {
+    
+
+    
+    
+    init() {}
+    
+
     
     //static func RootPath() throws -> URL {
      //   try LoadSaveFiles().root
     //}
     
     
-    func load<T>(pick: Bool) throws -> T
+    func load<T>() throws -> T
     where T : Codable
     {
-        if pick {
-            let picker = FileReadPicker(def: self.urls[.LastPath])
-            guard picker.runSync() else {
-                throw FileError.CannotPickLoadFile
-            }
-            self.urls[.LastPath]=picker.url
+        let picker = FileReadPicker(def: FileRoot.path)
+        guard picker.runSync() else {
+            throw FileError.CannotPickLoadFile
         }
         
-        
-        let d = try Data(contentsOf: self.urls[.LastPath])
+        let d = try Data(contentsOf: picker.url)
         let decoder=JSONDecoder()
         return try decoder.decode(T.self, from: d)
     }
     
-    func save<T>(_ data : T,pick: Bool,compact: Bool=true) throws
+    func save<T>(_ data : T,compact: Bool=true) throws
     where T : Codable
     {
-        if pick || !urls.has(.LastPath) {
-            let picker = FilePicker(def: self.urls[.LastPath])
-            guard picker.runSync() else {
-                throw FileError.CannotPickSaveFile
-            }
-            self.urls[.LastPath]=picker.url
+        let picker = FilePicker(def: FileRoot.path)
+        guard picker.runSync() else {
+            throw FileError.CannotPickSaveFile
         }
         
         let encoder=JSONEncoder()
         if !compact { encoder.outputFormatting = .prettyPrinted }
         let d = try encoder.encode(data)
-        try d.write(to: self.urls[.LastPath])
+        try d.write(to: FileRoot.path)
     }
     
 }

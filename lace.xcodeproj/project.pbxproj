@@ -22,9 +22,11 @@
 		E11B73AA28FC993A005AC2C9 /* pricker32.png in Resources */ = {isa = PBXBuildFile; fileRef = E11B73A628FC993A005AC2C9 /* pricker32.png */; };
 		E11B73AB28FC993A005AC2C9 /* pricker64.png in Resources */ = {isa = PBXBuildFile; fileRef = E11B73A728FC993A005AC2C9 /* pricker64.png */; };
 		E11B73AC28FC993A005AC2C9 /* pricker1024.png in Resources */ = {isa = PBXBuildFile; fileRef = E11B73A828FC993A005AC2C9 /* pricker1024.png */; };
+		E11EDC08295A687600B8E957 /* points.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11EDC07295A687600B8E957 /* points.swift */; };
+		E11EDC0A295A695400B8E957 /* lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11EDC09295A695400B8E957 /* lines.swift */; };
+		E11EDC0C295A69B400B8E957 /* sizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11EDC0B295A69B400B8E957 /* sizes.swift */; };
 		E135749128135102005D84D6 /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135749028135102005D84D6 /* DictionaryExtensions.swift */; };
 		E13574962815BE45005D84D6 /* DraingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13574952815BE45005D84D6 /* DraingPanel.swift */; };
-		E13574982819BDF4005D84D6 /* GridPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13574972819BDF4005D84D6 /* GridPanel.swift */; };
 		E135749A281C92B0005D84D6 /* PathsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1357499281C92B0005D84D6 /* PathsView.swift */; };
 		E135749E28245909005D84D6 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135749D28245909005D84D6 /* Log.swift */; };
 		E1383BE727F79C93009DEEFA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383BE627F79C93009DEEFA /* AppDelegate.swift */; };
@@ -78,8 +80,6 @@
 		E10DDC2E2882DD55003A5C9C /* CGApproach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGApproach.swift; sourceTree = "<group>"; };
 		E10DDC30288342AE003A5C9C /* Displays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Displays.swift; sourceTree = "<group>"; };
 		E117ABA9294513AA00CFF6E8 /* simple2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simple2.swift; sourceTree = "<group>"; };
-		E11B738E28EC64C9005AC2C9 /* LaceModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LaceModel.xcdatamodel; sourceTree = "<group>"; };
-		E11B739028EC6527005AC2C9 /* core.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = core.swift; sourceTree = "<group>"; };
 		E11B739228EF4D3D005AC2C9 /* simple.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simple.swift; sourceTree = "<group>"; };
 		E11B739628F3242A005AC2C9 /* PLIST.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PLIST.swift; sourceTree = "<group>"; };
 		E11B739828F32476005AC2C9 /* threads.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = threads.plist; sourceTree = "<group>"; };
@@ -92,9 +92,11 @@
 		E11B73A628FC993A005AC2C9 /* pricker32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pricker32.png; path = lace/Assets.xcassets/pricker32.png; sourceTree = "<group>"; };
 		E11B73A728FC993A005AC2C9 /* pricker64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pricker64.png; path = lace/Assets.xcassets/pricker64.png; sourceTree = "<group>"; };
 		E11B73A828FC993A005AC2C9 /* pricker1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pricker1024.png; path = lace/Assets.xcassets/pricker1024.png; sourceTree = "<group>"; };
+		E11EDC07295A687600B8E957 /* points.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = points.swift; sourceTree = "<group>"; };
+		E11EDC09295A695400B8E957 /* lines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lines.swift; sourceTree = "<group>"; };
+		E11EDC0B295A69B400B8E957 /* sizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sizes.swift; sourceTree = "<group>"; };
 		E135749028135102005D84D6 /* DictionaryExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
 		E13574952815BE45005D84D6 /* DraingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraingPanel.swift; sourceTree = "<group>"; };
-		E13574972819BDF4005D84D6 /* GridPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridPanel.swift; sourceTree = "<group>"; };
 		E1357499281C92B0005D84D6 /* PathsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PathsView.swift; sourceTree = "<group>"; };
 		E135749D28245909005D84D6 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		E13574A52826E38B005D84D6 /* SQLITE3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLITE3.swift; sourceTree = "<group>"; };
@@ -116,7 +118,6 @@
 		E1383C082808DACC009DEEFA /* FilePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePicker.swift; sourceTree = "<group>"; };
 		E1383C0A2809AC30009DEEFA /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
 		E1383C0C2809F267009DEEFA /* defaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = defaults.plist; sourceTree = "<group>"; };
-		E179F449294A7C4300E3C14A /* LacePlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; name = LacePlayground.playground; path = ../LacePlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		E17FBEDB28CB9FAA00408D89 /* viewDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewDefaults.swift; sourceTree = "<group>"; };
 		E17FBEDE28CD3E5F00408D89 /* colourParts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = colourParts.swift; sourceTree = "<group>"; };
 		E17FBEE028CD3EA600408D89 /* dimParts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dimParts.swift; sourceTree = "<group>"; };
@@ -168,13 +169,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E11B738C28EC6461005AC2C9 /* Core Data */ = {
+		E11EDC06295A685500B8E957 /* Persist */ = {
 			isa = PBXGroup;
 			children = (
-				E11B738D28EC64C9005AC2C9 /* LaceModel.xcdatamodeld */,
-				E11B739028EC6527005AC2C9 /* core.swift */,
+				E1383BF927F9E304009DEEFA /* Grid.swift */,
+				E11EDC07295A687600B8E957 /* points.swift */,
+				E11EDC09295A695400B8E957 /* lines.swift */,
+				E11EDC0B295A69B400B8E957 /* sizes.swift */,
 			);
-			path = "Core Data";
+			path = Persist;
 			sourceTree = "<group>";
 		};
 		E13574A42826E36E005D84D6 /* Data */ = {
@@ -192,7 +195,6 @@
 		E1383BDA27F79C93009DEEFA = {
 			isa = PBXGroup;
 			children = (
-				E179F449294A7C4300E3C14A /* LacePlayground.playground */,
 				E11B73A528FC993A005AC2C9 /* pricker16.png */,
 				E11B73A628FC993A005AC2C9 /* pricker32.png */,
 				E11B73A728FC993A005AC2C9 /* pricker64.png */,
@@ -260,7 +262,6 @@
 		E1383C0228037893009DEEFA /* Structures */ = {
 			isa = PBXGroup;
 			children = (
-				E1383BF927F9E304009DEEFA /* Grid.swift */,
 				E1383C002803787C009DEEFA /* Lines.swift */,
 				E1383C062808AB3D009DEEFA /* Serialise.swift */,
 			);
@@ -270,14 +271,13 @@
 		E1383C032807738B009DEEFA /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				E11EDC06295A685500B8E957 /* Persist */,
 				E1DFD09C2938016F0075D971 /* Default System */,
-				E11B738C28EC6461005AC2C9 /* Core Data */,
 				E17FBEE428CD3F6400408D89 /* LaceView */,
 				E1383C0A2809AC30009DEEFA /* Files.swift */,
 				E1D51F3B280B383D00995497 /* Preferences.xib */,
 				E1D51F3D280B3C1B00995497 /* SettingsController.swift */,
 				E13574952815BE45005D84D6 /* DraingPanel.swift */,
-				E13574972819BDF4005D84D6 /* GridPanel.swift */,
 				E1357499281C92B0005D84D6 /* PathsView.swift */,
 				E17FBEDB28CB9FAA00408D89 /* viewDefaults.swift */,
 			);
@@ -452,9 +452,9 @@
 				E1383C0B2809AC30009DEEFA /* Files.swift in Sources */,
 				E11B739728F3242A005AC2C9 /* PLIST.swift in Sources */,
 				E1DFD09E293802DD0075D971 /* enums.swift in Sources */,
+				E11EDC0A295A695400B8E957 /* lines.swift in Sources */,
 				E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */,
 				E1383BF627F79FC8009DEEFA /* Controller.swift in Sources */,
-				E13574982819BDF4005D84D6 /* GridPanel.swift in Sources */,
 				E1383BE727F79C93009DEEFA /* AppDelegate.swift in Sources */,
 				E1383C012803787C009DEEFA /* Lines.swift in Sources */,
 				E1383BF427F79F62009DEEFA /* LaceView.swift in Sources */,
@@ -466,11 +466,13 @@
 				E117ABAA294513AA00CFF6E8 /* simple2.swift in Sources */,
 				E183608F282A85FB00414F20 /* Calculator.swift in Sources */,
 				E11B739328EF4D3D005AC2C9 /* simple.swift in Sources */,
+				E11EDC0C295A69B400B8E957 /* sizes.swift in Sources */,
 				E1383C092808DACC009DEEFA /* FilePicker.swift in Sources */,
 				E1383BF827F8D8D4009DEEFA /* ViewBase.swift in Sources */,
 				E1836093282C0E3200414F20 /* LaceKinds.swift in Sources */,
 				E10DDC31288342AE003A5C9C /* Displays.swift in Sources */,
 				E18360A528384D0500414F20 /* PrintableCG.swift in Sources */,
+				E11EDC08295A687600B8E957 /* points.swift in Sources */,
 				E183609F2831B5F400414F20 /* PNG.swift in Sources */,
 				E10DDC2F2882DD55003A5C9C /* CGApproach.swift in Sources */,
 				E17FBEE628CD3F8D00408D89 /* common.swift in Sources */,
@@ -697,19 +699,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		E11B738D28EC64C9005AC2C9 /* LaceModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				E11B738E28EC64C9005AC2C9 /* LaceModel.xcdatamodel */,
-			);
-			currentVersion = E11B738E28EC64C9005AC2C9 /* LaceModel.xcdatamodel */;
-			path = LaceModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = E1383BDB27F79C93009DEEFA /* Project object */;
 }

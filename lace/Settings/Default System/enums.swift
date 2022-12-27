@@ -30,12 +30,10 @@ public enum ViewPart : Int, CaseIterable, Nameable {
     case LastPath = 7
     case DataDirectory = 8
     
-    case GridRows = 9
-    case GridCols = 10
-    
-    
     
     public var str : String { "\(self)" }
+    
+    static let Fonts : [ViewPart] = [.Title,.Metadata,.Comment]
 }
 
 public func Key(_ kind : DefaultKind,_ part : ViewPart) -> String {

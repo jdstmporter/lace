@@ -139,16 +139,16 @@ extension NSBezierPath {
 }
 
 struct ExtendedLine : CustomStringConvertible {
-    var line : Line
-    var raw : Line
+    var line : ScreenLine
+    var raw : ScreenLine
     
     
     init(start: NSPoint,end: NSPoint,pricking: Pricking) {
-        self.raw=Line(start, end)
+        self.raw=ScreenLine(start, end)
         self.line=pricking.snap(start,end)
     }
     
-    init(raw : Line,line: Line) {
+    init(raw : ScreenLine,line: ScreenLine) {
         self.raw=raw
         self.line=line
     }

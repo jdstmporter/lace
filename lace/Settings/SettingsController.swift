@@ -34,7 +34,6 @@ class SettingsPanel : NSPanel, LaunchableItem {
     
     var firstTime : Bool = true
     @IBOutlet weak var drawingView: DrawingView!
-    @IBOutlet weak var gridView : GridView!
     @IBOutlet weak var pathsView : PathsView!
 
     
@@ -92,7 +91,7 @@ class SettingsPanel : NSPanel, LaunchableItem {
     
     func initialise() {
         if firstTime {
-            panels = [drawingView,gridView,pathsView]
+            panels = [drawingView,pathsView]
             
             panels.forEach { $0.initialise() }
             // do first time round things
@@ -111,9 +110,6 @@ class SettingsPanel : NSPanel, LaunchableItem {
         drawingView.colourEvent(sender)
     }
     
-    @IBAction func textCallback(_ sender: NSTextField) {
-        syslog.debug("TEXT EVENT")
-        drawingView.sizesEvent(sender)
-    }
+
     
 }

@@ -97,7 +97,7 @@
             startingLineNumber = "186"
             endingLineNumber = "186"
             landmarkName = "mouseMoved(with:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -113,7 +113,7 @@
             startingLineNumber = "199"
             endingLineNumber = "199"
             landmarkName = "mouseEntered(with:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -129,7 +129,7 @@
             startingLineNumber = "192"
             endingLineNumber = "192"
             landmarkName = "mouseExited(with:)"
-            landmarkType = "9">
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

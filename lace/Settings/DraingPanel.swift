@@ -8,47 +8,17 @@
 import Foundation
 import AppKit
 
-struct GridViews {
-    static let AllGrids : [ViewPart] = [.GridRows,.GridCols]
-    
-    var parts : [RangeParts:NSTextField]
-    
-    init(min : NSTextField,max : NSTextField,mark: NSTextField) {
-        parts=[.Min : min, .Max : max, .Marker : mark]
-    }
-    
-    subscript(_ part : RangeParts) -> NSTextField? { parts[part] }
-    
-    func updateViews(_ grid: IntervalWithMarker) {
-        RangeParts.allCases.forEach { part in
-            parts[part]?.integerValue = grid[part]
-        }
-    }
-    func updateGrid( grid: inout IntervalWithMarker) {
-        RangeParts.allCases.forEach { part in
-            if let view = parts[part] {
-                grid[part] = view.integerValue
-            }
-        }
-    }
-    func reset() {
-        updateViews(IntervalWithMarker())
-    }
-}
+
 
 class DrawingView : NSView, SettingsFacet, NSFontChanging {
     
-    static let AllParts : [ViewPart] = [.Title,.Metadata,.Comment]
-    static let AllGrids : [ViewPart] = [.GridRows,.GridCols]
+    
     
     var wells : [ViewPart:NSColorWell] = [:]
     var fields : [ViewPart:NSTextField] = [:]
     var labels : [ViewPart:NSTextField] = [:]
     
-    var gridRows : GridViews!
-    var gridCols : GridViews!
-    //private var cols = ViewColours(.Temp)
-    //private var dims = ViewDimensions(.Temp)
+
     
     @IBOutlet weak var backgroundColour: NSColorWell!
     @IBOutlet weak var gridColour: NSColorWell!
@@ -65,13 +35,9 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
     @IBOutlet weak var metadataButton : NSButton!
     @IBOutlet weak var commentButton : NSButton!
     
-    @IBOutlet weak var minRows : NSTextField!
-    @IBOutlet weak var maxRows : NSTextField!
-    @IBOutlet weak var minColumns : NSTextField!
-    @IBOutlet weak var maxColumns : NSTextField!
     
-    @IBOutlet weak var defaultRows : NSTextField!
-    @IBOutlet weak var defaultColumns : NSTextField!
+    @IBOutlet weak var pathView : NSPathControl!
+    
     
     @IBOutlet weak var laceView : LaceView!
     
@@ -87,25 +53,19 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
     var fonts : ViewFonts = ViewFonts()
     var part : ViewPart?
     
-    var grids : [ViewPart:IntervalWithMarker] = [:]
-    var gridViews : [ViewPart:GridViews] = [:]
+    var paths = ViewPaths()
     
+
     func touch() {
         ViewPart.allCases.forEach { row in
             if let well = wells[row] { cols[row]=well.color }
             if let field = fields[row] { dims[row]=field.doubleValue }
         }
         
-        
-        Self.AllGrids.forEach { row in
-            if let views = gridViews[row], var part = grids[row] {
-                views.updateGrid(grid: &part)
-            }
-        }
-        
         laceView.touch()
         
     }
+    
     func setLabel(_ p : ViewPart) {
         labels[p]?.stringValue = fonts[p].humanName
     }
@@ -118,12 +78,11 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
             fields[row]?.doubleValue = dims[row]
         }
         
-        Self.AllGrids.forEach { gridViews[$0]?.reset() }
-        
         laceView.touch()
         fonts.revert()
-        Self.AllParts.forEach { self.setLabel($0) }
-        
+        ViewPart.Fonts.forEach { self.setLabel($0) }
+        paths.revert()
+        self.pathView.url=paths[.DataDirectory]
     }
     
     
@@ -136,12 +95,8 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
                 if let well = wells[row] { well.color = cols[row] }
                 if let text = fields[row] { text.doubleValue = dims[row] }
             }
-            Self.AllParts.forEach { self.setLabel($0) }
-            Self.AllGrids.forEach { part in
-                if let grid = self.grids[part], var views=self.gridViews[part] {
-                    views.updateViews(grid)
-                }
-            }
+            ViewPart.Fonts.forEach { self.setLabel($0) }
+            self.pathView.url=paths[.DataDirectory]
         }
         
     }
@@ -150,6 +105,8 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
         cols.commit()
         dims.commit()
         fonts.commit()
+ 
+        paths.commit()
         self.touch()
     }
     
@@ -166,15 +123,6 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
         labels[.Title] = titleText
         labels[.Metadata] = metadataText
         labels[.Comment] = commentText
-        
-        gridRows = GridViews(min:minRows,max:maxRows,mark:defaultRows)
-        gridCols = GridViews(min:minColumns,max:maxColumns,mark:defaultColumns)
-         
-        gridViews[.GridRows] = gridRows
-        gridViews[.GridCols] = gridCols
-        
-        grids[.GridRows] = IntervalWithMarker()
-        grids[.GridCols] = IntervalWithMarker()
         
         self.load()
         
@@ -206,7 +154,7 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
         ViewPart.allCases.forEach { syslog.debug("\($0) : \(self.cols[$0])") }
     }
     
-    func sizesEvent(_ field : NSTextField) {
+    @IBAction func sizesEvent(_ field : NSTextField) {
         self.touch()
     }
     
@@ -215,6 +163,14 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
     func cleanup() {
         NSColorPanel.shared.close()
         NSFontPanel.shared.close()
+    }
+    
+    @IBAction func pathChange(_ obj : Any) {
+        let fp = FilePicker(url: self.paths[.DataDirectory], types: [])
+        guard fp.runSync(), let dir=fp.dir else { return }
+        self.paths[.LastPath]=dir
+        self.paths[.DataDirectory]=dir.asDirectory()
+        self.load()
     }
     
     @IBAction func fontEvent(_ button: NSButton!) {
@@ -228,6 +184,7 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
         NSFontPanel.shared.makeKeyAndOrderFront(self)
        
     }
+    
     
     
     

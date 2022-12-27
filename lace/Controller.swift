@@ -83,7 +83,7 @@ class Controller : NSViewController {
     func saveCurrent(pick : Bool) {
         do {
             guard let p = drawingArea?.pricking else { throw PrickingError.CannotFindPricking }
-            try LoadSaveFiles().save(p, pick : pick)
+            try LoadSaveFile().save(p)
         }
         catch(let e) { syslog.error("Error \(e)")}
     }

@@ -38,15 +38,15 @@ public class SysLog {
     public func debugOn() { isDebug=true }
     public func debugOff() { isDebug=false }
     
-    public func debug(_ message : BaseError) {
+    public func debug(_ message : Loggable) {
         if isDebug {
             self.log.debug("\(message.str)")
         }
     }
-    public func info(_ message : BaseError)  { self.log.info("\(message.str)") }
-    public func announce(_ message : BaseError) { self.log.notice("\(message.str)") }
-    public func error(_ message : BaseError) { self.log.error("\(message.str)") }
-    public func fault(_ message : BaseError) { self.log.fault("\(message.str)") }
+    public func info(_ message : Loggable)  { self.log.info("\(message.str)") }
+    public func announce(_ message : Loggable) { self.log.notice("\(message.str)") }
+    public func error(_ message : Loggable) { self.log.error("\(message.str)") }
+    public func fault(_ message : Loggable) { self.log.fault("\(message.str)") }
     
     public func say(_ message : CustomStringConvertible) { self.log.log("\(message.description)") }
 }

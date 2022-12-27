@@ -66,6 +66,8 @@ class Grid : Codable {
         self.data[p.y][p.x].toggle()
     }
     
+    // conversion functions
+    
     func pos(_ x : Int, _ y : Int) -> NSPoint {
         let py = Double(y)+1.0
         let offset = 0.5*Double(y%2)
@@ -73,7 +75,7 @@ class Grid : Codable {
         return NSPoint(x: px*scale, y: py*scale)
     }
     func pos(_ p : GridPoint) -> NSPoint { self.pos(p.x,p.y) }
-    func pos(_ l : GridLine) -> Line { Line(self.pos(l.start),self.pos(l.end)) }
+    //func pos(_ l : GridLine) -> ScreenLine { ScreenLine(self.pos(l.start),self.pos(l.end)) }
     
     func round(_ d : Double) -> Int { Int((d/scale).rounded()) }
     

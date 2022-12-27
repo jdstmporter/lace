@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G72" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="v2">
+    <entity name="CDGrid" representedClassName="CDGrid" syncable="YES" codeGenerationType="class">
+        <attribute name="height" attributeType="Integer 32" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="scale" attributeType="Double" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="width" attributeType="Integer 32" defaultValueString="1" usesScalarValueType="YES"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDPricking" inverseName="grid" inverseEntity="CDPricking"/>
+    </entity>
+    <entity name="CDLine" representedClassName="CDLine" syncable="YES" codeGenerationType="class">
+        <attribute name="xEnd" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="xStart" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="yEnd" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="yStart" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDPricking" inverseName="lines" inverseEntity="CDPricking"/>
+    </entity>
+    <entity name="CDPoint" representedClassName="CDPoint" syncable="YES" codeGenerationType="class">
+        <attribute name="x" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="y" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDPricking" inverseName="points" inverseEntity="CDPricking"/>
+    </entity>
+    <entity name="CDPricking" representedClassName="CDPricking" syncable="YES" codeGenerationType="class">
+        <attribute name="created" attributeType="Date" defaultDateTimeInterval="693422160" usesScalarValueType="NO"/>
+        <attribute name="creator" attributeType="String"/>
+        <attribute name="modified" attributeType="Date" defaultDateTimeInterval="693422160" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="grid" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CDGrid" inverseName="parent" inverseEntity="CDGrid"/>
+        <relationship name="lines" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="CDLine" inverseName="parent" inverseEntity="CDLine"/>
+        <relationship name="points" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="CDPoint" inverseName="parent" inverseEntity="CDPoint"/>
+    </entity>
+</model>
