@@ -130,7 +130,7 @@ struct LaceState : Codable {
 
 extension LaceState : Nameable, HasDefault {
     public static var zero : LaceState { LaceState() }
-    public static func def(_ v : ViewPart) -> LaceState { zero }
+    public static func def(_ v : any DefaultPart) -> LaceState { zero }
     public var str : String { "Lace state" }
 }
 

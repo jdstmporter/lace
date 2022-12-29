@@ -15,7 +15,8 @@ protocol BaseData2 {
 
 protocol ViewData2 {
     associatedtype Element where Element : EncDec, Element : HasDefault
-    typealias Container = [ViewPart:Element]
+    associatedtype PartKey where PartKey : DefaultPart
+    typealias Container = [PartKey:Element]
     
     var values : Container { get set }
     
@@ -24,24 +25,24 @@ protocol ViewData2 {
     
     
     init()
-    subscript(_ p : ViewPart) -> Element { get set }
+    subscript(_ p : PartKey) -> Element { get set }
     mutating func revert()
     mutating func commit()
     
-    func get(_ : ViewPart) -> Element
-    mutating func set(_ : ViewPart,_  : Element)
-    func load(_ : ViewPart) -> Element?
-    func save(_ : ViewPart,_ : Element)
+    func get(_ : PartKey) -> Element
+    mutating func set(_ : PartKey,_  : Element)
+    func load(_ : PartKey) -> Element?
+    func save(_ : PartKey,_ : Element)
     func adjustToSet(_ : Element) -> Element
     
-    func has(_ : ViewPart) -> Bool
+    func has(_ : PartKey) -> Bool
     
 }
 
 extension ViewData2 {
     
-    func value(_ p : ViewPart) -> Element { self.load(p) ?? (Element.def(p) as! Self.Element) }
-    subscript(_ p: ViewPart) -> Element {
+    func value(_ p : PartKey) -> Element { self.load(p) ?? (Element.def(p) as! Self.Element) }
+    subscript(_ p: PartKey) -> Element {
         get {
             //let v=self.value(p)
             return self.values[p] ?? self.value(p)
@@ -51,12 +52,12 @@ extension ViewData2 {
             self.values[p]=v
         }
     }
-    func get(_ p : ViewPart) -> Element { self[p] }
-    mutating func set(_ p : ViewPart,_ e : Element) { self[p]=e }
+    func get(_ p : PartKey) -> Element { self[p] }
+    mutating func set(_ p : PartKey,_ e : Element) { self[p]=e }
     
     mutating func revert() { self.values.removeAll() }
     mutating func commit() {
-        ViewPart.allCases.forEach { p in
+        PartKey.allCases.forEach { p in
             if let v = self.values[p] {
                 self.save(p,v)
             }
@@ -64,11 +65,11 @@ extension ViewData2 {
         self.revert()
     }
     
-    func load(_ p : ViewPart) -> Element? { Defaults.GetPart(kind:Self.PREFIX,part: p) }
-    func save(_ p : ViewPart,_ v : Element) { Defaults.SetPart(kind:Self.PREFIX,part: p,value: v) }
-    func del(_ p : ViewPart) { Defaults.RemovePart(kind: Self.PREFIX, part: p) }
+    func load(_ p : PartKey) -> Element? { Defaults.GetPart(kind:Self.PREFIX,part: p) }
+    func save(_ p : PartKey,_ v : Element) { Defaults.SetPart(kind:Self.PREFIX,part: p,value: v) }
+    func del(_ p : PartKey) { Defaults.RemovePart(kind: Self.PREFIX, part: p) }
     
-    func readAndClear(_ p : ViewPart) -> Element? {
+    func readAndClear(_ p : PartKey) -> Element? {
         let v = load(p)
         del(p)
         return v
@@ -76,12 +77,13 @@ extension ViewData2 {
     
     func adjustToSet(_ v: Element) -> Element { v }
     
-    func has(_ p : ViewPart) -> Bool { load(p) != nil }
+    func has(_ p : PartKey) -> Bool { load(p) != nil }
     
 }
 
 class ViewDimensions : ViewData2 {
     typealias Element = Double
+    typealias PartKey = ViewPart
     static var PREFIX = DefaultKind.Dimension
     
     var values: Container = [ViewPart:Element]()
@@ -92,6 +94,7 @@ class ViewDimensions : ViewData2 {
 
 class ViewColours : ViewData2 {
     typealias Element = NSColor
+    typealias PartKey = ViewPart
     static var PREFIX = DefaultKind.Colour
     
     var values: Container = [ViewPart:Element]()
@@ -102,20 +105,22 @@ class ViewColours : ViewData2 {
 }
 
 class ViewFonts : ViewData2 {
+    
     typealias Element = NSFont
+    typealias PartKey = FontPart
     static var PREFIX = DefaultKind.Font
     
-    
-    var values: Container = [ViewPart:Element]()
+    var values: Container = [FontPart:Element]()
     
     required init() {  }
 }
 
 class ViewPaths : ViewData2 {
     typealias Element = URL
+    typealias PartKey = PathPart
     static var PREFIX = DefaultKind.URL
     
-    var values: Container = [ViewPart:Element]()
+    var values: Container = [PathPart:Element]()
     
     required init() {  }
     

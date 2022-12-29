@@ -11,9 +11,13 @@ import AppKit
 protocol HasDefault {
     associatedtype V
     static var zero : V { get }
-    static func def(_ : ViewPart) -> V
+    static func def(_ : any DefaultPart) -> V
+    
+
     
 }
+
+
 
 public protocol Nameable {
     var str : String { get }
@@ -22,31 +26,33 @@ public protocol Nameable {
 extension UInt32 : Nameable, HasDefault {
     var hex : String { String(format: "%08x",self) }
     public var str : String { hex }
-    static func def(_ : ViewPart) -> UInt32 { zero }
+    static func def(_ : any DefaultPart) -> UInt32 { zero }
 }
 
 extension Int32 : Nameable, HasDefault {
     var hex : String { UInt32(truncatingIfNeeded: self).hex }
     public var str : String { hex }
-    static func def(_ : ViewPart) -> Int32 { zero }
+    static func def(_ : any DefaultPart) -> Int32 { zero }
 }
 extension Double : Nameable, HasDefault {
-    public static func def(_ v : ViewPart) -> Double { 1 }
+    public static func def(_ v : any DefaultPart) -> Double { 1 }
     public var str : String { description }
 }
 
 extension NSColor : Nameable, HasDefault {
     public static var zero : NSColor { .black }
-    public static func def(_ v : ViewPart) -> NSColor {
-        (v == .Background) ? .white.deviceRGB : .black.deviceRGB
+    public static func def(_ v : any DefaultPart) -> NSColor {
+        let vb : ViewPart = v as? ViewPart ?? .Background
+        return (vb == .Background) ? .white.deviceRGB : .black.deviceRGB
     }
     public var str : String { rgba?.description ?? "[]" }
 }
 extension NSFont : Nameable, HasDefault {
     public static var zero : NSFont { NSFont.systemFont(ofSize: NSFont.systemFontSize) }
-    public static func def(_ v : ViewPart) -> NSFont {
+    public static func def(_ v : any DefaultPart) -> NSFont {
+        let vf : FontPart = v as? FontPart ?? .Title
         var size = NSFont.systemFontSize
-        switch v {
+        switch vf {
         case .Title:
             size=NSFont.systemFontSize(for: .large)
         case .Metadata:
@@ -62,7 +68,7 @@ extension NSFont : Nameable, HasDefault {
 }
 extension URL : Nameable, HasDefault {
     public static var zero : URL { URL(".") }
-    public static func def(_ : ViewPart) -> URL { zero }
+    public static func def(_ : any DefaultPart) -> URL { zero }
     public var str : String { path }
 }
 
@@ -70,15 +76,15 @@ extension URL : Nameable, HasDefault {
 
 extension Int: Nameable, HasDefault {
     public var str : String { description }
-    public static func def(_ : ViewPart) -> Int { zero }
+    public static func def(_ : any DefaultPart) -> Int { zero }
 }
 extension String : Nameable, HasDefault {
     public var str : String { self }
-    public static func def(_ : ViewPart) -> String { zero }
+    public static func def(_ : any DefaultPart) -> String { zero }
 }
 extension Bool : Nameable, HasDefault {
     public var str : String { self ? "ON" : "OFF" }
-    public static func def(_ : ViewPart) -> Bool { false }
+    public static func def(_ : any DefaultPart) -> Bool { false }
 }
 
 public protocol NameableEnumeration : CaseIterable, Hashable, Nameable, Decodable {

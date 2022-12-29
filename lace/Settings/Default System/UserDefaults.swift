@@ -85,13 +85,13 @@ class Defaults {
         UserDefaults.standard.removeObject(forKey: key)
     }
     
-    static func GetPart<T>(kind : DefaultKind,part : ViewPart) -> T? where T : EncDec {
+    static func GetPart<T>(kind : DefaultKind,part : any DefaultPart) -> T? where T : EncDec {
         return try? read(Key(kind,part))
     }
-    static func SetPart<T>(kind : DefaultKind,part : ViewPart,value : T) where T : EncDec {
+    static func SetPart<T>(kind : DefaultKind,part : any DefaultPart,value : T) where T : EncDec {
         try? write(Key(kind,part), value)
     }
-    static func RemovePart(kind : DefaultKind,part : ViewPart) {
+    static func RemovePart(kind : DefaultKind,part : any DefaultPart) {
         remove(forKey: Key(kind,part))
     }
     

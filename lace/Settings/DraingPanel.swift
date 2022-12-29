@@ -16,7 +16,7 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
     
     var wells : [ViewPart:NSColorWell] = [:]
     var fields : [ViewPart:NSTextField] = [:]
-    var labels : [ViewPart:NSTextField] = [:]
+    var labels : [FontPart:NSTextField] = [:]
     
 
     
@@ -51,7 +51,7 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
         set { laceView?.colours = newValue }
     }
     var fonts : ViewFonts = ViewFonts()
-    var part : ViewPart?
+    var part : FontPart?
     
     var paths = ViewPaths()
     
@@ -66,7 +66,7 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
         
     }
     
-    func setLabel(_ p : ViewPart) {
+    func setLabel(_ p : FontPart) {
         labels[p]?.stringValue = fonts[p].humanName
     }
     
@@ -80,7 +80,7 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
         
         laceView.touch()
         fonts.revert()
-        ViewPart.Fonts.forEach { self.setLabel($0) }
+        FontPart.allCases.forEach { self.setLabel($0) }
         paths.revert()
         self.pathView.url=paths[.DataDirectory]
     }
@@ -95,7 +95,7 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
                 if let well = wells[row] { well.color = cols[row] }
                 if let text = fields[row] { text.doubleValue = dims[row] }
             }
-            ViewPart.Fonts.forEach { self.setLabel($0) }
+            FontPart.allCases.forEach { self.setLabel($0) }
             self.pathView.url=paths[.DataDirectory]
         }
         self.part=nil
@@ -180,7 +180,7 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
     }
     
     @IBAction func fontEvent(_ button: NSButton!) {
-        guard let part=ViewPart(rawValue: button.tag) else { return }
+        guard let part=FontPart(rawValue: button.tag) else { return }
         self.part=part
         let font=fonts[part]
         syslog.debug("Changing part \(part) with current font \(font)")
