@@ -94,12 +94,13 @@ class ImageCG {
             self.setPixel(0, atX: x, y: numericCast(size.height)-1);
         }
         
+        let conv=grid.converter
         grid.forEachY { y in
             //let yy=Double(y)
             //let yf=Double(y%2)/2.0
             grid.forEachX { x in
                 if self.grid[x,y] {
-                    let p = grid.pos(x, y)
+                    let p = conv.pos(x, y)
                     (-5...5).forEach { xx in
                         (-5...5).forEach { yy in
                             let px=numericCast(p.x)+xx

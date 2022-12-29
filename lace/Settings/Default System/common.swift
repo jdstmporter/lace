@@ -12,6 +12,7 @@ protocol HasDefault {
     associatedtype V
     static var zero : V { get }
     static func def(_ : ViewPart) -> V
+    
 }
 
 public protocol Nameable {

@@ -62,33 +62,8 @@ class Grid : Codable {
         set { self.data[y][x] = newValue }
     }
     subscript(_ p : GridPoint) -> Bool { self[p.x,p.y] }
-    func flip(_ p : GridPoint) {
-        self.data[p.y][p.x].toggle()
-    }
+    func flip(_ p : GridPoint) { self.data[p.y][p.x].toggle() }
     
-    // conversion functions
-    
-    func pos(_ x : Int, _ y : Int) -> NSPoint {
-        let py = Double(y)+1.0
-        let offset = 0.5*Double(y%2)
-        let px = Double(x)+offset+1.0
-        return NSPoint(x: px*scale, y: py*scale)
-    }
-    func pos(_ p : GridPoint) -> NSPoint { self.pos(p.x,p.y) }
-    //func pos(_ l : GridLine) -> ScreenLine { ScreenLine(self.pos(l.start),self.pos(l.end)) }
-    
-    func round(_ d : Double) -> Int { Int((d/scale).rounded()) }
-    
-    func nearest(_ p : NSPoint) -> GridPoint {
-        let y = round(p.y)-1
-        let offset = 0.5*Double(y%2)*scale
-        let x = round(p.x-offset)-1
-        //print("Rounding: (\(p.x),\(p.y)) and offset \(p.x-offset) to (\(x),\(y))")
-        return GridPoint(x, y)
-    }
-    func nearestPoint(_ p : NSPoint) -> NSPoint {
-        self.pos(self.nearest(p))
-    }
     
     
     
@@ -96,7 +71,7 @@ class Grid : Codable {
         xRange.contains(x) && yRange.contains(y)
     }
     func check(_ p : GridPoint) -> Bool { check(p.x,p.y) }
-    func check(_ p : NSPoint) -> Bool { check(nearest(p)) }
+    
     
     
     

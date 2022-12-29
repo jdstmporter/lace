@@ -63,21 +63,21 @@ struct Pricking : Codable {
     }
     
     func nearestPoint(to point: NSPoint) throws -> GridPoint {
-        let p = grid.nearest(point)
+        let p = grid.converter.nearest(point)
         guard grid.check(p) else { throw PrickingError.PointOutsideArea }
         return p
     }
     
     func nearestPoint(to point: NSPoint, distance : inout Double) throws -> GridPoint {
         let p = try nearestPoint(to: point)
-        let pos = grid.pos(p)
+        let pos = grid.converter.pos(p)
         distance = hypot(pos.x-point.x,pos.y-point.y)
         return p
     }
     
     func snap(point: NSPoint) throws -> NSPoint {
         let p = try nearestPoint(to: point)
-        return grid.pos(p)
+        return grid.converter.pos(p)
     }
     
     func snap(line: ScreenLine) -> ScreenLine {
@@ -88,7 +88,7 @@ struct Pricking : Codable {
         let gr = ScreenLine(from,to).asGridLine(grid)
         return ScreenLine(grid: grid,line: gr)
     }
-    func snap(_ p : NSPoint) -> GridPoint { grid.nearest(p) }
+    func snap(_ p : NSPoint) -> GridPoint { grid.converter.nearest(p) }
     
     mutating func append(_ line : ScreenLine) {
         lines.append(grid, line)

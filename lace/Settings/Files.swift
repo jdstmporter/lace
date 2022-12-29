@@ -66,21 +66,9 @@ class FileRoot {
     
 }
 
-class LoadSaveFile {
+struct File {
     
-
-    
-    
-    init() {}
-    
-
-    
-    //static func RootPath() throws -> URL {
-     //   try LoadSaveFiles().root
-    //}
-    
-    
-    func load<T>() throws -> T
+    static func load<T>() throws -> T
     where T : Codable
     {
         let picker = FileReadPicker(def: FileRoot.path)
@@ -93,7 +81,7 @@ class LoadSaveFile {
         return try decoder.decode(T.self, from: d)
     }
     
-    func save<T>(_ data : T,compact: Bool=true) throws
+    static func save<T>(_ data : T,compact: Bool=true) throws
     where T : Codable
     {
         let picker = FilePicker(def: FileRoot.path)
@@ -104,7 +92,7 @@ class LoadSaveFile {
         let encoder=JSONEncoder()
         if !compact { encoder.outputFormatting = .prettyPrinted }
         let d = try encoder.encode(data)
-        try d.write(to: FileRoot.path)
+        try d.write(to: picker.url)
     }
     
 }

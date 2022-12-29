@@ -101,12 +101,13 @@ class CGPrintable {
         self.context.setStrokeColor(self.colours[.Line].cgColor)
         self.context.stroke(NSRect(x: 0, y: 0, width: self.size.width-1, height: self.size.height-1))
         
+        let conv=pricking.grid.converter
         pricking.grid.yRange.forEach { y in
             pricking.grid.xRange.forEach { x in
                 let isPin = pricking.grid[x,y]
                 let radius = dimensions[isPin ? .Pin : .Grid]*self.dimensionScaling
                 let fg : CGColor = self.colours[isPin ? .Pin : .Grid].cgColor
-                let p = pricking.grid.pos(x, y)
+                let p = conv.pos(x, y)
                 point(p,radius: radius,colour: fg)
             }
         }

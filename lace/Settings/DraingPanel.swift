@@ -98,6 +98,7 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
             ViewPart.Fonts.forEach { self.setLabel($0) }
             self.pathView.url=paths[.DataDirectory]
         }
+        self.part=nil
         
     }
     
@@ -163,14 +164,19 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
     func cleanup() {
         NSColorPanel.shared.close()
         NSFontPanel.shared.close()
+        self.part=nil
     }
     
     @IBAction func pathChange(_ obj : Any) {
         let fp = FilePicker(url: self.paths[.DataDirectory], types: [])
         guard fp.runSync(), let dir=fp.dir else { return }
-        self.paths[.LastPath]=dir
         self.paths[.DataDirectory]=dir.asDirectory()
         self.load()
+    }
+    
+    @objc func fontPanelClosed(_ event : NSNotification) {
+        self.part=nil
+        NotificationCenter.default.removeObserver(self, name: NSWindow.willCloseNotification, object: NSFontPanel.shared)
     }
     
     @IBAction func fontEvent(_ button: NSButton!) {
@@ -182,6 +188,7 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
         NSFontManager.shared.target=self
         NSFontPanel.shared.setPanelFont(font, isMultiple: false)
         NSFontPanel.shared.makeKeyAndOrderFront(self)
+        NotificationCenter.default.addObserver(self, selector: #selector(fontPanelClosed), name: NSWindow.willCloseNotification, object: NSFontPanel.shared)
        
     }
     
@@ -201,7 +208,7 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
         
         fonts[p]=font
         self.setLabel(p)
-        self.part=nil
+        //self.part=nil
     }
 
 }

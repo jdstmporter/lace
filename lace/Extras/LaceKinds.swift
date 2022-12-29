@@ -10,7 +10,7 @@ import Foundation
 
 
 
-enum LaceKind : CaseIterable {
+enum LaceKind : Int, CaseIterable, Encodable {
     case Milanese
     case Bedfordshire
     case PointGround
@@ -62,6 +62,7 @@ enum LaceKind : CaseIterable {
     init(index: Int) {
         self = (0..<LaceKind.count).contains(index) ? LaceKind.allCases[index] : .Custom
     }
+    init(_ i : Int) { self.init(index: i) }
     var index : Int { LaceKind.allCases.firstIndex(of: self) ?? LaceKind.count }
     
     

@@ -272,9 +272,10 @@ class LaceView : ViewBase {
         self.tracker.forEach { self.removeTrackingArea($0) }
         self.tracker.removeAll()
         
+        let conv=pricking.grid.converter
         pricking.grid.yRange.forEach { y in
             pricking.grid.xRange.forEach { x in
-                let p = invert(pricking.grid.pos(x, y))
+                let p = invert(conv.pos(x, y))
                 let r = NSRect(centre: p, side: pricking.grid.scale)
                 syslog.announce("(\(x),\(y)) -|> \(r)   [\(pricking.grid.scale)]")
                 let area = NSTrackingArea(rect: r,
@@ -308,14 +309,14 @@ class LaceView : ViewBase {
         }
         
      
-        
+        let conv=pricking.grid.converter
         pricking.grid.yRange.forEach { y in
             pricking.grid.xRange.forEach { x in
                 let isPin = pricking.grid[x,y]
                 let pinData : ViewPart = isPin ? .Pin : .Grid
                 let radius = dims[pinData]
                 let fg : NSColor = colours[pinData]
-                let p = pricking.grid.pos(x, y)
+                let p = conv.pos(x, y)
                 point(p,radius: radius,colour: fg)
                 
             }
@@ -392,7 +393,7 @@ class LaceView : ViewBase {
     
     override func shouldMoveMouse(_ from: NSPoint) -> NSPoint {
         guard mouseToGrid else { return from }
-        return pricking.grid.nearestPoint(from)
+        return pricking.grid.converter.nearestPoint(from)
     }
     
     func trackerCoordinate(_ event : NSEvent) -> GridPoint? {

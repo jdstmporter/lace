@@ -7,13 +7,47 @@
 
 import Foundation
 
-public enum ThreadMode : Int {
+protocol EncDecEnum : EncDec, RawRepresentable, HasDefault
+where RawValue : HasDefault
+{
+    
+}
+
+extension EncDecEnum {
+    func enc() -> Any? { self.rawValue as Any }
+    static func dec(_ x: Any) -> Self? {
+        guard let m=x as? Self.RawValue else { return nil }
+            return Self(rawValue: m)
+    }
+    
+    
+
+}
+
+protocol Encodable : RawRepresentable, Codable where RawValue : Codable {
+    init(_ r : Int)
+}
+
+extension Encodable {
+    
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.singleValueContainer()
+        let rv = try c .decode(Int.self)
+        self.init(rv)
+    }
+    public func encode(to encoder: Encoder) throws {
+        var c=encoder.singleValueContainer()
+        try c.encode(self.rawValue)
+    }
+}
+
+public enum ThreadMode : Int, Encodable {
     case Library = 0
     case Custom = 1
     
-    init(_ r : Int) { self = ThreadMode.init(rawValue: r) ?? .Library }
+    public init(_ r : Int) { self = ThreadMode.init(rawValue: r) ?? .Library }
 }
-public enum SpaceMode : Int {
+public enum SpaceMode : Int, Encodable {
     case Kind = 0
     case CustomKind = 1
     case CustomSpace = 2

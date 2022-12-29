@@ -48,8 +48,9 @@ struct ScreenLine : CustomStringConvertible, Codable {
         self.end=start
     }
     init(grid : Grid,line : GridLine) {
-        self.start=grid.pos(line.start)
-        self.end=grid.pos(line.end)
+        let conv=grid.converter
+        self.start=conv.pos(line.start)
+        self.end=conv.pos(line.end)
     }
     var path : NSBezierPath {
         let path=NSBezierPath()
@@ -59,13 +60,15 @@ struct ScreenLine : CustomStringConvertible, Codable {
     }
     
     func asGridLine(_ grid : Grid) -> GridLine {
-        let s=grid.nearest(start)
-        let e=grid.nearest(end)
+        let conv=grid.converter
+        let s=conv.nearest(start)
+        let e=conv.nearest(end)
         return GridLine(s,e)
     }
     
     func checkIn(_ grid: Grid) -> Bool {
-        grid.check(grid.nearest(start)) && grid.check(grid.nearest(end))
+        let conv=grid.converter
+        return grid.check(conv.nearest(start)) && grid.check(conv.nearest(end))
     }
     
     
