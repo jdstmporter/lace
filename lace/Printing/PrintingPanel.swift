@@ -11,6 +11,7 @@ import AppKit
 
 class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
     
+    
     //var defaults = PrintDefaults()
     
     var laceKindName: String {
@@ -52,10 +53,10 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
         threadKind.addItems(withTitles: items)
         threadKind.selectItem(at: 0)
     }
-    var printerOrList : Bool {
-        get { printers.isEnabled }
+    var printerOrList : ResolutionMode {
+        get { printers.isEnabled ? .Printer : .List }
         set {
-            printerButton.state = newValue ? .on : .off
+            printerButton.state = newValue == .Printer ? .on : .off
             choiceAction(nil)
         }
     }
@@ -263,6 +264,7 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
         return panel
     }
     
+    
     @discardableResult static func close() -> PrintingPanel? {
         panel?.performClose(nil)
         return panel
@@ -301,5 +303,7 @@ class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
         self.pricking=pricking
 
     }
+    
+  
 }
 

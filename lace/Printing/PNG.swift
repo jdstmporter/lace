@@ -10,9 +10,6 @@ import AppKit
 import ImageIO
 import UniformTypeIdentifiers
 
-protocol Defaultable {
-    static var zero : Self { get }
-}
 
 
 extension Int : Defaultable { static var zero: Int { 0 } }
@@ -20,7 +17,7 @@ extension Float : Defaultable { static var zero: Float { 0 } }
 extension Double : Defaultable { static var zero: Double { 0 } }
 extension Bool : Defaultable { static var zero: Bool { false } }
 extension NSSize : Defaultable { static var zero: NSSize { NSSize() } }
-extension String : Defaultable { static var zero: String { "" } }
+extension String : Defaultable { static var zero: String { "" } } 
 
 
 

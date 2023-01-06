@@ -82,10 +82,10 @@ extension Array {
 }
 
 extension Decimal {
-    var doubleValue : Double { (self as NSDecimalNumber).doubleValue }
-    var floatValue : Float { self.doubleValue.float }
+    public var doubleValue : Double { (self as NSDecimalNumber).doubleValue }
+    public var floatValue : Float { self.doubleValue.float }
     
-    init(_ string: String) {
+    public init(_ string: String) { 
         self = NSDecimalNumber(string: string) as Decimal
     }
 }

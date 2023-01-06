@@ -8,27 +8,10 @@
 import Foundation
 import AppKit
 
-public protocol Dec {
-    static func dec(_ : Any) -> Self?
-}
-public protocol Enc {
-    func enc() -> Any?
-}
-
-public extension Enc {
-    func enc() -> Any? { self as Any }
-}
-public extension Dec {
-    static func dec(_ x: Any) -> Self? {
-        guard let m=x as? Self else { return nil }
-        return m
-    }
-}
-
-public protocol EncDec : Enc, Dec {}
 
 
-extension Int : EncDec {}
+
+extension Int : EncDec {} 
 extension Bool : EncDec {}
 extension Double : EncDec {}
 extension String : EncDec {}
@@ -63,6 +46,16 @@ extension URL : EncDec {
     }
     public func enc() -> Any? {
         self.relativePath
+    }
+}
+
+extension Decimal : EncDec {
+    public static func dec(x: Any) -> Decimal? {
+        guard let val = x as? String else { return nil }
+        return Decimal(val)
+    }
+    public func enc() -> Any? {
+        self.str
     }
 }
 

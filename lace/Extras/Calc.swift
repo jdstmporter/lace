@@ -7,53 +7,9 @@
 
 import Foundation
 
-protocol EncDecEnum : EncDec, RawRepresentable, HasDefault
-where RawValue : HasDefault
-{
-    
-}
 
-extension EncDecEnum {
-    func enc() -> Any? { self.rawValue as Any }
-    static func dec(_ x: Any) -> Self? {
-        guard let m=x as? Self.RawValue else { return nil }
-            return Self(rawValue: m)
-    }
-    
-    
 
-}
 
-protocol Encodable : RawRepresentable, Codable where RawValue : Codable {
-    init(_ r : Int)
-}
-
-extension Encodable {
-    
-    public init(from decoder: Decoder) throws {
-        let c = try decoder.singleValueContainer()
-        let rv = try c .decode(Int.self)
-        self.init(rv)
-    }
-    public func encode(to encoder: Encoder) throws {
-        var c=encoder.singleValueContainer()
-        try c.encode(self.rawValue)
-    }
-}
-
-public enum ThreadMode : Int, Encodable {
-    case Library = 0
-    case Custom = 1
-    
-    public init(_ r : Int) { self = ThreadMode.init(rawValue: r) ?? .Library }
-}
-public enum SpaceMode : Int, Encodable {
-    case Kind = 0
-    case CustomKind = 1
-    case CustomSpace = 2
-    
-    init(_ r : Int) { self = SpaceMode.init(rawValue: r) ?? .Kind }
-}
 
 public protocol ThreadCalcDelegate {
     var laceKindName : String { get set }
@@ -73,7 +29,7 @@ public protocol ThreadCalcDelegate {
     var threadMode : ThreadMode { get set }
     var spaceMode : SpaceMode { get set }
     
-    var printerOrList : Bool { get set }
+    var printerOrList : ResolutionMode { get set }
     var printer : String { get set }
     var resolution : Int { get set }
     
@@ -123,7 +79,7 @@ fileprivate class ThreadCalcDelegateDummy : ThreadCalcDelegate {
     
     var threadMode: ThreadMode { get { .Library} set {} }
     var spaceMode: SpaceMode { get { .Kind}  set {} }
-    var printerOrList: Bool { get { true } set {} }
+    var printerOrList: ResolutionMode { get { .List } set {} }
     var printer: String { get {""} set {} }
     var resolution : Int { get {0} set {}}
     

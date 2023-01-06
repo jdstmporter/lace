@@ -8,21 +8,6 @@
 import Foundation
 import AppKit
 
-protocol HasDefault {
-    associatedtype V
-    static var zero : V { get }
-    static func def(_ : any DefaultPart) -> V
-    
-
-    
-}
-
-
-
-public protocol Nameable {
-    var str : String { get }
-}
-
 extension UInt32 : Nameable, HasDefault {
     var hex : String { String(format: "%08x",self) }
     public var str : String { hex }
@@ -72,8 +57,6 @@ extension URL : Nameable, HasDefault {
     public var str : String { path }
 }
 
-
-
 extension Int: Nameable, HasDefault {
     public var str : String { description }
     public static func def(_ : any DefaultPart) -> Int { zero }
@@ -87,23 +70,14 @@ extension Bool : Nameable, HasDefault {
     public static func def(_ : any DefaultPart) -> Bool { false }
 }
 
-public protocol NameableEnumeration : CaseIterable, Hashable, Nameable, Decodable {
-    init?(_ : String)
+extension Decimal : Nameable, HasDefault {
+    public static var zero : Decimal { Decimal() }
+    public static func def(_ : any DefaultPart) -> Decimal { zero }
+    public var str : String {
+        var val=self
+        return NSDecimalString(&val, NSLocale.current)
+    }
 }
 
-extension NameableEnumeration {
-    public init?(_ name : String) {
-        if let item = (Self.allCases.first { $0.str==name }) { self=item }
-        else { return nil }
-    }
-    public var str : String { "\(self)" }
-    
-    public static func dec(x: Any) -> Self? {
-        guard let name = x as? String else { return nil }
-        return Self(name)
-    }
-    public func enc() -> Any? {
-        self.str
-    }
-}
-    
+
+

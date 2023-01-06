@@ -26,6 +26,7 @@
 		E11EDC0C295A69B400B8E957 /* sizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11EDC0B295A69B400B8E957 /* sizes.swift */; };
 		E11EDC0E295B4A3100B8E957 /* grid2screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11EDC0D295B4A3100B8E957 /* grid2screen.swift */; };
 		E11EDC10295B7CE100B8E957 /* LaceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11EDC0F295B7CE100B8E957 /* LaceSettings.swift */; };
+		E11EDC2D2961EAAF00B8E957 /* enumProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11EDC2C2961EAAF00B8E957 /* enumProtocols.swift */; };
 		E135749128135102005D84D6 /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135749028135102005D84D6 /* DictionaryExtensions.swift */; };
 		E13574962815BE45005D84D6 /* DraingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13574952815BE45005D84D6 /* DraingPanel.swift */; };
 		E135749E28245909005D84D6 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135749D28245909005D84D6 /* Log.swift */; };
@@ -96,6 +97,7 @@
 		E11EDC0B295A69B400B8E957 /* sizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sizes.swift; sourceTree = "<group>"; };
 		E11EDC0D295B4A3100B8E957 /* grid2screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = grid2screen.swift; sourceTree = "<group>"; };
 		E11EDC0F295B7CE100B8E957 /* LaceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaceSettings.swift; sourceTree = "<group>"; };
+		E11EDC2C2961EAAF00B8E957 /* enumProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enumProtocols.swift; sourceTree = "<group>"; };
 		E135749028135102005D84D6 /* DictionaryExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
 		E13574952815BE45005D84D6 /* DraingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraingPanel.swift; sourceTree = "<group>"; };
 		E135749D28245909005D84D6 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -338,6 +340,7 @@
 				E1383C04280773AB009DEEFA /* UserDefaults.swift */,
 				E1DFD09D293802DD0075D971 /* enums.swift */,
 				E117ABA9294513AA00CFF6E8 /* simple2.swift */,
+				E11EDC2C2961EAAF00B8E957 /* enumProtocols.swift */,
 			);
 			path = "Default System";
 			sourceTree = "<group>";
@@ -432,6 +435,7 @@
 				E13574962815BE45005D84D6 /* DraingPanel.swift in Sources */,
 				E135749E28245909005D84D6 /* Log.swift in Sources */,
 				E1BD6A85280E049700430EC4 /* Colours.swift in Sources */,
+				E11EDC2D2961EAAF00B8E957 /* enumProtocols.swift in Sources */,
 				E11B739B28F4C873005AC2C9 /* threadTypes.swift in Sources */,
 				E1383C072808AB3D009DEEFA /* Serialise.swift in Sources */,
 				E1EBD81C284149A200D8E10C /* Calc.swift in Sources */,

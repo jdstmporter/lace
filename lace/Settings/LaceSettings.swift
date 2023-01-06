@@ -7,153 +7,32 @@
 
 import AppKit
 
-struct LaceState : Codable {
-    var printer : Int // printer index >= 0 (set to default if OOR)
-    var printerOrList : Bool // TRUE for printer, FALSE for list
-    var resolution : Int // from drop-down; fit around if needs be
-    
-    var threadMode : ThreadMode // interconvertible with member of ThreadMode enum
-    var material : Int // index in drop-down
-    var thread : Int // index in drop-down
-    var threading : Int // winding for thread
-    
-    var spaceMode : SpaceMode // interconvertible with member of SpaceMode enum
-    var laceKind : LaceKind // index in LaceKind structure
-    var laceKindWinding : Int // winding for kind
-    var pinSpacing : Decimal // the overall separation
-    
-    /*enum Keys : String, CodingKey {
-        case printer
-        case printerOrList
-        case resolution
-        case threadMode
-        case material
-        case thread
-        case threading
-        case spaceMode
-        case laceKind
-        case laceKindWinding
-        case pinSpacing
-    }
-    
-    init() {
-        printer = 0
-        printerOrList = true
-        resolution = 300
-        
-        threadMode = .Library
-        material = 0
-        thread = 0
-        threading = 0
-        
-        spaceMode = .Kind
-        laceKind = .Torchon
-        laceKindWinding = 0
-        pinSpacing = Decimal()
-    } */
-    
-    static func get<T>(_ d : [String:Any], _ key : String) -> T? {
-        d[key] as? T
-    }
-    
-    init(from : [String:Any] = [:]) {
-        printer = Self.get(from,"printer") ?? 0
-        printerOrList = (Self.get(from,"printerOrList") ?? 0) > 0
-        resolution = Self.get(from,"resolution") ?? 300
-        
-        threadMode = ThreadMode(Self.get(from,"threadMode") ?? 0)
-        material = Self.get(from,"material") ?? 0
-        thread = Self.get(from,"thread") ?? 0
-        threading = Self.get(from,"threading") ?? 0
-        
-        spaceMode = SpaceMode(Self.get(from,"spaceMode") ?? 0)
-        laceKind = LaceKind(Self.get(from,"laceKind") ?? LaceKind.Torchon.rawValue)
-        laceKindWinding = Self.get(from,"laceKindWinding") ?? 0
-        pinSpacing = Self.get(from,"pinSpacing") ?? Decimal.zero
-    }
-    
-    func code() -> [String:Any] {
-        [
-            "printer" : printer,
-            "printerOrList" : printerOrList ? 1 : 0,
-            "resolution" : resolution,
-            "threadMode" : threadMode.rawValue,
-            "material" : material,
-            "thread" : thread,
-            "threading" : threading,
-            "spaceMode" : spaceMode.rawValue,
-            "laceKind" : laceKind.rawValue,
-            "laceKindWinding" : laceKindWinding,
-            "pinSpacing" : pinSpacing
-        ]
-    }
- 
-    /*
-    init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: Keys.self)
-        printer = try c.decode(Int.self, forKey: .printer)
-        printerOrList = try c.decode(Bool.self, forKey: .printerOrList)
-        resolution = try c.decode(Int.self, forKey: .resolution)
-        
-        threadMode = try c.decode(ThreadMode.self, forKey: .threadMode)
-        material = try c.decode(Int.self, forKey: .material)
-        thread = try c.decode(Int.self, forKey: .thread)
-        threading = try c.decode(Int.self, forKey: .threading)
-        
-        spaceMode = try c.decode(SpaceMode.self, forKey: .spaceMode)
-        laceKind = try c.decode(LaceKind.self, forKey: .laceKind)
-        laceKindWinding = try c.decode(Int.self, forKey: .laceKindWinding)
-        
-        pinSpacing = try c.decode(Decimal.self, forKey: .pinSpacing)
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var c=encoder.container(keyedBy: Keys.self)
-        try c.encode(printer, forKey: .printer)
-        try c.encode(printerOrList, forKey: .printerOrList)
-        try c.encode(resolution, forKey: .resolution)
-        
-        try c.encode(threadMode, forKey: .threadMode)
-        try c.encode(material, forKey: .material)
-        try c.encode(thread, forKey: .thread)
-        try c.encode(threading, forKey: .threading)
-        
-        try c.encode(spaceMode, forKey: .spaceMode)
-        try c.encode(laceKind, forKey: .laceKind)
-        try c.encode(laceKindWinding, forKey: .laceKindWinding)
-        try c.encode(pinSpacing, forKey: .pinSpacing)
-    }
-     
-     */
-    
-}
 
-extension LaceState : Nameable, HasDefault {
-    public static var zero : LaceState { LaceState() }
-    public static func def(_ v : any DefaultPart) -> LaceState { zero }
-    public var str : String { "Lace state" }
-}
 
-extension LaceState : EncDec {
-    
-    func enc() -> Any? {
-        self.code() as Any
+extension EncDec {
+    public static func Enc(_ v : EncDec?) -> Any? {
+        guard let w = v as? Self else { return nil }
+        return w.enc()
     }
-    
-    static func dec(_ x : Any) -> LaceState? {
-        guard let data = x as? [String:Any] else { return nil }
-        return LaceState(from: data)
-    }
-    
 }
 
 class LaceSettingsPanel : NSView, ThreadCalcDelegate, SettingsFacet {
+    
+    var defaults = ViewLace()
+    
+    
+    
     func load() {
-        
+        ThreadPart.allCases.forEach { key in
+            self[key] = defaults[key]
+        }
     }
     
     func save() throws {
-        
+        ThreadPart.allCases.forEach { key in
+            defaults[key] = self[key]
+        }
+        defaults.commit()
     }
     
     
@@ -201,10 +80,10 @@ class LaceSettingsPanel : NSView, ThreadCalcDelegate, SettingsFacet {
         threadKind.addItems(withTitles: items)
         threadKind.selectItem(at: 0)
     }
-    var printerOrList : Bool {
-        get { printers.isEnabled }
+    var printerOrList : ResolutionMode {
+        get { printers.isEnabled ? .Printer : .List }
         set {
-            printerButton.state = newValue ? .on : .off
+            printerButton.state = newValue == .Printer ? .on : .off
             choiceAction(nil)
         }
     }
@@ -317,7 +196,7 @@ class LaceSettingsPanel : NSView, ThreadCalcDelegate, SettingsFacet {
         }
         self.calc.setMode(thread: mode)
     }
- 
+    
     @IBAction func laceKindChoice(_ sender: Any!) {
         let mode=spaceMode
         switch mode {
@@ -342,7 +221,7 @@ class LaceSettingsPanel : NSView, ThreadCalcDelegate, SettingsFacet {
         guard idx>=0, idx<displayedResolutions.count else { return }
         printerResolutionDPI = displayedResolutions[idx]
     }
- 
+    
     @IBAction func choiceAction(_ button: NSButton!) {
         if printerButton.state == .on {
             printers.isEnabled = true
@@ -391,13 +270,70 @@ class LaceSettingsPanel : NSView, ThreadCalcDelegate, SettingsFacet {
             threadChoice(nil)
             laceKindChoice(nil)
             self.calc.threadAction()
-         
+            
             // do first time round things
             
             //NotificationCenter.default.addObserver(self, selector: #selector(colourChanged(_:)), name: //NSColorPanel.colorDidChangeNotification, object: nil)
             firstTime=false
         }
         
-
+        
     }
+    
+    
+    subscript(_ key : ThreadPart) -> Int { get {
+        switch key {
+        case .printer:
+            return printers.indexOfSelectedItem
+        case .printerOrList:
+            return printerOrList.rawValue
+        case .resolution:
+            return resolution
+        case .threadMode:
+            return threadMode.rawValue
+        case .material:
+            return materialKind.indexOfSelectedItem
+        case .thread:
+            return threadKind.indexOfSelectedItem
+        case .threading:
+            return threadWinding
+        case .laceKind:
+            return laceKind.rawValue
+        case .laceKindWinding:
+            return laceKindWinding
+        case .pinSpacing:
+            return pinSeparation.sigFigures(10)
+        case .spaceMode:
+            return spaceMode.rawValue
+        }
+    }
+        set(v) {
+            switch key {
+            case .printer:
+                printers.selectItem(at: v )
+            case .printerOrList:
+                printerOrList = ResolutionMode(v)
+            case .resolution:
+                resolution = v
+            case .threadMode:
+                threadMode = ThreadMode(v )
+            case .material:
+                materialKind.selectItem(at: v )
+            case .thread:
+                threadKind.selectItem(at: v )
+            case .threading:
+                threadWinding = v
+            case .spaceMode:
+                spaceMode = SpaceMode(v )
+            case .laceKind:
+                laceKind = LaceKind(v )
+            case .laceKindWinding:
+                laceKindWinding  = v
+            case .pinSpacing:
+                pinSeparation  = Decimal(sigFigures: 10, value: v)
+            }
+        }
+    }
+    
+    
 }

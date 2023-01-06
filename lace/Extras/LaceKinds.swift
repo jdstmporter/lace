@@ -10,17 +10,21 @@ import Foundation
 
 
 
-enum LaceKind : Int, CaseIterable, Encodable {
-    case Milanese
-    case Bedfordshire
-    case PointGround
-    case Bruges
-    case Torchon
-    case Valenceniennes
-    case Binche
-    case Flanders
+enum LaceKind : Int, NameableEnumeration, RawConstructibleEnumeration {
     
-    case Custom
+    
+    case Milanese = 0
+    case Bedfordshire = 1
+    case PointGround = 2
+    case Bruges = 3
+    case Torchon = 4
+    case Valenceniennes = 5
+    case Binche = 6
+    case Flanders = 7
+    
+    case Custom = 8
+    
+    static var zero: LaceKind { .Custom }
 
     static let windings : [LaceKind:Int] = [
         .Milanese : 8,
@@ -46,24 +50,19 @@ enum LaceKind : Int, CaseIterable, Encodable {
     
     
     var name : String { LaceKind.names[self] ?? "" }
-    var str : String { "\(self)" }
+    var str : String { name }
     var wrapsPerSpace : Int { LaceKind.windings[self] ?? 12 }
     var isCustom : Bool { self == .Custom }
     
-    init(_ n : String?) {
-        self = (LaceKind.allCases.first { $0.name == n }) ?? .Custom
-    }
+    init(_ n : String?) { self = LaceKind(n ?? "") }
     init(fromSafeString s : String) throws {
         guard let x = (LaceKind.allCases.first { $0.str == s }) else { throw LaceError.BadLaceStyleName }
         self = x
     }
     
     static var count : Int { LaceKind.allCases.count }
-    init(index: Int) {
-        self = (0..<LaceKind.count).contains(index) ? LaceKind.allCases[index] : .Custom
-    }
-    init(_ i : Int) { self.init(index: i) }
-    var index : Int { LaceKind.allCases.firstIndex(of: self) ?? LaceKind.count }
+    init(index: Int) { self = LaceKind(index) }
+    var index : Int { self.value }
     
     
 
