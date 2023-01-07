@@ -10,6 +10,14 @@ import AppKit
 
 
 class PrintingPanel : NSPanel, LaunchableItem, ThreadCalcDelegate {
+    func loadSettings() {
+        
+    }
+    
+    func saveSettings() {
+        
+    }
+    
     
     
     //var defaults = PrintDefaults()

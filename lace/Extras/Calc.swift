@@ -26,6 +26,9 @@ public protocol ThreadCalcDelegate {
     func setThreads(items : [String])
     func reset()
     
+    func loadSettings()
+    func saveSettings()
+    
     var threadMode : ThreadMode { get set }
     var spaceMode : SpaceMode { get set }
     
@@ -34,6 +37,7 @@ public protocol ThreadCalcDelegate {
     var resolution : Int { get set }
     
     var dict : [String:Any] { get set }
+    
 }
 
 extension ThreadCalcDelegate {
@@ -85,6 +89,9 @@ fileprivate class ThreadCalcDelegateDummy : ThreadCalcDelegate {
     
     func setThreads(items : [String]) {}
     func reset() {}
+    
+    func loadSettings() {}
+    func saveSettings () {}
 }
 
 class ThreadCalc {
@@ -114,7 +121,7 @@ class ThreadCalc {
     public func reset() {
         info = ThreadInfo()
         delegate.reset()
-        self.loadSettings()
+        delegate.loadSettings()
         
         
         selectedMaterial = ""
@@ -235,18 +242,10 @@ class ThreadCalc {
             }
             print("Set pin separation to \(self.pinSeparation)")
         }
-        self.saveSettings()
+        delegate.saveSettings()
     }
     
-    internal func saveSettings() {
-        let defs = self.delegate.dict
-        Defaults.set(forKey: ThreadCalc.SettingsKey, value: defs)
-    }
-    internal func loadSettings() {
-        if let defs : [String:Any] = Defaults.get(forKey: ThreadCalc.SettingsKey) {
-            self.delegate.dict=defs
-        }
-    }
+    
     
     
     

@@ -71,9 +71,18 @@ extension Float {
         NSDecimalRound(&e, &d, 1, .plain)
         return e
     }
+    
+    
 }
 extension Double {
     var float : Float { Float(self) }
+    
+    func intVal(nDecimals: Int = 1) -> Int {
+        Int(floor(self*pow(10.0, Double(nDecimals))))
+    }
+    static func dbleVal(_ v : Int,nDecimals : Int = 1) -> Double {
+        Double(v)*pow(10.0,-Double(nDecimals))
+    }
 }
 
 extension Array {
@@ -85,7 +94,14 @@ extension Decimal {
     public var doubleValue : Double { (self as NSDecimalNumber).doubleValue }
     public var floatValue : Float { self.doubleValue.float }
     
-    public init(_ string: String) { 
+    public init(_ string: String) {
         self = NSDecimalNumber(string: string) as Decimal
+    }
+    
+    func intVal(nDecimals: Int = 1) -> Int {
+        (self as NSDecimalNumber).multiplying(byPowerOf10: numericCast(nDecimals)).intValue
+    }
+    static func decVal(_ v : Int,nDecimals : Int = 1) -> Decimal {
+        NSDecimalNumber(integerLiteral: v).multiplying(byPowerOf10: -numericCast(nDecimals)) as Decimal
     }
 }

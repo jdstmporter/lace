@@ -23,14 +23,17 @@ class LaceSettingsPanel : NSView, ThreadCalcDelegate, SettingsFacet {
     
     
     func load() {
+        self.defaults.revert()
         ThreadPart.allCases.forEach { key in
             self[key] = defaults[key]
+            syslog.announce("Loaded \(key) -> \(self[key])")
         }
     }
     
     func save() throws {
         ThreadPart.allCases.forEach { key in
             defaults[key] = self[key]
+            syslog.announce("Written \(key) -> \(self[key])")
         }
         defaults.commit()
     }
@@ -38,8 +41,16 @@ class LaceSettingsPanel : NSView, ThreadCalcDelegate, SettingsFacet {
     
     
     func cleanup() {
+        
     }
     
+    
+    func loadSettings() {
+        self.load()
+    }
+    func saveSettings() {
+        do { try self.save() } catch {}
+    }
     
     var laceKindName: String {
         get {laceKindList.titleOfSelectedItem ?? "" }
@@ -63,8 +74,10 @@ class LaceSettingsPanel : NSView, ThreadCalcDelegate, SettingsFacet {
         get { pinSpace.stringValue }
         set { pinSpace.stringValue=newValue }
     }
-    var pinSpacingFloat: Float { pinSpace.floatValue }
-    
+    var pinSpacingFloat: Float {
+        get { pinSpace.floatValue }
+        set { pinSpace.floatValue=newValue }
+    }
     func reset() {}
     
     var threadWinding: Int {
@@ -142,7 +155,7 @@ class LaceSettingsPanel : NSView, ThreadCalcDelegate, SettingsFacet {
     var selectedMaterial : String = ""
     var matchingThreads : Threads.ThreadGroup = []
     var matchedThreads : Threads.ThreadGroup = []
-    var pinSeparation : Decimal = 0
+    var pinSeparation : Decimal { get { self.calc.pinSeparation }  }
     var printerResolutionDPI : Int = 0
     var printerResolutionDPM : Int { Int(printerResolutionDPI.f32 * PrintingPanel.InchesPerMetre) }
     var printerresolutionDPISize : NSSize { NSSize(side: printerResolutionDPI) }
@@ -248,6 +261,8 @@ class LaceSettingsPanel : NSView, ThreadCalcDelegate, SettingsFacet {
     
     func initialise() {
         if firstTime {
+            self.load()
+            
             printSystem = try? PrintSystem()
             printers.removeAllItems()
             printSystem?.forEach { printers.addItem(withTitle: $0.name) }
@@ -302,7 +317,7 @@ class LaceSettingsPanel : NSView, ThreadCalcDelegate, SettingsFacet {
         case .laceKindWinding:
             return laceKindWinding
         case .pinSpacing:
-            return pinSeparation.sigFigures(10)
+            return Int(self.pinSpacingFloat * 100)
         case .spaceMode:
             return spaceMode.rawValue
         }
@@ -330,7 +345,7 @@ class LaceSettingsPanel : NSView, ThreadCalcDelegate, SettingsFacet {
             case .laceKindWinding:
                 laceKindWinding  = v
             case .pinSpacing:
-                pinSeparation  = Decimal(sigFigures: 10, value: v)
+                pinSpacingFloat = Float(v)/100.0
             }
         }
     }
