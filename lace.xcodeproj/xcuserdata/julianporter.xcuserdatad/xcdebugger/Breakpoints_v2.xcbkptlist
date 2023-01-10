@@ -386,5 +386,131 @@
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D76B2768-19DD-4AF5-B273-8B919E7F7A6F"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lace/Settings/threadListPanel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "72"
+            endingLineNumber = "72"
+            landmarkName = "tableView(_:objectValueFor:row:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "D76B2768-19DD-4AF5-B273-8B919E7F7A6F - d81cf6f3d16eb33a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "lace.ThreadListPanelView.tableView(_: __C.NSTableView, objectValueFor: Swift.Optional&lt;__C.NSTableColumn&gt;, row: Swift.Int) -&gt; Swift.Optional&lt;Any&gt;"
+                  moduleName = "lace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/julianporter/Workspace/XCode/Lace/lace/lace/Settings/threadListPanel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "72"
+                  endingLineNumber = "72"
+                  offsetFromSymbolStart = "152">
+               </Location>
+               <Location
+                  uuid = "D76B2768-19DD-4AF5-B273-8B919E7F7A6F - d81cf6f3d16eb33a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "lace.ThreadListPanelView.tableView(_: __C.NSTableView, objectValueFor: Swift.Optional&lt;__C.NSTableColumn&gt;, row: Swift.Int) -&gt; Swift.Optional&lt;Any&gt;"
+                  moduleName = "lace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/julianporter/Workspace/XCode/Lace/lace/lace/Settings/threadListPanel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "72"
+                  endingLineNumber = "72"
+                  offsetFromSymbolStart = "201">
+               </Location>
+               <Location
+                  uuid = "D76B2768-19DD-4AF5-B273-8B919E7F7A6F - d81cf6f3d16eb33a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "lace.ThreadListPanelView.tableView(_: __C.NSTableView, objectValueFor: Swift.Optional&lt;__C.NSTableColumn&gt;, row: Swift.Int) -&gt; Swift.Optional&lt;Any&gt;"
+                  moduleName = "lace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/julianporter/Workspace/XCode/Lace/lace/lace/Settings/threadListPanel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "72"
+                  endingLineNumber = "72"
+                  offsetFromSymbolStart = "1221">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "0329D52E-9A5C-4C9E-AAEA-89033131FD8E"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "lace/Settings/threadListPanel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "80"
+            endingLineNumber = "80"
+            landmarkName = "tableView(_:viewFor:row:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "0329D52E-9A5C-4C9E-AAEA-89033131FD8E - c140a4cf33375c3f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "lace.ThreadListPanelView.tableView(_: __C.NSTableView, viewFor: Swift.Optional&lt;__C.NSTableColumn&gt;, row: Swift.Int) -&gt; Swift.Optional&lt;__C.NSView&gt;"
+                  moduleName = "lace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/julianporter/Workspace/XCode/Lace/lace/lace/Settings/threadListPanel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "180">
+               </Location>
+               <Location
+                  uuid = "0329D52E-9A5C-4C9E-AAEA-89033131FD8E - c140a4cf33375c3f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "lace.ThreadListPanelView.tableView(_: __C.NSTableView, viewFor: Swift.Optional&lt;__C.NSTableColumn&gt;, row: Swift.Int) -&gt; Swift.Optional&lt;__C.NSView&gt;"
+                  moduleName = "lace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/julianporter/Workspace/XCode/Lace/lace/lace/Settings/threadListPanel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "229">
+               </Location>
+               <Location
+                  uuid = "0329D52E-9A5C-4C9E-AAEA-89033131FD8E - c140a4cf33375c3f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "lace.ThreadListPanelView.tableView(_: __C.NSTableView, viewFor: Swift.Optional&lt;__C.NSTableColumn&gt;, row: Swift.Int) -&gt; Swift.Optional&lt;__C.NSView&gt;"
+                  moduleName = "lace"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/julianporter/Workspace/XCode/Lace/lace/lace/Settings/threadListPanel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "80"
+                  endingLineNumber = "80"
+                  offsetFromSymbolStart = "1628">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
    </Breakpoints>
 </Bucket>

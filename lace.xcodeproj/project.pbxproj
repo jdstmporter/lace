@@ -27,6 +27,8 @@
 		E11EDC0E295B4A3100B8E957 /* grid2screen.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11EDC0D295B4A3100B8E957 /* grid2screen.swift */; };
 		E11EDC10295B7CE100B8E957 /* LaceSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11EDC0F295B7CE100B8E957 /* LaceSettings.swift */; };
 		E11EDC2D2961EAAF00B8E957 /* enumProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11EDC2C2961EAAF00B8E957 /* enumProtocols.swift */; };
+		E125DBD5296B76040088D5CC /* threadListPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E125DBD4296B76040088D5CC /* threadListPanel.swift */; };
+		E125DBD7296C97230088D5CC /* ThreadList.xib in Resources */ = {isa = PBXBuildFile; fileRef = E125DBD6296C97230088D5CC /* ThreadList.xib */; };
 		E135749128135102005D84D6 /* DictionaryExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135749028135102005D84D6 /* DictionaryExtensions.swift */; };
 		E13574962815BE45005D84D6 /* DraingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13574952815BE45005D84D6 /* DraingPanel.swift */; };
 		E135749E28245909005D84D6 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = E135749D28245909005D84D6 /* Log.swift */; };
@@ -98,6 +100,8 @@
 		E11EDC0D295B4A3100B8E957 /* grid2screen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = grid2screen.swift; sourceTree = "<group>"; };
 		E11EDC0F295B7CE100B8E957 /* LaceSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaceSettings.swift; sourceTree = "<group>"; };
 		E11EDC2C2961EAAF00B8E957 /* enumProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enumProtocols.swift; sourceTree = "<group>"; };
+		E125DBD4296B76040088D5CC /* threadListPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = threadListPanel.swift; sourceTree = "<group>"; };
+		E125DBD6296C97230088D5CC /* ThreadList.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ThreadList.xib; sourceTree = "<group>"; };
 		E135749028135102005D84D6 /* DictionaryExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
 		E13574952815BE45005D84D6 /* DraingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraingPanel.swift; sourceTree = "<group>"; };
 		E135749D28245909005D84D6 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
@@ -279,6 +283,8 @@
 				E13574952815BE45005D84D6 /* DraingPanel.swift */,
 				E17FBEDB28CB9FAA00408D89 /* viewDefaults.swift */,
 				E11EDC0F295B7CE100B8E957 /* LaceSettings.swift */,
+				E125DBD4296B76040088D5CC /* threadListPanel.swift */,
+				E125DBD6296C97230088D5CC /* ThreadList.xib */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -406,6 +412,7 @@
 				E18360AF283A94A300414F20 /* Printing.xib in Resources */,
 				E1383BE927F79C96009DEEFA /* Assets.xcassets in Resources */,
 				E11B73A328FC98D0005AC2C9 /* pricker128.png in Resources */,
+				E125DBD7296C97230088D5CC /* ThreadList.xib in Resources */,
 				E11B73A928FC993A005AC2C9 /* pricker16.png in Resources */,
 				E11B73AB28FC993A005AC2C9 /* pricker64.png in Resources */,
 				E1383C0D2809F267009DEEFA /* defaults.plist in Resources */,
@@ -460,6 +467,7 @@
 				E11EDC0C295A69B400B8E957 /* sizes.swift in Sources */,
 				E1383C092808DACC009DEEFA /* FilePicker.swift in Sources */,
 				E1383BF827F8D8D4009DEEFA /* ViewBase.swift in Sources */,
+				E125DBD5296B76040088D5CC /* threadListPanel.swift in Sources */,
 				E1836093282C0E3200414F20 /* LaceKinds.swift in Sources */,
 				E10DDC31288342AE003A5C9C /* Displays.swift in Sources */,
 				E18360A528384D0500414F20 /* PrintableCG.swift in Sources */,

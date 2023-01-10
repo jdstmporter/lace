@@ -37,6 +37,8 @@ class SettingsPanel : NSPanel, LaunchableItem {
     @IBOutlet weak var threadView : LaceSettingsPanel!
     
     
+    
+    
     var panels : [SettingsFacet] = []
     
     @IBAction func toolbarAction(_ item: NSToolbarItem) {
@@ -49,6 +51,11 @@ class SettingsPanel : NSPanel, LaunchableItem {
     @IBAction func cancelButtonAction(_ button: NSButton) {
         self.drawingView.revert()
         SettingsPanel.close()
+    }
+    
+    
+    @IBAction func laceLibraryLaunch(_ sender: NSButton) {
+        ThreadListPanelView.launch()
     }
     
    

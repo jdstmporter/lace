@@ -14,7 +14,9 @@ enum PListErrors : Error {
 }
 
 
-class Threads : IThreads {
+class Threads : IThreads, Sequence {
+    
+    
     static let PListName = "threads"
     static let PListExt = "plist"
     
@@ -39,17 +41,20 @@ class Threads : IThreads {
             return row
         }
             
-            var gs = Set<String>()
-            plist.forEach { row in
-                let material : String = (row["material"] as? String) ?? "unknown"
-                if let item = ThreadKind(row) {
-                    self.add(material: material, thread: item)
-                    gs.insert(material)
-                }
+        var gs = Set<String>()
+        plist.forEach { row in
+            let material : String = (row["material"] as? String) ?? "unknown"
+            if let item = ThreadKind(row) {
+                self.add(material: material, thread: item)
+                gs.insert(material)
             }
-            self.groups=Array(gs).sorted()
+        }
+        self.groups=Array(gs).sorted()
+        self.groups.forEach { self.threads[$0]?.sort() }
         
     }
+    
+
     
     static var the : Threads?
     static func load() -> Threads? {
