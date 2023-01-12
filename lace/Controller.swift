@@ -14,7 +14,6 @@ class Controller : NSViewController {
     @IBOutlet weak var zoomField: NSSlider!
     @IBOutlet weak var widthField : NSTextField!
     @IBOutlet weak var heightField : NSTextField!
-    @IBOutlet weak var styleMenu: NSPopUpButton!
     @IBOutlet weak var drawingArea : LaceView!
     @IBOutlet weak var scaleField : NSTextField!
     //@IBOutlet weak var testPanel: PrintableView!
@@ -35,11 +34,6 @@ class Controller : NSViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateEvent(_ :)), name: SettingsPanel.DefaultsUpdated, object: nil)
         
-        let items = LaceKind.allCases.map { $0.name }
-        styleMenu.removeAllItems()
-        styleMenu.addItems(withTitles: items)
-        
-        styleMenu.selectItem(at: LaceKind.Torchon.index)
         self.updateZoom(self.zoomField)
     }
     
@@ -75,7 +69,7 @@ class Controller : NSViewController {
     
     
     
-    @IBAction func styleDidChange(_ field: NSPopUpButton?) {}
+    
     
     
     @IBAction func loadPreferences(_ sender: NSMenuItem) { let _ = SettingsPanel.launch() }
@@ -103,6 +97,12 @@ class Controller : NSViewController {
     @IBAction func doPinSpacingHelper(_ item : NSMenuItem?) {
         let _ = ThreadCalculator.launch()
     }
+    
+    @IBAction func doThreadCatalogue(_ sender: NSMenuItem) {
+        let _ = ThreadListPanelView.launch()
+    }
+    
+    
     
 //    @IBAction func doTest(_ item : NSMenuItem?) {
 //        if let rep = testPanel.render() {

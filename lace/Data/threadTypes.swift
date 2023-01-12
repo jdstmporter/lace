@@ -67,7 +67,7 @@ class ThreadKind : CustomStringConvertible, Comparable {
     var array : [String] { [name, detail ?? "", wraps.str] }
 }
 
-struct FullThreadKind {
+struct FullThreadKind : CustomStringConvertible {
     public private(set) var thread: ThreadKind
     public private(set) var material : String
     
@@ -80,6 +80,7 @@ struct FullThreadKind {
         else { return self.thread[key] }
     }
     var strings : [String] { [material, thread.name, thread.detail ?? "", thread.wraps.str] }
+    var description: String { strings.joined(separator: " ") }
     
     
     

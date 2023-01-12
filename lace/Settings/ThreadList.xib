@@ -181,17 +181,6 @@
                             <autoresizingMask key="autoresizingMask"/>
                         </tableHeaderView>
                     </scrollView>
-                    <searchField wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="quJ-KP-BAR">
-                        <rect key="frame" x="4" y="4" width="610" height="22"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="22" id="PZ2-Vk-dRd"/>
-                        </constraints>
-                        <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="OPA-c6-GeI">
-                            <font key="font" metaFont="system"/>
-                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        </searchFieldCell>
-                    </searchField>
                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="e2z-U5-4N0">
                         <rect key="frame" x="623" y="-3" width="70" height="32"/>
                         <constraints>
@@ -212,6 +201,20 @@
                             <action selector="closeAction:" target="dj1-PI-m2Y" id="XPX-F5-QV5"/>
                         </connections>
                     </button>
+                    <searchField wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="quJ-KP-BAR">
+                        <rect key="frame" x="4" y="4" width="610" height="22"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="22" id="PZ2-Vk-dRd"/>
+                        </constraints>
+                        <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="OPA-c6-GeI">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        </searchFieldCell>
+                        <connections>
+                            <action selector="searchAction:" target="dj1-PI-m2Y" id="me1-nE-Ho0"/>
+                        </connections>
+                    </searchField>
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="bottom" secondItem="e2z-U5-4N0" secondAttribute="bottom" constant="4" id="O16-Qg-QHv"/>

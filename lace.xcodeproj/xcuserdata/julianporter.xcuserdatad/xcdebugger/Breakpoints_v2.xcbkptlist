@@ -30,8 +30,8 @@
             filePath = "lace/Controller.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "44"
-            endingLineNumber = "44"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
             landmarkName = "viewDidLoad()"
             landmarkType = "7">
          </BreakpointContent>
@@ -396,8 +396,8 @@
             filePath = "lace/Settings/threadListPanel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "72"
-            endingLineNumber = "72"
+            startingLineNumber = "94"
+            endingLineNumber = "94"
             landmarkName = "tableView(_:objectValueFor:row:)"
             landmarkType = "7">
             <Locations>
@@ -459,8 +459,8 @@
             filePath = "lace/Settings/threadListPanel.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "80"
-            endingLineNumber = "80"
+            startingLineNumber = "103"
+            endingLineNumber = "103"
             landmarkName = "tableView(_:viewFor:row:)"
             landmarkType = "7">
             <Locations>
