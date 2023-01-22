@@ -10,16 +10,19 @@ import AppKit
 
 
 
-class FileRoot {
+class FilePaths {
     private var urls : ViewPaths = ViewPaths()
     
-    var root: URL { urls[.DataDirectory] }
-    var hasRoot : Bool { ViewPaths().has(.DataDirectory) }
+    var root: URL { self.urls.load(.DataDirectory) ?? URL.zero }
+    var hasRoot : Bool { urls.has(.DataDirectory) }
     
-    public func update(root u : URL) {
-        self.urls[.DataDirectory]=u.asDirectory()
-        self.commit()
+    var current: URL {
+        get { self.urls.load(.FilePath) ?? URL.zero }
+        set(u) { urls.save(.FilePath,u.asDirectory()) }
     }
+    var hasCurrent : Bool { urls.has(.FilePath) }
+    func clearCurrent() { self.urls.del(.FilePath) }
+    
     
     private func appName() -> String {
         return Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? "LaceApp"
@@ -30,7 +33,7 @@ class FileRoot {
             var p = URL.userHome
             p.appendPathComponent(self.appName())
             syslog.info("Setting file path to \(p)")
-            self.update(root: p)
+            self.urls.save(.DataDirectory, p)
         }
         
         syslog.debug("Loaded path: \(root)")
@@ -43,24 +46,42 @@ class FileRoot {
             }
             catch {
                 // default fallback
-                self.update(root: URL.userHome)
+                self.urls.save(.DataDirectory,URL.userHome)
             }
         }
         syslog.info("Ready with document root \(root)")
         
     }
     
+    func setRoot(_ p : URL) {
+        syslog.announce("URLS root is \(p)" )
+        self.urls[.DataDirectory]=p.asDirectory()
+        self.urls.commit()
+    }
+    func setFile(_ p : URL) {
+        self.current=p
+        self.commit()
+    }
+    func existingFile() -> URL { self.current }
+    
     
     
     public func commit() { self.urls.commit() }
     
     
-    static var the : FileRoot!
-    static func load() -> FileRoot {
-        if the==nil { the=FileRoot() }
+    static var the : FilePaths!
+    @discardableResult static func load() -> FilePaths {
+        if the==nil { the=FilePaths() }
         return the
     }
-    public static var path: URL { load().root }
+    public static var root: URL { load().root }
+    public static var current: URL { load().current }
+    public static var hasCurrent : Bool { load().hasCurrent }
+    public static func newFile(_ p : URL) { load().setFile(p) }
+    
+    public static func shutdown() {
+        //load().clearCurrent()
+    }
     
     
     
@@ -71,7 +92,7 @@ struct File {
     static func load<T>() throws -> T
     where T : Codable
     {
-        let picker = FileReadPicker(def: FileRoot.path)
+        let picker = FileReadPicker(def: FilePaths.root)
         guard picker.runSync() else {
             throw FileError.CannotPickLoadFile
         }
@@ -81,18 +102,24 @@ struct File {
         return try decoder.decode(T.self, from: d)
     }
     
-    static func save<T>(_ data : T,compact: Bool=true) throws
+    @discardableResult static func save<T>(_ data : T,compact: Bool=true) throws -> URL
     where T : Codable
     {
-        let picker = FilePicker(def: FileRoot.path)
+        let picker = FilePicker(def: FilePaths.root)
         guard picker.runSync() else {
             throw FileError.CannotPickSaveFile
         }
-        
+        try save(url: picker.url,data,compact: compact)
+        return picker.url
+    }
+    
+    static func save<T>(url: URL,_ data : T,compact: Bool=true) throws
+    where T : Codable
+    {
         let encoder=JSONEncoder()
         if !compact { encoder.outputFormatting = .prettyPrinted }
         let d = try encoder.encode(data)
-        try d.write(to: picker.url)
+        try d.write(to: url)
     }
     
 }

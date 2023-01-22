@@ -11,16 +11,40 @@ import AppKit
 
 
 
-extension Int : EncDec {} 
-extension Bool : EncDec {}
-extension Double : EncDec {}
-extension String : EncDec {}
+extension Int : EncDec {
+    public func enc() -> Any? { self as Any }
+    public static func dec(_ x: Any) -> Int? {
+        guard let m=x as? Self else { return nil }
+        return m
+    }
+}
+extension Bool : EncDec {
+    public func enc() -> Any? { self as Any }
+    public static func dec(_ x: Any) -> Bool? {
+        guard let m=x as? Self else { return nil }
+        return m
+    }
+}
+extension Double : EncDec {
+    public func enc() -> Any? { self as Any }
+    public static func dec(_ x: Any) -> Double? {
+        guard let m=x as? Self else { return nil }
+        return m
+    }
+}
+extension String : EncDec {
+    public func enc() -> Any? { self as Any }
+    public static func dec(_ x: Any) -> String? {
+        guard let m=x as? Self else { return nil }
+        return m
+    }
+}
 
 extension NSColor : EncDec {
-    public static func dec(x: Any) -> NSColor? {
+    public static func dec(_ x: Any) -> Self? {
         guard let components = x as? [CGFloat] else { return nil }
         guard components.count==4 else { return nil }
-        return NSColor(components)
+        return (NSColor(components) as! Self)
     }
     public func enc() -> Any? {
         guard let components = self.rgba, components.count==4 else { return nil }
@@ -29,10 +53,10 @@ extension NSColor : EncDec {
 }
 
 extension NSFont : EncDec {
-    public static func dec(x: Any) -> NSFont? {
+    public static func dec(_ x: Any) -> Self? {
         guard let info = x as? [String:Any] else { return nil }
         guard let f = NSFont(components: info) else { return nil }
-        return f
+        return (f as! Self)
     }
     public func enc() -> Any? {
         self.components
@@ -40,17 +64,19 @@ extension NSFont : EncDec {
 }
 
 extension URL : EncDec {
-    public static func dec(x: Any) -> URL? {
+    public static func dec(_ x: Any) -> URL? {
+        syslog.announce("raw is [\(x)]")
         guard let path = x as? String else { return nil }
+        syslog.announce("string is [\(path)]")
         return URL(path)
     }
     public func enc() -> Any? {
-        self.relativePath
+        self.path as Any
     }
 }
 
 extension Decimal : EncDec {
-    public static func dec(x: Any) -> Decimal? {
+    public static func dec(_ x: Any) -> Decimal? {
         guard let val = x as? String else { return nil }
         return Decimal(val)
     }

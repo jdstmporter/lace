@@ -45,11 +45,17 @@ extension ViewData2 {
     subscript(_ p: PartKey) -> Element {
         get {
             //let v=self.value(p)
-            return self.values[p] ?? self.value(p)
+            let v = self.values[p] ?? self.value(p)
+            syslog.announce("GET Key is \(p), value is \(v)")
+            syslog.announce("VALUES is \(self.values)")
+            return v
         }
         set {
             let v=self.adjustToSet(newValue)
+            syslog.announce("SET Key is \(p), value is \(v)")
             self.values[p]=v
+            syslog.announce("VALUES is \(self.values)")
+            
         }
     }
     func get(_ p : PartKey) -> Element { self[p] }

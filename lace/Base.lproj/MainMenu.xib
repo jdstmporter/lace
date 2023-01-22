@@ -449,7 +449,7 @@
             <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1055"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="600"/>
-                <autoresizingMask key="autoresizingMask"/>
+                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                 <subviews>
                     <box borderType="line" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="wNP-w9-ne7">
                         <rect key="frame" x="-1" y="-2" width="802" height="68"/>
@@ -615,11 +615,149 @@
             <connections>
                 <outlet property="drawingArea" destination="Jhd-5x-ITq" id="D2F-5k-vrS"/>
                 <outlet property="heightField" destination="gZ8-js-3MG" id="wg7-OT-Ouq"/>
+                <outlet property="popover" destination="XUx-7U-IFC" id="VHL-DH-JjX"/>
+                <outlet property="popoverController" destination="J4D-AB-qKm" id="Z3C-dj-CP9"/>
                 <outlet property="scaleField" destination="bNa-ao-FNT" id="BmB-Gt-f1f"/>
                 <outlet property="view" destination="EiT-Mj-1SZ" id="oZH-8m-lm8"/>
                 <outlet property="widthField" destination="fMg-cz-abX" id="qdL-xw-76P"/>
                 <outlet property="zoomField" destination="UN8-xP-jA5" id="FP7-gH-nvJ"/>
             </connections>
         </viewController>
+        <viewController id="J4D-AB-qKm" userLabel="Popover View Controller" customClass="PopoverController" customModule="lace" customModuleProvider="target">
+            <connections>
+                <outlet property="blanker" destination="3Ro-9P-jlu" id="itL-5k-t9f"/>
+                <outlet property="continuer" destination="rvL-8d-ROU" id="FrR-y6-CJZ"/>
+                <outlet property="heighter" destination="XJR-8Y-HX8" id="U55-xa-1iO"/>
+                <outlet property="loader" destination="q1i-VV-4Rr" id="Vl1-0c-SvZ"/>
+                <outlet property="pather" destination="onR-Lq-XNR" id="d0m-YK-8di"/>
+                <outlet property="popover" destination="AJp-hH-qRY" id="7ih-fP-sXD"/>
+                <outlet property="rawPopover" destination="XUx-7U-IFC" id="FpJ-dV-A6B"/>
+                <outlet property="view" destination="AJp-hH-qRY" id="6Qo-gQ-BSX"/>
+                <outlet property="width" destination="oXi-X9-w1f" id="tDM-wZ-3A3"/>
+            </connections>
+        </viewController>
+        <popover id="XUx-7U-IFC">
+            <connections>
+                <outlet property="contentViewController" destination="J4D-AB-qKm" id="W7y-Vd-haz"/>
+            </connections>
+        </popover>
+        <customView id="AJp-hH-qRY" customClass="PopoverView" customModule="lace" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="552" height="222"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3Ro-9P-jlu">
+                    <rect key="frame" x="30" y="60" width="142" height="18"/>
+                    <buttonCell key="cell" type="radio" title="New blank pricking" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="d6Z-Dd-S7o">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="radios:" target="J4D-AB-qKm" id="bTZ-dy-Qjk"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rvL-8d-ROU">
+                    <rect key="frame" x="30" y="154" width="187" height="18"/>
+                    <buttonCell key="cell" type="radio" title="Continue from last session" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="RsS-b3-Bmu">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="radios:" target="J4D-AB-qKm" id="NS8-46-9Qv"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="q1i-VV-4Rr">
+                    <rect key="frame" x="30" y="92" width="168" height="18"/>
+                    <buttonCell key="cell" type="radio" title="Load pricking from disk" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="zEO-F5-op1">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="radios:" target="J4D-AB-qKm" id="y3s-np-JA5"/>
+                    </connections>
+                </button>
+                <pathControl verticalHuggingPriority="750" allowsExpansionToolTips="YES" translatesAutoresizingMaskIntoConstraints="NO" id="onR-Lq-XNR">
+                    <rect key="frame" x="96" y="125" width="384" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="384" id="ZDe-qz-sRU"/>
+                    </constraints>
+                    <pathCell key="cell" selectable="YES" alignment="left" id="BfO-jY-rvO">
+                        <font key="font" metaFont="system"/>
+                        <url key="url" string="file://localhost/Applications/"/>
+                    </pathCell>
+                </pathControl>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oXi-X9-w1f">
+                    <rect key="frame" x="96" y="32" width="64" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="64" id="BqT-I6-Djd"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1" drawsBackground="YES" id="vmq-4J-ToI">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" allowsFloats="NO" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="4" id="VeP-lp-68B">
+                            <integer key="roundingIncrement" value="1"/>
+                            <real key="minimum" value="1"/>
+                        </numberFormatter>
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="XJR-8Y-HX8">
+                    <rect key="frame" x="192" y="32" width="64" height="21"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" alignment="right" title="1" drawsBackground="YES" id="rrx-Ac-4lS">
+                        <numberFormatter key="formatter" formatterBehavior="custom10_4" allowsFloats="NO" usesGroupingSeparator="NO" formatWidth="-1" groupingSize="0" minimumIntegerDigits="1" maximumIntegerDigits="4" id="1Xi-94-Eam">
+                            <integer key="roundingIncrement" value="1"/>
+                            <real key="minimum" value="1"/>
+                        </numberFormatter>
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mc9-W0-kpx">
+                    <rect key="frame" x="30" y="187" width="64" height="19"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="Choose:" id="fCT-b4-6BP">
+                        <font key="font" metaFont="system" size="16"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="doN-Pf-ywE">
+                    <rect key="frame" x="-5" y="-5" width="562" height="32"/>
+                    <buttonCell key="cell" type="push" title="Select" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ben-Kq-fD6">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="button:" target="J4D-AB-qKm" id="net-Jz-hha"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="doN-Pf-ywE" secondAttribute="bottom" constant="2" id="65l-On-w9D"/>
+                <constraint firstItem="oXi-X9-w1f" firstAttribute="top" secondItem="3Ro-9P-jlu" secondAttribute="bottom" constant="8" id="6Qq-FE-xfV"/>
+                <constraint firstItem="doN-Pf-ywE" firstAttribute="leading" secondItem="AJp-hH-qRY" secondAttribute="leading" constant="2" id="7Dt-7Z-5DM"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="onR-Lq-XNR" secondAttribute="trailing" constant="64" id="APN-pg-nbu"/>
+                <constraint firstAttribute="trailing" secondItem="doN-Pf-ywE" secondAttribute="trailing" constant="2" id="CIp-Ic-PzV"/>
+                <constraint firstItem="XJR-8Y-HX8" firstAttribute="width" secondItem="oXi-X9-w1f" secondAttribute="width" id="Drq-88-8ZP"/>
+                <constraint firstItem="onR-Lq-XNR" firstAttribute="top" secondItem="rvL-8d-ROU" secondAttribute="bottom" constant="8" id="Fhz-6I-6pY"/>
+                <constraint firstItem="rvL-8d-ROU" firstAttribute="leading" secondItem="Mc9-W0-kpx" secondAttribute="leading" id="IEw-nC-ePF"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="3Ro-9P-jlu" secondAttribute="trailing" constant="32" id="MgE-uL-e2c"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Mc9-W0-kpx" secondAttribute="trailing" constant="32" id="QTT-pn-ABb"/>
+                <constraint firstItem="3Ro-9P-jlu" firstAttribute="top" secondItem="q1i-VV-4Rr" secondAttribute="bottom" constant="16" id="SCt-wq-FUE"/>
+                <constraint firstItem="Mc9-W0-kpx" firstAttribute="leading" secondItem="AJp-hH-qRY" secondAttribute="leading" constant="32" id="Yir-0x-sTA"/>
+                <constraint firstItem="q1i-VV-4Rr" firstAttribute="top" secondItem="onR-Lq-XNR" secondAttribute="bottom" constant="16" id="aVp-Yi-NJg"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="q1i-VV-4Rr" secondAttribute="trailing" constant="32" id="bWa-64-2R2"/>
+                <constraint firstItem="q1i-VV-4Rr" firstAttribute="leading" secondItem="Mc9-W0-kpx" secondAttribute="leading" id="c3w-A1-msP"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rvL-8d-ROU" secondAttribute="trailing" constant="32" id="cXL-A0-oof"/>
+                <constraint firstItem="XJR-8Y-HX8" firstAttribute="top" secondItem="oXi-X9-w1f" secondAttribute="top" id="fgr-mf-ajD"/>
+                <constraint firstItem="3Ro-9P-jlu" firstAttribute="leading" secondItem="Mc9-W0-kpx" secondAttribute="leading" id="hFb-Pu-XWk"/>
+                <constraint firstItem="oXi-X9-w1f" firstAttribute="leading" secondItem="onR-Lq-XNR" secondAttribute="leading" id="hiX-dS-kQX"/>
+                <constraint firstItem="rvL-8d-ROU" firstAttribute="top" secondItem="Mc9-W0-kpx" secondAttribute="bottom" constant="16" id="od8-4P-qyF"/>
+                <constraint firstItem="XJR-8Y-HX8" firstAttribute="leading" secondItem="oXi-X9-w1f" secondAttribute="trailing" constant="32" id="ozh-cj-egC"/>
+                <constraint firstItem="Mc9-W0-kpx" firstAttribute="top" secondItem="AJp-hH-qRY" secondAttribute="top" constant="16" id="pR0-i0-nx2"/>
+                <constraint firstAttribute="bottom" secondItem="oXi-X9-w1f" secondAttribute="bottom" constant="32" id="qnO-qW-JTj"/>
+                <constraint firstItem="onR-Lq-XNR" firstAttribute="leading" secondItem="AJp-hH-qRY" secondAttribute="leading" constant="96" id="sSa-w4-P3l"/>
+            </constraints>
+            <point key="canvasLocation" x="-346.5" y="339.5"/>
+        </customView>
     </objects>
 </document>

@@ -41,6 +41,9 @@ class Defaults {
     //    UserDefaults.standard.dictionaryRepresentation()
     //}
     
+    fileprivate func commit() {
+    }
+    
     subscript<T>(_ key : String) -> T? where T : EncDec {
         get {
             guard let x = UserDefaults.standard.object(forKey: key) else { return nil }
@@ -56,6 +59,9 @@ class Defaults {
     public static func load() {
         the=Defaults()
         the?.bootstrap()
+    }
+    public static func shutdown() {
+        the?.commit()
     }
     
     static func check() throws -> Defaults {
@@ -86,9 +92,11 @@ class Defaults {
     }
     
     static func GetPart<T>(kind : DefaultKind,part : any DefaultPart) -> T? where T : EncDec {
+        syslog.announce("GET kind=\(kind) part=\(part)")
         return try? read(Key(kind,part))
     }
     static func SetPart<T>(kind : DefaultKind,part : any DefaultPart,value : T) where T : EncDec {
+        syslog.announce("SET kind=\(kind) part=\(part)")
         try? write(Key(kind,part), value)
     }
     static func RemovePart(kind : DefaultKind,part : any DefaultPart) {

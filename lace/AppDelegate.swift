@@ -17,6 +17,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         Defaults.load()
+        FilePaths.load()
         
         
         // NSOpenPanel
@@ -94,6 +95,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      
      func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+         FilePaths.shutdown()
+         Defaults.shutdown()
     }
 
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {

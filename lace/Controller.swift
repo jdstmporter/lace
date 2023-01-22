@@ -8,6 +8,65 @@
 import Foundation
 import Cocoa
 
+class PopoverView : NSView {}
+
+class PopoverController : NSViewController {
+    enum Choice {
+        case Continue
+        case Load
+        case New(width: Int,height: Int)
+    }
+    typealias Callback = (PopoverController.Choice) -> Void
+    
+    @IBOutlet weak var popover : PopoverView!
+    
+    @IBOutlet weak var blanker: NSButton!
+    @IBOutlet weak var continuer: NSButton!
+    @IBOutlet weak var loader: NSButton!
+    @IBOutlet weak var pather: NSPathControl!
+    
+    @IBOutlet weak var heighter: NSTextField!
+    
+   
+    @IBOutlet weak var rawPopover: NSPopover!
+    
+    
+    @IBOutlet weak var width: NSTextField!
+    
+    
+    var callback : Callback? = nil
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let c = FilePaths.hasCurrent
+        continuer.isEnabled = c
+        if c {
+            continuer.state = .on
+            pather.url = FilePaths.current
+        }
+        else {
+            blanker.state = .on
+            pather.isHidden = true
+        }
+    }
+    
+    var wid : Int { width.integerValue }
+    var hei : Int { heighter.integerValue }
+    
+    @IBAction func button(_ sender: Any) {
+        rawPopover.close()
+        if continuer.state == .on { callback?(.Continue) }
+        else if loader.state == .on { callback?(.Load) }
+        else  if blanker.state == .on { callback?(.New(width: wid, height: hei)) }
+    }
+    
+    @IBAction func radios(_ sender: NSButton!) {
+        [self.blanker,self.loader,self.continuer].forEach { $0.state = ($0==sender) ? .on : .off }
+    }
+    
+    
+}
+
 class Controller : NSViewController {
     static let prefix = "GridSize-"
     
@@ -17,7 +76,10 @@ class Controller : NSViewController {
     @IBOutlet weak var drawingArea : LaceView!
     @IBOutlet weak var scaleField : NSTextField!
     //@IBOutlet weak var testPanel: PrintableView!
+    @IBOutlet weak var popover: NSPopover!
     
+    @IBOutlet weak var popoverController: PopoverController!
+    var initialised : Bool = false
     
     var width : Int = 1
     var height : Int = 1
@@ -35,6 +97,14 @@ class Controller : NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(updateEvent(_ :)), name: SettingsPanel.DefaultsUpdated, object: nil)
         
         self.updateZoom(self.zoomField)
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        
+        guard !self.initialised else { return }
+        popoverController.callback = { v in print("Got \(v)!!") }
+        popover.show(relativeTo: self.drawingArea.bounds, of: self.view, preferredEdge: .maxY)
     }
     
     @objc func updateEvent(_ n : Notification) {
@@ -68,26 +138,39 @@ class Controller : NSViewController {
     }
     
     
-    
+    enum SaveActions {
+        case Save
+        case SaveAs
+        case New
+    }
     
     
     
     @IBAction func loadPreferences(_ sender: NSMenuItem) { let _ = SettingsPanel.launch() }
     
-    func saveCurrent(pick : Bool) {
+    func saveCurrent(_ action : SaveActions) {
         do {
             guard let p = drawingArea?.pricking else { throw PrickingError.CannotFindPricking }
-            try File.save(p)
+            switch action {
+            case .Save:
+                if FilePaths.hasCurrent { try File.save(url: FilePaths.current,p) }
+                else { saveCurrent(.SaveAs) }
+            case .SaveAs:
+                let url = try File.save(p)
+                FilePaths.newFile(url)
+            default:
+                break
+            }
         }
         catch(let e) { syslog.error("Error \(e)")}
     }
     
     @IBAction func doSave(_ item : NSMenuItem?) {
-        self.saveCurrent(pick: false)
+        self.saveCurrent(.Save)
     }
     
     @IBAction func doSaveAs(_ item : NSMenuItem?) {
-        self.saveCurrent(pick: true)
+        self.saveCurrent(.SaveAs)
     }
     
     @IBAction func doExport(_ item: NSMenuItem?) {

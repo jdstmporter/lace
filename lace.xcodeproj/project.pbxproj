@@ -42,7 +42,7 @@
 		E1383BFD27F9EF3E009DEEFA /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1383BFC27F9EF3E009DEEFA /* AppKit.framework */; };
 		E1383C012803787C009DEEFA /* Lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383C002803787C009DEEFA /* Lines.swift */; };
 		E1383C05280773AB009DEEFA /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383C04280773AB009DEEFA /* UserDefaults.swift */; };
-		E1383C072808AB3D009DEEFA /* Serialise.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383C062808AB3D009DEEFA /* Serialise.swift */; };
+		E1383C072808AB3D009DEEFA /* pricking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383C062808AB3D009DEEFA /* pricking.swift */; };
 		E1383C092808DACC009DEEFA /* FilePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383C082808DACC009DEEFA /* FilePicker.swift */; };
 		E1383C0B2809AC30009DEEFA /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383C0A2809AC30009DEEFA /* Files.swift */; };
 		E1383C0D2809F267009DEEFA /* defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = E1383C0C2809F267009DEEFA /* defaults.plist */; };
@@ -70,6 +70,7 @@
 		E1D51F40280B3C8F00995497 /* Launchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D51F3F280B3C8F00995497 /* Launchable.swift */; };
 		E1DFD09B2932DC690075D971 /* decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DFD09A2932DC690075D971 /* decodable.swift */; };
 		E1DFD09E293802DD0075D971 /* enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DFD09D293802DD0075D971 /* enums.swift */; };
+		E1E731B42972B23800C4B850 /* Combine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E731B32972B23800C4B850 /* Combine.framework */; };
 		E1EBD81A283D7A9900D8E10C /* NSSizeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBD819283D7A9900D8E10C /* NSSizeExtensions.swift */; };
 		E1EBD81C284149A200D8E10C /* Calc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBD81B284149A200D8E10C /* Calc.swift */; };
 		E1EBD81E2844021500D8E10C /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBD81D2844021500D8E10C /* Errors.swift */; };
@@ -118,9 +119,9 @@
 		E1383BF727F8D8D4009DEEFA /* ViewBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewBase.swift; sourceTree = "<group>"; };
 		E1383BF927F9E304009DEEFA /* Grid.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Grid.swift; sourceTree = "<group>"; };
 		E1383BFC27F9EF3E009DEEFA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
-		E1383C002803787C009DEEFA /* Lines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lines.swift; sourceTree = "<group>"; };
+		E1383C002803787C009DEEFA /* Lines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Lines.swift; path = ../../Structures/Lines.swift; sourceTree = "<group>"; };
 		E1383C04280773AB009DEEFA /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
-		E1383C062808AB3D009DEEFA /* Serialise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Serialise.swift; sourceTree = "<group>"; };
+		E1383C062808AB3D009DEEFA /* pricking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pricking.swift; sourceTree = "<group>"; };
 		E1383C082808DACC009DEEFA /* FilePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePicker.swift; sourceTree = "<group>"; };
 		E1383C0A2809AC30009DEEFA /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
 		E1383C0C2809F267009DEEFA /* defaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = defaults.plist; sourceTree = "<group>"; };
@@ -150,6 +151,7 @@
 		E1D51F3F280B3C8F00995497 /* Launchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launchable.swift; sourceTree = "<group>"; };
 		E1DFD09A2932DC690075D971 /* decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = decodable.swift; sourceTree = "<group>"; };
 		E1DFD09D293802DD0075D971 /* enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enums.swift; sourceTree = "<group>"; };
+		E1E731B32972B23800C4B850 /* Combine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Combine.framework; path = System/Library/Frameworks/Combine.framework; sourceTree = SDKROOT; };
 		E1EBD819283D7A9900D8E10C /* NSSizeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSSizeExtensions.swift; sourceTree = "<group>"; };
 		E1EBD81B284149A200D8E10C /* Calc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calc.swift; sourceTree = "<group>"; };
 		E1EBD81D2844021500D8E10C /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 				E183609A282EF88D00414F20 /* ApplicationServices.framework in Frameworks */,
 				E18360A12831B60400414F20 /* PDFKit.framework in Frameworks */,
 				E1383BFD27F9EF3E009DEEFA /* AppKit.framework in Frameworks */,
+				E1E731B42972B23800C4B850 /* Combine.framework in Frameworks */,
 				E18360A32832A2E000414F20 /* ImageIO.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -175,6 +178,8 @@
 		E11EDC06295A685500B8E957 /* Persist */ = {
 			isa = PBXGroup;
 			children = (
+				E1383C062808AB3D009DEEFA /* pricking.swift */,
+				E1383C002803787C009DEEFA /* Lines.swift */,
 				E1383BF927F9E304009DEEFA /* Grid.swift */,
 				E11EDC07295A687600B8E957 /* points.swift */,
 				E11EDC09295A695400B8E957 /* lines.swift */,
@@ -199,14 +204,7 @@
 		E1383BDA27F79C93009DEEFA = {
 			isa = PBXGroup;
 			children = (
-				E11B73A528FC993A005AC2C9 /* pricker16.png */,
-				E11B73A628FC993A005AC2C9 /* pricker32.png */,
-				E11B73A728FC993A005AC2C9 /* pricker64.png */,
-				E11B73A828FC993A005AC2C9 /* pricker1024.png */,
-				E11B73A128FC98D0005AC2C9 /* pricker128.png */,
-				E11B73A228FC98D0005AC2C9 /* pricker512.png */,
-				E11B739D28FC987A005AC2C9 /* pricker256.png */,
-				E11B739E28FC987A005AC2C9 /* pricker2048.png */,
+				E1E731B22972A7BC00C4B850 /* images */,
 				E11B739828F32476005AC2C9 /* threads.plist */,
 				E10DDC2A287B1E90003A5C9C /* threads.csv */,
 				E10DDC262879CF65003A5C9C /* threads.json */,
@@ -251,6 +249,7 @@
 		E1383BFB27F9EF3E009DEEFA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E1E731B32972B23800C4B850 /* Combine.framework */,
 				E18360A628384F8600414F20 /* CoreGraphics.framework */,
 				E18360A22832A2E000414F20 /* ImageIO.framework */,
 				E18360A02831B60400414F20 /* PDFKit.framework */,
@@ -265,8 +264,6 @@
 		E1383C0228037893009DEEFA /* Structures */ = {
 			isa = PBXGroup;
 			children = (
-				E1383C002803787C009DEEFA /* Lines.swift */,
-				E1383C062808AB3D009DEEFA /* Serialise.swift */,
 			);
 			path = Structures;
 			sourceTree = "<group>";
@@ -349,6 +346,21 @@
 				E11EDC2C2961EAAF00B8E957 /* enumProtocols.swift */,
 			);
 			path = "Default System";
+			sourceTree = "<group>";
+		};
+		E1E731B22972A7BC00C4B850 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				E11B73A528FC993A005AC2C9 /* pricker16.png */,
+				E11B73A628FC993A005AC2C9 /* pricker32.png */,
+				E11B73A728FC993A005AC2C9 /* pricker64.png */,
+				E11B73A828FC993A005AC2C9 /* pricker1024.png */,
+				E11B73A128FC98D0005AC2C9 /* pricker128.png */,
+				E11B73A228FC98D0005AC2C9 /* pricker512.png */,
+				E11B739D28FC987A005AC2C9 /* pricker256.png */,
+				E11B739E28FC987A005AC2C9 /* pricker2048.png */,
+			);
+			name = images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -444,7 +456,7 @@
 				E1BD6A85280E049700430EC4 /* Colours.swift in Sources */,
 				E11EDC2D2961EAAF00B8E957 /* enumProtocols.swift in Sources */,
 				E11B739B28F4C873005AC2C9 /* threadTypes.swift in Sources */,
-				E1383C072808AB3D009DEEFA /* Serialise.swift in Sources */,
+				E1383C072808AB3D009DEEFA /* pricking.swift in Sources */,
 				E1EBD81C284149A200D8E10C /* Calc.swift in Sources */,
 				E1383C0B2809AC30009DEEFA /* Files.swift in Sources */,
 				E11EDC10295B7CE100B8E957 /* LaceSettings.swift in Sources */,

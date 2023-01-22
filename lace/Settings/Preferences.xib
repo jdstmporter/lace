@@ -14,7 +14,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="2192" y="60" width="697" height="582"/>
-            <rect key="screenRect" x="1920" y="-112" width="2560" height="1415"/>
+            <rect key="screenRect" x="1920" y="-112" width="2560" height="1440"/>
             <view key="contentView" id="UoL-fX-fRw">
                 <rect key="frame" x="0.0" y="0.0" width="697" height="582"/>
                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -998,7 +998,7 @@ Gw
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="2203" y="193" width="480" height="270"/>
-            <rect key="screenRect" x="1920" y="-112" width="2560" height="1415"/>
+            <rect key="screenRect" x="1920" y="-112" width="2560" height="1440"/>
             <view key="contentView" id="2fA-Py-s3K">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>

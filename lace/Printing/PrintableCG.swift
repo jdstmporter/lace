@@ -85,20 +85,20 @@ class ImageCG {
         grid.scale = Swift.max(xs,ys)
         
         //var pix=[0]
-        grid.forEachY { y in
+        grid.yRange.forEach { y in
             self.setPixel(0, atX: 0, y: y);
             self.setPixel(0, atX: numericCast(size.width)-1, y: y);
         }
-        grid.forEachX { x in
+        grid.xRange.forEach { x in
             self.setPixel(0, atX: x, y: 0);
             self.setPixel(0, atX: x, y: numericCast(size.height)-1);
         }
         
         let conv=grid.converter
-        grid.forEachY { y in
+        grid.yRange.forEach { y in
             //let yy=Double(y)
             //let yf=Double(y%2)/2.0
-            grid.forEachX { x in
+            grid.xRange.forEach { x in
                 if self.grid[x,y] {
                     let p = conv.pos(x, y)
                     (-5...5).forEach { xx in

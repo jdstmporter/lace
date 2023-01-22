@@ -13,7 +13,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES" utility="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="2192" y="60" width="690" height="378"/>
-            <rect key="screenRect" x="1920" y="-112" width="2560" height="1415"/>
+            <rect key="screenRect" x="1920" y="-112" width="2560" height="1440"/>
             <view key="contentView" id="zfp-9a-4hC">
                 <rect key="frame" x="0.0" y="0.0" width="690" height="378"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -32,7 +32,7 @@
                                     <tableViewGridLines key="gridStyleMask" vertical="YES" dashed="YES"/>
                                     <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                     <tableColumns>
-                                        <tableColumn identifier="material" editable="NO" width="80" minWidth="40" maxWidth="120" id="pCy-8j-Y7h">
+                                        <tableColumn identifier="material" editable="NO" width="119" minWidth="40" maxWidth="120" id="pCy-8j-Y7h">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Material">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -45,11 +45,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="JGM-vt-QWl">
-                                                    <rect key="frame" x="8" y="0.0" width="78" height="52"/>
+                                                    <rect key="frame" x="8" y="0.0" width="117" height="52"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1WL-M7-Dtw">
-                                                            <rect key="frame" x="0.0" y="18" width="78" height="16"/>
+                                                            <rect key="frame" x="0.0" y="18" width="117" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="Vq1-GW-poc">
                                                                 <font key="font" usesAppearanceFont="YES"/>
@@ -64,7 +64,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="name" editable="NO" width="300" minWidth="300" maxWidth="1000" id="xC9-Q5-lFW">
+                                        <tableColumn identifier="name" editable="NO" width="338" minWidth="300" maxWidth="1000" id="xC9-Q5-lFW">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" title="Name">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -77,11 +77,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="hXJ-nU-AfN">
-                                                    <rect key="frame" x="103" y="0.0" width="300" height="52"/>
+                                                    <rect key="frame" x="142" y="0.0" width="338" height="52"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="31l-fr-52H">
-                                                            <rect key="frame" x="0.0" y="18" width="300" height="16"/>
+                                                            <rect key="frame" x="0.0" y="18" width="338" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="o23-Bc-Nrw">
                                                                 <font key="font" usesAppearanceFont="YES"/>
@@ -96,7 +96,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="detail" editable="NO" width="50" minWidth="50" maxWidth="80" id="bsD-eH-n8h">
+                                        <tableColumn identifier="detail" editable="NO" width="80" minWidth="50" maxWidth="80" id="bsD-eH-n8h">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Detail">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -109,11 +109,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="g5H-fi-fe3">
-                                                    <rect key="frame" x="420" y="0.0" width="50" height="45"/>
+                                                    <rect key="frame" x="497" y="0.0" width="80" height="45"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e7B-8l-0Oo">
-                                                            <rect key="frame" x="0.0" y="14" width="50" height="16"/>
+                                                            <rect key="frame" x="0.0" y="14" width="80" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="S88-mU-ku9">
                                                                 <font key="font" usesAppearanceFont="YES"/>
@@ -128,7 +128,7 @@
                                                 </tableCellView>
                                             </prototypeCellViews>
                                         </tableColumn>
-                                        <tableColumn identifier="windings" editable="NO" width="50" minWidth="50" maxWidth="80" id="AN5-DU-8gg">
+                                        <tableColumn identifier="windings" editable="NO" width="80" minWidth="50" maxWidth="80" id="AN5-DU-8gg">
                                             <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border" alignment="left" title="Windings">
                                                 <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -141,11 +141,11 @@
                                             <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                             <prototypeCellViews>
                                                 <tableCellView id="0Ty-KY-3lY">
-                                                    <rect key="frame" x="487" y="0.0" width="47" height="45"/>
+                                                    <rect key="frame" x="594" y="0.0" width="77" height="45"/>
                                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                     <subviews>
                                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="B3p-Y7-Oux">
-                                                            <rect key="frame" x="0.0" y="14" width="47" height="16"/>
+                                                            <rect key="frame" x="0.0" y="14" width="77" height="16"/>
                                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                             <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="hFf-9r-ZlC">
                                                                 <font key="font" usesAppearanceFont="YES"/>

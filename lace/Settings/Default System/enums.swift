@@ -50,17 +50,10 @@ public enum ViewPart : Int, DefaultPart {
     case Pin = 2
     case Line = 3
     
-    case Title = 4
-    case Metadata = 5
-    case Comment = 6
     
-    case LastPath = 7
-    case DataDirectory = 8
     
     
     public var str : String { "\(self)" }
-    
-    static let Fonts : [ViewPart] = [.Title,.Metadata,.Comment]
 }
 
 public enum FontPart : Int, DefaultPart {
@@ -71,6 +64,9 @@ public enum FontPart : Int, DefaultPart {
 
 public enum PathPart : Int, DefaultPart {
     case DataDirectory = 8
+    case FilePath = 9
+    
+    public var str : String { "\(self)" }
 }
 
 public enum ThreadPart : Int, DefaultPart {
@@ -91,7 +87,9 @@ public enum ThreadPart : Int, DefaultPart {
 }
 
 public func Key(_ kind : DefaultKind,_ part : any DefaultPart) -> String {
-    "\(kind.str)::\(part.str)"
+    let v = "\(kind.str)::\(part.str)"
+    syslog.announce("KEY=\(v))")
+    return v
 }
 
 

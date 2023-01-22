@@ -41,25 +41,11 @@ protocol HasDefault {
 
 /// Protocols for encoding and decoding to defaults
     
-public protocol Dec {
+
+
+public protocol EncDec  {
     static func dec(_ : Any) -> Self?
-}
-public protocol Enc {
     func enc() -> Any?
-}
-
-public extension Enc {
-    func enc() -> Any? { self as Any }
-}
-public extension Dec {
-    static func dec(_ x: Any) -> Self? {
-        guard let m=x as? Self else { return nil }
-        return m
-    }
-}
-
-public protocol EncDec : Enc, Dec {
-    
 }
 
 
@@ -127,7 +113,7 @@ extension NameableEnumeration {
     public var str : String { "\(self)" }
     
     public static func load(_ str: String) -> Self { Self(str) }
-    public static func dec(x: Any) -> Self? {
+    public static func dec(_ x: Any) -> Self? {
         guard let name = x as? String else { return nil }
         return Self.load(name)
     }
