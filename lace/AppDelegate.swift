@@ -19,7 +19,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         Defaults.load()
         FilePaths.load()
         
-        
+        //NSApplication.shared.activate(ignoringOtherApps: true)
         // NSOpenPanel
         //self.doPrinting()
         //printActions()
@@ -102,6 +102,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
         return true
     }
+    
+    
 
 
 }

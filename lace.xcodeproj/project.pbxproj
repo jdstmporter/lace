@@ -68,6 +68,9 @@
 		E1D51F3C280B383D00995497 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D51F3B280B383D00995497 /* Preferences.xib */; };
 		E1D51F3E280B3C1B00995497 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D51F3D280B3C1B00995497 /* SettingsController.swift */; };
 		E1D51F40280B3C8F00995497 /* Launchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D51F3F280B3C8F00995497 /* Launchable.swift */; };
+		E1D72232297D8881005A1BBF /* startup.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D72231297D8881005A1BBF /* startup.xib */; };
+		E1D72234297D8D4E005A1BBF /* RectangularButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D72233297D8D4E005A1BBF /* RectangularButton.swift */; };
+		E1D72236297DED89005A1BBF /* popoverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D72235297DED89005A1BBF /* popoverProtocol.swift */; };
 		E1DFD09B2932DC690075D971 /* decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DFD09A2932DC690075D971 /* decodable.swift */; };
 		E1DFD09E293802DD0075D971 /* enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DFD09D293802DD0075D971 /* enums.swift */; };
 		E1E731B42972B23800C4B850 /* Combine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E731B32972B23800C4B850 /* Combine.framework */; };
@@ -149,6 +152,9 @@
 		E1D51F3B280B383D00995497 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		E1D51F3D280B3C1B00995497 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		E1D51F3F280B3C8F00995497 /* Launchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launchable.swift; sourceTree = "<group>"; };
+		E1D72231297D8881005A1BBF /* startup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = startup.xib; sourceTree = "<group>"; };
+		E1D72233297D8D4E005A1BBF /* RectangularButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularButton.swift; sourceTree = "<group>"; };
+		E1D72235297DED89005A1BBF /* popoverProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = popoverProtocol.swift; sourceTree = "<group>"; };
 		E1DFD09A2932DC690075D971 /* decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = decodable.swift; sourceTree = "<group>"; };
 		E1DFD09D293802DD0075D971 /* enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enums.swift; sourceTree = "<group>"; };
 		E1E731B32972B23800C4B850 /* Combine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Combine.framework; path = System/Library/Frameworks/Combine.framework; sourceTree = SDKROOT; };
@@ -204,6 +210,7 @@
 		E1383BDA27F79C93009DEEFA = {
 			isa = PBXGroup;
 			children = (
+				E1D72233297D8D4E005A1BBF /* RectangularButton.swift */,
 				E1E731B22972A7BC00C4B850 /* images */,
 				E11B739828F32476005AC2C9 /* threads.plist */,
 				E10DDC2A287B1E90003A5C9C /* threads.csv */,
@@ -242,6 +249,8 @@
 				E1383BF727F8D8D4009DEEFA /* ViewBase.swift */,
 				E1383C0228037893009DEEFA /* Structures */,
 				E1383C082808DACC009DEEFA /* FilePicker.swift */,
+				E1D72231297D8881005A1BBF /* startup.xib */,
+				E1D72235297DED89005A1BBF /* popoverProtocol.swift */,
 			);
 			path = lace;
 			sourceTree = "<group>";
@@ -437,6 +446,7 @@
 				E11B739F28FC987A005AC2C9 /* pricker256.png in Resources */,
 				E11B73AA28FC993A005AC2C9 /* pricker32.png in Resources */,
 				E11B739928F32476005AC2C9 /* threads.plist in Resources */,
+				E1D72232297D8881005A1BBF /* startup.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -449,6 +459,7 @@
 			files = (
 				E18360AD283A6F6700414F20 /* ViewApproach.swift in Sources */,
 				E18360AB2839978900414F20 /* PrintFromData.swift in Sources */,
+				E1D72234297D8D4E005A1BBF /* RectangularButton.swift in Sources */,
 				E1D51F3E280B3C1B00995497 /* SettingsController.swift in Sources */,
 				E17FBEDC28CB9FAA00408D89 /* viewDefaults.swift in Sources */,
 				E13574962815BE45005D84D6 /* DraingPanel.swift in Sources */,
@@ -471,6 +482,7 @@
 				E1383C05280773AB009DEEFA /* UserDefaults.swift in Sources */,
 				E1D51F40280B3C8F00995497 /* Launchable.swift in Sources */,
 				E1383BFA27F9E304009DEEFA /* Grid.swift in Sources */,
+				E1D72236297DED89005A1BBF /* popoverProtocol.swift in Sources */,
 				E1836095282C643100414F20 /* ThreadInfo.swift in Sources */,
 				E135749128135102005D84D6 /* DictionaryExtensions.swift in Sources */,
 				E117ABAA294513AA00CFF6E8 /* simple2.swift in Sources */,

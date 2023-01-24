@@ -8,7 +8,7 @@
 import Foundation
 import Cocoa
 
-
+@IBDesignable
 extension NSView {
     var width: Double { self.bounds.width }
     var height : Double { self.bounds.height }

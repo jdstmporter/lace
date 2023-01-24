@@ -8,36 +8,58 @@
 import Foundation
 import Cocoa
 
-class PopoverView : NSView {}
 
-class PopoverController : NSViewController {
+
+class PopoverWindow : NSWindow, LaunchableItem {
+    
+    static var nibname: NSNib.Name = NSNib.Name("startup")
+    static var lock: NSLock = NSLock()
+    
     enum Choice {
         case Continue
-        case Load
+        case Load(url: URL?)
         case New(width: Int,height: Int)
+        
+        var str : String {
+            switch self {
+            case .Continue:
+                return "Continue"
+            case .Load(let url):
+                return "Load \(url?.relativePath ?? "-")"
+            case .New(let width,let height):
+                return "New \(width) x \(height)"
+            }
+        }
+        
+        var path : URL? {
+            switch self {
+            case .Load(let url):
+                return url
+            default:
+                return  nil
+            }
+        }
+        var size : GridSize? {
+            switch self {
+            case .New(let width,let height):
+                return GridSize(width,height)
+            default:
+                return  nil
+            }
+        }
     }
-    typealias Callback = (PopoverController.Choice) -> Void
     
-    @IBOutlet weak var popover : PopoverView!
+    
+    var outcome : PopoverWindow.Choice?
     
     @IBOutlet weak var blanker: NSButton!
     @IBOutlet weak var continuer: NSButton!
     @IBOutlet weak var loader: NSButton!
     @IBOutlet weak var pather: NSPathControl!
-    
     @IBOutlet weak var heighter: NSTextField!
-    
-   
-    @IBOutlet weak var rawPopover: NSPopover!
-    
-    
     @IBOutlet weak var width: NSTextField!
     
-    
-    var callback : Callback? = nil
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    func initialise() {
         let c = FilePaths.hasCurrent
         continuer.isEnabled = c
         if c {
@@ -48,24 +70,50 @@ class PopoverController : NSViewController {
             blanker.state = .on
             pather.isHidden = true
         }
+        
     }
+    static var popover : PopoverWindow? = nil
+    static func launch() -> PopoverWindow? {
+        if popover==nil {
+            popover=instance()
+            popover?.initialise()
+        }
+        return popover
+    }
+    
     
     var wid : Int { width.integerValue }
     var hei : Int { heighter.integerValue }
     
-    @IBAction func button(_ sender: Any) {
-        rawPopover.close()
-        if continuer.state == .on { callback?(.Continue) }
-        else if loader.state == .on { callback?(.Load) }
-        else  if blanker.state == .on { callback?(.New(width: wid, height: hei)) }
-    }
-    
-    @IBAction func radios(_ sender: NSButton!) {
+    @IBAction func radioButtons(_ sender: NSButton) {
         [self.blanker,self.loader,self.continuer].forEach { $0.state = ($0==sender) ? .on : .off }
     }
     
+
+    @IBAction func buttonAction(_ sender: NSButton) {
+        var outcome : PopoverWindow.Choice? = nil
+        if continuer.state == .on { outcome = .Continue }
+        else if loader.state == .on { outcome = .Load(url: pather.url) }
+        else  if blanker.state == .on { outcome = .New(width: wid, height: hei) }
+        
+        self.outcome=outcome
+        self.sheetParent?.endSheet(self, returnCode: .OK)
+        
+    }
     
+    typealias Handler = (NSApplication.ModalResponse) -> Void
+    typealias Callback = (PopoverWindow.Choice?) -> Void
+    func handler(_ callback : @escaping Callback) -> Handler {
+        { _ in callback(self.outcome) }
+    }
+    
+    func start(_ w: NSWindow,callback: @escaping Callback) {
+        w.beginSheet(self,completionHandler: self.handler(callback))
+    }
 }
+
+
+
 
 class Controller : NSViewController {
     static let prefix = "GridSize-"
@@ -76,9 +124,12 @@ class Controller : NSViewController {
     @IBOutlet weak var drawingArea : LaceView!
     @IBOutlet weak var scaleField : NSTextField!
     //@IBOutlet weak var testPanel: PrintableView!
-    @IBOutlet weak var popover: NSPopover!
     
-    @IBOutlet weak var popoverController: PopoverController!
+    
+    @IBOutlet weak var window: NSWindow!
+    
+    @IBOutlet weak var popoverWindow: PopoverWindow!
+    var callback : PopoverWindow.Callback?
     var initialised : Bool = false
     
     var width : Int = 1
@@ -102,10 +153,12 @@ class Controller : NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         
-        guard !self.initialised else { return }
-        popoverController.callback = { v in print("Got \(v)!!") }
-        popover.show(relativeTo: self.drawingArea.bounds, of: self.view, preferredEdge: .maxY)
+        guard !self.initialised, let pop=PopoverWindow.launch() else { return }
+        pop.start(self.window, callback: { c in self.callback(c ?? .Continue) })
+        
     }
+    
+    func callback(_ c : PopoverWindow.Choice) { syslog.info("Choice is \(c)") }
     
     @objc func updateEvent(_ n : Notification) {
         DispatchQueue.main.async {

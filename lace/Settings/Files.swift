@@ -87,6 +87,39 @@ class FilePaths {
     
 }
 
+struct AutoBackup {
+    
+    private static func appName() -> String {
+        return Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String ?? "LaceApp"
+    }
+    private static func url() throws -> URL {
+        let fm = FileManager.default
+        var urlBase = try fm.url(for: .autosavedInformationDirectory,in: .userDomainMask,  appropriateFor: nil, create: true)
+        urlBase.appendPathComponent("\(AutoBackup.appName()).backup")
+        return urlBase
+    }
+    
+    static func del() throws {
+        let fm = FileManager.default
+        try fm.removeItem(at: url())
+    }
+    
+    static func load<T>() throws -> T
+    where T : Codable {
+        let d = try Data(contentsOf: url())
+        let decoder=JSONDecoder()
+        return try decoder.decode(T.self, from: d)
+    }
+    
+    static func save<T>(_ data : T) throws
+    where T : Codable {
+        let encoder=JSONEncoder()
+        let d = try encoder.encode(data)
+        try d.write(to: url())
+        
+    }
+}
+
 struct File {
     
     static func load<T>() throws -> T
