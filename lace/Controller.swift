@@ -238,6 +238,13 @@ class Controller : NSViewController {
         let _ = ThreadListPanelView.launch()
     }
     
+    func doBackup() {
+        do { try AutoBackup.save(self.drawingArea.pricking) } catch {}
+    }
+    
+    
+    
+    
     
     
 //    @IBAction func doTest(_ item : NSMenuItem?) {

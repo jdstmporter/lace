@@ -65,6 +65,7 @@ public enum FontPart : Int, DefaultPart {
 public enum PathPart : Int, DefaultPart {
     case DataDirectory = 8
     case FilePath = 9
+    case AutoSave = 10
     
     public var str : String { "\(self)" }
 }

@@ -19,6 +19,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         Defaults.load()
         FilePaths.load()
         
+        // START AUTOSAVE:
+        //
+        // autosave calles controller.doBackup()
+        
         //NSApplication.shared.activate(ignoringOtherApps: true)
         // NSOpenPanel
         //self.doPrinting()
@@ -95,6 +99,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      
      func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+         
+         // STOP AUTOSAVE
+         controller.doBackup()
          FilePaths.shutdown()
          Defaults.shutdown()
     }
