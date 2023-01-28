@@ -206,10 +206,10 @@ class Controller : NSViewController {
             guard let p = drawingArea?.pricking else { throw PrickingError.CannotFindPricking }
             switch action {
             case .Save:
-                if FilePaths.hasCurrent { try File.save(url: FilePaths.current,p) }
+                if FilePaths.hasCurrent { try File(url: FilePaths.current).save(p) }
                 else { saveCurrent(.SaveAs) }
             case .SaveAs:
-                let url = try File.save(p)
+                let url = try File().save(p)
                 FilePaths.newFile(url)
             default:
                 break
@@ -239,7 +239,7 @@ class Controller : NSViewController {
     }
     
     func doBackup() {
-        do { try AutoBackup.save(self.drawingArea.pricking) } catch {}
+        do { try AutoBackup().save(self.drawingArea.pricking) } catch {}
     }
     
     

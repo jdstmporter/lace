@@ -65,6 +65,7 @@
 		E18360AF283A94A300414F20 /* Printing.xib in Resources */ = {isa = PBXBuildFile; fileRef = E18360AE283A94A300414F20 /* Printing.xib */; };
 		E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18360B0283A950600414F20 /* PrintingPanel.swift */; };
 		E1BD6A85280E049700430EC4 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BD6A84280E049700430EC4 /* Colours.swift */; };
+		E1CF9AA429845EE300E8509A /* autobackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CF9AA329845EE300E8509A /* autobackup.swift */; };
 		E1D51F3C280B383D00995497 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D51F3B280B383D00995497 /* Preferences.xib */; };
 		E1D51F3E280B3C1B00995497 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D51F3D280B3C1B00995497 /* SettingsController.swift */; };
 		E1D51F40280B3C8F00995497 /* Launchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D51F3F280B3C8F00995497 /* Launchable.swift */; };
@@ -149,6 +150,7 @@
 		E18360AE283A94A300414F20 /* Printing.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Printing.xib; sourceTree = "<group>"; };
 		E18360B0283A950600414F20 /* PrintingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingPanel.swift; sourceTree = "<group>"; };
 		E1BD6A84280E049700430EC4 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
+		E1CF9AA329845EE300E8509A /* autobackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = autobackup.swift; sourceTree = "<group>"; };
 		E1D51F3B280B383D00995497 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		E1D51F3D280B3C1B00995497 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		E1D51F3F280B3C8F00995497 /* Launchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launchable.swift; sourceTree = "<group>"; };
@@ -210,6 +212,7 @@
 		E1383BDA27F79C93009DEEFA = {
 			isa = PBXGroup;
 			children = (
+				E1CF9AA329845EE300E8509A /* autobackup.swift */,
 				E1D72233297D8D4E005A1BBF /* RectangularButton.swift */,
 				E1E731B22972A7BC00C4B850 /* images */,
 				E11B739828F32476005AC2C9 /* threads.plist */,
@@ -472,6 +475,7 @@
 				E1383C0B2809AC30009DEEFA /* Files.swift in Sources */,
 				E11EDC10295B7CE100B8E957 /* LaceSettings.swift in Sources */,
 				E11B739728F3242A005AC2C9 /* PLIST.swift in Sources */,
+				E1CF9AA429845EE300E8509A /* autobackup.swift in Sources */,
 				E1DFD09E293802DD0075D971 /* enums.swift in Sources */,
 				E11EDC0A295A695400B8E957 /* lines.swift in Sources */,
 				E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */,

@@ -115,3 +115,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 }
 
+extension NSApplication {
+    static var controller : Controller? {
+        NSApplication.shared.mainWindow?.contentViewController as? Controller
+    }
+}
+

@@ -136,78 +136,62 @@ class FilePaths {
 }
 
 protocol DataStorage {
-    static func load<T>() throws -> T where T : Codable
-    @discardableResult static func save<T>(_ data : T) throws -> URL where T : Codable
-    static func del() throws
+    var url : URL { get set }
+    func load<T>() throws -> T where T : Codable
+    @discardableResult func save<T>(_ data : T, compact: Bool) throws -> URL where T : Codable
+    @discardableResult func save<T>(_ data : T) throws -> URL where T : Codable
+    func del() throws
 }
 extension DataStorage {
-    public static func del() throws {}
-}
-
-struct AutoBackup {
-    
-    static let name : String = "lace.bak.json"
-    
-    static var url : URL {
-        var p = FilePaths.autosave
-        p.appendPathComponent(name)
-        return p
-    }
-    
-    static func del() throws {
+    func del() throws {
         let fm = FileManager.default
         try fm.removeItem(at: url)
     }
     
-    static func load<T>() throws -> T
+    func load<T>() throws -> T
     where T : Codable {
         let d = try Data(contentsOf: url)
         let decoder=JSONDecoder()
         return try decoder.decode(T.self, from: d)
     }
     
-    @discardableResult static func save<T>(_ data : T) throws -> URL
+    @discardableResult func save<T>(_ data : T, compact: Bool) throws -> URL
     where T : Codable {
-        let encoder=JSONEncoder()
-        let d = try encoder.encode(data)
-        try d.write(to: url)
-        return url
-    }
-}
-
-struct File {
-    
-    static func load<T>() throws -> T
-    where T : Codable
-    {
-        let picker = FileReadPicker(def: FilePaths.root)
-        guard picker.runSync() else {
-            throw FileError.CannotPickLoadFile
-        }
-        
-        let d = try Data(contentsOf: picker.url)
-        let decoder=JSONDecoder()
-        return try decoder.decode(T.self, from: d)
-    }
-    
-    @discardableResult static func save<T>(_ data : T,compact: Bool=true) throws -> URL
-    where T : Codable
-    {
-        let picker = FilePicker(def: FilePaths.root)
-        guard picker.runSync() else {
-            throw FileError.CannotPickSaveFile
-        }
-        try save(url: picker.url,data,compact: compact)
-        return picker.url
-    }
-    
-    static func save<T>(url: URL,_ data : T,compact: Bool=true) throws
-    where T : Codable
-    {
         let encoder=JSONEncoder()
         if !compact { encoder.outputFormatting = .prettyPrinted }
         let d = try encoder.encode(data)
         try d.write(to: url)
+        return url
     }
     
+    @discardableResult func save<T>(_ data : T) throws -> URL  where T : Codable { try save(data, compact: true) }
+}
+
+struct AutoBackup : DataStorage {
+    
+    static let name : String = "lace.bak.json"
+    var url  : URL
+    
+    init()  {
+        var p = FilePaths.autosave
+        p.appendPathComponent(AutoBackup.name)
+        url = p
+    }
+
+}
+
+struct File : DataStorage {
+    
+    var url  : URL
+    init() throws {
+        let picker = FileReadPicker(def: FilePaths.root)
+        guard picker.runSync() else {
+            throw FileError.CannotPickLoadFile
+        }
+        url = picker.url
+    }
+    
+    init(url : URL) {
+        self.url=url
+    }
 }
