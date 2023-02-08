@@ -48,7 +48,6 @@
 		E1383C0D2809F267009DEEFA /* defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = E1383C0C2809F267009DEEFA /* defaults.plist */; };
 		E17FBEDC28CB9FAA00408D89 /* viewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17FBEDB28CB9FAA00408D89 /* viewDefaults.swift */; };
 		E17FBEE628CD3F8D00408D89 /* common.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17FBEE528CD3F8D00408D89 /* common.swift */; };
-		E18360882828039600414F20 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E18360872828036900414F20 /* libsqlite3.tbd */; };
 		E183608D2829C72100414F20 /* Calculator.xib in Resources */ = {isa = PBXBuildFile; fileRef = E183608C2829C72100414F20 /* Calculator.xib */; };
 		E183608F282A85FB00414F20 /* Calculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E183608E282A85FB00414F20 /* Calculator.swift */; };
 		E1836093282C0E3200414F20 /* LaceKinds.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1836092282C0E3200414F20 /* LaceKinds.swift */; };
@@ -65,9 +64,6 @@
 		E18360AF283A94A300414F20 /* Printing.xib in Resources */ = {isa = PBXBuildFile; fileRef = E18360AE283A94A300414F20 /* Printing.xib */; };
 		E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18360B0283A950600414F20 /* PrintingPanel.swift */; };
 		E1BD6A85280E049700430EC4 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BD6A84280E049700430EC4 /* Colours.swift */; };
-		E1CF9AA429845EE300E8509A /* autobackup.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CF9AA329845EE300E8509A /* autobackup.swift */; };
-		E1CF9AA92988838B00E8509A /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13574A72826E39A005D84D6 /* CoreData.framework */; };
-		E1CF9AAF299175D900E8509A /* fileBased.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CF9AAE299175D900E8509A /* fileBased.swift */; };
 		E1CF9AB129930EBE00E8509A /* autosaveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CF9AB029930EBE00E8509A /* autosaveController.swift */; };
 		E1D51F3C280B383D00995497 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D51F3B280B383D00995497 /* Preferences.xib */; };
 		E1D51F3E280B3C1B00995497 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D51F3D280B3C1B00995497 /* SettingsController.swift */; };
@@ -113,7 +109,6 @@
 		E135749028135102005D84D6 /* DictionaryExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryExtensions.swift; sourceTree = "<group>"; };
 		E13574952815BE45005D84D6 /* DraingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DraingPanel.swift; sourceTree = "<group>"; };
 		E135749D28245909005D84D6 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
-		E13574A52826E38B005D84D6 /* SQLITE3.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SQLITE3.swift; sourceTree = "<group>"; };
 		E13574A72826E39A005D84D6 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		E13574A928270BE2005D84D6 /* threads.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = threads.xml; sourceTree = "<group>"; };
 		E1383BE327F79C93009DEEFA /* lace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = lace.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -153,11 +148,6 @@
 		E18360AE283A94A300414F20 /* Printing.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Printing.xib; sourceTree = "<group>"; };
 		E18360B0283A950600414F20 /* PrintingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingPanel.swift; sourceTree = "<group>"; };
 		E1BD6A84280E049700430EC4 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
-		E1CF9AA329845EE300E8509A /* autobackup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = autobackup.swift; sourceTree = "<group>"; };
-		E1CF9AA72988828300E8509A /* backups.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = backups.xcdatamodel; sourceTree = "<group>"; };
-		E1CF9AAA298883EE00E8509A /* autobackupHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = autobackupHandler.swift; sourceTree = "<group>"; };
-		E1CF9AAC2991758E00E8509A /* PreferencesAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesAPI.swift; sourceTree = "<group>"; };
-		E1CF9AAE299175D900E8509A /* fileBased.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = fileBased.swift; sourceTree = "<group>"; };
 		E1CF9AB029930EBE00E8509A /* autosaveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = autosaveController.swift; sourceTree = "<group>"; };
 		E1D51F3B280B383D00995497 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		E1D51F3D280B3C1B00995497 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
@@ -179,8 +169,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E18360A728384F8600414F20 /* CoreGraphics.framework in Frameworks */,
-				E1CF9AA92988838B00E8509A /* CoreData.framework in Frameworks */,
-				E18360882828039600414F20 /* libsqlite3.tbd in Frameworks */,
 				E183609A282EF88D00414F20 /* ApplicationServices.framework in Frameworks */,
 				E18360A12831B60400414F20 /* PDFKit.framework in Frameworks */,
 				E1383BFD27F9EF3E009DEEFA /* AppKit.framework in Frameworks */,
@@ -209,7 +197,6 @@
 		E13574A42826E36E005D84D6 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				E13574A52826E38B005D84D6 /* SQLITE3.swift */,
 				E10DDC282879E53A003A5C9C /* JSON.swift */,
 				E10DDC2C287B222D003A5C9C /* CSV.swift */,
 				E11B739628F3242A005AC2C9 /* PLIST.swift */,
@@ -221,7 +208,6 @@
 		E1383BDA27F79C93009DEEFA = {
 			isa = PBXGroup;
 			children = (
-				E1CF9AA329845EE300E8509A /* autobackup.swift */,
 				E1D72233297D8D4E005A1BBF /* RectangularButton.swift */,
 				E1E731B22972A7BC00C4B850 /* images */,
 				E11B739828F32476005AC2C9 /* threads.plist */,
@@ -348,10 +334,6 @@
 		E1CF9AA52988821700E8509A /* Autobackup */ = {
 			isa = PBXGroup;
 			children = (
-				E1CF9AA62988828300E8509A /* backups.xcdatamodeld */,
-				E1CF9AAA298883EE00E8509A /* autobackupHandler.swift */,
-				E1CF9AAC2991758E00E8509A /* PreferencesAPI.swift */,
-				E1CF9AAE299175D900E8509A /* fileBased.swift */,
 				E1CF9AB029930EBE00E8509A /* autosaveController.swift */,
 			);
 			path = Autobackup;
@@ -491,14 +473,12 @@
 				E135749E28245909005D84D6 /* Log.swift in Sources */,
 				E1BD6A85280E049700430EC4 /* Colours.swift in Sources */,
 				E11EDC2D2961EAAF00B8E957 /* enumProtocols.swift in Sources */,
-				E1CF9AAF299175D900E8509A /* fileBased.swift in Sources */,
 				E11B739B28F4C873005AC2C9 /* threadTypes.swift in Sources */,
 				E1383C072808AB3D009DEEFA /* pricking.swift in Sources */,
 				E1EBD81C284149A200D8E10C /* Calc.swift in Sources */,
 				E1383C0B2809AC30009DEEFA /* Files.swift in Sources */,
 				E11EDC10295B7CE100B8E957 /* LaceSettings.swift in Sources */,
 				E11B739728F3242A005AC2C9 /* PLIST.swift in Sources */,
-				E1CF9AA429845EE300E8509A /* autobackup.swift in Sources */,
 				E1DFD09E293802DD0075D971 /* enums.swift in Sources */,
 				E11EDC0A295A695400B8E957 /* lines.swift in Sources */,
 				E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */,
@@ -749,19 +729,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCVersionGroup section */
-		E1CF9AA62988828300E8509A /* backups.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				E1CF9AA72988828300E8509A /* backups.xcdatamodel */,
-			);
-			currentVersion = E1CF9AA72988828300E8509A /* backups.xcdatamodel */;
-			path = backups.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = E1383BDB27F79C93009DEEFA /* Project object */;
 }
