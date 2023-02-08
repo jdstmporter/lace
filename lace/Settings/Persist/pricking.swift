@@ -113,21 +113,9 @@ struct Pricking : Codable {
     
 }
 
-/*
-class Serialiser {
-    
-    static func load(json: Data) throws -> Pricking  {
-        let decoder=JSONDecoder()
-        return try decoder.decode(Pricking.self, from: json)
-    }
-    
-    static func json(_ pricking: Pricking,compact: Bool = false) throws -> Data {
-        let encoder=JSONEncoder()
-        if !compact { encoder.outputFormatting = .prettyPrinted }
-        return try encoder.encode(pricking)
-    }
-    
-}
- */
+
+
+
+
 
 

@@ -136,6 +136,12 @@ class Controller : NSViewController {
     var height : Int = 1
     var path : String?
     
+    var pricking : Pricking {
+        get { self.drawingArea.pricking }
+        set { self.drawingArea.pricking = newValue }
+    }
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.drawingArea.backgroundColor = .white
@@ -148,6 +154,9 @@ class Controller : NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(updateEvent(_ :)), name: SettingsPanel.DefaultsUpdated, object: nil)
         
         self.updateZoom(self.zoomField)
+        if let p = AutoSaveProcessor.load() {
+            self.pricking=p
+        }
     }
     
     override func viewDidAppear() {
@@ -156,9 +165,29 @@ class Controller : NSViewController {
         guard !self.initialised, let pop=PopoverWindow.launch() else { return }
         pop.start(self.window, callback: { c in self.callback(c ?? .Continue) })
         
+        //self.backup?.startTimedBackups()
     }
     
-    func callback(_ c : PopoverWindow.Choice) { syslog.info("Choice is \(c)") }
+    override func viewWillDisappear() {
+        AutoSaveProcessor.save(self.pricking)
+    }
+    
+    func callback(_ c : PopoverWindow.Choice) {
+        syslog.info("Choice is \(c)")
+        switch c {
+        case .Continue:
+            if let p = AutoSaveProcessor.load() {
+                self.pricking=p
+            }
+        case .Load(url: let u):
+            print(u?.description ?? "")
+            break
+        case .New(width: let w, height: let h):
+            AutoSaveProcessor.new()
+            self.setSize(width: w, height: h)
+        
+        }
+    }
     
     @objc func updateEvent(_ n : Notification) {
         DispatchQueue.main.async {
@@ -175,17 +204,22 @@ class Controller : NSViewController {
         }
     }
     
+    func setSize(width: Int,height: Int) {
+        self.height=height
+        self.width=width
+        syslog.debug("Changed to \(self.width) x \(self.height)")
+        self.drawingArea.setSize(width: width, height: height)
+        self.view.window?.title="Torchon \(self.width)x\(self.height)"
+    }
+    
+    
 
     @IBAction func sizeDidChange(_ field: NSTextField?) {
         let w : Int = numericCast(widthField.intValue)
         let h : Int = numericCast(heightField.intValue)
         
         if w != self.width || h != self.height {
-            self.height=h
-            self.width=w
-            syslog.debug("Changed to \(self.width) x \(self.height)")
-            self.drawingArea.setSize(width: w, height: h)
-            self.view.window?.title="Torchon \(self.width)x\(self.height)"
+            self.setSize(width: w, height: h)
         }
         
     }
@@ -238,25 +272,10 @@ class Controller : NSViewController {
         let _ = ThreadListPanelView.launch()
     }
     
-    func doBackup() {
-        do { try AutoBackup().save(self.drawingArea.pricking) } catch {}
-    }
     
-    
-    
-    
-    
-    
-//    @IBAction func doTest(_ item : NSMenuItem?) {
-//        if let rep = testPanel.render() {
-//            let cg=rep.cgImage!
-//            let renderer=RenderPNG(image: cg, dpi: NSSize(width: 300, height: 300))
-//            try? renderer.renderToLocation(path: URL(fileURLWithPath: "/Users/julianporter/fred.png"))
-//        }
-//        testPanel.load(pricking: drawingArea.pricking, spacingInM: 0.2, dpM: 120)
-//    }
     
     
     
     
 }
+

@@ -141,6 +141,8 @@ protocol DataStorage {
     @discardableResult func save<T>(_ data : T, compact: Bool) throws -> URL where T : Codable
     @discardableResult func save<T>(_ data : T) throws -> URL where T : Codable
     func del() throws
+    var exists : Bool { get }
+    
 }
 extension DataStorage {
     func del() throws {
@@ -165,20 +167,15 @@ extension DataStorage {
     }
     
     @discardableResult func save<T>(_ data : T) throws -> URL  where T : Codable { try save(data, compact: true) }
-}
-
-struct AutoBackup : DataStorage {
     
-    static let name : String = "lace.bak.json"
-    var url  : URL
-    
-    init()  {
-        var p = FilePaths.autosave
-        p.appendPathComponent(AutoBackup.name)
-        url = p
+    var exists : Bool {
+        let fm = FileManager.default
+        return fm.fileExists(at: url)
     }
-
+    
 }
+
+
 
 struct File : DataStorage {
     
@@ -195,3 +192,6 @@ struct File : DataStorage {
         self.url=url
     }
 }
+
+
+

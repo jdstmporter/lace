@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct GridPoint : CustomStringConvertible, Comparable, Equatable, Codable {
+struct GridPoint : CustomStringConvertible, Comparable, Equatable, Hashable, Codable {
     let x : Int
     let y : Int
     
@@ -48,5 +48,10 @@ struct GridPoint : CustomStringConvertible, Comparable, Equatable, Codable {
     }
     static func < (lhs: GridPoint, rhs:GridPoint) -> Bool {
         (lhs.y < rhs.y) || (lhs.y==rhs.y && lhs.x<rhs.x)
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        x.hash(into: &hasher)
+        y.hash(into: &hasher)
     }
 }

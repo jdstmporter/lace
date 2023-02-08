@@ -12,6 +12,7 @@ import Combine
 enum GridError : Error {}
 
 
+
 class Grid : Codable {
     
     enum CodingKeys : String, CodingKey {
@@ -29,9 +30,11 @@ class Grid : Codable {
     //var data : [[Bool]]=[]
     var data : [Bool] = []
     var size : Int { width*height }
+    
     var xRange : Range<Int> { 0..<width }
     var yRange : Range<Int> { 0..<height }
     var xyRange : [(Int,Int)] { self._apply { (x,y) in (x,y) }}
+    
     var pointRange : [GridPoint] { xyRange.map { GridPoint($0.0,$0.1) } }
     
     private func _apply<T>(_ f: (Int,Int) -> T?) -> [T] {
@@ -42,11 +45,13 @@ class Grid : Codable {
     private func _idx(_ x : Int, _ y : Int) -> Int { x+(y*width) }
     private func _idx(_ p : GridPoint) -> Int { p.x+(p.y*width) }
     
-    public init(width : Int, height: Int) {
+    public init(width : Int, height: Int,data : [Bool]=[]) {
         self.width=width
         self.height=height
         self.scale=1.0
         self.reset()
+        let n = Swift.min(self.size,data.count)
+        (0..<n).forEach { self.data[$0] = data[$0] }
     }
     
     public required init(from decoder: Decoder) throws {
@@ -90,7 +95,7 @@ class Grid : Codable {
     //func flip(_ p : GridPoint) { self.data[p.y][p.x].toggle() }
     //func reset() { self.data = (0..<height).map { _ in [Bool].init(repeating: false, count: width) } }
     public func flip(_ p : GridPoint) { self.data[self._idx(p.x,p.y)].toggle() }
-    public func reset() { self.data=[Bool].init(repeating: false, count: size) }
+    public func reset() { self.data=Array<Bool>(repeating: false, count: size) }
     
     public func check(_ x : Int, _ y : Int) -> Bool { xRange.contains(x) && yRange.contains(y) }
     public func check(_ p : GridPoint) -> Bool { check(p.x,p.y) }

@@ -41,6 +41,8 @@ class Defaults {
     //    UserDefaults.standard.dictionaryRepresentation()
     //}
     
+    public var prefix : String { appName }
+    
     fileprivate func commit() {
     }
     
@@ -69,6 +71,12 @@ class Defaults {
         load()
         guard let t=the else { throw DefaultError.CannotGetDefaults }
         return t
+    }
+    
+    static func has<T>(_ : T.Type,_ key : String) -> Bool where T : EncDec {
+        guard let it = try? check(),
+              let _ : T = it[key] else { return false }
+        return true
     }
     
     static func read<T>(_ key: String) throws -> T where T : EncDec {

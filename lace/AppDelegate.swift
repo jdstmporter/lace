@@ -14,19 +14,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet var window: NSWindow!
     @IBOutlet weak var controller: Controller!
     
+    
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         Defaults.load()
         FilePaths.load()
         
-        // START AUTOSAVE:
-        //
-        // autosave calles controller.doBackup()
         
-        //NSApplication.shared.activate(ignoringOtherApps: true)
-        // NSOpenPanel
-        //self.doPrinting()
-        //printActions()
     }
     
     /*
@@ -100,8 +95,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
      func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
          
-         // STOP AUTOSAVE
-         controller.doBackup()
+         
+
          FilePaths.shutdown()
          Defaults.shutdown()
     }
@@ -109,6 +104,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
         return true
     }
+    
+    
     
     
 
