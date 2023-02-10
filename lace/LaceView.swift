@@ -7,7 +7,7 @@
 
 import Foundation
 import Cocoa
-
+import Atomics
 
 
 protocol MouseHandler {
@@ -136,6 +136,43 @@ extension NSBezierPath {
         self.move(to: from)
         self.line(to: to)
     }
+    
+}
+
+struct ExtendedPoint : CustomStringConvertible {
+    var point : NSPoint?
+    var raw : NSPoint
+    
+    init(point: NSPoint,pricking: Pricking) {
+        self.raw=point
+        self.point=try? pricking.snap(point: point)
+    }
+    
+    init(raw : NSPoint,point: NSPoint) {
+        self.raw=raw
+        self.point=point
+    }
+    
+    var path : NSBezierPath {
+        guard let p=self.point else { return NSBezierPath() }
+        return NSBezierPath(ovalIn: NSRect(centre: p,side: 2))
+    }
+    var extendedPath : [NSBezierPath] {
+        var paths = [NSBezierPath(ovalIn: NSRect(centre: raw,side: 8))]
+        if let p=self.point {
+            let p2=NSBezierPath(from: raw, to: p) //; p2.move(to: raw.start); p2.line(to: line.start)
+            let dashes : [CGFloat] = [8.0,2.0]
+            p2.setLineDash(dashes, count: 2, phase: 0.0)
+            paths.append(p2)
+        }
+        return paths
+    }
+    
+    var description: String {
+        if let p = point { return "\(raw) : \(p)" }
+        else { return "\(raw) - N/A" }
+    }
+    
 }
 
 struct ExtendedLine : CustomStringConvertible {
@@ -176,7 +213,7 @@ struct ExtendedLine : CustomStringConvertible {
     
 }
 
-class AtomicFlag {
+class AtomicFlagOld {
     
     private static var queue = DispatchQueue(label: "AtomicFlag",qos: .userInteractive)
     private var _flag : Bool = false
@@ -191,6 +228,15 @@ class AtomicFlag {
             return v
         }
     }
+}
+
+class AtomicFlag {
+    private var _flag : ManagedAtomic<Bool> = ManagedAtomic<Bool>(false)
+    
+    func set() { _flag.store(true, ordering: .relaxed) }
+    func clear() { _flag.store(false, ordering: .relaxed) }
+    func test() -> Bool { _flag.load(ordering: .relaxed) }
+    func testAndClear() -> Bool { _flag.loadThenLogicalAnd(with: false, ordering: .relaxed) }
 }
 
 

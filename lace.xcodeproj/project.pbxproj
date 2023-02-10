@@ -65,6 +65,7 @@
 		E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18360B0283A950600414F20 /* PrintingPanel.swift */; };
 		E1BD6A85280E049700430EC4 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BD6A84280E049700430EC4 /* Colours.swift */; };
 		E1CF9AB129930EBE00E8509A /* autosaveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CF9AB029930EBE00E8509A /* autosaveController.swift */; };
+		E1CF9AB9299707E200E8509A /* Atomics in Frameworks */ = {isa = PBXBuildFile; productRef = E1CF9AB8299707E200E8509A /* Atomics */; };
 		E1D51F3C280B383D00995497 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D51F3B280B383D00995497 /* Preferences.xib */; };
 		E1D51F3E280B3C1B00995497 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D51F3D280B3C1B00995497 /* SettingsController.swift */; };
 		E1D51F40280B3C8F00995497 /* Launchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D51F3F280B3C8F00995497 /* Launchable.swift */; };
@@ -149,6 +150,8 @@
 		E18360B0283A950600414F20 /* PrintingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingPanel.swift; sourceTree = "<group>"; };
 		E1BD6A84280E049700430EC4 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		E1CF9AB029930EBE00E8509A /* autosaveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = autosaveController.swift; sourceTree = "<group>"; };
+		E1CF9AB2299703F600E8509A /* autobackupHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = autobackupHandler.swift; sourceTree = "<group>"; };
+		E1CF9AB52997042400E8509A /* backups.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = backups.xcdatamodel; sourceTree = "<group>"; };
 		E1D51F3B280B383D00995497 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		E1D51F3D280B3C1B00995497 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		E1D51F3F280B3C8F00995497 /* Launchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launchable.swift; sourceTree = "<group>"; };
@@ -174,6 +177,7 @@
 				E1383BFD27F9EF3E009DEEFA /* AppKit.framework in Frameworks */,
 				E1E731B42972B23800C4B850 /* Combine.framework in Frameworks */,
 				E18360A32832A2E000414F20 /* ImageIO.framework in Frameworks */,
+				E1CF9AB9299707E200E8509A /* Atomics in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -334,6 +338,8 @@
 		E1CF9AA52988821700E8509A /* Autobackup */ = {
 			isa = PBXGroup;
 			children = (
+				E1CF9AB42997042400E8509A /* backups.xcdatamodeld */,
+				E1CF9AB2299703F600E8509A /* autobackupHandler.swift */,
 				E1CF9AB029930EBE00E8509A /* autosaveController.swift */,
 			);
 			path = Autobackup;
@@ -395,6 +401,9 @@
 			dependencies = (
 			);
 			name = lace;
+			packageProductDependencies = (
+				E1CF9AB8299707E200E8509A /* Atomics */,
+			);
 			productName = lace;
 			productReference = E1383BE327F79C93009DEEFA /* lace.app */;
 			productType = "com.apple.product-type.application";
@@ -423,6 +432,9 @@
 				Base,
 			);
 			mainGroup = E1383BDA27F79C93009DEEFA;
+			packageReferences = (
+				E1CF9AB7299707E200E8509A /* XCRemoteSwiftPackageReference "swift-atomics" */,
+			);
 			productRefGroup = E1383BE427F79C93009DEEFA /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -729,6 +741,38 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E1CF9AB7299707E200E8509A /* XCRemoteSwiftPackageReference "swift-atomics" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-atomics.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E1CF9AB8299707E200E8509A /* Atomics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1CF9AB7299707E200E8509A /* XCRemoteSwiftPackageReference "swift-atomics" */;
+			productName = Atomics;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		E1CF9AB42997042400E8509A /* backups.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E1CF9AB52997042400E8509A /* backups.xcdatamodel */,
+			);
+			currentVersion = E1CF9AB52997042400E8509A /* backups.xcdatamodel */;
+			path = backups.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E1383BDB27F79C93009DEEFA /* Project object */;
 }
