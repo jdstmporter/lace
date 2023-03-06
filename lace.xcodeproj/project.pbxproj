@@ -44,7 +44,7 @@
 		E1383C05280773AB009DEEFA /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383C04280773AB009DEEFA /* UserDefaults.swift */; };
 		E1383C072808AB3D009DEEFA /* pricking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383C062808AB3D009DEEFA /* pricking.swift */; };
 		E1383C092808DACC009DEEFA /* FilePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383C082808DACC009DEEFA /* FilePicker.swift */; };
-		E1383C0B2809AC30009DEEFA /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383C0A2809AC30009DEEFA /* Files.swift */; };
+		E1383C0B2809AC30009DEEFA /* filepaths.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1383C0A2809AC30009DEEFA /* filepaths.swift */; };
 		E1383C0D2809F267009DEEFA /* defaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = E1383C0C2809F267009DEEFA /* defaults.plist */; };
 		E17FBEDC28CB9FAA00408D89 /* viewDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17FBEDB28CB9FAA00408D89 /* viewDefaults.swift */; };
 		E17FBEE628CD3F8D00408D89 /* common.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17FBEE528CD3F8D00408D89 /* common.swift */; };
@@ -63,6 +63,7 @@
 		E18360AD283A6F6700414F20 /* ViewApproach.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18360AC283A6F6700414F20 /* ViewApproach.swift */; };
 		E18360AF283A94A300414F20 /* Printing.xib in Resources */ = {isa = PBXBuildFile; fileRef = E18360AE283A94A300414F20 /* Printing.xib */; };
 		E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18360B0283A950600414F20 /* PrintingPanel.swift */; };
+		E1947D3F29B52EF4002D5D15 /* files.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1947D3E29B52EF4002D5D15 /* files.swift */; };
 		E1BD6A85280E049700430EC4 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BD6A84280E049700430EC4 /* Colours.swift */; };
 		E1CF9AB129930EBE00E8509A /* autosaveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CF9AB029930EBE00E8509A /* autosaveController.swift */; };
 		E1CF9AB9299707E200E8509A /* Atomics in Frameworks */ = {isa = PBXBuildFile; productRef = E1CF9AB8299707E200E8509A /* Atomics */; };
@@ -126,7 +127,7 @@
 		E1383C04280773AB009DEEFA /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		E1383C062808AB3D009DEEFA /* pricking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pricking.swift; sourceTree = "<group>"; };
 		E1383C082808DACC009DEEFA /* FilePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilePicker.swift; sourceTree = "<group>"; };
-		E1383C0A2809AC30009DEEFA /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
+		E1383C0A2809AC30009DEEFA /* filepaths.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = filepaths.swift; sourceTree = "<group>"; };
 		E1383C0C2809F267009DEEFA /* defaults.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = defaults.plist; sourceTree = "<group>"; };
 		E17FBEDB28CB9FAA00408D89 /* viewDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = viewDefaults.swift; sourceTree = "<group>"; };
 		E17FBEE528CD3F8D00408D89 /* common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = common.swift; sourceTree = "<group>"; };
@@ -148,10 +149,9 @@
 		E18360AC283A6F6700414F20 /* ViewApproach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewApproach.swift; sourceTree = "<group>"; };
 		E18360AE283A94A300414F20 /* Printing.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Printing.xib; sourceTree = "<group>"; };
 		E18360B0283A950600414F20 /* PrintingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingPanel.swift; sourceTree = "<group>"; };
+		E1947D3E29B52EF4002D5D15 /* files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = files.swift; sourceTree = "<group>"; };
 		E1BD6A84280E049700430EC4 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		E1CF9AB029930EBE00E8509A /* autosaveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = autosaveController.swift; sourceTree = "<group>"; };
-		E1CF9AB2299703F600E8509A /* autobackupHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = autobackupHandler.swift; sourceTree = "<group>"; };
-		E1CF9AB52997042400E8509A /* backups.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = backups.xcdatamodel; sourceTree = "<group>"; };
 		E1D51F3B280B383D00995497 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		E1D51F3D280B3C1B00995497 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		E1D51F3F280B3C8F00995497 /* Launchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launchable.swift; sourceTree = "<group>"; };
@@ -237,7 +237,7 @@
 		E1383BE527F79C93009DEEFA /* lace */ = {
 			isa = PBXGroup;
 			children = (
-				E1CF9AA52988821700E8509A /* Autobackup */,
+				E1CF9AA52988821700E8509A /* Saving */,
 				E1DFD0992932DC0F0075D971 /* UUtils */,
 				E1836096282ED3C500414F20 /* Printing */,
 				E183608B2829C6F100414F20 /* Extras */,
@@ -286,7 +286,6 @@
 				E11EDC06295A685500B8E957 /* Persist */,
 				E1DFD09C2938016F0075D971 /* Default System */,
 				E17FBEE428CD3F6400408D89 /* LaceView */,
-				E1383C0A2809AC30009DEEFA /* Files.swift */,
 				E1D51F3B280B383D00995497 /* Preferences.xib */,
 				E1D51F3D280B3C1B00995497 /* SettingsController.swift */,
 				E13574952815BE45005D84D6 /* DraingPanel.swift */,
@@ -335,14 +334,13 @@
 			path = Printing;
 			sourceTree = "<group>";
 		};
-		E1CF9AA52988821700E8509A /* Autobackup */ = {
+		E1CF9AA52988821700E8509A /* Saving */ = {
 			isa = PBXGroup;
 			children = (
-				E1CF9AB42997042400E8509A /* backups.xcdatamodeld */,
-				E1CF9AB2299703F600E8509A /* autobackupHandler.swift */,
 				E1CF9AB029930EBE00E8509A /* autosaveController.swift */,
+				E1947D3E29B52EF4002D5D15 /* files.swift */,
 			);
-			path = Autobackup;
+			path = Saving;
 			sourceTree = "<group>";
 		};
 		E1DFD0992932DC0F0075D971 /* UUtils */ = {
@@ -360,6 +358,7 @@
 		E1DFD09C2938016F0075D971 /* Default System */ = {
 			isa = PBXGroup;
 			children = (
+				E1383C0A2809AC30009DEEFA /* filepaths.swift */,
 				E1DFD09A2932DC690075D971 /* decodable.swift */,
 				E17FBEE528CD3F8D00408D89 /* common.swift */,
 				E1383C04280773AB009DEEFA /* UserDefaults.swift */,
@@ -488,13 +487,14 @@
 				E11B739B28F4C873005AC2C9 /* threadTypes.swift in Sources */,
 				E1383C072808AB3D009DEEFA /* pricking.swift in Sources */,
 				E1EBD81C284149A200D8E10C /* Calc.swift in Sources */,
-				E1383C0B2809AC30009DEEFA /* Files.swift in Sources */,
+				E1383C0B2809AC30009DEEFA /* filepaths.swift in Sources */,
 				E11EDC10295B7CE100B8E957 /* LaceSettings.swift in Sources */,
 				E11B739728F3242A005AC2C9 /* PLIST.swift in Sources */,
 				E1DFD09E293802DD0075D971 /* enums.swift in Sources */,
 				E11EDC0A295A695400B8E957 /* lines.swift in Sources */,
 				E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */,
 				E1383BF627F79FC8009DEEFA /* Controller.swift in Sources */,
+				E1947D3F29B52EF4002D5D15 /* files.swift in Sources */,
 				E1CF9AB129930EBE00E8509A /* autosaveController.swift in Sources */,
 				E1383BE727F79C93009DEEFA /* AppDelegate.swift in Sources */,
 				E1383C012803787C009DEEFA /* Lines.swift in Sources */,
@@ -760,19 +760,6 @@
 			productName = Atomics;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		E1CF9AB42997042400E8509A /* backups.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				E1CF9AB52997042400E8509A /* backups.xcdatamodel */,
-			);
-			currentVersion = E1CF9AB52997042400E8509A /* backups.xcdatamodel */;
-			path = backups.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = E1383BDB27F79C93009DEEFA /* Project object */;
 }

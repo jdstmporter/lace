@@ -85,17 +85,6 @@ extension Decimal : EncDec {
     }
 }
 
-extension Pricking : EncDec {
-    
-    static func dec(_ d: Any) -> Pricking? {
-        guard let data=d as? Data else { return nil }
-        return try? JSONDecoder().decode(Pricking.self, from: data)
-    }
-    
-    func enc() -> Any? {
-        try? JSONEncoder().encode(self)
-    }
-}
 
 
 func dec<T>(_ x : Any) -> T? where T : EncDec { T.dec(x) }

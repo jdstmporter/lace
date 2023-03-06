@@ -59,24 +59,23 @@ class Grid : Codable {
         self.width = try c.decode(Int.self,forKey: .width)
         self.height = try c.decode(Int.self,forKey: .height)
         self.scale = try c.decode(Double.self,forKey: .scale)
-        //self.data = try c.decode([[Bool]].self,forKey: .data)
-        let points = try c.decode([GridPoint].self,forKey: .points)
+        let points = try c.decode(String.self,forKey: .points)
         
         self.reset()
-        points.forEach { self[$0]=true }
+        let dp : [Bool] = points.prefix(self.size).map { $0=="1" }
+        self.data.replaceSubrange(0..<dp.count, with: dp)
+        (0..<dp.count).forEach { self.data[$0]=dp[$0] }
+        
+        //points.forEach { self[$0]=true }
     }
     public func encode(to encoder: Encoder) throws {
         
-        let points : [GridPoint]=self._apply { (x,y) in
-            guard self[x,y] else { return nil }
-            return GridPoint(x,y)
-        }
+        let points : String = self.data.map { $0 ? "1" : "0" }.joined(separator: "")
         
         var c=encoder.container(keyedBy: CodingKeys.self)
         try c.encode(self.width,forKey : .width)
         try c.encode(self.height,forKey : .height)
         try c.encode(self.scale,forKey : .scale)
-        //try c.encode(self.data,forKey : .data)
         try c.encode(points,forKey : .points)
         
         

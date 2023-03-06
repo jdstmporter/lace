@@ -94,14 +94,36 @@ extension Decimal {
     public var doubleValue : Double { (self as NSDecimalNumber).doubleValue }
     public var floatValue : Float { self.doubleValue.float }
     
-    public init(_ string: String) {
-        self = NSDecimalNumber(string: string) as Decimal
-    }
+    
     
     func intVal(nDecimals: Int = 1) -> Int {
         (self as NSDecimalNumber).multiplying(byPowerOf10: numericCast(nDecimals)).intValue
     }
     static func decVal(_ v : Int,nDecimals : Int = 1) -> Decimal {
         NSDecimalNumber(integerLiteral: v).multiplying(byPowerOf10: -numericCast(nDecimals)) as Decimal
+    }
+    
+    func sigFigures(_ n : Int) -> Int {
+        let v = (self as NSDecimalNumber).multiplying(byPowerOf10: numericCast(n))
+        return Int(v.doubleValue)
+    }
+    
+    init(sigFigures n: Int,value: Int) {
+        self = (Decimal(value) as NSDecimalNumber).multiplying(byPowerOf10: -numericCast(n)) as Decimal
+    }
+    
+    public init(_ string: String) {
+        self = NSDecimalNumber(string: string) as Decimal
+    }
+}
+
+extension Bundle {
+    static var appName : String? { Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String }
+}
+
+extension URL {
+    static func autoSaveDirectory() throws -> URL {
+        let fm = FileManager.default
+        return try fm.url(for: .autosavedInformationDirectory,in: .userDomainMask,  appropriateFor: nil, create: true)
     }
 }

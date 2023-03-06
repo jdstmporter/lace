@@ -39,27 +39,29 @@ class AutoSaveProcessor {
             tmr.invalidate()
             syslog.info("Backup timer stopping")
         }
-        else if self.didSet { self._save() }
+        else if self.didSet, let p=self.pricking { self._save(p) }
         self.didSet=false
     }
     
     
+    var file : File { File(url: FilePaths.autosave) }
     
-    func _save() {
-        guard let pricking=self.pricking else { return }
-        do {
-            try Defaults.write(AutoSaveProcessor.KEY,pricking)
-        }
+    
+    func _save(_ pricking: Pricking) {
+        do { try file.save(pricking) }
         catch(let e) { syslog.error(e.localizedDescription) }
     }
-    @discardableResult func _load() -> Pricking? {
-        do { self.pricking = try Defaults.read(AutoSaveProcessor.KEY) }
-        catch(let e) {
-            self.pricking=nil
-            syslog.error(e.localizedDescription)
+    func _load() -> Pricking? {
+        do {
+            return try file.load()
         }
-        return self.pricking
+        catch(let e) {
+            syslog.error(e.localizedDescription)
+            return nil
+        }
     }
+    func _del() {  try? file.del() }
+    
     
     func _has() -> Bool {
         self.pricking != nil
@@ -75,11 +77,7 @@ class AutoSaveProcessor {
     static func has() -> Bool { the._has() }
     static func new() { the._new() }
     static func load() -> Pricking? { the._load() }
-    static func save() { the._save() }
-    static func save(_ p : Pricking) {
-        the.pricking=p
-        the._save()
-    }
+    static func save(_ pricking: Pricking) { the._save(pricking) }
     
     
     

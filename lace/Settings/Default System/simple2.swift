@@ -142,13 +142,3 @@ class ViewLace : ViewData2 {
 
 }
 
-extension Decimal {
-    func sigFigures(_ n : Int) -> Int {
-        let v = (self as NSDecimalNumber).multiplying(byPowerOf10: numericCast(n))
-        return Int(v.doubleValue)
-    }
-    
-    init(sigFigures n: Int,value: Int) {
-        self = (Decimal(value) as NSDecimalNumber).multiplying(byPowerOf10: -numericCast(n)) as Decimal
-    }
-}
