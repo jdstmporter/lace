@@ -22,6 +22,7 @@ where T : BinaryInteger
 class ImageCG {
     
     var bitmap : NSBitmapImageRep
+    var pricking : Pricking
     var grid : Grid
     var data : [UInt8]
     var size : NSSize
@@ -33,10 +34,11 @@ class ImageCG {
     var MaxHeight : Double = 50.0
     
     
-    init?(grid : Grid,width w: Int,height h: Int,spacing: Double,dpi: Int = 300) {
+    init?(pricking : Pricking,width w: Int,height h: Int,spacing: Double,dpi: Int = 300) {
         let size=NSSize(width: w*dpi,height: h*dpi)*spacing
         self.size=size
-        self.grid=grid
+        self.pricking=pricking
+        self.grid=pricking.grid
         self.dpi=NSSize(side: dpi)
         self.data=Array<UInt8>(repeating: 255, count: size.area)
         self.N=self.data.count
@@ -82,7 +84,7 @@ class ImageCG {
         let xs = size.width/(self.MaxWidth+2.0)
         let ys = size.height/(self.MaxHeight+2.0)
         //spacing = Swift.max(xs,ys)
-        grid.scale = Swift.max(xs,ys)
+        pricking.scale = Swift.max(xs,ys)
         
         //var pix=[0]
         grid.yRange.forEach { y in
@@ -94,7 +96,7 @@ class ImageCG {
             self.setPixel(0, atX: x, y: numericCast(size.height)-1);
         }
         
-        let conv=grid.converter
+        let conv=pricking.converter
         grid.yRange.forEach { y in
             //let yy=Double(y)
             //let yf=Double(y%2)/2.0

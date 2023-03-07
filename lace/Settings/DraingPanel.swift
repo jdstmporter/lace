@@ -135,10 +135,10 @@ class DrawingView : NSView, SettingsFacet, NSFontChanging {
         laceView.pricking=Pricking(10,10)
         (0..<5).forEach { n in
             let p = GridPoint(2*n, 2*n)
-            laceView.pricking.grid.flip(p)
+            laceView.pricking.flip(p)
         }
-        laceView.pricking.lines.append(GridLine(GridPoint(0,0), GridPoint(8,8)))
-        laceView.pricking.lines.append(GridLine(GridPoint(1,1), GridPoint(1,7)))
+        laceView.pricking.append(GridLine(GridPoint(0,0), GridPoint(8,8)))
+        laceView.pricking.append(GridLine(GridPoint(1,1), GridPoint(1,7)))
         
         DispatchQueue.main.async { [self] in
             //laceView.setDelegates(cols,dims)

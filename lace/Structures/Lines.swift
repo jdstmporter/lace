@@ -47,8 +47,8 @@ struct ScreenLine : CustomStringConvertible, Codable {
         self.start=start
         self.end=start
     }
-    init(grid : Grid,line : GridLine) {
-        let conv=grid.converter
+    init(pricking : Pricking,line : GridLine) {
+        let conv=pricking.converter
         self.start=conv.pos(line.start)
         self.end=conv.pos(line.end)
     }
@@ -59,16 +59,15 @@ struct ScreenLine : CustomStringConvertible, Codable {
         return path
     }
     
-    func asGridLine(_ grid : Grid) -> GridLine {
-        let conv=grid.converter
+    func asGridLine(_ pricking : Pricking) -> GridLine {
+        let conv=pricking.converter
         let s=conv.nearest(start)
         let e=conv.nearest(end)
         return GridLine(s,e)
     }
     
-    func checkIn(_ grid: Grid) -> Bool {
-        let conv=grid.converter
-        return grid.check(conv.nearest(start)) && grid.check(conv.nearest(end))
+    func checkIn(_ pricking : Pricking) -> Bool {
+        return pricking.check(start) && pricking.check(end)
     }
     
     
@@ -119,15 +118,15 @@ class Lines : Sequence, Codable {
         if !matched { newLines.append(line) }
         self.lines = newLines.filter { $0.isGood }
     }
-    func append(_ grid : Grid,_ line: ScreenLine) {
-        let l=line.asGridLine(grid)
+    func append(_ pricking : Pricking,_ line: ScreenLine) {
+        let l=line.asGridLine(pricking)
         syslog.debug("Appending LINE \(line) : GLINE \(l)")
         self.append(l)
     }
     subscript(_ n : Int) -> GridLine { lines[n] }
     
-    func asCoords(_ grid : Grid) -> [ScreenLine] {
-        self.lines.map { ScreenLine(grid: grid,line: $0) }
+    func asCoords(_ pricking : Pricking) -> [ScreenLine] {
+        self.lines.map { ScreenLine(pricking: pricking,line: $0) }
     }
     
     func makeIterator() -> Iterator {

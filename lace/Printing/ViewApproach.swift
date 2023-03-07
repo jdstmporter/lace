@@ -33,7 +33,7 @@ class PrintableView : NSImageView {
         self.pricking=pricking
         self.bounds = NSRect(x: 0, y: 0, width: w, height: h)
         
-        self.pricking.grid.scale = sc
+        self.pricking.scale = sc
         self.touch()
     }
     
@@ -101,7 +101,7 @@ class PrintableView : NSImageView {
                 let isPin = pricking.grid[x,y]
                 let radius = dimensions[isPin ? .Pin : .Grid]
                 let fg : NSColor = colours[isPin ? .Pin : .Grid]
-                let p = pricking.grid.converter.pos(x, y)
+                let p = pricking.converter.pos(x, y)
                 point(p,radius: radius,colour: fg)
             }
         }

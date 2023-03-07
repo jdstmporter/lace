@@ -18,7 +18,6 @@ class Grid : Codable {
     enum CodingKeys : String, CodingKey {
         case width
         case height
-        case scale
         case points
     }
     
@@ -26,7 +25,7 @@ class Grid : Codable {
     let width : Int
     let height : Int
     
-    var scale : Double
+    //var scale : Double
     //var data : [[Bool]]=[]
     var data : [Bool] = []
     var size : Int { width*height }
@@ -48,7 +47,7 @@ class Grid : Codable {
     public init(width : Int, height: Int,data : [Bool]=[]) {
         self.width=width
         self.height=height
-        self.scale=1.0
+        
         self.reset()
         let n = Swift.min(self.size,data.count)
         (0..<n).forEach { self.data[$0] = data[$0] }
@@ -58,7 +57,7 @@ class Grid : Codable {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         self.width = try c.decode(Int.self,forKey: .width)
         self.height = try c.decode(Int.self,forKey: .height)
-        self.scale = try c.decode(Double.self,forKey: .scale)
+        
         let points = try c.decode(String.self,forKey: .points)
         
         self.reset()
@@ -75,15 +74,13 @@ class Grid : Codable {
         var c=encoder.container(keyedBy: CodingKeys.self)
         try c.encode(self.width,forKey : .width)
         try c.encode(self.height,forKey : .height)
-        try c.encode(self.scale,forKey : .scale)
+        
         try c.encode(points,forKey : .points)
         
         
     }
     
     public subscript(_ x : Int, _ y : Int) -> Bool {
-        //get { self.data[y][x] }
-        //set { self.data[y][x] = newValue }
         get { self.data[self._idx(x,y)] }
         set(v) { self.data[self._idx(x,y)]=v }
     }
@@ -91,8 +88,6 @@ class Grid : Codable {
         get { self.data[self._idx(p)] }
         set(v) { self.data[self._idx(p)]=v }
     }
-    //func flip(_ p : GridPoint) { self.data[p.y][p.x].toggle() }
-    //func reset() { self.data = (0..<height).map { _ in [Bool].init(repeating: false, count: width) } }
     public func flip(_ p : GridPoint) { self.data[self._idx(p.x,p.y)].toggle() }
     public func reset() { self.data=Array<Bool>(repeating: false, count: size) }
     

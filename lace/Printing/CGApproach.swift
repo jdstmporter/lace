@@ -34,7 +34,7 @@ class CGPrintable {
         self.pricking=pricking
         self.size = NSSize.init(width: w, height: h)
         self.frame = NSRect(origin: NSPoint(), size: self.size)
-        self.pricking.grid.scale=sc
+        self.pricking.scale=sc
         
         let app = NSApplication.shared
         let win = app.mainWindow
@@ -101,7 +101,7 @@ class CGPrintable {
         self.context.setStrokeColor(self.colours[.Line].cgColor)
         self.context.stroke(NSRect(x: 0, y: 0, width: self.size.width-1, height: self.size.height-1))
         
-        let conv=pricking.grid.converter
+        let conv=pricking.converter
         pricking.grid.yRange.forEach { y in
             pricking.grid.xRange.forEach { x in
                 let isPin = pricking.grid[x,y]

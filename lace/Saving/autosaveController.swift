@@ -9,6 +9,8 @@ import Foundation
 
 class AutoSaveProcessor {
     
+    static var queue : DispatchQueue = DispatchQueue(label: "LaceBackgroundSave", qos: .background)
+    
     static var KEY : String {
         let prefix = Bundle.main.bundleIdentifier ?? ""
         return "\(prefix).backup"
@@ -28,7 +30,7 @@ class AutoSaveProcessor {
     
     func startTimedBackups() {
         self.alive=true
-        var timer = Timer(timeInterval: interval, repeats: true) { self.timedAction($0) }
+        let timer = Timer(timeInterval: interval, repeats: true) { self.timedAction($0) }
         RunLoop.main.add(timer, forMode: .common)
     }
     
@@ -39,7 +41,7 @@ class AutoSaveProcessor {
             tmr.invalidate()
             syslog.info("Backup timer stopping")
         }
-        else if self.didSet, let p=self.pricking { self._save(p) }
+        else if self.didSet { self._update() }
         self.didSet=false
     }
     
@@ -47,37 +49,47 @@ class AutoSaveProcessor {
     var file : File { File(url: FilePaths.autosave) }
     
     
-    func _save(_ pricking: Pricking) {
-        do { try file.save(pricking) }
-        catch(let e) { syslog.error(e.localizedDescription) }
-    }
-    func _load() -> Pricking? {
-        do {
-            return try file.load()
-        }
-        catch(let e) {
-            syslog.error(e.localizedDescription)
-            return nil
-        }
-    }
-    func _del() {  try? file.del() }
     
     
-    func _has() -> Bool {
-        self.pricking != nil
+    
+    func _set(_ pricking: Pricking, immediate: Bool = false) {
+        self.pricking=pricking
+        if immediate { self._update() }
     }
     
-    func _new() {
+    func _reset() {
         self.pricking=nil
-        Defaults.remove(forKey: AutoSaveProcessor.KEY)
+        AutoSaveProcessor.queue.async { [self] in
+            try? file.del()
+        }
     }
+    
+    func _update() {
+        guard let p=pricking else { return }
+        AutoSaveProcessor.queue.async { [self] in
+            do { try file.save(p) }
+            catch(let e) { syslog.error(e.localizedDescription) }
+        }
+    }
+    
+    func _load() -> Pricking? {
+        return AutoSaveProcessor.queue.sync { [self] in
+            do { return try file.load() }
+            catch(let e) {
+                syslog.error(e.localizedDescription)
+                return nil
+            }
+        }
+    }
+
     
     static var the = AutoSaveProcessor()
-    static func set(pricking p : Pricking) { the.pricking=p }
-    static func has() -> Bool { the._has() }
-    static func new() { the._new() }
+    static func set(pricking p : Pricking, immediate i : Bool = false) {
+        the._set(p, immediate: i)
+    }
+    static func has() -> Bool { the.pricking != nil  }
     static func load() -> Pricking? { the._load() }
-    static func save(_ pricking: Pricking) { the._save(pricking) }
+    static func reset() { the._reset() }
     
     
     

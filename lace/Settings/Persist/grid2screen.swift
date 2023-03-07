@@ -41,8 +41,3 @@ struct Convert {
     
     
 }
-
-extension Grid {
-    var converter : Convert { Convert(scale) }
-    func check(_ p : NSPoint) -> Bool { self.check(Convert(scale).nearest(p)) }
-}

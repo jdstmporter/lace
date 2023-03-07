@@ -242,8 +242,6 @@ class AtomicFlag {
 
 class LaceView : ViewBase {
     
-    //var grid : Grid = Grid(width: 1, height: 1)
-    //var lines : Lines = Lines()
     var spacing : Double = 1.0
     var mouseEnabled : Bool = true
     var mouseToGrid : Bool = false
@@ -257,12 +255,7 @@ class LaceView : ViewBase {
     public var colours : ViewColours = ViewColours()
     
     var pricking : Pricking = Pricking()
-    
-    //func setDelegates(_ c : ViewColours2, _ d : ViewDimensions2)  {
-    //    self.colours = c
-    //    self.dims = d
-    //    self.reload()
-    //}
+
     
     func reload() {
         //guard let colours=self.colours else { return }
@@ -278,16 +271,9 @@ class LaceView : ViewBase {
         let xPos = (xx+yf+1)*spacing
         return NSPoint(x: xPos, y: yPos)
     }
-    
-     //var MaxWidth : Double = 50.0
-     //var MaxHeight : Double = 50.0
+
     
     var spacingInMetres : CGFloat = 0.01 // 10mm
-    
-    //var startP : NSPoint?
-    //var endP : NSPoint?
-    //var line : Line?
-    //ar rawLine : Line?
     var liner : ExtendedLine?
     
     func setSize(width: Int,height: Int) {
@@ -299,7 +285,7 @@ class LaceView : ViewBase {
     }
     
     func getScaling() {
-        pricking.grid.scale = Display.current.convertToPixels(metres: self.spacingInMetres)
+        pricking.scale = Display.current.convertToPixels(metres: self.spacingInMetres)
     }
     
     func setSpacing(inMetres: CGFloat) {
@@ -318,12 +304,12 @@ class LaceView : ViewBase {
         self.tracker.forEach { self.removeTrackingArea($0) }
         self.tracker.removeAll()
         
-        let conv=pricking.grid.converter
+        let conv=pricking.converter
         pricking.grid.yRange.forEach { y in
             pricking.grid.xRange.forEach { x in
                 let p = invert(conv.pos(x, y))
-                let r = NSRect(centre: p, side: pricking.grid.scale)
-                syslog.announce("(\(x),\(y)) -|> \(r)   [\(pricking.grid.scale)]")
+                let r = NSRect(centre: p, side: pricking.scale)
+                syslog.announce("(\(x),\(y)) -|> \(r)   [\(pricking.scale)]")
                 let area = NSTrackingArea(rect: r,
                                           options: [.mouseEnteredAndExited,.activeInKeyWindow],
                                           owner: self,
@@ -355,10 +341,10 @@ class LaceView : ViewBase {
         }
         
      
-        let conv=pricking.grid.converter
+        let conv=pricking.converter
         pricking.grid.yRange.forEach { y in
             pricking.grid.xRange.forEach { x in
-                let isPin = pricking.grid[x,y]
+                let isPin = pricking[x,y]
                 let pinData : ViewPart = isPin ? .Pin : .Grid
                 let radius = dims[pinData]
                 let fg : NSColor = colours[pinData]
@@ -407,7 +393,7 @@ class LaceView : ViewBase {
         catch {}
     }
     
-    func LocationIsValid(_ at: NSPoint) -> Bool { pricking.grid.check(at) }
+    func LocationIsValid(_ at: NSPoint) -> Bool { pricking.check(at) }
     
     override func didDrag(_ from: NSPoint, _ to: NSPoint) {
         guard let l=liner?.line else { return }
@@ -439,7 +425,7 @@ class LaceView : ViewBase {
     
     override func shouldMoveMouse(_ from: NSPoint) -> NSPoint {
         guard mouseToGrid else { return from }
-        return pricking.grid.converter.nearestPoint(from)
+        return pricking.converter.nearestPoint(from)
     }
     
     func trackerCoordinate(_ event : NSEvent) -> GridPoint? {
