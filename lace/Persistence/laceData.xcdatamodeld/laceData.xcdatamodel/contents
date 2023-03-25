@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G419" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="StoredGrid" representedClassName="StoredGrid" syncable="YES" codeGenerationType="class">
+        <attribute name="attribute" optional="YES"/>
+        <attribute name="grid" optional="YES" attributeType="Binary"/>
+        <attribute name="height" attributeType="Integer 32" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="width" attributeType="Integer 32" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
+        <relationship name="pricking" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoredPricking" inverseName="grid" inverseEntity="StoredPricking"/>
+    </entity>
+    <entity name="StoredLine" representedClassName="StoredLine" syncable="YES" codeGenerationType="class">
+        <attribute name="x1" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="x2" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="y1" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="y2" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="pricking" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="StoredPricking" inverseName="lines" inverseEntity="StoredPricking"/>
+    </entity>
+    <entity name="StoredPoint" representedClassName="StoredPoint" syncable="YES" codeGenerationType="class">
+        <attribute name="x" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="y" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="StoredPricking" representedClassName="StoredPricking" syncable="YES" codeGenerationType="class">
+        <attribute name="created" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <relationship name="grid" maxCount="1" deletionRule="Nullify" destinationEntity="StoredGrid" inverseName="pricking" inverseEntity="StoredGrid"/>
+        <relationship name="lines" toMany="YES" minCount="1" deletionRule="Nullify" ordered="YES" destinationEntity="StoredLine" inverseName="pricking" inverseEntity="StoredLine"/>
+    </entity>
+</model>

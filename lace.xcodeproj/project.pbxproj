@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E106B00829CE78A200B840B1 /* schema.xsd in Resources */ = {isa = PBXBuildFile; fileRef = E106B00729CE78A200B840B1 /* schema.xsd */; };
 		E10DDC2F2882DD55003A5C9C /* CGApproach.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10DDC2E2882DD55003A5C9C /* CGApproach.swift */; };
 		E10DDC31288342AE003A5C9C /* Displays.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10DDC30288342AE003A5C9C /* Displays.swift */; };
 		E117ABAA294513AA00CFF6E8 /* simple2.swift in Sources */ = {isa = PBXBuildFile; fileRef = E117ABA9294513AA00CFF6E8 /* simple2.swift */; };
@@ -82,6 +83,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E106B00729CE78A200B840B1 /* schema.xsd */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = schema.xsd; sourceTree = "<group>"; };
 		E10DDC262879CF65003A5C9C /* threads.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = threads.json; sourceTree = "<group>"; };
 		E10DDC282879E53A003A5C9C /* JSON.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JSON.swift; sourceTree = "<group>"; };
 		E10DDC2A287B1E90003A5C9C /* threads.csv */ = {isa = PBXFileReference; lastKnownFileType = text; path = threads.csv; sourceTree = "<group>"; };
@@ -184,6 +186,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E106B00629CE6C5900B840B1 /* xml */ = {
+			isa = PBXGroup;
+			children = (
+				E106B00729CE78A200B840B1 /* schema.xsd */,
+			);
+			path = xml;
+			sourceTree = "<group>";
+		};
 		E11EDC06295A685500B8E957 /* Persist */ = {
 			isa = PBXGroup;
 			children = (
@@ -212,6 +222,7 @@
 		E1383BDA27F79C93009DEEFA = {
 			isa = PBXGroup;
 			children = (
+				E106B00629CE6C5900B840B1 /* xml */,
 				E1D72233297D8D4E005A1BBF /* RectangularButton.swift */,
 				E1E731B22972A7BC00C4B850 /* images */,
 				E11B739828F32476005AC2C9 /* threads.plist */,
@@ -237,6 +248,7 @@
 		E1383BE527F79C93009DEEFA /* lace */ = {
 			isa = PBXGroup;
 			children = (
+				E1947D4029C3D5C0002D5D15 /* Persistence */,
 				E1CF9AA52988821700E8509A /* Saving */,
 				E1DFD0992932DC0F0075D971 /* UUtils */,
 				E1836096282ED3C500414F20 /* Printing */,
@@ -332,6 +344,13 @@
 				E10DDC30288342AE003A5C9C /* Displays.swift */,
 			);
 			path = Printing;
+			sourceTree = "<group>";
+		};
+		E1947D4029C3D5C0002D5D15 /* Persistence */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Persistence;
 			sourceTree = "<group>";
 		};
 		E1CF9AA52988821700E8509A /* Saving */ = {
@@ -450,6 +469,7 @@
 			files = (
 				E18360AF283A94A300414F20 /* Printing.xib in Resources */,
 				E1383BE927F79C96009DEEFA /* Assets.xcassets in Resources */,
+				E106B00829CE78A200B840B1 /* schema.xsd in Resources */,
 				E11B73A328FC98D0005AC2C9 /* pricker128.png in Resources */,
 				E125DBD7296C97230088D5CC /* ThreadList.xib in Resources */,
 				E11B73A928FC993A005AC2C9 /* pricker16.png in Resources */,

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Pricking xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning"
+ xmlns="http://meromorph.org/lace"
+ xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://meromorph.org/lace file:/Users/julianporter/Workspace/XCode/Lace/lace/xml/schema.xsd">
+    <grid height="50" width="4">
+        <points>10101111010101010111</points>
+    </grid>
+    <lines>
+        <line>
+            <end>
+                <x>4</x>
+                <y>0</y>
+            </end>
+            <start>
+                <x>1</x>
+                <y>0</y>
+            </start>
+        </line>
+        <line>
+            <end>
+                <x>4</x>
+                <y>0</y>
+            </end>
+            <start>
+                <x>7</x>
+                <y>0</y>
+            </start>
+        </line>
+        <line>
+            <end>
+                <x>1</x>
+                <y>0</y>
+            </end>
+            <start>
+                <x>9</x>
+                <y>0</y>
+            </start>
+        </line>
+        <line>
+            <end>
+                <x>7</x>
+                <y>0</y>
+            </end>
+            <start>
+                <x>9</x>
+                <y>0</y>
+            </start>
+        </line>
+    </lines>
+</Pricking>

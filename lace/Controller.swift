@@ -169,7 +169,7 @@ class Controller : NSViewController {
     }
     
     override func viewWillDisappear() {
-        AutoSaveProcessor.save(self.pricking)
+        AutoSaveProcessor.set(pricking: self.pricking)
     }
     
     func callback(_ c : PopoverWindow.Choice) {
@@ -179,13 +179,14 @@ class Controller : NSViewController {
             if let p = AutoSaveProcessor.load() {
                 self.pricking=p
             }
+            break
         case .Load(url: let u):
             print(u?.description ?? "")
             break
         case .New(width: let w, height: let h):
-            AutoSaveProcessor.new()
             self.setSize(width: w, height: h)
-        
+            AutoSaveProcessor.set(pricking: self.pricking, immediate: true)
+            break
         }
     }
     

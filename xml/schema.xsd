@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+    xmlns:vc="http://www.w3.org/2007/XMLSchema-versioning" elementFormDefault="qualified"
+    vc:minVersion="1.1" targetNamespace="http://meromorph.org/lace"
+    xmlns:lc="http://meromorph.org/lace">
+
+    <xs:complexType name="GridPoint">
+        <xs:all>
+            <xs:element default="0" name="x" type="xs:int"/>
+            <xs:element default="0" name="y" type="xs:integer"/>
+        </xs:all>
+    </xs:complexType>
+    <xs:complexType name="GridLine">
+        <xs:all>
+            <xs:element name="end" type="lc:GridPoint"/>
+            <xs:element name="start" type="lc:GridPoint"/>
+        </xs:all>
+    </xs:complexType>
+    <xs:complexType name="Grid">
+        <xs:all>
+            <xs:element name="points">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:pattern value="[01]+"/>
+                        <xs:minLength value="1"/>
+                        <xs:whiteSpace value="collapse"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+        </xs:all>
+        <xs:attribute name="height" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:int">
+                    <xs:minInclusive value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="width" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:int">
+                    <xs:minInclusive value="1"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:element name="Pricking">
+        <xs:complexType>
+            <xs:all>
+                <xs:element name="grid" type="lc:Grid"/>
+                <xs:element name="lines">
+                    <xs:complexType>
+                        <xs:sequence maxOccurs="unbounded" minOccurs="0">
+                            <xs:element name="line" type="lc:GridLine"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:all>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
