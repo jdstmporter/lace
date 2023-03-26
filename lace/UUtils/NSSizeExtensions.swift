@@ -122,8 +122,15 @@ extension Bundle {
 }
 
 extension URL {
-    static func autoSaveDirectory() throws -> URL {
-        let fm = FileManager.default
-        return try fm.url(for: .autosavedInformationDirectory,in: .userDomainMask,  appropriateFor: nil, create: true)
+    static func special(_ path: FileManager.SearchPathDirectory) throws -> URL {
+        let appName = Bundle.appName ?? "LaceApp"
+        var u = try FileManager.default.url(for: path,in: .userDomainMask,  appropriateFor: nil, create: true)
+        return u.appendingPathComponent(appName, isDirectory: true)
     }
+    static var autoSaveRoot : URL { get throws { try URL.special(.autosavedInformationDirectory) }}
+    static var applicationRoot : URL { get throws { try URL.special(.applicationDirectory) }}
+    static var applicationSupportRoot :  URL { get throws { try URL.special(.applicationSupportDirectory) }}
+    
+    
+    
 }

@@ -11,9 +11,6 @@ struct GridPoint : CustomStringConvertible, Comparable, Equatable, Hashable, Cod
     let x : Int
     let y : Int
     
-    var x32 : Int32 { numericCast(x) }
-    var y32 : Int32 { numericCast(y) }
-    
     enum CodingKeys : String, CodingKey {
         case x
         case y

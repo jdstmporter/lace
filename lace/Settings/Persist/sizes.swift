@@ -11,9 +11,6 @@ struct GridSize : CustomStringConvertible, Equatable, Codable {
     let width: Int
     let height: Int
     
-    var width32: Int32 { numericCast(width) }
-    var height32: Int32 { numericCast(height) }
-    
     enum CodingKeys : String, CodingKey {
         case width
         case height

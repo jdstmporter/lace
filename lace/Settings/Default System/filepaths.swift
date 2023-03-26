@@ -34,7 +34,7 @@ class FilePaths {
             return p
         case .AutoSave:
             do {
-                var p = try URL.autoSaveDirectory()
+                var p = try URL.autoSaveRoot
                 p.appendPathComponent(appName)
                 return p
             }

@@ -8,17 +8,7 @@
 import Foundation
 import AppKit
 
-extension UInt32 : Nameable, HasDefault {
-    var hex : String { String(format: "%08x",self) }
-    public var str : String { hex }
-    static func def(_ : any DefaultPart) -> UInt32 { zero }
-}
 
-extension Int32 : Nameable, HasDefault {
-    var hex : String { UInt32(truncatingIfNeeded: self).hex }
-    public var str : String { hex }
-    static func def(_ : any DefaultPart) -> Int32 { zero }
-}
 extension Double : Nameable, HasDefault {
     public static func def(_ v : any DefaultPart) -> Double { 1 }
     public var str : String { description }
