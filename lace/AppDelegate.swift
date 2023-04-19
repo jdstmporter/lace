@@ -21,7 +21,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         Defaults.load()
         FilePaths.load()
         
-        
+        Task {
+            let bootstrap = CoreDataBootStrap(model: "model")
+            let handler : DataHandler? = await bootstrap.connect()
+            controller.setDataSource(handler: handler)
+        }
     }
     
     /*

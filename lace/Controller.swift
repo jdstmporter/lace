@@ -132,6 +132,8 @@ class Controller : NSViewController {
     var callback : PopoverWindow.Callback?
     var initialised : Bool = false
     
+    var dataState = Trivalent<DataHandler>()
+    
     var width : Int = 1
     var height : Int = 1
     var path : String?
@@ -139,6 +141,28 @@ class Controller : NSViewController {
     var pricking : Pricking {
         get { self.drawingArea.pricking }
         set { self.drawingArea.pricking = newValue }
+    }
+    
+    func setDataSource(handler: DataHandler?) {
+        Task {
+            let state = await self.dataState.set(handler)
+            await self.setViewMode(state: state)
+        }
+    }
+    
+
+    func setViewMode(state : DataState) async {
+        await MainActor.run {
+            switch state {
+            case .Good:
+                guard !self.initialised, let pop=PopoverWindow.launch() else { return }
+                pop.start(self.window, callback: { c in self.callback(c ?? .Continue) })
+            case .Bad:
+                break
+            case .Unset:
+                break
+            }
+        }
     }
     
     
@@ -162,8 +186,19 @@ class Controller : NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         
+        Task {
+            let state = await dataState.state
+            await self.setViewMode(state: state)
+        }
+        
+        // if datasource has been set, switch straight to active mode;
+        // otherwise wait mode : use an atomic (or an Actor) to synchronise this
+        //
+        // ifNoData { wait stuff, i.e. do nothing }
+        // else {
         guard !self.initialised, let pop=PopoverWindow.launch() else { return }
         pop.start(self.window, callback: { c in self.callback(c ?? .Continue) })
+        // }
         
         //self.backup?.startTimedBackups()
     }

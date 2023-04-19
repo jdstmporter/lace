@@ -80,6 +80,10 @@
 		E1EBD81A283D7A9900D8E10C /* NSSizeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBD819283D7A9900D8E10C /* NSSizeExtensions.swift */; };
 		E1EBD81C284149A200D8E10C /* Calc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBD81B284149A200D8E10C /* Calc.swift */; };
 		E1EBD81E2844021500D8E10C /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBD81D2844021500D8E10C /* Errors.swift */; };
+		E1F525D629EDBDF80032D4E3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13574A72826E39A005D84D6 /* CoreData.framework */; };
+		E1F525D829EDBE460032D4E3 /* CoreDataBootStrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F525D729EDBE460032D4E3 /* CoreDataBootStrap.swift */; };
+		E1F525DA29EDBFAA0032D4E3 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F525D929EDBFAA0032D4E3 /* DataHandler.swift */; };
+		E1F525DE29F08E710032D4E3 /* Trivalent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F525DD29F08E710032D4E3 /* Trivalent.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -166,6 +170,9 @@
 		E1EBD819283D7A9900D8E10C /* NSSizeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSSizeExtensions.swift; sourceTree = "<group>"; };
 		E1EBD81B284149A200D8E10C /* Calc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calc.swift; sourceTree = "<group>"; };
 		E1EBD81D2844021500D8E10C /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
+		E1F525D729EDBE460032D4E3 /* CoreDataBootStrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataBootStrap.swift; sourceTree = "<group>"; };
+		E1F525D929EDBFAA0032D4E3 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
+		E1F525DD29F08E710032D4E3 /* Trivalent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trivalent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +181,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E18360A728384F8600414F20 /* CoreGraphics.framework in Frameworks */,
+				E1F525D629EDBDF80032D4E3 /* CoreData.framework in Frameworks */,
 				E183609A282EF88D00414F20 /* ApplicationServices.framework in Frameworks */,
 				E18360A12831B60400414F20 /* PDFKit.framework in Frameworks */,
 				E1383BFD27F9EF3E009DEEFA /* AppKit.framework in Frameworks */,
@@ -349,6 +357,9 @@
 		E1947D4029C3D5C0002D5D15 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				E1F525D729EDBE460032D4E3 /* CoreDataBootStrap.swift */,
+				E1F525D929EDBFAA0032D4E3 /* DataHandler.swift */,
+				E1F525DD29F08E710032D4E3 /* Trivalent.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -499,6 +510,7 @@
 				E18360AB2839978900414F20 /* PrintFromData.swift in Sources */,
 				E1D72234297D8D4E005A1BBF /* RectangularButton.swift in Sources */,
 				E1D51F3E280B3C1B00995497 /* SettingsController.swift in Sources */,
+				E1F525D829EDBE460032D4E3 /* CoreDataBootStrap.swift in Sources */,
 				E17FBEDC28CB9FAA00408D89 /* viewDefaults.swift in Sources */,
 				E13574962815BE45005D84D6 /* DraingPanel.swift in Sources */,
 				E135749E28245909005D84D6 /* Log.swift in Sources */,
@@ -518,6 +530,7 @@
 				E1CF9AB129930EBE00E8509A /* autosaveController.swift in Sources */,
 				E1383BE727F79C93009DEEFA /* AppDelegate.swift in Sources */,
 				E1383C012803787C009DEEFA /* Lines.swift in Sources */,
+				E1F525DA29EDBFAA0032D4E3 /* DataHandler.swift in Sources */,
 				E1383BF427F79F62009DEEFA /* LaceView.swift in Sources */,
 				E1383C05280773AB009DEEFA /* UserDefaults.swift in Sources */,
 				E1D51F40280B3C8F00995497 /* Launchable.swift in Sources */,
@@ -532,6 +545,7 @@
 				E1383C092808DACC009DEEFA /* FilePicker.swift in Sources */,
 				E1383BF827F8D8D4009DEEFA /* ViewBase.swift in Sources */,
 				E125DBD5296B76040088D5CC /* threadListPanel.swift in Sources */,
+				E1F525DE29F08E710032D4E3 /* Trivalent.swift in Sources */,
 				E1836093282C0E3200414F20 /* LaceKinds.swift in Sources */,
 				E10DDC31288342AE003A5C9C /* Displays.swift in Sources */,
 				E18360A528384D0500414F20 /* PrintableCG.swift in Sources */,
