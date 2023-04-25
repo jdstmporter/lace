@@ -10,108 +10,6 @@ import Cocoa
 
 
 
-class PopoverWindow : NSWindow, LaunchableItem {
-    
-    static var nibname: NSNib.Name = NSNib.Name("startup")
-    static var lock: NSLock = NSLock()
-    
-    enum Choice {
-        case Continue
-        case Load(url: URL?)
-        case New(width: Int,height: Int)
-        
-        var str : String {
-            switch self {
-            case .Continue:
-                return "Continue"
-            case .Load(let url):
-                return "Load \(url?.relativePath ?? "-")"
-            case .New(let width,let height):
-                return "New \(width) x \(height)"
-            }
-        }
-        
-        var path : URL? {
-            switch self {
-            case .Load(let url):
-                return url
-            default:
-                return  nil
-            }
-        }
-        var size : GridSize? {
-            switch self {
-            case .New(let width,let height):
-                return GridSize(width,height)
-            default:
-                return  nil
-            }
-        }
-    }
-    
-    
-    var outcome : PopoverWindow.Choice?
-    
-    @IBOutlet weak var blanker: NSButton!
-    @IBOutlet weak var continuer: NSButton!
-    @IBOutlet weak var loader: NSButton!
-    @IBOutlet weak var pather: NSPathControl!
-    @IBOutlet weak var heighter: NSTextField!
-    @IBOutlet weak var width: NSTextField!
-    
-    func initialise() {
-        let c = FilePaths.hasCurrent
-        continuer.isEnabled = c
-        if c {
-            continuer.state = .on
-            pather.url = FilePaths.current
-        }
-        else {
-            blanker.state = .on
-            pather.isHidden = true
-        }
-        
-    }
-    static var popover : PopoverWindow? = nil
-    static func launch() -> PopoverWindow? {
-        if popover==nil {
-            popover=instance()
-            popover?.initialise()
-        }
-        return popover
-    }
-    
-    
-    var wid : Int { width.integerValue }
-    var hei : Int { heighter.integerValue }
-    
-    @IBAction func radioButtons(_ sender: NSButton) {
-        [self.blanker,self.loader,self.continuer].forEach { $0.state = ($0==sender) ? .on : .off }
-    }
-    
-
-    @IBAction func buttonAction(_ sender: NSButton) {
-        var outcome : PopoverWindow.Choice? = nil
-        if continuer.state == .on { outcome = .Continue }
-        else if loader.state == .on { outcome = .Load(url: pather.url) }
-        else  if blanker.state == .on { outcome = .New(width: wid, height: hei) }
-        
-        self.outcome=outcome
-        self.sheetParent?.endSheet(self, returnCode: .OK)
-        
-    }
-    
-    typealias Handler = (NSApplication.ModalResponse) -> Void
-    typealias Callback = (PopoverWindow.Choice?) -> Void
-    func handler(_ callback : @escaping Callback) -> Handler {
-        { _ in callback(self.outcome) }
-    }
-    
-    func start(_ w: NSWindow,callback: @escaping Callback) {
-        w.beginSheet(self,completionHandler: self.handler(callback))
-    }
-}
-
 
 
 
@@ -128,6 +26,7 @@ class Controller : NSViewController {
     
     @IBOutlet weak var window: NSWindow!
     
+    var popover : PopoverWindow!
     @IBOutlet weak var popoverWindow: PopoverWindow!
     var callback : PopoverWindow.Callback?
     var initialised : Bool = false
@@ -152,14 +51,18 @@ class Controller : NSViewController {
     
 
     func setViewMode(state : DataState) async {
+        
         await MainActor.run {
+            guard !self.initialised, let pop=self.popover else { return }
             switch state {
             case .Good:
-                guard !self.initialised, let pop=PopoverWindow.launch() else { return }
-                pop.start(self.window, callback: { c in self.callback(c ?? .Continue) })
+                pop.set(mode: .Success)
+                self.initialised=true
             case .Bad:
-                break
+                pop.set(mode: .Failure)
+                self.initialised=true
             case .Unset:
+                pop.set(mode: .Loading)
                 break
             }
         }
@@ -181,11 +84,19 @@ class Controller : NSViewController {
         if let p = AutoSaveProcessor.load() {
             self.pricking=p
         }
+        
+        
+        if let pop = PopoverWindow.launch() {
+            self.popover=pop
+            self.popover.start(self.window, callback: { c in self.callback(c ?? .Continue) })
+            self.popover.set(mode: .Loading)
+        }
     }
     
     override func viewDidAppear() {
         super.viewDidAppear()
         
+
         Task {
             let state = await dataState.state
             await self.setViewMode(state: state)
@@ -221,6 +132,8 @@ class Controller : NSViewController {
         case .New(width: let w, height: let h):
             self.setSize(width: w, height: h)
             AutoSaveProcessor.set(pricking: self.pricking, immediate: true)
+            break
+        case .Accept:
             break
         }
     }
