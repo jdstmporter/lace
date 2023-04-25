@@ -11,8 +11,13 @@ import UniformTypeIdentifiers
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    @IBOutlet var window: NSWindow!
-    @IBOutlet weak var controller: Controller!
+   
+    @IBOutlet weak var window: NSWindow!
+    @IBOutlet weak var pmController: ProjectMangerController!
+    
+    
+    
+    
     
     
     
@@ -24,7 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         Task {
             let bootstrap = CoreDataBootStrap(model: "model")
             let handler : DataHandler? = await bootstrap.connect()
-            controller.setDataSource(handler: handler)
+            pmController.setDataSource(handler: handler)
         }
     }
     

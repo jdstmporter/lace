@@ -66,7 +66,7 @@
 		E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18360B0283A950600414F20 /* PrintingPanel.swift */; };
 		E1947D3F29B52EF4002D5D15 /* files.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1947D3E29B52EF4002D5D15 /* files.swift */; };
 		E1BD6A85280E049700430EC4 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BD6A84280E049700430EC4 /* Colours.swift */; };
-		E1BE8ADA29F45A2C0001C6CF /* popoverWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BE8AD929F45A2C0001C6CF /* popoverWindow.swift */; };
+		E1BE8ADA29F45A2C0001C6CF /* pmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BE8AD929F45A2C0001C6CF /* pmController.swift */; };
 		E1CF9AB129930EBE00E8509A /* autosaveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CF9AB029930EBE00E8509A /* autosaveController.swift */; };
 		E1CF9AB9299707E200E8509A /* Atomics in Frameworks */ = {isa = PBXBuildFile; productRef = E1CF9AB8299707E200E8509A /* Atomics */; };
 		E1D51F3C280B383D00995497 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D51F3B280B383D00995497 /* Preferences.xib */; };
@@ -158,7 +158,7 @@
 		E18360B0283A950600414F20 /* PrintingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingPanel.swift; sourceTree = "<group>"; };
 		E1947D3E29B52EF4002D5D15 /* files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = files.swift; sourceTree = "<group>"; };
 		E1BD6A84280E049700430EC4 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
-		E1BE8AD929F45A2C0001C6CF /* popoverWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = popoverWindow.swift; sourceTree = "<group>"; };
+		E1BE8AD929F45A2C0001C6CF /* pmController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pmController.swift; sourceTree = "<group>"; };
 		E1CF9AB029930EBE00E8509A /* autosaveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = autosaveController.swift; sourceTree = "<group>"; };
 		E1D51F3B280B383D00995497 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		E1D51F3D280B3C1B00995497 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
@@ -218,6 +218,16 @@
 			path = Persist;
 			sourceTree = "<group>";
 		};
+		E122A67E29F847FF00DF98D6 /* ProjectManagerView */ = {
+			isa = PBXGroup;
+			children = (
+				E1D72235297DED89005A1BBF /* popoverProtocol.swift */,
+				E1BE8AD929F45A2C0001C6CF /* pmController.swift */,
+				E1D72231297D8881005A1BBF /* startup.xib */,
+			);
+			path = ProjectManagerView;
+			sourceTree = "<group>";
+		};
 		E13574A42826E36E005D84D6 /* Data */ = {
 			isa = PBXGroup;
 			children = (
@@ -258,6 +268,7 @@
 		E1383BE527F79C93009DEEFA /* lace */ = {
 			isa = PBXGroup;
 			children = (
+				E122A67E29F847FF00DF98D6 /* ProjectManagerView */,
 				E1947D4029C3D5C0002D5D15 /* Persistence */,
 				E1CF9AA52988821700E8509A /* Saving */,
 				E1DFD0992932DC0F0075D971 /* UUtils */,
@@ -274,9 +285,6 @@
 				E1383BF727F8D8D4009DEEFA /* ViewBase.swift */,
 				E1383C0228037893009DEEFA /* Structures */,
 				E1383C082808DACC009DEEFA /* FilePicker.swift */,
-				E1D72231297D8881005A1BBF /* startup.xib */,
-				E1D72235297DED89005A1BBF /* popoverProtocol.swift */,
-				E1BE8AD929F45A2C0001C6CF /* popoverWindow.swift */,
 			);
 			path = lace;
 			sourceTree = "<group>";
@@ -538,7 +546,7 @@
 				E1383C05280773AB009DEEFA /* UserDefaults.swift in Sources */,
 				E1D51F40280B3C8F00995497 /* Launchable.swift in Sources */,
 				E1383BFA27F9E304009DEEFA /* Grid.swift in Sources */,
-				E1BE8ADA29F45A2C0001C6CF /* popoverWindow.swift in Sources */,
+				E1BE8ADA29F45A2C0001C6CF /* pmController.swift in Sources */,
 				E1D72236297DED89005A1BBF /* popoverProtocol.swift in Sources */,
 				E1836095282C643100414F20 /* ThreadInfo.swift in Sources */,
 				E135749128135102005D84D6 /* DictionaryExtensions.swift in Sources */,
