@@ -18,43 +18,36 @@ enum HistoryActions {
     case Line(_ : ScreenLine)
 }
 
-struct Pricking : Codable {
+struct Pricking {
     let grid : Grid
     let lines : Lines
     var scale : Double
+    
+    
+    var name : String
+    var kind : LaceKind
+    
     var history : [HistoryActions] = []
     
-    enum CodingKeys : String, CodingKey {
-        case grid
-        case lines
-        case scale
-    }
-    
-    init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        self.grid = try c.decode(Grid.self,forKey: .grid)
-        self.lines = try c.decode(Lines.self,forKey: .lines)
-        self.scale = try c.decode(Double.self,forKey: .scale)
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var c=encoder.container(keyedBy: CodingKeys.self)
-        try c.encode(self.grid,forKey : .grid)
-        try c.encode(self.lines,forKey : .lines)
-        try c.encode(self.scale,forKey : .scale)
-    }
-    
-    init(_ width: Int = 1,_ height: Int = 1) {
+    init(_ width: Int = 1,_ height: Int = 1,name : String = "",kind : LaceKind = .Torchon) {
         self.grid = Grid(width: width, height: height)
         self.lines = Lines()
         self.scale=1.0
+        self.name=name
+        self.kind=kind
     }
     
-    init(grid: Grid,lines: Lines) {
+    init(grid: Grid,lines: Lines,name : String = "",kind : LaceKind = .Torchon) {
         self.grid=grid
         self.lines=lines
         self.scale=1.0
+        self.name=""
+        self.kind=kind
     }
+    
+    var width : Int { self.grid.width }
+    var height : Int { self.grid.height }
+    
     
     var converter : Convert { Convert(scale) }
     func check(_ p : NSPoint) -> Bool { grid.check(Convert(scale).nearest(p)) }

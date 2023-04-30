@@ -75,6 +75,11 @@
 		E1D72232297D8881005A1BBF /* startup.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D72231297D8881005A1BBF /* startup.xib */; };
 		E1D72234297D8D4E005A1BBF /* RectangularButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D72233297D8D4E005A1BBF /* RectangularButton.swift */; };
 		E1D72236297DED89005A1BBF /* popoverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D72235297DED89005A1BBF /* popoverProtocol.swift */; };
+		E1D98FD729FD9AC900027208 /* codablePricking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D98FD629FD9AC900027208 /* codablePricking.swift */; };
+		E1D98FDA29FD9FE000027208 /* LaceModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1D98FD829FD9FE000027208 /* LaceModel.xcdatamodeld */; };
+		E1D98FDC29FDA1A300027208 /* dataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D98FDB29FDA1A300027208 /* dataTypes.swift */; };
+		E1D98FE029FEFC6400027208 /* CreatePrickingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D98FDF29FEFC6400027208 /* CreatePrickingView.swift */; };
+		E1D98FE229FEFEC300027208 /* CreatePrickingWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D98FE129FEFEC300027208 /* CreatePrickingWindow.xib */; };
 		E1DFD09B2932DC690075D971 /* decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DFD09A2932DC690075D971 /* decodable.swift */; };
 		E1DFD09E293802DD0075D971 /* enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DFD09D293802DD0075D971 /* enums.swift */; };
 		E1E731B42972B23800C4B850 /* Combine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E731B32972B23800C4B850 /* Combine.framework */; };
@@ -166,6 +171,11 @@
 		E1D72231297D8881005A1BBF /* startup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = startup.xib; sourceTree = "<group>"; };
 		E1D72233297D8D4E005A1BBF /* RectangularButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularButton.swift; sourceTree = "<group>"; };
 		E1D72235297DED89005A1BBF /* popoverProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = popoverProtocol.swift; sourceTree = "<group>"; };
+		E1D98FD629FD9AC900027208 /* codablePricking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = codablePricking.swift; sourceTree = "<group>"; };
+		E1D98FD929FD9FE000027208 /* LaceModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LaceModel.xcdatamodel; sourceTree = "<group>"; };
+		E1D98FDB29FDA1A300027208 /* dataTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataTypes.swift; sourceTree = "<group>"; };
+		E1D98FDF29FEFC6400027208 /* CreatePrickingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePrickingView.swift; sourceTree = "<group>"; };
+		E1D98FE129FEFEC300027208 /* CreatePrickingWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreatePrickingWindow.xib; sourceTree = "<group>"; };
 		E1DFD09A2932DC690075D971 /* decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = decodable.swift; sourceTree = "<group>"; };
 		E1DFD09D293802DD0075D971 /* enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enums.swift; sourceTree = "<group>"; };
 		E1E731B32972B23800C4B850 /* Combine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Combine.framework; path = System/Library/Frameworks/Combine.framework; sourceTree = SDKROOT; };
@@ -214,6 +224,7 @@
 				E11EDC09295A695400B8E957 /* lines.swift */,
 				E11EDC0B295A69B400B8E957 /* sizes.swift */,
 				E11EDC0D295B4A3100B8E957 /* grid2screen.swift */,
+				E1D98FD629FD9AC900027208 /* codablePricking.swift */,
 			);
 			path = Persist;
 			sourceTree = "<group>";
@@ -332,6 +343,8 @@
 			isa = PBXGroup;
 			children = (
 				E1BD6A84280E049700430EC4 /* Colours.swift */,
+				E1D98FDF29FEFC6400027208 /* CreatePrickingView.swift */,
+				E1D98FE129FEFEC300027208 /* CreatePrickingWindow.xib */,
 			);
 			path = LaceView;
 			sourceTree = "<group>";
@@ -371,6 +384,8 @@
 				E1F525D729EDBE460032D4E3 /* CoreDataBootStrap.swift */,
 				E1F525D929EDBFAA0032D4E3 /* DataHandler.swift */,
 				E1F525DD29F08E710032D4E3 /* Trivalent.swift */,
+				E1D98FD829FD9FE000027208 /* LaceModel.xcdatamodeld */,
+				E1D98FDB29FDA1A300027208 /* dataTypes.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -505,6 +520,7 @@
 				E1383BEC27F79C96009DEEFA /* MainMenu.xib in Resources */,
 				E11B739F28FC987A005AC2C9 /* pricker256.png in Resources */,
 				E11B73AA28FC993A005AC2C9 /* pricker32.png in Resources */,
+				E1D98FE229FEFEC300027208 /* CreatePrickingWindow.xib in Resources */,
 				E11B739928F32476005AC2C9 /* threads.plist in Resources */,
 				E1D72232297D8881005A1BBF /* startup.xib in Resources */,
 			);
@@ -552,6 +568,8 @@
 				E135749128135102005D84D6 /* DictionaryExtensions.swift in Sources */,
 				E117ABAA294513AA00CFF6E8 /* simple2.swift in Sources */,
 				E183608F282A85FB00414F20 /* Calculator.swift in Sources */,
+				E1D98FDC29FDA1A300027208 /* dataTypes.swift in Sources */,
+				E1D98FD729FD9AC900027208 /* codablePricking.swift in Sources */,
 				E11EDC0E295B4A3100B8E957 /* grid2screen.swift in Sources */,
 				E11EDC0C295A69B400B8E957 /* sizes.swift in Sources */,
 				E1383C092808DACC009DEEFA /* FilePicker.swift in Sources */,
@@ -564,10 +582,12 @@
 				E11EDC08295A687600B8E957 /* points.swift in Sources */,
 				E183609F2831B5F400414F20 /* PNG.swift in Sources */,
 				E10DDC2F2882DD55003A5C9C /* CGApproach.swift in Sources */,
+				E1D98FE029FEFC6400027208 /* CreatePrickingView.swift in Sources */,
 				E17FBEE628CD3F8D00408D89 /* common.swift in Sources */,
 				E1EBD81E2844021500D8E10C /* Errors.swift in Sources */,
 				E1EBD81A283D7A9900D8E10C /* NSSizeExtensions.swift in Sources */,
 				E1DFD09B2932DC690075D971 /* decodable.swift in Sources */,
+				E1D98FDA29FD9FE000027208 /* LaceModel.xcdatamodeld in Sources */,
 				E1836098282ED3DF00414F20 /* Printers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -806,6 +826,19 @@
 			productName = Atomics;
 		};
 /* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		E1D98FD829FD9FE000027208 /* LaceModel.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				E1D98FD929FD9FE000027208 /* LaceModel.xcdatamodel */,
+			);
+			currentVersion = E1D98FD929FD9FE000027208 /* LaceModel.xcdatamodel */;
+			path = LaceModel.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = E1383BDB27F79C93009DEEFA /* Project object */;
 }

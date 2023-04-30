@@ -13,6 +13,7 @@ import Foundation
 enum LaceKind : Int, NameableEnumeration, RawConstructibleEnumeration {
     
     
+    
     case Milanese = 0
     case Bedfordshire = 1
     case PointGround = 2
@@ -63,6 +64,10 @@ enum LaceKind : Int, NameableEnumeration, RawConstructibleEnumeration {
     static var count : Int { LaceKind.allCases.count }
     init(index: Int) { self = LaceKind(index) }
     var index : Int { self.value }
+    
+    
+    
+    
     
     
 
