@@ -45,7 +45,7 @@ class CreatePrickingWindow : NSWindow, LaunchableItem {
         var height = self.height.integerValue
         var kind = LaceKind(self.laceKindButton.titleOfSelectedItem)
         
-        self.pricking = PrickingSpecification(name: name, width: width, height: height, kind: kind, uid: UUID())
+        self.pricking = PrickingSpecification(name: name, width: width, height: height, kind: kind)
         self.sheetParent?.endSheet(self, returnCode: .OK)
     }
     

@@ -16,19 +16,11 @@ enum ActionChoice {
     case Undefined
 }
 
-protocol IMainPage {
-    typealias Callback = (ActionChoice) -> Void
-    var cb : Callback? { get set }
-    mutating func set(callback : @escaping Callback)
-}
-
-extension IMainPage {
-    mutating func set(callback : @escaping Callback) { self.cb=callback }
-}
 
 
 
-class ProjectManagerController : NSViewController {
+
+class ProjectManagerController : NSViewController, NSTabViewDelegate {
     
     
     @IBOutlet weak var tabs: NSTabView!
@@ -55,7 +47,19 @@ class ProjectManagerController : NSViewController {
         }
     }
     
-    func actionResponse(choice: ActionChoice) {}
+    func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
+        guard let item = tabViewItem else { return }
+        let idx = self.tabs.indexOfTabViewItem(item)
+        guard idx != NSNotFound else { return }
+        
+        
+    }
+    
+    @IBAction func actionResponse(_ from: Any) {
+        guard let view=self.tabs.selectedTabViewItem?.view else { return }
+    }
+    
+    
     
     
     
@@ -64,9 +68,8 @@ class ProjectManagerController : NSViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateEvent(_ :)), name: SettingsPanel.DefaultsUpdated, object: nil)
         
-        let cb : (ActionChoice) -> Void = { self.actionResponse(choice: $0) }
-        var mp = tabs.tabViewItems.compactMap { $0.view as? IMainPage }
-        mp.forEach { $0.set(callback: cb) }
+        
+        
     }
     
     override func viewDidAppear() {
@@ -87,28 +90,41 @@ class ProjectManagerController : NSViewController {
 }
 
 
-
-class NoStorageView : NSView, IMainPage {
+class PrickingSpecifier : NSControl {
+    
+    var pricking = PrickingSpecification()
     
     
-    
-    var cb : Callback?
-    
-    @IBAction func didClickOK(_ sender: Any) {
-        self.cb?(.Undefined)
+    @IBAction func createNew(_ sender : Any) {
+        guard let w=self.window else { return }
+        CreatePrickingWindow.launch()?.start(host: w, callback: { p in self.cb(p,isNew: true) })
     }
+    
+    func cb(_ p : PrickingSpecification?,isNew: Bool) {
+        self.pricking = p ?? PrickingSpecification()
+        guard let s = self.action else { return }
+        _ = self.target?.perform(s, with: self)
+        
+        // get corresponding item from DB or create new
+        
+    }
+    
     
 }
 
 
-class GotStorageView : NSView, NSTableViewDelegate, NSTableViewDataSource, IMainPage, NSTextFieldDelegate {
+class NoStorageView : PrickingSpecifier {}
+
+
+class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate {
     
     @IBOutlet var prickings : NSTableView!
+    
 
     static let cellID = NSUserInterfaceItemIdentifier("Prickings")
     
     
-    var cb : Callback?
+
     var data : [PrickingSpecification] = []
     
     
@@ -176,18 +192,8 @@ class GotStorageView : NSView, NSTableViewDelegate, NSTableViewDataSource, IMain
     
     @IBAction func onClick(_ sender: Any) {
         let row = self.prickings.selectedRow
-        self.action(data[row],isNew: false)
+        self.cb(data[row],isNew: false)
     }
     
-    @IBAction func createNew(_ sender : Any) {
-        guard let w=self.window else { return }
-        CreatePrickingWindow.launch()?.start(host: w, callback: { p in self.action(p,isNew: true) })
-    }
-    
-    func action(_ p : PrickingSpecification?,isNew: Bool) {
-        guard let pricking = p else { return }
-        
-        // get corresponding item from DB or create new
-    }
 }
 

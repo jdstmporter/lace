@@ -40,38 +40,54 @@ extension LaceKind {
     }
 }
 
+extension UUID {
+    static var Null : UUID { UUID(uuid: UUID_NULL) }
+}
+
 struct PrickingSpecification {
     
     let name : String
     let width : Int
     let height : Int
     let kind : LaceKind
-    let uid : UUID
+    var uid : UUID
+    var created : Date?
     
     var mirror : Mirror!
     
-    init(name: String,width: Int,height : Int, kind : LaceKind, uid : UUID) {
+    init(name: String,width: Int,height : Int, kind : LaceKind, uid : UUID? = nil, created : Date? = nil) {
         self.name=name
         self.width=width
         self.height=height
         self.kind=kind
-        self.uid=uid
+        self.uid=uid ?? UUID.Null
+        self.created=created
+        
         
         self.mirror = Mirror(reflecting: self)
     }
-    init(name: String?,width: Int32,height : Int32, kind : Int32, uid : UUID?) {
-        self.init(name: name ?? "", width: numericCast(width), height: numericCast(height), kind: LaceKind(kind), uid: uid ?? UUID())
+    init(name: String?,width: Int32,height : Int32, kind : Int32, uid : UUID? = nil,created : Date? = nil) {
+        self.init(name: name ?? "", width: numericCast(width), height: numericCast(height), kind: LaceKind(kind), uid: uid,created: created)
     }
     init(_ item : PrickingData) {
-        self.init(name: item.name,width:item.width,height:item.height,kind:item.kind,uid:item.uid)
+        self.init(name: item.name,width:item.width,height:item.height,kind:item.kind,uid:item.uid,created:item.created)
     }
     init() {
-        self.init(name: "default",width:1,height:1,kind: .Torchon,uid: UUID(uuid: UUID_NULL))
+        self.init(name: "default",width:1,height:1,kind: .Torchon)
     }
     
     subscript<T>(_ label: String) -> T? {
         (self.mirror.children.first { $0.label == label })?.value as? T
     }
+    
+    mutating func finalise() {
+        self.uid = UUID()
+        self.created=Date()
+    }
+    
+    var isUnsaved : Bool { created == nil || uid == UUID.Null }
+    
+    
     
     
     

@@ -468,7 +468,7 @@
                                     </subviews>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Success" identifier="" id="arL-op-ETv">
+                            <tabViewItem label="Success" identifier="success" id="arL-op-ETv">
                                 <view key="view" id="tkn-vQ-fP9">
                                     <rect key="frame" x="0.0" y="0.0" width="494" height="303"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -692,6 +692,7 @@
                                             <viewLayoutGuide key="safeArea" id="UdP-6a-g0v"/>
                                             <viewLayoutGuide key="layoutMargins" id="hzR-y5-dl2"/>
                                             <connections>
+                                                <action selector="actionResponse:" target="yBv-fZ-8Zb" id="ROc-C2-YEU"/>
                                                 <outlet property="prickings" destination="7HU-gz-AiW" id="pcw-C1-JrC"/>
                                             </connections>
                                         </view>
@@ -704,7 +705,7 @@
                                     </constraints>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Failure" identifier="" id="ocy-hq-ukm">
+                            <tabViewItem label="Failure" identifier="failure" id="ocy-hq-ukm">
                                 <view key="view" id="XfJ-Oe-d4Z">
                                     <rect key="frame" x="0.0" y="0.0" width="494" height="303"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -741,10 +742,13 @@ DQ
 </string>
                                                     </buttonCell>
                                                     <connections>
-                                                        <action selector="didClickOK:" target="kUs-F4-s0T" id="4Cj-kc-5Tr"/>
+                                                        <action selector="createNew:" target="kUs-F4-s0T" id="PEs-64-0d6"/>
                                                     </connections>
                                                 </button>
                                             </subviews>
+                                            <connections>
+                                                <action selector="actionResponse:" target="yBv-fZ-8Zb" id="3wh-KT-2nr"/>
+                                            </connections>
                                         </customView>
                                     </subviews>
                                     <constraints>
