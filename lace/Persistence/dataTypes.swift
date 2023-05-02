@@ -43,8 +43,14 @@ extension LaceKind {
 extension UUID {
     static var Null : UUID { UUID(uuid: UUID_NULL) }
 }
+extension Date {
+    var slug : String {
+        self.ISO8601Format(.iso8601.year().month().day().dateSeparator(.dash)
+            .dateTimeSeparator(.space).time(includingFractionalSeconds: false).timeSeparator(.colon))
+    }
+}
 
-struct PrickingSpecification {
+struct PrickingSpecification : CustomStringConvertible {
     
     let name : String
     let width : Int
@@ -88,7 +94,9 @@ struct PrickingSpecification {
     var isUnsaved : Bool { created == nil || uid == UUID.Null }
     
     
-    
+    var description: String {
+        "\(name) : \(width) pins x \(height) rows, \(kind) lace, created \(created?.formatted() ?? "n/a")"
+    }
     
     
 }

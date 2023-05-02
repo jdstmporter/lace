@@ -24,8 +24,15 @@ class CreatePrickingWindow : NSWindow, LaunchableItem {
     
     func initialise() {
         
-        laceKindButton.state = .on
+        
         let items = LaceKind.allCases.map { $0.name }
+        laceKindButton.removeAllItems()
+        laceKindButton.addItems(withTitles: items)
+        laceKindButton.selectItem(at: LaceKind.Torchon.index)
+        
+        width.integerValue = 1
+        height.integerValue = 1
+        name.stringValue = Date.now.slug
     }
     
     static var window : CreatePrickingWindow? = nil
@@ -40,10 +47,10 @@ class CreatePrickingWindow : NSWindow, LaunchableItem {
     
     
     @IBAction func go(_ button : Any) {
-        var name = self.name.stringValue
-        var width = self.width.integerValue
-        var height = self.height.integerValue
-        var kind = LaceKind(self.laceKindButton.titleOfSelectedItem)
+        let name = self.name.stringValue
+        let width = self.width.integerValue
+        let height = self.height.integerValue
+        let kind = LaceKind(self.laceKindButton.titleOfSelectedItem)
         
         self.pricking = PrickingSpecification(name: name, width: width, height: height, kind: kind)
         self.sheetParent?.endSheet(self, returnCode: .OK)

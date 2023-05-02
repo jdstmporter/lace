@@ -27,7 +27,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         FilePaths.load()
         
         Task {
-            let bootstrap = CoreDataBootStrap(model: "model")
+            let bootstrap = CoreDataBootStrap(model: "LaceModel")
             let handler : DataHandler? = await bootstrap.connect()
             pmController.setDataSource(handler: handler)
         }

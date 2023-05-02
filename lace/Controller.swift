@@ -26,9 +26,7 @@ class Controller : NSViewController {
     
     @IBOutlet weak var window: NSWindow!
     
-    var popover : PopoverWindow!
-    @IBOutlet weak var popoverWindow: PopoverWindow!
-    var callback : PopoverWindow.Callback?
+    
     var initialised : Bool = false
     
     var dataState = Trivalent<DataHandler>()
@@ -42,31 +40,10 @@ class Controller : NSViewController {
         set { self.drawingArea.pricking = newValue }
     }
     
-    func setDataSource(handler: DataHandler?) {
-        Task {
-            let state = await self.dataState.set(handler)
-            await self.setViewMode(state: state)
-        }
-    }
+    
     
 
-    func setViewMode(state : DataState) async {
-        
-        await MainActor.run {
-            guard !self.initialised, let pop=self.popover else { return }
-            switch state {
-            case .Good:
-                pop.set(mode: .Success)
-                self.initialised=true
-            case .Bad:
-                pop.set(mode: .Failure)
-                self.initialised=true
-            case .Unset:
-                pop.set(mode: .Loading)
-                break
-            }
-        }
-    }
+    
     
     
     override func viewDidLoad() {
@@ -86,29 +63,21 @@ class Controller : NSViewController {
         }
         
         
-        if let pop = PopoverWindow.launch() {
-            self.popover=pop
-            self.popover.start(self.window, callback: { c in self.callback(c ?? .Continue) })
-            self.popover.set(mode: .Loading)
-        }
+        
     }
     
     override func viewDidAppear() {
         super.viewDidAppear()
         
 
-        Task {
-            let state = await dataState.state
-            await self.setViewMode(state: state)
-        }
+        
         
         // if datasource has been set, switch straight to active mode;
         // otherwise wait mode : use an atomic (or an Actor) to synchronise this
         //
         // ifNoData { wait stuff, i.e. do nothing }
         // else {
-        guard !self.initialised, let pop=PopoverWindow.launch() else { return }
-        pop.start(self.window, callback: { c in self.callback(c ?? .Continue) })
+       
         // }
         
         //self.backup?.startTimedBackups()
@@ -118,25 +87,7 @@ class Controller : NSViewController {
         AutoSaveProcessor.set(pricking: self.pricking)
     }
     
-    func callback(_ c : PopoverWindow.Choice) {
-        syslog.info("Choice is \(c)")
-        switch c {
-        case .Continue:
-            if let p = AutoSaveProcessor.load() {
-                self.pricking=p
-            }
-            break
-        case .Load(url: let u):
-            print(u?.description ?? "")
-            break
-        case .New(width: let w, height: let h):
-            self.setSize(width: w, height: h)
-            AutoSaveProcessor.set(pricking: self.pricking, immediate: true)
-            break
-        case .Accept:
-            break
-        }
-    }
+    
     
     @objc func updateEvent(_ n : Notification) {
         DispatchQueue.main.async {
