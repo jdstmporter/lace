@@ -12,10 +12,11 @@ class PrickingSpecifier : NSControl {
     
     var pricking = PrickingSpecification()
     
+    var isLocked : Bool { false }
     
     @IBAction func createNew(_ sender : Any) {
         guard let w=self.window else { return }
-        CreatePrickingWindow.launch()?.start(host: w, callback: { p in self.cb(p,isNew: true) })
+        CreatePrickingWindow.launch(locked: self.isLocked)?.start(host: w, callback: { p in self.cb(p,isNew: true) })
     }
     
     func cb(_ p : PrickingSpecification?,isNew: Bool) {
@@ -31,7 +32,11 @@ class PrickingSpecifier : NSControl {
 }
 
 
-class NoStorageView : PrickingSpecifier {}
+class NoStorageView : PrickingSpecifier {
+    
+    override var isLocked: Bool { true }
+    
+}
 
 
 class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate {
@@ -58,6 +63,7 @@ class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSo
         if let v = prickings.makeView(withIdentifier: GotStorageView.cellID, owner: self) as? NSTextField { return v}
         else {
             let v = NSTextField(labelWithString: "dummy")
+            v.font = NSFont.systemFont(ofSize: 10)
             v.identifier = GotStorageView.cellID
             return v
         }
@@ -110,8 +116,16 @@ class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSo
     
     @IBAction func onClick(_ sender: Any) {
         let row = self.prickings.selectedRow
-        self.cb(data[row],isNew: false)
+        let pricking = data.at(row)
+        self.cb(pricking,isNew: false)
     }
     
+}
+
+extension Array {
+    
+    var range : Range<Int> { 0..<self.count }
+    
+    func at(_ n : Int) -> Element? { self.range.contains(n) ? self[n] : nil }
 }
 

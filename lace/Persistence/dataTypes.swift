@@ -20,7 +20,7 @@ extension PrickingData {
     }
     
     static func make(in context: NSManagedObjectContext,named : String, width: Int, height: Int, kind: LaceKind) -> PrickingData {
-        var obj = PrickingData.init(context: context)
+        let obj = PrickingData.init(context: context)
         obj.name = named
         obj.width = numericCast(width)
         obj.height = numericCast(height)
@@ -56,18 +56,21 @@ struct PrickingSpecification : CustomStringConvertible {
     let width : Int
     let height : Int
     let kind : LaceKind
-    var uid : UUID
+    let uid : UUID
     var created : Date?
+
     
     var mirror : Mirror!
+    
     
     init(name: String,width: Int,height : Int, kind : LaceKind, uid : UUID? = nil, created : Date? = nil) {
         self.name=name
         self.width=width
         self.height=height
         self.kind=kind
-        self.uid=uid ?? UUID.Null
+        self.uid=uid ?? UUID()
         self.created=created
+        
         
         
         self.mirror = Mirror(reflecting: self)
@@ -82,16 +85,15 @@ struct PrickingSpecification : CustomStringConvertible {
         self.init(name: "default",width:1,height:1,kind: .Torchon)
     }
     
+    
     subscript<T>(_ label: String) -> T? {
         (self.mirror.children.first { $0.label == label })?.value as? T
     }
     
-    mutating func finalise() {
-        self.uid = UUID()
-        self.created=Date()
-    }
+    mutating func finalise() { created=Date.now }
+  
     
-    var isUnsaved : Bool { created == nil || uid == UUID.Null }
+    var isUnsaved : Bool { created == nil }
     
     
     var description: String {

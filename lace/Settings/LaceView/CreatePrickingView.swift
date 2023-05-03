@@ -20,26 +20,29 @@ class CreatePrickingWindow : NSWindow, LaunchableItem {
     @IBOutlet var width : NSTextField!
     @IBOutlet var height : NSTextField!
     
+    var uuid = UUID.Null
     var pricking : PrickingSpecification?
     
-    func initialise() {
-        
-        
-        let items = LaceKind.allCases.map { $0.name }
-        laceKindButton.removeAllItems()
-        laceKindButton.addItems(withTitles: items)
-        laceKindButton.selectItem(at: LaceKind.Torchon.index)
-        
+    func initialise(locked : Bool = false) {
+        laceKindButton.load(LaceKind.self)
+        self.reset()
+        self.name.isEnabled = !locked
+        self.name.isEditable = !locked
+    }
+    
+    func reset() {
         width.integerValue = 1
         height.integerValue = 1
-        name.stringValue = Date.now.slug
+        uuid=UUID()
+        name.stringValue = uuid.uuidString
+        laceKindButton.selectItem(withTitle: LaceKind.zero.name)
     }
     
     static var window : CreatePrickingWindow? = nil
-    static func launch() -> CreatePrickingWindow? {
+    static func launch(locked : Bool = false) -> CreatePrickingWindow? {
         if window==nil {
             window=instance()
-            window?.initialise()
+            window?.initialise(locked : locked)
         }
         return window
     }
@@ -52,7 +55,7 @@ class CreatePrickingWindow : NSWindow, LaunchableItem {
         let height = self.height.integerValue
         let kind = LaceKind(self.laceKindButton.titleOfSelectedItem)
         
-        self.pricking = PrickingSpecification(name: name, width: width, height: height, kind: kind)
+        self.pricking = PrickingSpecification(name: name, width: width, height: height, kind: kind,uid: self.uuid)
         self.sheetParent?.endSheet(self, returnCode: .OK)
     }
     

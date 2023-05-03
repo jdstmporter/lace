@@ -40,15 +40,15 @@ protocol Openable {
 
 protocol LaunchableSingletonItem : LaunchableItem, Openable {
     static var item : Self? { get set }
-    func initialise()
+    func initialise(args : [String:Any])
 }
 
 extension LaunchableSingletonItem {
     
-    public static func launch() -> Self? {
+    public static func launch(args : [String:Any] = [:]) -> Self? {
         if item==nil {
             item=instance()
-            item?.initialise()
+            item?.initialise(args: args)
         }
         item?.makeKeyAndOrderFront(nil)
         return item

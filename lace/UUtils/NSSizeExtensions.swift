@@ -22,6 +22,13 @@ extension NSPopUpButton {
             return false
         }
     }
+    
+    func load<T>(_ kind : T.Type) where T : NameableEnumeration {
+        let items = T.allCases.map { $0.name }
+        self.removeAllItems()
+        self.addItems(withTitles: items)
+        self.selectItem(withTitle: T.zero.name)
+    }
 }
 
 extension NSButton {
@@ -30,6 +37,8 @@ extension NSButton {
         set { self.state = newValue ? .on : .off }
     }
 }
+
+
 
 extension NSSize {
     init(_ res : PMResolution) { self.init(width: res.hRes, height: res.vRes) }
@@ -124,7 +133,7 @@ extension Bundle {
 extension URL {
     static func special(_ path: FileManager.SearchPathDirectory) throws -> URL {
         let appName = Bundle.appName ?? "LaceApp"
-        var u = try FileManager.default.url(for: path,in: .userDomainMask,  appropriateFor: nil, create: true)
+        let u = try FileManager.default.url(for: path,in: .userDomainMask,  appropriateFor: nil, create: true)
         return u.appendingPathComponent(appName, isDirectory: true)
     }
     static var autoSaveRoot : URL { get throws { try URL.special(.autosavedInformationDirectory) }}

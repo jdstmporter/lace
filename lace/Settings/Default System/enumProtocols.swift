@@ -9,13 +9,12 @@ import Foundation
 
 public protocol Nameable {
     var str : String { get }
+    var name : String { get }
 }
 
 public protocol Defaultable {
     static var zero : Self { get }
 }
-
-
 
 
 
@@ -26,6 +25,7 @@ public protocol DefaultPart : RawRepresentable, CaseIterable, Hashable, Nameable
 
 extension DefaultPart {
     public var str : String { "\(self)" }
+    public var name : String { str }
     
      public init?(_ str : String) {
          guard let x = (Self.allCases.first { $0.str == str }) else { return nil }
@@ -104,6 +104,8 @@ public protocol NameableEnumeration : CaseIterable, Hashable, Nameable, Decodabl
     static var zero : Self { get }
     func zeroValue() -> Self 
     init(_ : String)
+    
+    
 }
 
 extension NameableEnumeration {
@@ -122,4 +124,8 @@ extension NameableEnumeration {
     }
     
     public func zeroValue() -> Self { Self.zero }
+    
+    public var name : String { str }
 }
+
+
