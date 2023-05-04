@@ -75,11 +75,32 @@ class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSo
         
     }
     
+    func sizeFor(view : NSTextField,column: NSTableColumn?) -> NSSize {
+        guard let id = column?.identifier.rawValue else { return NSSize() }
+        guard let box = view.font?.boundingRectForFont else { return NSSize() }
+        var width = 0.0
+        switch id {
+        case "width", "height":
+            width =  4*box.width
+        case "kind":
+            width =  20*box.width
+        case "name":
+            width =  self.prickings.width-28*box.width
+        default:
+            width = 0
+        }
+        return NSSize(width: width, height: box.height+2)
+    }
+    
+    // NSTableViewDataSource
+    
     func numberOfRows(in tableView: NSTableView) -> Int { self.data.count }
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let value = self.tableView(tableView, objectValueFor: tableColumn,row: row) else { return nil }
         let view = self.getView(row: row, column: tableColumn)
         view.stringValue="\(value)"
+        let size = self.sizeFor(view: view, column: tableColumn)
+        view.setFrameSize(size)
         return view
     }
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
@@ -89,9 +110,15 @@ class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSo
         return data[row][column]
     }
     
+    // NSTableViewDelegate
+    
     func tableView(_ tableView: NSTableView, shouldEdit tableColumn: NSTableColumn?, row: Int) -> Bool {
         false
     }
+    
+    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat { 16.0 }
+    
+    
     
     // context menu
     
