@@ -49,8 +49,18 @@ class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSo
     
 
     var data : [PrickingSpecification] = []
+    var textFont : NSFont { NSFont.systemFont(ofSize: 10) }
     
-    
+    override func awakeFromNib() {
+        self.prickings.tableColumns.forEach { column in
+            column.headerCell.alignment = .center
+            column.width = self.widthFor(column: column)
+        }
+        //    let x = HeaderView(textCell: column.headerCell.stringValue)
+        //    x.alignment = .center
+        //    column.headerCell=x
+       //}
+    }
     
     
     func initialise() {
@@ -75,21 +85,19 @@ class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSo
         
     }
     
-    func sizeFor(view : NSTextField,column: NSTableColumn?) -> NSSize {
-        guard let id = column?.identifier.rawValue else { return NSSize() }
-        guard let box = view.font?.boundingRectForFont else { return NSSize() }
-        var width = 0.0
+    func widthFor(column: NSTableColumn) -> CGFloat {
+        let id = column.identifier.rawValue
+        let box = self.textFont.boundingRectForFont
         switch id {
         case "width", "height":
-            width =  4*box.width
+            return  2*box.width
         case "kind":
-            width =  20*box.width
+            return  4*box.width
         case "name":
-            width =  self.prickings.width-28*box.width
+            return  self.prickings.width-8*box.width
         default:
-            width = 0
+            return 0
         }
-        return NSSize(width: width, height: box.height+2)
     }
     
     // NSTableViewDataSource
@@ -99,8 +107,6 @@ class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSo
         guard let value = self.tableView(tableView, objectValueFor: tableColumn,row: row) else { return nil }
         let view = self.getView(row: row, column: tableColumn)
         view.stringValue="\(value)"
-        let size = self.sizeFor(view: view, column: tableColumn)
-        view.setFrameSize(size)
         return view
     }
     func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {

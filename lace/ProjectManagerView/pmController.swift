@@ -16,8 +16,33 @@ enum ActionChoice {
     case Undefined
 }
 
+extension NSRect {
+    var lb : NSPoint { NSPoint(x: self.minX, y: self.minY) }
+    var lt : NSPoint { NSPoint(x: self.minX, y: self.maxY) }
+    var rb : NSPoint { NSPoint(x: self.maxX, y: self.minY) }
+    var rt : NSPoint { NSPoint(x: self.maxX, y: self.maxY) }
+}
+class HeaderView : NSTableHeaderCell {
+    
+    var borderColour : NSColor {
+        NSColor.black
+    }
+    
+    override func draw(withFrame cellFrame: NSRect, in controlView: NSView) {
+        
+        self.borderColour.setStroke()
+        let p1 = NSBezierPath(from: cellFrame.lt, to: cellFrame.rt)
+        let p2 = NSBezierPath(from: cellFrame.rb, to: cellFrame.rt)
 
+        [p1, p2].forEach { p in
+            p.lineWidth=0
+            p.stroke()
+        }
+        
+        self.drawInterior(withFrame: cellFrame, in: controlView)
+    }
 
+}
 
 
 class ProjectManagerController : NSViewController, NSTabViewDelegate {
@@ -65,6 +90,8 @@ class ProjectManagerController : NSViewController, NSTabViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateEvent(_ :)), name: SettingsPanel.DefaultsUpdated, object: nil)
         
