@@ -47,6 +47,26 @@ class HeaderView : NSTableHeaderCell {
 
 class ProjectManagerController : NSViewController, NSTabViewDelegate {
     
+    enum Tabs : CaseIterable {
+        case Loading
+        case Success
+        case Failure
+        
+        static let _map : [DataState:Tabs] = [
+            .Unset : .Loading,
+            .Good : .Success,
+            .Bad : .Failure
+        ]
+        
+        init(from d: DataState) {
+            self = Tabs._map[d] ?? .Loading
+        }
+        init(_ name : String) {
+            self = (Self.allCases.first { $0.label==name }) ?? .Loading
+        }
+        var label : String { "\(self)" }
+    }
+    
     
     @IBOutlet weak var tabs: NSTabView!
     
@@ -81,6 +101,7 @@ class ProjectManagerController : NSViewController, NSTabViewDelegate {
     }
     
     @IBAction func actionResponse(_ from: Any) {
+        // redo this with an enum
         guard let view=self.tabs.selectedTabViewItem?.view as? PrickingSpecifier else { return }
         
         let persist = !view.isLocked
