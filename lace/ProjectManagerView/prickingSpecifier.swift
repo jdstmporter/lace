@@ -8,18 +8,55 @@
 import Foundation
 import AppKit
 
+
+
+extension NSTableColumn {
+    var prickingElement : Columns { Columns(self.identifier.rawValue) }
+}
+
+extension PrickingSpecification {
+    func format(for c: Columns) -> String {
+        switch c {
+        case .name:
+            return self.name
+        case .width:
+            return "\(self.width)"
+        case .height:
+            return "\(self.height)"
+        case .kind:
+            return  self.kind.str
+        default:
+            return "-"
+        }
+    }
+    
+    
+}
+
 class PrickingSpecifier : NSControl {
+    
     
     var pricking = PrickingSpecification()
     
     var isLocked : Bool { false }
     
     @IBAction func createNew(_ sender : Any) {
-        guard let w=self.window else { return }
-        CreatePrickingWindow.launch(locked: self.isLocked)?.start(host: w, callback: { p in self.cb(p,isNew: true) })
+        Task {
+            guard let w=self.window, let popup = CreatePrickingWindow.launch(locked: self.isLocked) else { return }
+            do {
+                let p = try await popup.start(host: w)
+                self.processRequest(p, isNew: true)
+            }
+            catch(let e as CreatePrickingWindow.PrickingError) {
+                if e == .cancelled { syslog.info("Cancelled creation") }
+                else { syslog.info("Unknown error") }
+            }
+        }
     }
     
-    func cb(_ p : PrickingSpecification?,isNew: Bool) {
+    
+    
+    func processRequest(_ p : PrickingSpecification?,isNew: Bool) {
         self.pricking = p ?? PrickingSpecification()
         guard let s = self.action else { return }
         _ = self.target?.perform(s, with: self)
@@ -43,31 +80,55 @@ class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSo
     
     @IBOutlet var prickings : NSTableView!
     
-
     static let cellID = NSUserInterfaceItemIdentifier("Prickings")
-    
-    
+    static let NonName : [Columns] = [.width,.height,.kind]
 
     var data : [PrickingSpecification] = []
+    var widths : [Columns:CGFloat] = [:]
     var textFont : NSFont { NSFont.systemFont(ofSize: 10) }
+ 
+    func textSize(_ str : String) -> NSSize {
+        let attr = [NSAttributedString.Key.font : self.textFont]
+        return (str as NSString).size(withAttributes: attr)
+        
+    }
+    
+    func widthFor(column: NSTableColumn) -> CGFloat {
+        let id = column.prickingElement
+        let w = self.prickings.width
+        if Self.NonName.firstIndex(of: id) != nil {
+            return self.widths[id] ?? 0
+        }
+        else if id == .name {
+            var ww : CGFloat = 0
+            Self.NonName.forEach { ww = ww + (self.widths[$0] ?? 0) }
+            return w - ww
+        }
+        else { return 0 }
+        
+    }
     
     override func awakeFromNib() {
+        
+        widths.removeAll()
+        widths[.width] = self.textSize("1000").width
+        widths[.height] = self.textSize("1000").width
+        widths[.kind] = LaceKind.allCases.map { self.textSize($0.name).width }.max() ?? 1.0
+        
         self.prickings.tableColumns.forEach { column in
             column.headerCell.alignment = .center
-            column.width = self.widthFor(column: column)
+            let w = self.widthFor(column: column)
+            print("\(column) : \(w)")
+            //column.width = w
         }
-        //    let x = HeaderView(textCell: column.headerCell.stringValue)
-        //    x.alignment = .center
-        //    column.headerCell=x
-       //}
+        
     }
     
     
     func initialise() {
         data = []
-        
-        
     }
+    
     
     func getView(row : Int, column: NSTableColumn?) -> NSTextField {
         if let v = prickings.makeView(withIdentifier: GotStorageView.cellID, owner: self) as? NSTextField { return v}
@@ -81,39 +142,24 @@ class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSo
     
     func indexOf(column c: NSTableColumn?) -> Int {
         guard let column=c else { return 0 }
-        return prickings.tableColumns.firstIndex(of: column) ?? 0
+        return column.prickingElement.idx
         
     }
-    
-    func widthFor(column: NSTableColumn) -> CGFloat {
-        let id = column.identifier.rawValue
-        let box = self.textFont.boundingRectForFont
-        switch id {
-        case "width", "height":
-            return  2*box.width
-        case "kind":
-            return  4*box.width
-        case "name":
-            return  self.prickings.width-8*box.width
-        default:
-            return 0
-        }
-    }
-    
+
     // NSTableViewDataSource
     
     func numberOfRows(in tableView: NSTableView) -> Int { self.data.count }
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        guard let value = self.tableView(tableView, objectValueFor: tableColumn,row: row) else { return nil }
-        let view = self.getView(row: row, column: tableColumn)
+    func tableView(_ tableView: NSTableView, viewFor column: NSTableColumn?, row: Int) -> NSView? {
+        guard let value = self.tableView(tableView, objectValueFor: column,row: row) else { return nil }
+        let view = self.getView(row: row, column: column)
         view.stringValue="\(value)"
         return view
     }
-    func tableView(_ tableView: NSTableView, objectValueFor tableColumn: NSTableColumn?, row: Int) -> Any? {
-        guard let column = tableColumn?.identifier.rawValue else { return nil }
+    func tableView(_ tableView: NSTableView, objectValueFor column: NSTableColumn?, row: Int) -> Any? {
+        guard let column = column else { return nil }
         guard row>=0 && row<data.count  else { return nil }
         
-        return data[row][column]
+        return data[row][column.prickingElement]
     }
     
     // NSTableViewDelegate
@@ -142,7 +188,7 @@ class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSo
         }
     }
     
-    
+    // table actions
 
     @IBAction func onDoubleClick(_ sender: Any) {
     }
@@ -150,7 +196,7 @@ class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSo
     @IBAction func onClick(_ sender: Any) {
         let row = self.prickings.selectedRow
         let pricking = data.at(row)
-        self.cb(pricking,isNew: false)
+        self.processRequest(pricking,isNew: false)
     }
     
 }

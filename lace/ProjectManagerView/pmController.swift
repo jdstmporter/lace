@@ -81,7 +81,10 @@ class ProjectManagerController : NSViewController, NSTabViewDelegate {
     }
     
     @IBAction func actionResponse(_ from: Any) {
-        guard let view=self.tabs.selectedTabViewItem?.view else { return }
+        guard let view=self.tabs.selectedTabViewItem?.view as? PrickingSpecifier else { return }
+        
+        let persist = !view.isLocked
+        let specifier = view.pricking
     }
     
     

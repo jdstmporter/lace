@@ -9,8 +9,11 @@ import Foundation
 import AppKit
 
 class CreatePrickingWindow : NSWindow, LaunchableItem {
-    typealias Callback = (PrickingSpecification?) -> Void
     typealias Handler = (NSApplication.ModalResponse) -> Void
+    enum PrickingError : Error {
+        case cancelled
+        case unknown
+    }
     
     static var nibname = NSNib.Name("CreatePrickingWindow")
     static var lock = NSLock()
@@ -64,13 +67,32 @@ class CreatePrickingWindow : NSWindow, LaunchableItem {
         self.sheetParent?.endSheet(self, returnCode: .cancel)
     }
     
-    func handler(_ callback : @escaping Callback) -> Handler {
-        { _ in callback(self.pricking) }
+    
+    
+    func start(host : NSWindow) async throws -> PrickingSpecification? {
+        return try await withCheckedThrowingContinuation { continuation in
+            host.beginSheet(self) { result in
+                switch result {
+                case .OK:
+                    continuation.resume(returning: self.pricking)
+                case .cancel:
+                    continuation.resume(throwing: PrickingError.cancelled)
+                default:
+                    continuation.resume(throwing: PrickingError.unknown)
+                }
+            }
+        }
     }
     
-    func start(host: NSWindow, callback: @escaping Callback) {
-        host.beginSheet(self,completionHandler: self.handler(callback))
+    static func start(host : PrickingSpecifier) async throws -> PrickingSpecification? {
+        guard let w=host.window, let win = CreatePrickingWindow.launch(locked: host.isLocked)
+            else { return  nil  }
+        return try await win.start(host: w)
     }
+        
+        
+//        host.beginSheet(self,completionHandler: self.handler(callback))
+ //   }
     
     
 }

@@ -50,7 +50,38 @@ extension Date {
     }
 }
 
+enum Columns : Int, RawRepresentable, CaseIterable {
+    typealias RawValue = Int
+    
+    static var fullNames : [Self:String] = [
+        .name : "Name",
+        .width : "Width",
+        .height : "Height",
+        .kind : "Lace Kind"
+    ]
+    
+    case name = 1
+    case width = 2
+    case height = 3
+    case kind = 4
+    case uid = 5
+    case created = 6
+    
+    init(_ r : RawValue) { self = Self(rawValue: r) ?? .name }
+    public init(_ name : String) {
+        self = (Self.allCases.first { $0.str==name }) ?? .name
+    }
+    
+    
+    var str : String { "\(self)" }
+    var name : String { Self.fullNames[self] ?? "default" }
+    var idx : Int { self.rawValue - 1 }
+    
+}
+
 struct PrickingSpecification : CustomStringConvertible {
+    
+    var data : [Columns : Any] = [:]
     
     let name : String
     let width : Int
@@ -89,6 +120,7 @@ struct PrickingSpecification : CustomStringConvertible {
     subscript<T>(_ label: String) -> T? {
         (self.mirror.children.first { $0.label == label })?.value as? T
     }
+    subscript<T>(_ c : Columns) -> T? { self[c.str] }
     
     mutating func finalise() { created=Date.now }
   
