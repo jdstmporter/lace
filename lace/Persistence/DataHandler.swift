@@ -32,5 +32,15 @@ class DataHandler {
     func insert<T>(_ object : T) where T : NSManagedObject { self.moc.insert(object) }
     func delete<T>(_ object : T) where T : NSManagedObject { self.moc.delete(object) }
     func new<T>() -> T where T : NSManagedObject { return T(entity: T.entity(), insertInto: self.moc) }
+    
+    func getOrCreate<T>(predicate: (T) -> Bool) throws -> T where T : NSManagedObject {
+        if let result : T = (try self.getAll().filter { predicate($0) }).first {
+            return result
+        }
+        else {
+            return self.new()
+        }
+        
+    }
 }
 

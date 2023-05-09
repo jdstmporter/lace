@@ -65,6 +65,8 @@
 		E18360AF283A94A300414F20 /* Printing.xib in Resources */ = {isa = PBXBuildFile; fileRef = E18360AE283A94A300414F20 /* Printing.xib */; };
 		E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18360B0283A950600414F20 /* PrintingPanel.swift */; };
 		E1947D3F29B52EF4002D5D15 /* files.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1947D3E29B52EF4002D5D15 /* files.swift */; };
+		E1BAC0202A099C68005DA5E7 /* modelBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BAC01F2A099C68005DA5E7 /* modelBase.swift */; };
+		E1BAC0222A09A00D005DA5E7 /* PrickingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BAC0212A09A00D005DA5E7 /* PrickingData.swift */; };
 		E1BD6A85280E049700430EC4 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BD6A84280E049700430EC4 /* Colours.swift */; };
 		E1BE8ADA29F45A2C0001C6CF /* pmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BE8AD929F45A2C0001C6CF /* pmController.swift */; };
 		E1CF9AB129930EBE00E8509A /* autosaveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CF9AB029930EBE00E8509A /* autosaveController.swift */; };
@@ -163,6 +165,8 @@
 		E18360AE283A94A300414F20 /* Printing.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Printing.xib; sourceTree = "<group>"; };
 		E18360B0283A950600414F20 /* PrintingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingPanel.swift; sourceTree = "<group>"; };
 		E1947D3E29B52EF4002D5D15 /* files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = files.swift; sourceTree = "<group>"; };
+		E1BAC01F2A099C68005DA5E7 /* modelBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = modelBase.swift; sourceTree = "<group>"; };
+		E1BAC0212A09A00D005DA5E7 /* PrickingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrickingData.swift; sourceTree = "<group>"; };
 		E1BD6A84280E049700430EC4 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		E1BE8AD929F45A2C0001C6CF /* pmController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pmController.swift; sourceTree = "<group>"; };
 		E1CF9AB029930EBE00E8509A /* autosaveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = autosaveController.swift; sourceTree = "<group>"; };
@@ -384,6 +388,7 @@
 		E1947D4029C3D5C0002D5D15 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
+				E1BAC01E2A099BB7005DA5E7 /* DataModel */,
 				E1F525D729EDBE460032D4E3 /* CoreDataBootStrap.swift */,
 				E1F525D929EDBFAA0032D4E3 /* DataHandler.swift */,
 				E1F525DD29F08E710032D4E3 /* Trivalent.swift */,
@@ -391,6 +396,15 @@
 				E1D98FDB29FDA1A300027208 /* dataTypes.swift */,
 			);
 			path = Persistence;
+			sourceTree = "<group>";
+		};
+		E1BAC01E2A099BB7005DA5E7 /* DataModel */ = {
+			isa = PBXGroup;
+			children = (
+				E1BAC01F2A099C68005DA5E7 /* modelBase.swift */,
+				E1BAC0212A09A00D005DA5E7 /* PrickingData.swift */,
+			);
+			path = DataModel;
 			sourceTree = "<group>";
 		};
 		E1CF9AA52988821700E8509A /* Saving */ = {
@@ -538,6 +552,7 @@
 			files = (
 				E18360AD283A6F6700414F20 /* ViewApproach.swift in Sources */,
 				E18360AB2839978900414F20 /* PrintFromData.swift in Sources */,
+				E1BAC0202A099C68005DA5E7 /* modelBase.swift in Sources */,
 				E1D72234297D8D4E005A1BBF /* RectangularButton.swift in Sources */,
 				E1D51F3E280B3C1B00995497 /* SettingsController.swift in Sources */,
 				E1F525D829EDBE460032D4E3 /* CoreDataBootStrap.swift in Sources */,
@@ -558,6 +573,7 @@
 				E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */,
 				E1383BF627F79FC8009DEEFA /* Controller.swift in Sources */,
 				E1947D3F29B52EF4002D5D15 /* files.swift in Sources */,
+				E1BAC0222A09A00D005DA5E7 /* PrickingData.swift in Sources */,
 				E1CF9AB129930EBE00E8509A /* autosaveController.swift in Sources */,
 				E1383BE727F79C93009DEEFA /* AppDelegate.swift in Sources */,
 				E1383C012803787C009DEEFA /* Lines.swift in Sources */,

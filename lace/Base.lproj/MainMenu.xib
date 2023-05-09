@@ -800,7 +800,7 @@ DQ
                     <attributedString key="attributedTitle">
                         <fragment content="Open">
                             <attributes>
-                                <font key="NSFont" metaFont="toolTip"/>
+                                <font key="NSFont" usesAppearanceFont="YES"/>
                                 <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                             </attributes>
                         </fragment>

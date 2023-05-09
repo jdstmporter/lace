@@ -39,6 +39,7 @@ class PrickingSpecifier : NSControl {
     var pricking = PrickingSpecification()
     
     var isLocked : Bool { false }
+    func loadData(_ d : [PrickingSpecification]) {}
     
     @IBAction func createNew(_ sender : Any) {
         Task {
@@ -78,6 +79,7 @@ class NoStorageView : PrickingSpecifier {
 
 class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSource, NSTextFieldDelegate {
     
+     
     @IBOutlet var prickings : NSTableView!
     
     static let cellID = NSUserInterfaceItemIdentifier("Prickings")
@@ -126,7 +128,14 @@ class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSo
     
     
     func initialise() {
-        data = []
+        //data = []
+    }
+    
+    override func loadData(_ d : [PrickingSpecification]) {
+        self.data=d
+        Task {
+            await MainActor.run { self.prickings.reloadData() }
+        }
     }
     
     
