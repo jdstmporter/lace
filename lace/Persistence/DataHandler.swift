@@ -42,5 +42,7 @@ class DataHandler {
         }
         
     }
+    func get<T>(predicate: (T) -> Bool) throws -> T? where T : NSManagedObject {
+        try self.getAll().first { predicate($0) }
+    }
 }
-

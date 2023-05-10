@@ -44,33 +44,6 @@ class HeaderView : NSTableHeaderCell {
 
 }
 
-class ProjectDataManager : Sequence {
-    typealias Element = PrickingSpecification
-    typealias Iterator = Array<Element>.Iterator
-    
-    var handler : DataHandler
-    
-    
-    init?(_ handler : DataHandler?) {
-        guard let handler=handler else { return nil }
-        self.handler=handler
-    }
-    
-    var data : [PrickingData] { (try? self.handler.getAll()) ?? [] }
-    var prickings : [PrickingSpecification] { self.data.map { $0.copy() } }
-    var count : Int { self.data.count }
-    func makeIterator() -> Array<Element>.Iterator { self.prickings.makeIterator() }
-    subscript(_ idx : Int) -> PrickingSpecification { self.prickings[idx] }
-    
-    func save(_ item : PrickingSpecification) throws {
-        let obj : PrickingData = try self.handler.getOrCreate { $0.uid==item.uid }
-        obj.copy(item)
-    }
-    func load(_ item : PrickingSpecification) throws -> PrickingData? {
-        try self.handler.getAll().first { $0.uid == item.uid }
-    }
-   
-}
 
 
 class ProjectManagerController : NSViewController, NSTabViewDelegate {
@@ -99,13 +72,14 @@ class ProjectManagerController : NSViewController, NSTabViewDelegate {
     @IBOutlet weak var tabs: NSTabView!
     
     var dataState = Trivalent<DataHandler>()
-    var dataManager : ProjectDataManager?
+    var handler : DataHandler? = nil
     var initialised : Bool = false
+    var prickings : [PrickingSpecification] = []
     
     func setTab(_ state : DataState = .Unset) {
         self.tabs.selectTabViewItem(at: state.rawValue)
         self.initialised = state != .Unset
-        let prickings = self.dataManager?.prickings ?? []
+        self.reload()
         (self.tabs.tabViewItems[state.rawValue].view as? PrickingSpecifier)?.loadData(prickings)
     }
     
@@ -116,10 +90,20 @@ class ProjectManagerController : NSViewController, NSTabViewDelegate {
         }
     }
     
+    func reload() {
+        if let handler=self.handler {
+            var d : [PrickingData] = (try? handler.getAll()) ?? []
+            self.prickings = d.map { PrickingSpecification($0) }
+        }
+        else {
+            self.prickings=[]
+        }
+    }
+    
     func setDataSource(handler: DataHandler?) {
         Task {
             let state = await self.dataState.set(handler)
-            self.dataManager=await ProjectDataManager(self.dataState.obj)
+            self.handler=await self.dataState.obj
             await self.setActiveMode(state: state)
         }
     }
@@ -130,6 +114,12 @@ class ProjectManagerController : NSViewController, NSTabViewDelegate {
         guard idx != NSNotFound else { return }
         
         
+    }
+    
+    func save(_ item : PrickingSpecification) throws {
+        guard let handler=self.handler else { return }
+        let obj : PrickingData = try handler.getOrCreate { $0.uid==item.uid }
+        item.asData(obj)
     }
     
     @IBAction func actionResponse(_ from: Any) {

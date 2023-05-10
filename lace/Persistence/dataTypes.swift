@@ -55,7 +55,15 @@ enum Columns : Int, RawRepresentable, CaseIterable {
     
 }
 
-struct PrickingSpecification : CustomStringConvertible {
+protocol IAuxilliary {
+    associatedtype DataType : NSManagedObject
+    
+    init(_ : DataType)
+    func asData(_ : DataType)
+    
+}
+
+struct PrickingSpecification : CustomStringConvertible, IAuxilliary {
     
     var data : [Columns : Any] = [:]
     
@@ -80,8 +88,6 @@ struct PrickingSpecification : CustomStringConvertible {
         self.uid=uid ?? UUID()
         self.created=created
         
-        
-        
         self.mirror = Mirror(reflecting: self)
     }
     init(name: String?,width: Int32,height : Int32, kind : Int32, uid : UUID? = nil,created : Date? = nil) {
@@ -90,6 +96,19 @@ struct PrickingSpecification : CustomStringConvertible {
     
     init() {
         self.init(name: "default",width:1,height:1,kind: .Torchon)
+    }
+    
+    init(_ obj : PrickingData) {
+        self.init(name: obj.name,width:obj.width,height:obj.height,kind:obj.kind,
+                  uid:obj.uid,created:obj.created)
+    }
+    func asData(_ obj : PrickingData) {
+        obj.name = name
+        obj.width = numericCast(width)
+        obj.height = numericCast(height)
+        obj.kind = numericCast(kind.rawValue)
+        obj.uid = uid
+        obj.created = created ?? Date.now
     }
     
     
