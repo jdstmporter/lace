@@ -76,6 +76,26 @@ class ProjectManagerController : NSViewController, NSTabViewDelegate {
     var initialised : Bool = false
     var prickings : [PrickingSpecification] = []
     
+    func reload() {
+        if let handler=self.handler {
+            var d : [PrickingData] = (try? handler.getAll()) ?? []
+            self.prickings = d.map { PrickingSpecification($0) }
+        }
+        else { self.prickings=[] }
+    }
+    
+    func save(_ item : PrickingSpecification) throws {
+        guard let handler=self.handler else { return }
+        let obj : PrickingData = try handler.getOrCreate { $0.uid==item.uid }
+        item.asData(obj)
+        handler.commit()
+    }
+    func delete(_ item : PrickingSpecification) {
+        guard let handler=self.handler else { return }
+        handler.delete(PrickingData.self) { $0.uid==item.uid }
+        handler.commit()
+    }
+    
     func setTab(_ state : DataState = .Unset) {
         self.tabs.selectTabViewItem(at: state.rawValue)
         self.initialised = state != .Unset
@@ -90,15 +110,7 @@ class ProjectManagerController : NSViewController, NSTabViewDelegate {
         }
     }
     
-    func reload() {
-        if let handler=self.handler {
-            var d : [PrickingData] = (try? handler.getAll()) ?? []
-            self.prickings = d.map { PrickingSpecification($0) }
-        }
-        else {
-            self.prickings=[]
-        }
-    }
+    
     
     func setDataSource(handler: DataHandler?) {
         Task {
@@ -116,11 +128,7 @@ class ProjectManagerController : NSViewController, NSTabViewDelegate {
         
     }
     
-    func save(_ item : PrickingSpecification) throws {
-        guard let handler=self.handler else { return }
-        let obj : PrickingData = try handler.getOrCreate { $0.uid==item.uid }
-        item.asData(obj)
-    }
+    
     
     @IBAction func actionResponse(_ from: Any) {
         // redo this with an enum
