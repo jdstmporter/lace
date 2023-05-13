@@ -4,8 +4,12 @@
         <attribute name="created" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="uid" attributeType="UUID" usesScalarValueType="YES"/>
     </entity>
+    <entity name="Grid" representedClassName="Grid" syncable="YES" codeGenerationType="class">
+        <attribute name="points" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Bool]"/>
+    </entity>
     <entity name="PrickingData" representedClassName="PrickingData" syncable="YES" codeGenerationType="class">
         <attribute name="created" attributeType="Date" minDateTimeInterval="704487600" usesScalarValueType="NO"/>
+        <attribute name="gridBytes" attributeType="Binary" defaultValueString="" customClassName="["/>
         <attribute name="height" attributeType="Integer 32" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="kind" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String" defaultValueString=""/>
