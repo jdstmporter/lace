@@ -7,64 +7,20 @@
 
 import Foundation
 import CoreData
+import BitArray
 
-extension BinaryInteger {
+struct TimeStamp : CustomStringConvertible {
+    static let format : Date.ISO8601FormatStyle = .iso8601.year().month().day()
+        .time(includingFractionalSeconds: true)
+        .dateSeparator(.omitted).dateTimeSeparator(.space).timeSeparator(.omitted)
     
-    subscript(_ idx : Int) -> Bool {
-        get { (self >> idx) & 1 == 1 }
-        set(b) {
-            self = b ? self | (1<<idx) : self & ~(1<<idx)
-        }
-    }
+    let date : Date
+    init(_ date : Date = Date.now) { self.date = date }
+    var description: String { date.formatted(TimeStamp.format) }
 }
 
-struct BitArray {
-    
-    var words : [UInt8]
-    var bools : [Bool]
-    
-    init(words : [UInt8], count : Int) {
-        
-        let nBool=Swift.min(count,words.count*8)
-        var bools=Array<Bool>(repeating: false, count: nBool)
-        
-        (0..<nBool).forEach { nb in
-            let word = nb/8
-            let offset = nb%8
-            bools[nb]=words[word][offset]
-        }
-        
-        self.words=words
-        self.bools=bools
-    }
-    
-    init(bools : [Bool]) {
-        let n=bools.count
-        let nWords = (n+7)>>3
-        var words=Array<UInt8>(repeating: 0, count: nWords)
-        
-        (0..<n).forEach { nb in
-            let word = nb/8
-            let offset = nb%8
-            words[word][offset]=bools[nb]
-        }
-        
-        self.words=words
-        self.bools=bools
-    }
-    
-    init(data: Data, count : Int) {
-        var bytes = Array<UInt8>(repeating: 0, count: data.count)
-        bytes.withUnsafeMutableBufferPointer { ptr in
-            guard var base = ptr.baseAddress else { return }
-            data.copyBytes(to: base, count: data.count)
-        }
-        self.init(words: bytes, count: count)
-    }
-    
-    var data : Data { Data(words) }
-    
-}
+
+
 
 extension PrickingData {
     
@@ -78,19 +34,41 @@ extension PrickingData {
     }
     var size : Int { w*h }
     
-    func initialiseGrid() {
-        self.gridBytes = Data()
+    var grid : BitArray {
+        get { BitArray(binary: self.gridBytes ?? Data(),nBits: self.size) }
+        set(a) { self.gridBytes=a.binary }
     }
     
-    
-    var grid : [Bool] {
-        get { BitArray(data: self.gridBytes ?? Data(),count: self.size).bools }
-        set(a) { self.gridBytes=BitArray(bools: a).data }
+    func update(pricking: PrickingSpecification) {
+        self.w = pricking.width
+        self.h = pricking.height
+        self.kind = numericCast(pricking.kind.index)
+        self.created = pricking.created
+        self.uid = pricking.uid
+        self.grid = pricking.grid
+        self.name = pricking.name
     }
     
+    convenience init(handler : DataHandler,pricking: PrickingSpecification = PrickingSpecification()) {
+        self.init(context: handler.moc)
+        self.update(pricking: pricking)
+    }
     
+    static func find(handler : DataHandler,uid : UUID) throws -> PrickingData? {
+        try handler.getAll().first { $0.uid == uid }
+    }
+
+}
+
+extension GridData {
     
-   
-    
+    var data : BitArray {
+        get { BitArray(binary: self.points ?? Data(), nBits: numericCast(self.nBits)) }
+        set(b) {
+            self.points =  b.binary
+            self.nBits = numericCast(b.nBits)
+        }
+        
+    }
 }
 

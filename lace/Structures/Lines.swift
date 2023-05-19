@@ -52,6 +52,7 @@ struct ScreenLine : CustomStringConvertible, Codable {
         self.start=conv.pos(line.start)
         self.end=conv.pos(line.end)
     }
+    
     var path : NSBezierPath {
         let path=NSBezierPath()
         path.move(to: start)
@@ -101,6 +102,11 @@ class Lines : Sequence, Codable {
     init() {
         self.lines=[]
     }
+    
+    convenience init(_ specifier : PrickingSpecification) {
+        self.init()
+    }
+    
     var count : Int { lines.count }
     
     func append(_ line : GridLine) {

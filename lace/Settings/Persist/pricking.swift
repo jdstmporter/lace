@@ -19,30 +19,34 @@ enum HistoryActions {
 }
 
 struct Pricking {
-    let grid : Grid
-    let lines : Lines
+    
+    var specification : PrickingSpecification
+    
+    var grid : Grid
+    var lines : Lines
     var scale : Double
     
     
-    var name : String
-    var kind : LaceKind
+    var name : String { self.specification.name }
+    var kind : LaceKind { self.specification.kind }
     
     var history : [HistoryActions] = []
     
     init(_ width: Int = 1,_ height: Int = 1,name : String = "",kind : LaceKind = .Torchon) {
-        self.grid = Grid(width: width, height: height)
-        self.lines = Lines()
-        self.scale=1.0
-        self.name=name
-        self.kind=kind
+        let spec = PrickingSpecification(name: name, width: width, height: height, kind: kind)
+        self.init(spec)
     }
     
     init(grid: Grid,lines: Lines,name : String = "",kind : LaceKind = .Torchon) {
-        self.grid=grid
-        self.lines=lines
-        self.scale=1.0
-        self.name=""
-        self.kind=kind
+        let spec = PrickingSpecification(name: name, width: grid.width, height: grid.height, kind: kind, grid: grid.data)
+        self.init(spec)
+    }
+    
+    init(_ specifier : PrickingSpecification) {
+        self.scale = 1.0
+        self.specification=specifier
+        self.grid=Grid(specifier)
+        self.lines=Lines(specifier)
     }
     
     var width : Int { self.grid.width }

@@ -7,10 +7,17 @@
 
 import Foundation
 import Combine
+import BitArray
 
 
 enum GridError : Error {}
 
+
+extension BitArray {
+    func toggle(_ idx : Int) {
+        self[idx] = !self[idx]
+    }
+}
 
 
 class Grid : Codable {
@@ -27,7 +34,7 @@ class Grid : Codable {
     
     //var scale : Double
     //var data : [[Bool]]=[]
-    var data : [Bool] = []
+    var data : BitArray = BitArray()
     var size : Int { width*height }
     
     var xRange : Range<Int> { 0..<width }
@@ -44,38 +51,45 @@ class Grid : Codable {
     private func _idx(_ x : Int, _ y : Int) -> Int { x+(y*width) }
     private func _idx(_ p : GridPoint) -> Int { p.x+(p.y*width) }
     
-    public init(width : Int, height: Int,data : [Bool]=[]) {
+    public init(width : Int, height: Int,data : BitArray = BitArray(nBits: 0)) {
         self.width=width
         self.height=height
         
         self.reset()
-        let n = Swift.min(self.size,data.count)
-        (0..<n).forEach { self.data[$0] = data[$0] }
+        let n = Swift.min(self.size,data.nBits)
+        self.data = BitArray(bytes: data.bytes, nBits: n)
+        //(0..<n).forEach { self.data[$0] = data[$0] }
+    }
+    
+    public convenience init(_ specification: PrickingSpecification) {
+        self.init(width: specification.width,height: specification.height,data : specification.grid)
     }
     
     public required init(from decoder: Decoder) throws {
         let c = try decoder.container(keyedBy: CodingKeys.self)
         self.width = try c.decode(Int.self,forKey: .width)
         self.height = try c.decode(Int.self,forKey: .height)
+        self.data = try c.decode(BitArray.self, forKey: .points)
         
-        let points = try c.decode(String.self,forKey: .points)
+        //let points = try c.decode(String.self,forKey: .points)
         
-        self.reset()
-        let dp : [Bool] = points.prefix(self.size).map { $0=="1" }
-        self.data.replaceSubrange(0..<dp.count, with: dp)
-        (0..<dp.count).forEach { self.data[$0]=dp[$0] }
+        //self.reset()
+        //let dp : [Bool] = points.prefix(self.size).map { $0=="1" }
+        //self.data.replaceSubrange(0..<dp.count, with: dp)
+        //(0..<dp.count).forEach { self.data[$0]=dp[$0] }
         
         //points.forEach { self[$0]=true }
     }
     public func encode(to encoder: Encoder) throws {
         
-        let points : String = self.data.map { $0 ? "1" : "0" }.joined(separator: "")
+        //let points : String = self.data.map { $0 ? "1" : "0" }.joined(separator: "")
         
         var c=encoder.container(keyedBy: CodingKeys.self)
         try c.encode(self.width,forKey : .width)
         try c.encode(self.height,forKey : .height)
+        try c.encode(self.data,forKey : .points)
         
-        try c.encode(points,forKey : .points)
+        //try c.encode(points,forKey : .points)
         
         
     }
@@ -88,8 +102,8 @@ class Grid : Codable {
         get { self.data[self._idx(p)] }
         set(v) { self.data[self._idx(p)]=v }
     }
-    public func flip(_ p : GridPoint) { self.data[self._idx(p.x,p.y)].toggle() }
-    public func reset() { self.data=Array<Bool>(repeating: false, count: size) }
+    public func flip(_ p : GridPoint) { self.data.toggle(self._idx(p.x,p.y)) }
+    public func reset() { self.data=BitArray(nBits: size) } //Array<Bool>(repeating: false, count: size) }
     
     public func check(_ x : Int, _ y : Int) -> Bool { xRange.contains(x) && yRange.contains(y) }
     public func check(_ p : GridPoint) -> Bool { check(p.x,p.y) }

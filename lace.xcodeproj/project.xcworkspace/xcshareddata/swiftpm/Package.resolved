@@ -8,6 +8,15 @@
         "revision" : "6c89474e62719ddcc1e9614989fff2f68208fe10",
         "version" : "1.1.0"
       }
+    },
+    {
+      "identity" : "swift_bitarray",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/jdstmporter/Swift_BitArray.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "f0e893675071eb2a3f36569aaefce7fe888deb14"
+      }
     }
   ],
   "version" : 2

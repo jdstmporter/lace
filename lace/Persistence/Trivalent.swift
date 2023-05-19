@@ -12,8 +12,19 @@ enum DataState: Int {
     case Bad = 2
     case Unset = 0
     
+    static let _names : [DataState:String] = [
+        .Unset : "Loading",
+        .Good : "Success",
+        .Bad : "Failure"
+    ]
+    
     var str : String { "\(self)" }
+    var name : String { DataState._names[self] ?? "" }
     var int : Int { self.rawValue }
+    
+    init(_ name : String) {
+        self = (Self._names.first { $0.value==name })?.key ?? .Unset
+    }
     
 }
 

@@ -4,8 +4,9 @@
         <attribute name="created" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="uid" attributeType="UUID" usesScalarValueType="YES"/>
     </entity>
-    <entity name="Grid" representedClassName="Grid" syncable="YES" codeGenerationType="class">
-        <attribute name="points" optional="YES" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Bool]"/>
+    <entity name="GridData" representedClassName="GridData" syncable="YES" codeGenerationType="class">
+        <attribute name="nBits" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="points" optional="YES" attributeType="Binary" valueTransformerName="NSSecureUnarchiveFromDataTransformer" customClassName="[Int16]"/>
     </entity>
     <entity name="PrickingData" representedClassName="PrickingData" syncable="YES" codeGenerationType="class">
         <attribute name="created" attributeType="Date" minDateTimeInterval="704487600" usesScalarValueType="NO"/>

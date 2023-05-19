@@ -695,7 +695,7 @@
                                                         </connections>
                                                     </button>
                                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Z2W-Vi-iLs">
-                                                        <rect key="frame" x="2" y="4" width="137" height="16"/>
+                                                        <rect key="frame" x="2" y="4" width="446" height="16"/>
                                                         <textFieldCell key="cell" lineBreakMode="clipping" title="Create new pricking..." id="gXs-8z-JXI">
                                                             <font key="font" metaFont="system"/>
                                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -709,6 +709,7 @@
                                                     <constraint firstItem="zPt-wB-wRs" firstAttribute="centerY" secondItem="Z2W-Vi-iLs" secondAttribute="centerY" id="g7c-1p-Lfx"/>
                                                     <constraint firstItem="zPt-wB-wRs" firstAttribute="top" secondItem="y7M-ca-dxC" secondAttribute="top" constant="2" id="mti-6U-8oe"/>
                                                     <constraint firstItem="Z2W-Vi-iLs" firstAttribute="leading" secondItem="y7M-ca-dxC" secondAttribute="leading" constant="4" id="ok2-Uw-aQ0"/>
+                                                    <constraint firstItem="zPt-wB-wRs" firstAttribute="leading" secondItem="Z2W-Vi-iLs" secondAttribute="trailing" constant="16" id="uwq-Xj-8cq"/>
                                                 </constraints>
                                             </view>
                                         </box>
@@ -736,27 +737,16 @@
                                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="kUs-F4-s0T" customClass="NoStorageView" customModule="lace" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="500" height="336"/>
                                             <subviews>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pIm-Nd-1vV">
-                                                    <rect key="frame" x="99" y="259" width="200" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pIm-Nd-1vV">
+                                                    <rect key="frame" x="150" y="160" width="200" height="16"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Cannot connect to data storage." id="BWc-jy-kF7">
                                                         <font key="font" usesAppearanceFont="YES"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rbA-xW-me2">
-                                                    <rect key="frame" x="101" y="204" width="343" height="16"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="You can create / print / export a pricking, but not save it." id="DTD-Mp-PfN">
-                                                        <font key="font" metaFont="system"/>
-                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                                    </textFieldCell>
-                                                </textField>
-                                                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="r4n-sr-IYM">
-                                                    <rect key="frame" x="213" y="115" width="54" height="32"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="r4n-sr-IYM">
+                                                    <rect key="frame" x="223" y="53" width="54" height="32"/>
                                                     <buttonCell key="cell" type="push" title="OK" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="V5m-70-0gO">
                                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                         <font key="font" metaFont="system"/>
@@ -768,7 +758,23 @@ DQ
                                                         <action selector="createNew:" target="kUs-F4-s0T" id="PEs-64-0d6"/>
                                                     </connections>
                                                 </button>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rbA-xW-me2">
+                                                    <rect key="frame" x="79" y="128" width="343" height="16"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="You can create / print / export a pricking, but not save it." id="DTD-Mp-PfN">
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="pIm-Nd-1vV" firstAttribute="centerX" secondItem="kUs-F4-s0T" secondAttribute="centerX" id="4U9-qQ-rp2"/>
+                                                <constraint firstItem="pIm-Nd-1vV" firstAttribute="centerY" secondItem="kUs-F4-s0T" secondAttribute="centerY" id="9zR-br-eSc"/>
+                                                <constraint firstItem="rbA-xW-me2" firstAttribute="top" secondItem="pIm-Nd-1vV" secondAttribute="bottom" constant="16" id="Jdw-1V-CAH"/>
+                                                <constraint firstItem="r4n-sr-IYM" firstAttribute="top" secondItem="rbA-xW-me2" secondAttribute="bottom" constant="48" id="drK-ak-Whq"/>
+                                                <constraint firstItem="rbA-xW-me2" firstAttribute="centerX" secondItem="kUs-F4-s0T" secondAttribute="centerX" id="gId-x6-5zP"/>
+                                                <constraint firstItem="r4n-sr-IYM" firstAttribute="centerX" secondItem="kUs-F4-s0T" secondAttribute="centerX" id="o3d-dc-GUY"/>
+                                            </constraints>
                                             <connections>
                                                 <action selector="actionResponse:" target="yBv-fZ-8Zb" id="3wh-KT-2nr"/>
                                             </connections>

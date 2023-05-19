@@ -48,38 +48,22 @@ class HeaderView : NSTableHeaderCell {
 
 class ProjectManagerController : NSViewController, NSTabViewDelegate {
     
-    enum Tabs : CaseIterable {
-        case Loading
-        case Success
-        case Failure
-        
-        static let _map : [DataState:Tabs] = [
-            .Unset : .Loading,
-            .Good : .Success,
-            .Bad : .Failure
-        ]
-        
-        init(from d: DataState) {
-            self = Tabs._map[d] ?? .Loading
-        }
-        init(_ name : String) {
-            self = (Self.allCases.first { $0.label==name }) ?? .Loading
-        }
-        var label : String { "\(self)" }
-    }
-    
-    
     @IBOutlet weak var tabs: NSTabView!
+    var selected : DataState = .Unset
     
     var dataState = Trivalent<DataHandler>()
     var handler : DataHandler? = nil
     var initialised : Bool = false
     var prickings : [PrickingSpecification] = []
     
+    private func specifier(_ spec : DataState) -> PrickingSpecifier? {
+        self.tabs.tabViewItems[spec.rawValue].view as? PrickingSpecifier
+    }
+    
     func reload() {
         if let handler=self.handler {
-            var d : [PrickingData] = (try? handler.getAll()) ?? []
-            self.prickings = d.map { PrickingSpecification($0) }
+            let d : [PrickingData] = (try? handler.getAll()) ?? []
+            self.prickings = d.compactMap { PrickingSpecification($0) }
         }
         else { self.prickings=[] }
     }
@@ -87,7 +71,7 @@ class ProjectManagerController : NSViewController, NSTabViewDelegate {
     func save(_ item : PrickingSpecification) throws {
         guard let handler=self.handler else { return }
         let obj : PrickingData = try handler.getOrCreate { $0.uid==item.uid }
-        item.asData(obj)
+        obj.update(pricking: item)
         handler.commit()
     }
     func delete(_ item : PrickingSpecification) {
@@ -97,10 +81,11 @@ class ProjectManagerController : NSViewController, NSTabViewDelegate {
     }
     
     func setTab(_ state : DataState = .Unset) {
-        self.tabs.selectTabViewItem(at: state.rawValue)
-        self.initialised = state != .Unset
+        self.selected = state
+        self.tabs.selectTabViewItem(at: self.selected.rawValue)
+        self.initialised = self.selected != .Unset
         self.reload()
-        (self.tabs.tabViewItems[state.rawValue].view as? PrickingSpecifier)?.loadData(prickings)
+        self.specifier(self.selected)?.loadData(prickings)
     }
     
     func setActiveMode(state: DataState) async {
@@ -123,26 +108,29 @@ class ProjectManagerController : NSViewController, NSTabViewDelegate {
     func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         guard let item = tabViewItem else { return }
         let idx = self.tabs.indexOfTabViewItem(item)
-        guard idx != NSNotFound else { return }
-        
-        
+        guard idx != NSNotFound, let tab = DataState(rawValue: idx) else { return }
+        self.selected = tab
     }
+    
     
     
     
     @IBAction func actionResponse(_ from: Any) {
         // redo this with an enum
-        guard let view=self.tabs.selectedTabViewItem?.view as? PrickingSpecifier else { return }
+        guard let view=self.specifier(self.selected) else { return }
         
         let persist = !view.isLocked
         let specifier = view.pricking
     }
+    
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         NotificationCenter.default.addObserver(self, selector: #selector(updateEvent(_ :)), name: SettingsPanel.DefaultsUpdated, object: nil)
-   
+        
+        
     }
     
     override func viewDidAppear() {

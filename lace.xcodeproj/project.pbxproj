@@ -93,6 +93,7 @@
 		E1F525D829EDBE460032D4E3 /* CoreDataBootStrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F525D729EDBE460032D4E3 /* CoreDataBootStrap.swift */; };
 		E1F525DA29EDBFAA0032D4E3 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F525D929EDBFAA0032D4E3 /* DataHandler.swift */; };
 		E1F525DE29F08E710032D4E3 /* Trivalent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F525DD29F08E710032D4E3 /* Trivalent.swift */; };
+		E1F88F832A1177830024BE81 /* BitArray in Frameworks */ = {isa = PBXBuildFile; productRef = E1F88F822A1177830024BE81 /* BitArray */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -206,6 +207,7 @@
 				E1E731B42972B23800C4B850 /* Combine.framework in Frameworks */,
 				E18360A32832A2E000414F20 /* ImageIO.framework in Frameworks */,
 				E1CF9AB9299707E200E8509A /* Atomics in Frameworks */,
+				E1F88F832A1177830024BE81 /* BitArray in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,6 +477,7 @@
 			name = lace;
 			packageProductDependencies = (
 				E1CF9AB8299707E200E8509A /* Atomics */,
+				E1F88F822A1177830024BE81 /* BitArray */,
 			);
 			productName = lace;
 			productReference = E1383BE327F79C93009DEEFA /* lace.app */;
@@ -506,6 +509,7 @@
 			mainGroup = E1383BDA27F79C93009DEEFA;
 			packageReferences = (
 				E1CF9AB7299707E200E8509A /* XCRemoteSwiftPackageReference "swift-atomics" */,
+				E1F88F812A1177830024BE81 /* XCRemoteSwiftPackageReference "Swift_BitArray" */,
 			);
 			productRefGroup = E1383BE427F79C93009DEEFA /* Products */;
 			projectDirPath = "";
@@ -837,6 +841,14 @@
 				minimumVersion = 1.0.0;
 			};
 		};
+		E1F88F812A1177830024BE81 /* XCRemoteSwiftPackageReference "Swift_BitArray" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jdstmporter/Swift_BitArray.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -844,6 +856,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E1CF9AB7299707E200E8509A /* XCRemoteSwiftPackageReference "swift-atomics" */;
 			productName = Atomics;
+		};
+		E1F88F822A1177830024BE81 /* BitArray */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E1F88F812A1177830024BE81 /* XCRemoteSwiftPackageReference "Swift_BitArray" */;
+			productName = BitArray;
 		};
 /* End XCSwiftPackageProductDependency section */
 

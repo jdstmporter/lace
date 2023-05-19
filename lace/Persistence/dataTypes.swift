@@ -7,7 +7,7 @@
 
 import Foundation
 import CoreData
-
+import BitArray
 
 
 extension LaceKind {
@@ -55,15 +55,16 @@ enum Columns : Int, RawRepresentable, CaseIterable {
     
 }
 
-protocol IAuxilliary {
-    associatedtype DataType : NSManagedObject
-    
-    init(_ : DataType)
-    func asData(_ : DataType)
-    
-}
 
-struct PrickingSpecification : CustomStringConvertible, IAuxilliary {
+
+
+class PrickingSpecification : CustomStringConvertible, Identifiable {
+    typealias ID = UUID
+    
+    enum Errors : Error {
+        case ValueWithoutUUID
+        case ValueWithoutTimeStamp
+    }
     
     var data : [Columns : Any] = [:]
     
@@ -71,65 +72,53 @@ struct PrickingSpecification : CustomStringConvertible, IAuxilliary {
     let width : Int
     let height : Int
     let kind : LaceKind
+    var grid : BitArray
     let uid : UUID
-    var created : Date?
+    var created : Date
 
-    
     var mirror : Mirror!
     
-    
-    
-    
-    init(name: String,width: Int,height : Int, kind : LaceKind, uid : UUID? = nil, created : Date? = nil) {
+    init(name: String,width: Int,height : Int, kind : LaceKind,
+         grid : BitArray,
+         uid : UUID = UUID(), created : Date = Date.now) {
         self.name=name
         self.width=width
         self.height=height
         self.kind=kind
-        self.uid=uid ?? UUID()
+        self.grid=grid
+        self.uid=uid
         self.created=created
         
         self.mirror = Mirror(reflecting: self)
     }
-    init(name: String?,width: Int32,height : Int32, kind : Int32, uid : UUID? = nil,created : Date? = nil) {
-        self.init(name: name ?? "", width: numericCast(width), height: numericCast(height), kind: LaceKind(kind), uid: uid,created: created)
+    convenience init(name: String,width: Int,height : Int, kind : LaceKind,
+                     uid : UUID = UUID(), created : Date = Date.now) {
+        self.init(name: name, width: width, height: height, kind: kind,
+                  grid: BitArray(nBits: width*height), uid : uid, created : created)
     }
     
-    init() {
-        self.init(name: "default",width:1,height:1,kind: .Torchon)
+    convenience init() {
+        let timestamp=TimeStamp()
+        self.init(name: "pricking \(timestamp)",width: 1,height: 1, kind: .Torchon,
+                  grid: BitArray(nBits: 1), created: timestamp.date)
     }
     
-    init(_ obj : PrickingData) {
-        self.init(name: obj.name,width:obj.width,height:obj.height,kind:obj.kind,
-                  uid:obj.uid,created:obj.created)
-    }
-    func asData(_ obj : PrickingData) {
-        obj.name = name
-        obj.width = numericCast(width)
-        obj.height = numericCast(height)
-        obj.kind = numericCast(kind.rawValue)
-        obj.uid = uid
-        obj.created = created ?? Date.now
-    }
-    
-    
-    
+    convenience init?(_ obj : PrickingData) {
+        guard let uid = obj.uid, let created = obj.created else { return nil }
 
+        self.init(name: obj.name ?? "", width: obj.w, height: obj.h, kind: LaceKind(obj.kind),
+                  grid: obj.grid, uid: uid, created: created)
+    }
     
+    var id : ID { self.uid }
     
     subscript<T>(_ label: String) -> T? {
         (self.mirror.children.first { $0.label == label })?.value as? T
     }
     subscript<T>(_ c : Columns) -> T? { self[c.str] }
     
-    mutating func finalise() {
-        guard created==nil else { return }
-        created=Date.now
-    }
-    var isUnsaved : Bool { created == nil }
-    
-    
     var description: String {
-        "\(name) : \(width) pins x \(height) rows, \(kind) lace, created \(created?.formatted() ?? "n/a")"
+        "\(name) : \(width) pins x \(height) rows, \(kind) lace, created \(TimeStamp(created))"
     }
     
     
