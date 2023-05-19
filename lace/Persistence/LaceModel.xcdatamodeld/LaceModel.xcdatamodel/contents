@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G419" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="0.1">
-    <entity name="Base" representedClassName="Base" isAbstract="YES" syncable="YES" codeGenerationType="class">
-        <attribute name="created" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="uid" attributeType="UUID" usesScalarValueType="YES"/>
+    <entity name="BaseExtension" representedClassName="BaseExtension" isAbstract="YES" syncable="YES" codeGenerationType="class">
+        <attribute name="data" optional="YES" attributeType="Binary"/>
+        <attribute name="kind" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String"/>
+        <relationship name="relationship" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PrickingData" inverseName="extensions" inverseEntity="PrickingData"/>
     </entity>
     <entity name="GridData" representedClassName="GridData" syncable="YES" codeGenerationType="class">
         <attribute name="nBits" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
@@ -16,5 +18,6 @@
         <attribute name="name" attributeType="String" defaultValueString=""/>
         <attribute name="uid" attributeType="UUID" usesScalarValueType="YES"/>
         <attribute name="width" attributeType="Integer 32" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
+        <relationship name="extensions" toMany="YES" minCount="1" deletionRule="Nullify" ordered="YES" destinationEntity="BaseExtension" inverseName="relationship" inverseEntity="BaseExtension"/>
     </entity>
 </model>
