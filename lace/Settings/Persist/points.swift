@@ -7,28 +7,20 @@
 
 import Foundation
 
+enum DecodeError : Error {
+    case BadCoordinate
+}
+
 struct GridPoint : CustomStringConvertible, Comparable, Equatable, Hashable, Codable {
-    let x : Int
-    let y : Int
+    let x : Int32
+    let y : Int32
     
-    enum CodingKeys : String, CodingKey {
+    enum CodingKeys : CodingKey {
         case x
         case y
     }
     
-    init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        self.x = try c.decode(Int.self,forKey: .x)
-        self.y = try c.decode(Int.self,forKey: .y)
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var c=encoder.container(keyedBy: CodingKeys.self)
-        try c.encode(self.x,forKey : .x)
-        try c.encode(self.y,forKey : .y)
-    }
-    
-    init(_ x : Int, _ y : Int) {
+    init(_ x : Int32, _ y : Int32) {
         self.x=x
         self.y=y
     }
@@ -51,4 +43,9 @@ struct GridPoint : CustomStringConvertible, Comparable, Equatable, Hashable, Cod
         x.hash(into: &hasher)
         y.hash(into: &hasher)
     }
+    
+   
+    
+    
+    
 }

@@ -8,36 +8,16 @@
 import Foundation
 import Cocoa
 
-
-
-
     
     
     
     
 
 
-struct ScreenLine : CustomStringConvertible, Codable {
+struct ScreenLine : CustomStringConvertible {
 
     let start : NSPoint
     let end : NSPoint
-    
-    enum CodingKeys : String, CodingKey {
-        case start
-        case end
-    }
-    
-    init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        self.start = try c.decode(NSPoint.self,forKey: .start)
-        self.end = try c.decode(NSPoint.self,forKey: .end)
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var c=encoder.container(keyedBy: CodingKeys.self)
-        try c.encode(self.start,forKey : .start)
-        try c.encode(self.end,forKey : .end)
-    }
     
     init(_ start: NSPoint,_ end: NSPoint) {
         self.start=start
@@ -84,27 +64,8 @@ class Lines : Sequence, Codable {
     
     var lines : [GridLine]
     
-    enum CodingKeys : String, CodingKey {
-        case lines
-    }
-    
-    required init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        self.lines = try c.decode([GridLine].self,forKey: .lines)
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var c=encoder.container(keyedBy: CodingKeys.self)
-        try c.encode(self.lines,forKey : .lines)
-    }
-    
-    
     init() {
         self.lines=[]
-    }
-    
-    convenience init(_ specifier : PrickingSpecification) {
-        self.init()
     }
     
     var count : Int { lines.count }

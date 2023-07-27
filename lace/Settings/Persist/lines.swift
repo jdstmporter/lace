@@ -11,21 +11,9 @@ struct GridLine : CustomStringConvertible, Codable {
     let start : GridPoint
     let end : GridPoint
     
-    enum CodingKeys : String, CodingKey {
+    enum CodingKeys : CodingKey {
         case start
         case end
-    }
-    
-    init(from decoder: Decoder) throws {
-        let c = try decoder.container(keyedBy: CodingKeys.self)
-        self.start = try c.decode(GridPoint.self,forKey: .start)
-        self.end = try c.decode(GridPoint.self,forKey: .end)
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var c=encoder.container(keyedBy: CodingKeys.self)
-        try c.encode(self.start,forKey : .start)
-        try c.encode(self.end,forKey : .end)
     }
     
     init(_ start: GridPoint, _ end: GridPoint) {
@@ -78,7 +66,9 @@ struct GridLine : CustomStringConvertible, Codable {
             return GridLine(l1.end,l2.end)
         case .Nil:
             return nil
+        }
     }
         
-}
+
+    
 }

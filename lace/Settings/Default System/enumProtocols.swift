@@ -16,6 +16,11 @@ public protocol Defaultable {
     static var zero : Self { get }
 }
 
+public protocol Enumerable {
+    init(_ r : Int)
+    var value : Int { get }
+}
+
 
 
 
@@ -65,26 +70,6 @@ extension EncDecEnum {
 
 
 
-protocol Encodable : RawRepresentable, Codable where RawValue : Codable {
-    init(_ r : Int)
-}
-
-extension Encodable {
-    
-    public init(from decoder: Decoder) throws {
-        let c = try decoder.singleValueContainer()
-        let rv = try c .decode(Int.self)
-        self.init(rv)
-    }
-    public func encode(to encoder: Encoder) throws {
-        var c=encoder.singleValueContainer()
-        try c.encode(self.rawValue)
-    }
-}
-
-/// Special encodable enumerations
-///
-
 public protocol RawConstructibleEnumeration : RawRepresentable {
     static var zero : Self { get }
     
@@ -99,7 +84,7 @@ extension RawConstructibleEnumeration {
     public var value : RawValue { self.rawValue }
 }
 
-public protocol NameableEnumeration : CaseIterable, Hashable, Nameable, Decodable, EncDec {
+public protocol NameableEnumeration : CaseIterable, Hashable, Nameable, EncDec {
     
     static var zero : Self { get }
     func zeroValue() -> Self 

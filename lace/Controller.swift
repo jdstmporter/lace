@@ -58,9 +58,9 @@ class Controller : NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(updateEvent(_ :)), name: SettingsPanel.DefaultsUpdated, object: nil)
         
         self.updateZoom(self.zoomField)
-        if let p = AutoSaveProcessor.load() {
-            self.pricking=p
-        }
+        //if let p = AutoSaveProcessor.load() {
+        //    self.pricking=p
+        //}
         
         
         
@@ -84,7 +84,7 @@ class Controller : NSViewController {
     }
     
     override func viewWillDisappear() {
-        AutoSaveProcessor.set(pricking: self.pricking)
+        //AutoSaveProcessor.set(pricking: self.pricking)
     }
     
     
@@ -137,6 +137,7 @@ class Controller : NSViewController {
     
     func saveCurrent(_ action : SaveActions) {
         do {
+            /*
             guard let p = drawingArea?.pricking else { throw PrickingError.CannotFindPricking }
             switch action {
             case .Save:
@@ -148,6 +149,7 @@ class Controller : NSViewController {
             default:
                 break
             }
+             */
         }
         catch(let e) { syslog.error("Error \(e)")}
     }

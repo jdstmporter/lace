@@ -10,7 +10,7 @@ import Foundation
 
 
 
-enum LaceKind : Int, NameableEnumeration, RawConstructibleEnumeration {
+enum LaceKind : Int, NameableEnumeration, RawConstructibleEnumeration, Codable {
     
     
     
@@ -65,6 +65,21 @@ enum LaceKind : Int, NameableEnumeration, RawConstructibleEnumeration {
     init(index: Int) { self = LaceKind(index) }
     var index : Int { self.value }
     
+    enum CodingKeys : String, CodingKey {
+        case value = "kind"
+    }
+    
+    
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(self.value, forKey: .value)
+    }
+    
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        let idx = try container.decode(Int.self, forKey: .value)
+        self = LaceKind(idx)
+    }
     
     
     

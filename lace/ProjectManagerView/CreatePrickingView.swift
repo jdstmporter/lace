@@ -13,6 +13,7 @@ class CreatePrickingWindow : NSWindow, LaunchableItem {
     enum PrickingError : Error {
         case cancelled
         case unknown
+        case nilreturn
     }
     
     static var nibname = NSNib.Name("CreatePrickingWindow")
@@ -24,7 +25,7 @@ class CreatePrickingWindow : NSWindow, LaunchableItem {
     @IBOutlet var height : NSTextField!
     
     var uuid = UUID.Null
-    var pricking : PrickingSpecification?
+    var pricking = PrickingSpec()
     
     func initialise(locked : Bool = false) {
         laceKindButton.load(LaceKind.self)
@@ -34,11 +35,11 @@ class CreatePrickingWindow : NSWindow, LaunchableItem {
     }
     
     func reset() {
-        width.integerValue = 1
-        height.integerValue = 1
-        uuid=UUID()
-        name.stringValue = uuid.uuidString
-        laceKindButton.selectItem(withTitle: LaceKind.zero.name)
+        self.pricking.reset()
+        width.integerValue = self.pricking.width
+        height.integerValue = self.pricking.height
+        name.stringValue = self.pricking.name
+        laceKindButton.selectItem(withTitle: self.pricking.kind.name)
     }
     
     static var window : CreatePrickingWindow? = nil
@@ -58,18 +59,18 @@ class CreatePrickingWindow : NSWindow, LaunchableItem {
         let height = self.height.integerValue
         let kind = LaceKind(self.laceKindButton.titleOfSelectedItem)
         
-        self.pricking = PrickingSpecification(name: name, width: width, height: height, kind: kind,uid: self.uuid)
+        self.pricking = PrickingSpec(name: name, width: width, height: height, kind: kind)
         self.sheetParent?.endSheet(self, returnCode: .OK)
     }
     
     @IBAction func cancel(_ button : Any) {
-        self.pricking=nil
+        self.pricking.reset()
         self.sheetParent?.endSheet(self, returnCode: .cancel)
     }
     
     
     
-    func start(host : NSWindow) async throws -> PrickingSpecification? {
+    func start(host : NSWindow) async throws -> PrickingSpec {
         return try await withCheckedThrowingContinuation { continuation in
             host.beginSheet(self) { result in
                 switch result {
@@ -84,9 +85,9 @@ class CreatePrickingWindow : NSWindow, LaunchableItem {
         }
     }
     
-    static func start(host : PrickingSpecifier) async throws -> PrickingSpecification? {
+    static func start(host : PrickingSpecifier) async throws -> PrickingSpec {
         guard let w=host.window, let win = CreatePrickingWindow.launch(locked: host.isLocked)
-            else { return  nil  }
+        else { throw PrickingError.nilreturn  }
         return try await win.start(host: w)
     }
         

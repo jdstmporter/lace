@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G419" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="0.1">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G419" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="0.3">
     <entity name="GridData" representedClassName="GridData" syncable="YES" codeGenerationType="class">
         <attribute name="nBits" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="points" attributeType="Binary" valueTransformerName="BitArrayTransformer" customClassName="BitArray"/>
     </entity>
     <entity name="Layer" representedClassName="Layer" syncable="YES" codeGenerationType="class">
         <attribute name="data" attributeType="Binary"/>
-        <attribute name="index" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="index" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="kind" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String" defaultValueString=""/>
-        <attribute name="parent" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <relationship name="parent" maxCount="1" deletionRule="Nullify" destinationEntity="PrickingData" inverseName="layers" inverseEntity="PrickingData"/>
     </entity>
     <entity name="PrickingData" representedClassName="PrickingData" syncable="YES" codeGenerationType="class">
         <attribute name="created" attributeType="Date" minDateTimeInterval="0" usesScalarValueType="NO"/>
@@ -18,5 +18,6 @@
         <attribute name="name" attributeType="String" defaultValueString=""/>
         <attribute name="uuid" attributeType="UUID" usesScalarValueType="YES"/>
         <attribute name="width" attributeType="Integer 32" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
+        <relationship name="layers" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Layer" inverseName="parent" inverseEntity="Layer"/>
     </entity>
 </model>

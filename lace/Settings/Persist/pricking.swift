@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import BitArray
 
 enum PrickingError : BaseError {
     case PointOutsideArea
@@ -18,36 +19,115 @@ enum HistoryActions {
     case Line(_ : ScreenLine)
 }
 
-struct Pricking {
+class PrickingSpec {
+    public private(set) var name : String = "Pricking"
+    public private(set) var pricking : Pricking?
     
-    var specification : PrickingSpecification
+    public var width : Int { pricking?.width ?? 1 }
+    public var height : Int { pricking?.height ?? 1 }
+    public var kind : LaceKind { pricking?.kind ?? .Custom }
+    
+    
+    init() {}
+    init(pricking: Pricking) {
+        self.name=pricking.name
+        self.pricking=pricking
+    }
+    convenience init(name: String) {
+        if let pricking = try? Pricking.load(name) { self.init(pricking: pricking) }
+    }
+    convenience init(url: URL) {
+        self.init(name: url.lastPathComponent)
+    }
+    
+    func save() {
+        do { try self.pricking?.save() }
+        catch {}
+    }
+}
+class PrickingManager {
+    static var prickings : [Pricking] = []
+    static var changed : [String:Bool] = [:]
+    
+    static func load() {
+        let paths=FileService.enumerate(as: Pricking.self)
+        self.prickings = paths.compactMap { try? Pricking.load($0.lastPathComponent) }
+    }
+    
+    static func save() {
+        self.prickings.forEach { pricking in
+            if self.changed[pricking.name]==true {
+                do {
+                    try pricking.save()
+                    self.changed[pricking.name]=false
+                }
+                catch {}
+            }
+        }
+    }
+    
+    
+    
+    
+    static subscript(_ name : String) -> Pricking? {
+        get { self.prickings.first { $0.name==name } }
+        set {
+            guard let pricking=newValue, pricking.name==name else { return }
+            if let idx=(self.prickings.firstIndex { $0.name==name}) { self.prickings[idx]=pricking }
+            else { self.prickings.append(pricking) }
+            self.changed[name]=true
+        }
+    }
+
+    static func has(name: String) -> Bool { self[name] != nil }
+    static func del(name: String) {
+        guard let pricking=self[name] else { return }
+        do {
+            try pricking.del()
+            self.prickings.removeAll { $0.name==name }
+            self.changed.removeValue(forKey: name)
+        }
+        catch {}
+    }
+    
+}
+
+
+
+struct Pricking : Storable {
+    
+    var index : Int = 0
     
     var grid : Grid
     var lines : Lines
-    var scale : Double
+    var scale : Double = 1.0
     
     
-    var name : String { self.specification.name }
-    var kind : LaceKind { self.specification.kind }
+    var name : String
+    var kind : LaceKind
     
     var history : [HistoryActions] = []
     
-    init(_ width: Int = 1,_ height: Int = 1,name : String = "",kind : LaceKind = .Torchon) {
-        let spec = PrickingSpecification(name: name, width: width, height: height, kind: kind)
-        self.init(spec)
+    // exclude history from persistance
+    
+    enum CodingKeys : CodingKey {
+        case grid
+        case lines
+        case kind
+        case scale
+        case name
     }
     
-    init(grid: Grid,lines: Lines,name : String = "",kind : LaceKind = .Torchon) {
-        let spec = PrickingSpecification(name: name, width: grid.width, height: grid.height, kind: kind, grid: grid.data)
-        self.init(spec)
-    }
     
-    init(_ specifier : PrickingSpecification) {
-        self.scale = 1.0
-        self.specification=specifier
-        self.grid=Grid(specifier)
-        self.lines=Lines(specifier)
+    init(name : String = "Pricking", width: Int = 1, height : Int = 1, kind: LaceKind = .Custom) {
+        self.name=name
+        self.grid=Grid(width: width,height: height)
+        self.lines=Lines()
+        self.kind=kind
+        self.scale=1.0
+        self.index=0
     }
+ 
     
     var width : Int { self.grid.width }
     var height : Int { self.grid.height }

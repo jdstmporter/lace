@@ -9,11 +9,12 @@ import Foundation
 import AppKit
 
 
-
+/*
 class FilePaths {
     private var urls : ViewPaths = ViewPaths()
 
     private func has(_ path : PathPart) -> Bool { urls.has(path) }
+    
     public subscript(_ path : PathPart) -> URL {
         get { self.urls.load(path) ?? URL.zero }
         set(u) {
@@ -73,6 +74,8 @@ class FilePaths {
         //load().clearCurrent()
     }
 }
+ 
+ */
 
 
 

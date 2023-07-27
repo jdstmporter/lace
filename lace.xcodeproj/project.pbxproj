@@ -65,8 +65,6 @@
 		E18360AF283A94A300414F20 /* Printing.xib in Resources */ = {isa = PBXBuildFile; fileRef = E18360AE283A94A300414F20 /* Printing.xib */; };
 		E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18360B0283A950600414F20 /* PrintingPanel.swift */; };
 		E1947D3F29B52EF4002D5D15 /* files.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1947D3E29B52EF4002D5D15 /* files.swift */; };
-		E1BAC0202A099C68005DA5E7 /* modelBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BAC01F2A099C68005DA5E7 /* modelBase.swift */; };
-		E1BAC0222A09A00D005DA5E7 /* PrickingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BAC0212A09A00D005DA5E7 /* PrickingData.swift */; };
 		E1BD6A85280E049700430EC4 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BD6A84280E049700430EC4 /* Colours.swift */; };
 		E1BE8ADA29F45A2C0001C6CF /* pmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BE8AD929F45A2C0001C6CF /* pmController.swift */; };
 		E1CF9AB129930EBE00E8509A /* autosaveController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1CF9AB029930EBE00E8509A /* autosaveController.swift */; };
@@ -78,20 +76,23 @@
 		E1D72234297D8D4E005A1BBF /* RectangularButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D72233297D8D4E005A1BBF /* RectangularButton.swift */; };
 		E1D72236297DED89005A1BBF /* popoverProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D72235297DED89005A1BBF /* popoverProtocol.swift */; };
 		E1D98FD729FD9AC900027208 /* codablePricking.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D98FD629FD9AC900027208 /* codablePricking.swift */; };
-		E1D98FDA29FD9FE000027208 /* LaceModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1D98FD829FD9FE000027208 /* LaceModel.xcdatamodeld */; };
-		E1D98FDC29FDA1A300027208 /* dataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D98FDB29FDA1A300027208 /* dataTypes.swift */; };
 		E1D98FE029FEFC6400027208 /* CreatePrickingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D98FDF29FEFC6400027208 /* CreatePrickingView.swift */; };
 		E1D98FE229FEFEC300027208 /* CreatePrickingWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D98FE129FEFEC300027208 /* CreatePrickingWindow.xib */; };
 		E1DF65A42A01C44D00395C4F /* prickingSpecifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DF65A32A01C44D00395C4F /* prickingSpecifier.swift */; };
 		E1DFD09B2932DC690075D971 /* decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DFD09A2932DC690075D971 /* decodable.swift */; };
 		E1DFD09E293802DD0075D971 /* enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DFD09D293802DD0075D971 /* enums.swift */; };
+		E1E3BCA62A6D9E1600DF6821 /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCA52A6D9E1600DF6821 /* Files.swift */; };
+		E1E3BCA92A708D9500DF6821 /* LaceAppModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCA72A708D9500DF6821 /* LaceAppModel.xcdatamodeld */; };
+		E1E3BCAB2A71786800DF6821 /* types.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCAA2A71786800DF6821 /* types.swift */; };
+		E1E3BCAD2A71D77A00DF6821 /* dataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCAC2A71D77A00DF6821 /* dataTypes.swift */; };
+		E1E3BCAF2A72CFAD00DF6821 /* prickings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCAE2A72CFAD00DF6821 /* prickings.swift */; };
+		E1E3BCB12A72CFE800DF6821 /* layers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCB02A72CFE800DF6821 /* layers.swift */; };
+		E1E3BCB32A72D02F00DF6821 /* lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCB22A72D02F00DF6821 /* lines.swift */; };
+		E1E3BCB52A73310F00DF6821 /* grids.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCB42A73310F00DF6821 /* grids.swift */; };
 		E1E731B42972B23800C4B850 /* Combine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E731B32972B23800C4B850 /* Combine.framework */; };
 		E1EBD81A283D7A9900D8E10C /* NSSizeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBD819283D7A9900D8E10C /* NSSizeExtensions.swift */; };
 		E1EBD81C284149A200D8E10C /* Calc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBD81B284149A200D8E10C /* Calc.swift */; };
 		E1EBD81E2844021500D8E10C /* Errors.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBD81D2844021500D8E10C /* Errors.swift */; };
-		E1F525D629EDBDF80032D4E3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13574A72826E39A005D84D6 /* CoreData.framework */; };
-		E1F525D829EDBE460032D4E3 /* CoreDataBootStrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F525D729EDBE460032D4E3 /* CoreDataBootStrap.swift */; };
-		E1F525DA29EDBFAA0032D4E3 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F525D929EDBFAA0032D4E3 /* DataHandler.swift */; };
 		E1F525DE29F08E710032D4E3 /* Trivalent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F525DD29F08E710032D4E3 /* Trivalent.swift */; };
 		E1F88F832A1177830024BE81 /* BitArray in Frameworks */ = {isa = PBXBuildFile; productRef = E1F88F822A1177830024BE81 /* BitArray */; };
 /* End PBXBuildFile section */
@@ -166,8 +167,6 @@
 		E18360AE283A94A300414F20 /* Printing.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Printing.xib; sourceTree = "<group>"; };
 		E18360B0283A950600414F20 /* PrintingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingPanel.swift; sourceTree = "<group>"; };
 		E1947D3E29B52EF4002D5D15 /* files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = files.swift; sourceTree = "<group>"; };
-		E1BAC01F2A099C68005DA5E7 /* modelBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = modelBase.swift; sourceTree = "<group>"; };
-		E1BAC0212A09A00D005DA5E7 /* PrickingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrickingData.swift; sourceTree = "<group>"; };
 		E1BD6A84280E049700430EC4 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		E1BE8AD929F45A2C0001C6CF /* pmController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pmController.swift; sourceTree = "<group>"; };
 		E1CF9AB029930EBE00E8509A /* autosaveController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = autosaveController.swift; sourceTree = "<group>"; };
@@ -178,19 +177,23 @@
 		E1D72233297D8D4E005A1BBF /* RectangularButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RectangularButton.swift; sourceTree = "<group>"; };
 		E1D72235297DED89005A1BBF /* popoverProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = popoverProtocol.swift; sourceTree = "<group>"; };
 		E1D98FD629FD9AC900027208 /* codablePricking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = codablePricking.swift; sourceTree = "<group>"; };
-		E1D98FD929FD9FE000027208 /* LaceModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LaceModel.xcdatamodel; sourceTree = "<group>"; };
-		E1D98FDB29FDA1A300027208 /* dataTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataTypes.swift; sourceTree = "<group>"; };
 		E1D98FDF29FEFC6400027208 /* CreatePrickingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatePrickingView.swift; sourceTree = "<group>"; };
 		E1D98FE129FEFEC300027208 /* CreatePrickingWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CreatePrickingWindow.xib; sourceTree = "<group>"; };
 		E1DF65A32A01C44D00395C4F /* prickingSpecifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prickingSpecifier.swift; sourceTree = "<group>"; };
 		E1DFD09A2932DC690075D971 /* decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = decodable.swift; sourceTree = "<group>"; };
 		E1DFD09D293802DD0075D971 /* enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enums.swift; sourceTree = "<group>"; };
+		E1E3BCA52A6D9E1600DF6821 /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
+		E1E3BCA82A708D9500DF6821 /* LaceAppModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LaceAppModel.xcdatamodel; sourceTree = "<group>"; };
+		E1E3BCAA2A71786800DF6821 /* types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = types.swift; sourceTree = "<group>"; };
+		E1E3BCAC2A71D77A00DF6821 /* dataTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataTypes.swift; sourceTree = "<group>"; };
+		E1E3BCAE2A72CFAD00DF6821 /* prickings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prickings.swift; sourceTree = "<group>"; };
+		E1E3BCB02A72CFE800DF6821 /* layers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = layers.swift; sourceTree = "<group>"; };
+		E1E3BCB22A72D02F00DF6821 /* lines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lines.swift; sourceTree = "<group>"; };
+		E1E3BCB42A73310F00DF6821 /* grids.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = grids.swift; sourceTree = "<group>"; };
 		E1E731B32972B23800C4B850 /* Combine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Combine.framework; path = System/Library/Frameworks/Combine.framework; sourceTree = SDKROOT; };
 		E1EBD819283D7A9900D8E10C /* NSSizeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSSizeExtensions.swift; sourceTree = "<group>"; };
 		E1EBD81B284149A200D8E10C /* Calc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calc.swift; sourceTree = "<group>"; };
 		E1EBD81D2844021500D8E10C /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
-		E1F525D729EDBE460032D4E3 /* CoreDataBootStrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataBootStrap.swift; sourceTree = "<group>"; };
-		E1F525D929EDBFAA0032D4E3 /* DataHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
 		E1F525DD29F08E710032D4E3 /* Trivalent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trivalent.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -200,7 +203,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E18360A728384F8600414F20 /* CoreGraphics.framework in Frameworks */,
-				E1F525D629EDBDF80032D4E3 /* CoreData.framework in Frameworks */,
 				E183609A282EF88D00414F20 /* ApplicationServices.framework in Frameworks */,
 				E18360A12831B60400414F20 /* PDFKit.framework in Frameworks */,
 				E1383BFD27F9EF3E009DEEFA /* AppKit.framework in Frameworks */,
@@ -240,6 +242,8 @@
 		E122A67E29F847FF00DF98D6 /* ProjectManagerView */ = {
 			isa = PBXGroup;
 			children = (
+				E1D98FDF29FEFC6400027208 /* CreatePrickingView.swift */,
+				E1D98FE129FEFEC300027208 /* CreatePrickingWindow.xib */,
 				E1D72235297DED89005A1BBF /* popoverProtocol.swift */,
 				E1BE8AD929F45A2C0001C6CF /* pmController.swift */,
 				E1D72231297D8881005A1BBF /* startup.xib */,
@@ -352,8 +356,6 @@
 			isa = PBXGroup;
 			children = (
 				E1BD6A84280E049700430EC4 /* Colours.swift */,
-				E1D98FDF29FEFC6400027208 /* CreatePrickingView.swift */,
-				E1D98FE129FEFEC300027208 /* CreatePrickingWindow.xib */,
 			);
 			path = LaceView;
 			sourceTree = "<group>";
@@ -391,11 +393,8 @@
 			isa = PBXGroup;
 			children = (
 				E1BAC01E2A099BB7005DA5E7 /* DataModel */,
-				E1F525D729EDBE460032D4E3 /* CoreDataBootStrap.swift */,
-				E1F525D929EDBFAA0032D4E3 /* DataHandler.swift */,
 				E1F525DD29F08E710032D4E3 /* Trivalent.swift */,
-				E1D98FD829FD9FE000027208 /* LaceModel.xcdatamodeld */,
-				E1D98FDB29FDA1A300027208 /* dataTypes.swift */,
+				E1E3BCA52A6D9E1600DF6821 /* Files.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -403,8 +402,13 @@
 		E1BAC01E2A099BB7005DA5E7 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
-				E1BAC01F2A099C68005DA5E7 /* modelBase.swift */,
-				E1BAC0212A09A00D005DA5E7 /* PrickingData.swift */,
+				E1E3BCA72A708D9500DF6821 /* LaceAppModel.xcdatamodeld */,
+				E1E3BCAA2A71786800DF6821 /* types.swift */,
+				E1E3BCAC2A71D77A00DF6821 /* dataTypes.swift */,
+				E1E3BCAE2A72CFAD00DF6821 /* prickings.swift */,
+				E1E3BCB02A72CFE800DF6821 /* layers.swift */,
+				E1E3BCB22A72D02F00DF6821 /* lines.swift */,
+				E1E3BCB42A73310F00DF6821 /* grids.swift */,
 			);
 			path = DataModel;
 			sourceTree = "<group>";
@@ -555,11 +559,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E18360AD283A6F6700414F20 /* ViewApproach.swift in Sources */,
+				E1E3BCB12A72CFE800DF6821 /* layers.swift in Sources */,
 				E18360AB2839978900414F20 /* PrintFromData.swift in Sources */,
-				E1BAC0202A099C68005DA5E7 /* modelBase.swift in Sources */,
 				E1D72234297D8D4E005A1BBF /* RectangularButton.swift in Sources */,
 				E1D51F3E280B3C1B00995497 /* SettingsController.swift in Sources */,
-				E1F525D829EDBE460032D4E3 /* CoreDataBootStrap.swift in Sources */,
 				E17FBEDC28CB9FAA00408D89 /* viewDefaults.swift in Sources */,
 				E13574962815BE45005D84D6 /* DraingPanel.swift in Sources */,
 				E1DF65A42A01C44D00395C4F /* prickingSpecifier.swift in Sources */,
@@ -567,23 +570,26 @@
 				E1BD6A85280E049700430EC4 /* Colours.swift in Sources */,
 				E11EDC2D2961EAAF00B8E957 /* enumProtocols.swift in Sources */,
 				E11B739B28F4C873005AC2C9 /* threadTypes.swift in Sources */,
+				E1E3BCB52A73310F00DF6821 /* grids.swift in Sources */,
 				E1383C072808AB3D009DEEFA /* pricking.swift in Sources */,
 				E1EBD81C284149A200D8E10C /* Calc.swift in Sources */,
 				E1383C0B2809AC30009DEEFA /* filepaths.swift in Sources */,
 				E11EDC10295B7CE100B8E957 /* LaceSettings.swift in Sources */,
 				E11B739728F3242A005AC2C9 /* PLIST.swift in Sources */,
+				E1E3BCA92A708D9500DF6821 /* LaceAppModel.xcdatamodeld in Sources */,
 				E1DFD09E293802DD0075D971 /* enums.swift in Sources */,
+				E1E3BCAD2A71D77A00DF6821 /* dataTypes.swift in Sources */,
 				E11EDC0A295A695400B8E957 /* lines.swift in Sources */,
+				E1E3BCB32A72D02F00DF6821 /* lines.swift in Sources */,
 				E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */,
 				E1383BF627F79FC8009DEEFA /* Controller.swift in Sources */,
 				E1947D3F29B52EF4002D5D15 /* files.swift in Sources */,
-				E1BAC0222A09A00D005DA5E7 /* PrickingData.swift in Sources */,
 				E1CF9AB129930EBE00E8509A /* autosaveController.swift in Sources */,
 				E1383BE727F79C93009DEEFA /* AppDelegate.swift in Sources */,
 				E1383C012803787C009DEEFA /* Lines.swift in Sources */,
-				E1F525DA29EDBFAA0032D4E3 /* DataHandler.swift in Sources */,
 				E1383BF427F79F62009DEEFA /* LaceView.swift in Sources */,
 				E1383C05280773AB009DEEFA /* UserDefaults.swift in Sources */,
+				E1E3BCAB2A71786800DF6821 /* types.swift in Sources */,
 				E1D51F40280B3C8F00995497 /* Launchable.swift in Sources */,
 				E1383BFA27F9E304009DEEFA /* Grid.swift in Sources */,
 				E1BE8ADA29F45A2C0001C6CF /* pmController.swift in Sources */,
@@ -592,7 +598,6 @@
 				E135749128135102005D84D6 /* DictionaryExtensions.swift in Sources */,
 				E117ABAA294513AA00CFF6E8 /* simple2.swift in Sources */,
 				E183608F282A85FB00414F20 /* Calculator.swift in Sources */,
-				E1D98FDC29FDA1A300027208 /* dataTypes.swift in Sources */,
 				E1D98FD729FD9AC900027208 /* codablePricking.swift in Sources */,
 				E11EDC0E295B4A3100B8E957 /* grid2screen.swift in Sources */,
 				E11EDC0C295A69B400B8E957 /* sizes.swift in Sources */,
@@ -600,6 +605,7 @@
 				E1383BF827F8D8D4009DEEFA /* ViewBase.swift in Sources */,
 				E125DBD5296B76040088D5CC /* threadListPanel.swift in Sources */,
 				E1F525DE29F08E710032D4E3 /* Trivalent.swift in Sources */,
+				E1E3BCA62A6D9E1600DF6821 /* Files.swift in Sources */,
 				E1836093282C0E3200414F20 /* LaceKinds.swift in Sources */,
 				E10DDC31288342AE003A5C9C /* Displays.swift in Sources */,
 				E18360A528384D0500414F20 /* PrintableCG.swift in Sources */,
@@ -611,7 +617,7 @@
 				E1EBD81E2844021500D8E10C /* Errors.swift in Sources */,
 				E1EBD81A283D7A9900D8E10C /* NSSizeExtensions.swift in Sources */,
 				E1DFD09B2932DC690075D971 /* decodable.swift in Sources */,
-				E1D98FDA29FD9FE000027208 /* LaceModel.xcdatamodeld in Sources */,
+				E1E3BCAF2A72CFAD00DF6821 /* prickings.swift in Sources */,
 				E1836098282ED3DF00414F20 /* Printers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -865,13 +871,13 @@
 /* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
-		E1D98FD829FD9FE000027208 /* LaceModel.xcdatamodeld */ = {
+		E1E3BCA72A708D9500DF6821 /* LaceAppModel.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				E1D98FD929FD9FE000027208 /* LaceModel.xcdatamodel */,
+				E1E3BCA82A708D9500DF6821 /* LaceAppModel.xcdatamodel */,
 			);
-			currentVersion = E1D98FD929FD9FE000027208 /* LaceModel.xcdatamodel */;
-			path = LaceModel.xcdatamodeld;
+			currentVersion = E1E3BCA82A708D9500DF6821 /* LaceAppModel.xcdatamodel */;
+			path = LaceAppModel.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

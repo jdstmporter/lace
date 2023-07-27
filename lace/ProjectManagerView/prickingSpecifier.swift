@@ -8,13 +8,44 @@
 import Foundation
 import AppKit
 
+enum Columns : Int, RawRepresentable, CaseIterable {
+    typealias RawValue = Int
+    
+    static var fullNames : [Self:String] = [
+        .name : "Name",
+        .width : "Width",
+        .height : "Height",
+        .kind : "Lace Kind"
+    ]
+    
+    case name = 1
+    case width = 2
+    case height = 3
+    case kind = 4
+    //case uid = 5
+    //case created = 6
+    
+    init(_ r : RawValue) { self = Self(rawValue: r) ?? .name }
+    public init(_ name : String) {
+        self = (Self.allCases.first { $0.str==name }) ?? .name
+    }
+    
+    
+    var str : String { "\(self)" }
+    var name : String { Self.fullNames[self] ?? "default" }
+    var idx : Int { self.rawValue - 1 }
+    
+}
+
+
 
 
 extension NSTableColumn {
     var prickingElement : Columns { Columns(self.identifier.rawValue) }
 }
 
-extension PrickingSpecification {
+
+extension PrickingSpec {
     func format(for c: Columns) -> String {
         switch c {
         case .name:
@@ -36,10 +67,10 @@ extension PrickingSpecification {
 class PrickingSpecifier : NSControl {
     
     
-    var pricking = PrickingSpecification()
+    var pricking = PrickingSpec()
     
     var isLocked : Bool { false }
-    func loadData(_ d : [PrickingSpecification]) {}
+    func loadData(_ d : [PrickingSpec]) {}
     
     @IBAction func createNew(_ sender : Any) {
         Task {
@@ -57,8 +88,8 @@ class PrickingSpecifier : NSControl {
     
     
     
-    func processRequest(_ p : PrickingSpecification?,isNew: Bool) {
-        self.pricking = p ?? PrickingSpecification()
+    func processRequest(_ p : PrickingSpec?,isNew: Bool) {
+        self.pricking = p ?? PrickingSpec()
         guard let s = self.action else { return }
         _ = self.target?.perform(s, with: self)
         
@@ -85,7 +116,7 @@ class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSo
     static let cellID = NSUserInterfaceItemIdentifier("Prickings")
     static let NonName : [Columns] = [.width,.height,.kind]
 
-    var data : [PrickingSpecification] = []
+    var data : [PrickingSpec] = []
     var widths : [Columns:CGFloat] = [:]
     var textFont : NSFont { NSFont.systemFont(ofSize: 10) }
  
@@ -131,7 +162,7 @@ class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSo
         //data = []
     }
     
-    override func loadData(_ d : [PrickingSpecification]) {
+    override func loadData(_ d : [PrickingSpec]) {
         self.data=d
         Task {
             await MainActor.run { self.prickings.reloadData() }

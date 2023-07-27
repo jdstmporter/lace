@@ -54,7 +54,7 @@ class ProjectManagerController : NSViewController, NSTabViewDelegate {
     var dataState = Trivalent<DataHandler>()
     var handler : DataHandler? = nil
     var initialised : Bool = false
-    var prickings : [PrickingSpecification] = []
+    var prickings : [PrickingSpec] = []
     
     private func specifier(_ spec : DataState) -> PrickingSpecifier? {
         self.tabs.tabViewItems[spec.rawValue].view as? PrickingSpecifier
@@ -63,20 +63,20 @@ class ProjectManagerController : NSViewController, NSTabViewDelegate {
     func reload() {
         if let handler=self.handler {
             let d : [PrickingData] = (try? handler.getAll()) ?? []
-            self.prickings = d.compactMap { PrickingSpecification($0) }
+            self.prickings = d.compactMap { PrickingSpec($0) }
         }
         else { self.prickings=[] }
     }
     
-    func save(_ item : PrickingSpecification) throws {
+    func save(_ item : PrickingSpec) throws {
         guard let handler=self.handler else { return }
-        let obj : PrickingData = try handler.getOrCreate { $0.uid==item.uid }
-        obj.update(pricking: item)
+        var obj : PrickingData = try handler.getOrCreate { $0.uuid==item.uuid }
+        item.update(obj)
         handler.commit()
     }
-    func delete(_ item : PrickingSpecification) {
+    func delete(_ item : PrickingSpec) {
         guard let handler=self.handler else { return }
-        handler.delete(PrickingData.self) { $0.uid==item.uid }
+        handler.delete(PrickingData.self) { $0.uuid==item.uuid }
         handler.commit()
     }
     
