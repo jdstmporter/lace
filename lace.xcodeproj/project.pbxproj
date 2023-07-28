@@ -87,8 +87,9 @@
 		E1E3BCAD2A71D77A00DF6821 /* dataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCAC2A71D77A00DF6821 /* dataTypes.swift */; };
 		E1E3BCAF2A72CFAD00DF6821 /* prickings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCAE2A72CFAD00DF6821 /* prickings.swift */; };
 		E1E3BCB12A72CFE800DF6821 /* layers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCB02A72CFE800DF6821 /* layers.swift */; };
-		E1E3BCB32A72D02F00DF6821 /* lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCB22A72D02F00DF6821 /* lines.swift */; };
+		E1E3BCB32A72D02F00DF6821 /* lines_CD.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCB22A72D02F00DF6821 /* lines_CD.swift */; };
 		E1E3BCB52A73310F00DF6821 /* grids.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCB42A73310F00DF6821 /* grids.swift */; };
+		E1E3BCB62A733BB500DF6821 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13574A72826E39A005D84D6 /* CoreData.framework */; };
 		E1E731B42972B23800C4B850 /* Combine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E731B32972B23800C4B850 /* Combine.framework */; };
 		E1EBD81A283D7A9900D8E10C /* NSSizeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBD819283D7A9900D8E10C /* NSSizeExtensions.swift */; };
 		E1EBD81C284149A200D8E10C /* Calc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBD81B284149A200D8E10C /* Calc.swift */; };
@@ -188,7 +189,7 @@
 		E1E3BCAC2A71D77A00DF6821 /* dataTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataTypes.swift; sourceTree = "<group>"; };
 		E1E3BCAE2A72CFAD00DF6821 /* prickings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prickings.swift; sourceTree = "<group>"; };
 		E1E3BCB02A72CFE800DF6821 /* layers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = layers.swift; sourceTree = "<group>"; };
-		E1E3BCB22A72D02F00DF6821 /* lines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lines.swift; sourceTree = "<group>"; };
+		E1E3BCB22A72D02F00DF6821 /* lines_CD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lines_CD.swift; sourceTree = "<group>"; };
 		E1E3BCB42A73310F00DF6821 /* grids.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = grids.swift; sourceTree = "<group>"; };
 		E1E731B32972B23800C4B850 /* Combine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Combine.framework; path = System/Library/Frameworks/Combine.framework; sourceTree = SDKROOT; };
 		E1EBD819283D7A9900D8E10C /* NSSizeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSSizeExtensions.swift; sourceTree = "<group>"; };
@@ -203,6 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E18360A728384F8600414F20 /* CoreGraphics.framework in Frameworks */,
+				E1E3BCB62A733BB500DF6821 /* CoreData.framework in Frameworks */,
 				E183609A282EF88D00414F20 /* ApplicationServices.framework in Frameworks */,
 				E18360A12831B60400414F20 /* PDFKit.framework in Frameworks */,
 				E1383BFD27F9EF3E009DEEFA /* AppKit.framework in Frameworks */,
@@ -407,7 +409,7 @@
 				E1E3BCAC2A71D77A00DF6821 /* dataTypes.swift */,
 				E1E3BCAE2A72CFAD00DF6821 /* prickings.swift */,
 				E1E3BCB02A72CFE800DF6821 /* layers.swift */,
-				E1E3BCB22A72D02F00DF6821 /* lines.swift */,
+				E1E3BCB22A72D02F00DF6821 /* lines_CD.swift */,
 				E1E3BCB42A73310F00DF6821 /* grids.swift */,
 			);
 			path = DataModel;
@@ -580,7 +582,7 @@
 				E1DFD09E293802DD0075D971 /* enums.swift in Sources */,
 				E1E3BCAD2A71D77A00DF6821 /* dataTypes.swift in Sources */,
 				E11EDC0A295A695400B8E957 /* lines.swift in Sources */,
-				E1E3BCB32A72D02F00DF6821 /* lines.swift in Sources */,
+				E1E3BCB32A72D02F00DF6821 /* lines_CD.swift in Sources */,
 				E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */,
 				E1383BF627F79FC8009DEEFA /* Controller.swift in Sources */,
 				E1947D3F29B52EF4002D5D15 /* files.swift in Sources */,
