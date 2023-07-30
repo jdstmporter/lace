@@ -33,9 +33,6 @@ extension NSColor  {
     }
 }
 
-
-
-
 extension NSFont {
     convenience init?(components c: [String:Any]) {
         guard let name : String = c["name"] as? String, let size : CGFloat = c["size"] as? CGFloat else { return nil }

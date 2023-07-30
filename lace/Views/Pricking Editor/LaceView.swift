@@ -276,9 +276,10 @@ class LaceView : ViewBase {
     var spacingInMetres : CGFloat = 0.01 // 10mm
     var liner : ExtendedLine?
     
-    func setSize(width: Int,height: Int) {
+    func setSize(width: Int32,height: Int32) { self.setSize(GridSize(width,height)) }
+    func setSize(_ size: GridSize) {
         DispatchQueue.main.async {
-            self.pricking=Pricking(width,height)
+            self.pricking=Pricking(name: "", size: size)
             self.needsTrackerUpdate=true
             self.needsDisplay=true
         }
@@ -305,6 +306,8 @@ class LaceView : ViewBase {
         self.tracker.removeAll()
         
         let conv=pricking.converter
+        
+
         pricking.grid.yRange.forEach { y in
             pricking.grid.xRange.forEach { x in
                 let p = invert(conv.pos(x, y))
@@ -318,6 +321,7 @@ class LaceView : ViewBase {
                 self.tracker.append(area)
             }
         }
+        self.pricking.grid.updateTracking(view: self)
         self.needsTrackerUpdate=false
     }
     
@@ -350,7 +354,6 @@ class LaceView : ViewBase {
                 let fg : NSColor = colours[pinData]
                 let p = conv.pos(x, y)
                 point(p,radius: radius,colour: fg)
-                
             }
         }
         
@@ -430,7 +433,7 @@ class LaceView : ViewBase {
     
     func trackerCoordinate(_ event : NSEvent) -> GridPoint? {
         guard let info=event.trackingArea?.userInfo else { return nil }
-        guard let x=info["x"] as? Int, let y=info["y"] as? Int else { return nil }
+        guard let x=info["x"] as? Int32, let y=info["y"] as? Int32 else { return nil }
         return GridPoint(x, y)
     }
     

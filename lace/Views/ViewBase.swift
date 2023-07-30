@@ -40,16 +40,12 @@ class ViewBase : NSView, MouseHandler {
     var mainTracker : NSTrackingArea?
     var needsTrackerUpdate : Bool = false
     
-    func initialise() {
-        needsTrackerUpdate=true
-    }
+    func initialise() { needsTrackerUpdate=true }
     
-    // Draweing functions
+    // Drawing functions
     
     @IBInspectable var foregroundColor: NSColor = .black {
-        didSet {
-            self.touch()
-        }
+        didSet { self.touch() }
     }
     
     func invert(_ p : NSPoint) -> NSPoint {
@@ -87,14 +83,7 @@ class ViewBase : NSView, MouseHandler {
         self.touch()
         
     }
-    
-    
-    
-    
-    
-    
-
-    
+ 
     // mouse handlers
     
     func pos(_ event : NSEvent) -> NSPoint {
@@ -137,19 +126,13 @@ class ViewBase : NSView, MouseHandler {
     func locationIsValid(_ at: NSPoint) -> Bool { true }
     func shouldMoveMouse(_ from: NSPoint) -> NSPoint {from }
     
-    
-    
   
- 
-    
-    
     override func mouseDown(with event: NSEvent) {
         let p=self.shouldMoveMouse(self.pos(event))
         let valid=self.locationIsValid(p)
         self.mouseState=(valid) ? MouseDown(p) : nil
         self.lastPoint = self.mouseState?.position
     }
-    
     
     override func mouseUp(with event: NSEvent) {
         guard let down = mouseState else { return }
@@ -165,10 +148,7 @@ class ViewBase : NSView, MouseHandler {
         self.mouseState=nil
         self.lastPoint=nil
         self.enableDrag=false
-
     }
-    
-    
     
     override func mouseDragged(with event: NSEvent) {
         guard let down = mouseState else { return }
@@ -177,7 +157,6 @@ class ViewBase : NSView, MouseHandler {
             if self.locationIsValid(p) { self.lastPoint=p }
             if let l=self.lastPoint { self.isDragging(down.position,l) }
         }
-        
     }
     
     override func rightMouseDown(with event: NSEvent) {  }

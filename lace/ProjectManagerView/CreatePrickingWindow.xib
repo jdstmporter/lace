@@ -111,10 +111,10 @@
 Gw
 </string>
                                     </buttonCell>
-                                    <color key="bezelColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="bezelColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                            <color key="value" name="quaternaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="value" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                     <connections>
@@ -123,17 +123,17 @@ Gw
                                 </button>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZiE-jc-ahn">
                                     <rect key="frame" x="367" y="-5" width="76" height="32"/>
-                                    <buttonCell key="cell" type="push" title="Go" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3NM-dV-R08">
+                                    <buttonCell key="cell" type="push" title="Create" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="3NM-dV-R08">
                                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                         <font key="font" metaFont="system"/>
                                         <connections>
                                             <action selector="go:" target="QvC-M9-y7g" id="K2n-pR-xFh"/>
                                         </connections>
                                     </buttonCell>
-                                    <color key="bezelColor" name="tertiaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="bezelColor" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
                                     <userDefinedRuntimeAttributes>
                                         <userDefinedRuntimeAttribute type="color" keyPath="backgroundColor">
-                                            <color key="value" name="quaternaryLabelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="value" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
                                 </button>

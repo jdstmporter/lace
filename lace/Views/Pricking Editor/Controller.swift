@@ -31,20 +31,14 @@ class Controller : NSViewController {
     
     var dataState = Trivalent<DataHandler>()
     
-    var width : Int = 1
-    var height : Int = 1
+    var width: Int32 = 1
+    var height: Int32 = 1
     var path : String?
     
     var pricking : Pricking {
         get { self.drawingArea.pricking }
         set { self.drawingArea.pricking = newValue }
     }
-    
-    
-    
-
-    
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -58,12 +52,6 @@ class Controller : NSViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(updateEvent(_ :)), name: SettingsPanel.DefaultsUpdated, object: nil)
         
         self.updateZoom(self.zoomField)
-        //if let p = AutoSaveProcessor.load() {
-        //    self.pricking=p
-        //}
-        
-        
-        
     }
     
     override func viewDidAppear() {
@@ -104,7 +92,7 @@ class Controller : NSViewController {
         }
     }
     
-    func setSize(width: Int,height: Int) {
+    func setSize(width: Int32,height: Int32) {
         self.height=height
         self.width=width
         syslog.debug("Changed to \(self.width) x \(self.height)")
@@ -115,8 +103,8 @@ class Controller : NSViewController {
     
 
     @IBAction func sizeDidChange(_ field: NSTextField?) {
-        let w : Int = numericCast(widthField.intValue)
-        let h : Int = numericCast(heightField.intValue)
+        let w  = widthField.intValue
+        let h = heightField.intValue
         
         if w != self.width || h != self.height {
             self.setSize(width: w, height: h)

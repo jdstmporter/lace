@@ -118,19 +118,23 @@ struct Pricking : Storable {
         case name
     }
     
-    
-    init(name : String = "Pricking", width: Int = 1, height : Int = 1, kind: LaceKind = .Custom) {
+    init(name : String="Pricking", size: GridSize,kind: LaceKind = .Custom) {
         self.name=name
-        self.grid=Grid(width: width,height: height)
+        self.grid=Grid(size: size)
         self.lines=Lines()
         self.kind=kind
         self.scale=1.0
         self.index=0
     }
- 
     
-    var width : Int { self.grid.width }
-    var height : Int { self.grid.height }
+    init(name : String = "Pricking", width: Int32 = 1, height : Int32 = 1, kind: LaceKind = .Custom) {
+        self.init(name: name, size: GridSize(width,height),kind: kind)
+        
+    }
+ 
+    var size : GridSize { self.grid.size }
+    var width : Int32 { self.grid.width }
+    var height : Int32 { self.grid.height }
     
     
     var converter : Convert { Convert(scale) }
@@ -195,7 +199,7 @@ struct Pricking : Storable {
     
     mutating func flip(_ p : GridPoint) { grid.flip(p) }
     mutating func reset() { grid.reset() }
-    public subscript(_ x : Int, _ y : Int) -> Bool {
+    public subscript(_ x : Int32, _ y : Int32) -> Bool {
         get { self.grid[x,y] }
         set(v) { self.grid[x,y]=v }
     }

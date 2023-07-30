@@ -28,12 +28,9 @@ class ThreadListPanelView : NSPanel, LaunchableItem, NSTableViewDelegate, NSTabl
     
     static var threads : ThreadListPanelView? = nil
     
-    
-    
     @IBAction func closeAction(_ b : NSButton) {
         ThreadListPanelView.close()
     }
-    
     @discardableResult static func close() -> ThreadListPanelView? {
         threads?.performClose(nil)
         return threads
@@ -87,7 +84,6 @@ class ThreadListPanelView : NSPanel, LaunchableItem, NSTableViewDelegate, NSTabl
         self.show = Array(0..<self.rows.count)
         self.columns = self.table.tableColumns.map { $0.identifier }
         self.initialised=true
-        
     }
     
     func tableView(_ tableView: NSTableView, objectValueFor col : NSTableColumn?, row: Int) -> Any? {

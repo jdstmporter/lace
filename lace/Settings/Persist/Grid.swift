@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import AppKit
 import Combine
 import BitArray
 
@@ -44,13 +45,11 @@ class Grid : Codable {
     
     public init(width : Int32, height: Int32,data : BitArray) {
         self.size = GridSize(width,height)
-        let n = Swift.min(self.count,data.nBits)
+        let n = Swift.min(numericCast(width*height),data.nBits)
         self.data=BitArray(bytes:data.bytes,nBits: n)
     }
     
-    public convenience init(_ specification: PrickingSpecification) {
-        self.init(size: specification.size,data : specification.grid)
-    }
+    
     
     // coding
     
@@ -106,5 +105,43 @@ class Grid : Codable {
     public func check(_ x : Int32, _ y : Int32) -> Bool { xRange.contains(x) && yRange.contains(y) }
     public func check(_ p : GridPoint) -> Bool { check(p.x,p.y) }
  
+}
+
+extension Grid {
+    
+    
+    func updateTracking(view : LaceView) {
+        let conv=view.pricking.converter
+        
+        self.yRange.forEach { y in
+            self.xRange.forEach { x in
+                let p = view.invert(conv.pos(x,y))
+                let r = NSRect(centre: p, side: view.pricking.scale)
+                syslog.announce("(\(x),\(y)) -|> \(r)   [\(view.pricking.scale)]")
+                let area = NSTrackingArea(rect: r,
+                                          options: [.mouseEnteredAndExited,.activeInKeyWindow],
+                                          owner: self,
+                                          userInfo: ["x" : x, "y" : y])
+                view.addTrackingArea(area)
+                view.tracker.append(area)
+            }
+        }
+    }
+    
+    func draw(view : LaceView) {
+        
+        let conv=view.pricking.converter
+        self.yRange.forEach { y in
+            self.xRange.forEach { x in
+                let isPin = view.pricking[x,y]
+                let pinData : ViewPart = isPin ? .Pin : .Grid
+                let radius = view.dims[pinData]
+                let fg : NSColor = view.colours[pinData]
+                let p = conv.pos(x, y)
+                view.point(p,radius: radius,colour: fg)
+                
+            }
+        }
+    }
 }
 
