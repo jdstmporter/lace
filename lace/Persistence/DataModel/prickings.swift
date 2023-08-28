@@ -11,6 +11,15 @@ import BitArray
 
 extension DataPricking {
     
+    convenience init(context moc: NSManagedObjectContext,name: String, size: GridSize) {
+        self.init(context: moc)
+        self.name=name
+        self.size=size
+        self.uuid=UUID()
+        self.created=Date.now
+        
+    }
+    
     func layers() throws  -> [DataLayer] {
         guard let uuid=self.uuid else { throw DataError.PrickingHasNilIdentity }
         guard let moc=self.managedObjectContext else { throw DataError.PrickingHasNoManagedObjectContext }
@@ -38,15 +47,20 @@ extension DataPricking {
         self.gridData?.setGrid(grid)
     }
     
+    func getPricking() -> Pricking {
+        let g=self.getGrid()
+        let p=Pricking(name: self.name ?? "Pricking",)
+    }
+    
+    var laceKind : LaceKind {
+        get { LaceKind(index: self.kind) }
+        set { self.kind=newValue.index }
+    }
+    
     
     static func make(in moc: NSManagedObjectContext,name: String="Default",size: GridSize = GridSize(1,1)) -> DataPricking {
-        var pricking=DataPricking(context: moc)
-        pricking.name=name
-        pricking.size=size
-        pricking.uuid=UUID()
-        pricking.created=Date.now
-        
-        var grid=DataGrid.make(in: moc, nBits: size.count)
+        let pricking=DataPricking(context: moc,name: name,size: size)
+        let grid=DataGrid.make(in: moc, nBits: size.count)
         pricking.gridData=grid
         grid.parent=pricking
         return pricking

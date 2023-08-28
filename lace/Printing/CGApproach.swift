@@ -28,8 +28,8 @@ class CGPrintable {
         
         let sc = Double(dpM)*spM
         
-        let w = (pricking.grid.width.double+2)*sc
-        let h = (pricking.grid.height.double+2)*sc
+        let w = (Double(pricking.grid.width)+2)*sc
+        let h = (Double(pricking.grid.height)+2)*sc
         
         self.pricking=pricking
         self.size = NSSize.init(width: w, height: h)

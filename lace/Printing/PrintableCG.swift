@@ -88,12 +88,14 @@ class ImageCG {
         
         //var pix=[0]
         grid.yRange.forEach { y in
-            self.setPixel(0, atX: 0, y: y);
-            self.setPixel(0, atX: numericCast(size.width)-1, y: y);
+            let yy=Int(y)
+            self.setPixel(0, atX: 0, y: yy);
+            self.setPixel(0, atX: numericCast(size.width)-1, y: yy);
         }
         grid.xRange.forEach { x in
-            self.setPixel(0, atX: x, y: 0);
-            self.setPixel(0, atX: x, y: numericCast(size.height)-1);
+            let xx=Int(x)
+            self.setPixel(0, atX: xx, y: 0);
+            self.setPixel(0, atX: xx, y: numericCast(size.height)-1);
         }
         
         let conv=pricking.converter

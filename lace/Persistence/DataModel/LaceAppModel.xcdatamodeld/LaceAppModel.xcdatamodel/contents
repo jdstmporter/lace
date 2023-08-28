@@ -23,6 +23,7 @@
     <entity name="DataPricking" representedClassName="DataPricking" syncable="YES" codeGenerationType="class">
         <attribute name="created" attributeType="Date" defaultDateTimeInterval="-595929600" usesScalarValueType="NO"/>
         <attribute name="height" attributeType="Integer 32" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
+        <attribute name="kind" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String" minValueString="1" defaultValueString="Default Pricking"/>
         <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="width" attributeType="Integer 32" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>

@@ -11,6 +11,15 @@ import BitArray
 
 extension DataGrid {
     
+    convenience init(context moc: NSManagedObjectContext,bits: BitArray) {
+        self.init(context: moc)
+        self.grid=bits.binary
+    }
+    convenience init(context moc: NSManagedObjectContext,nBits: Int) {
+        self.init(context: moc)
+        self.grid=BitArray(nBits: nBits).binary
+    }
+    
     func getGrid(size: GridSize) -> Grid? {
         guard let d = self.grid else { return nil }
         return Grid(size: size, data: BitArray(binary: d, nBits: size.count))
@@ -21,13 +30,9 @@ extension DataGrid {
     }
     
     static func make(in moc: NSManagedObjectContext,nBits: Int) -> DataGrid {
-        var item=DataGrid.init(context: moc)
-        item.grid=BitArray(nBits: nBits).binary
-        return item
+        DataGrid.init(context: moc,nBits: nBits)
     }
     static func make(in moc: NSManagedObjectContext,bits: BitArray) -> DataGrid {
-        var item=DataGrid.init(context: moc)
-        item.grid=bits.binary
-        return item
+        DataGrid.init(context: moc,bits: bits)
     }
 }

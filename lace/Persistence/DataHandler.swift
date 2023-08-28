@@ -8,9 +8,7 @@
 import Foundation
 import CoreData
 
-enum DataError : BaseError {
-    case BadType
-}
+
 
 class DataHandler {
     
@@ -25,7 +23,7 @@ class DataHandler {
         catch(let e) { syslog.error(e.localizedDescription) }
     }
     func getAll<T>() throws -> [T] where T : NSManagedObject {
-            guard let name = T.entity().name else { throw DataError.BadType }
+            guard let name = T.entity().name else { throw DataError.BadTypeNameForDataLayer }
             let request = NSFetchRequest<T>(entityName: name)
             return try moc.performAndWait { try self.moc.fetch(request) }
     }
@@ -58,3 +56,23 @@ class DataHandler {
     
     
 }
+
+
+
+/*
+ class Persist {
+ typealias Callback = (DataHandler?) -> ()
+ static let modelName = "LaceAppModel"
+ 
+ static var handler : DataHandler? = nil
+ static var callback : Callback? = nil
+ 
+ static func load(_ name : String) {
+ Task {
+ let bootstrap = CoreDataBootStrap(model: self.modelName)
+ self.handler = await bootstrap.connect()
+ if let cb = self.callback { cb(self.handler) }
+ }
+ }
+ }
+ */
