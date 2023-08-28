@@ -68,6 +68,7 @@
 		E1BD6A85280E049700430EC4 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BD6A84280E049700430EC4 /* Colours.swift */; };
 		E1BE8ADA29F45A2C0001C6CF /* pmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BE8AD929F45A2C0001C6CF /* pmController.swift */; };
 		E1CF9AB9299707E200E8509A /* Atomics in Frameworks */ = {isa = PBXBuildFile; productRef = E1CF9AB8299707E200E8509A /* Atomics */; };
+		E1D2FE882A9D0887003C89A4 /* SQLITE3.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D2FE872A9D0887003C89A4 /* SQLITE3.swift */; };
 		E1D51F3C280B383D00995497 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D51F3B280B383D00995497 /* Preferences.xib */; };
 		E1D51F3E280B3C1B00995497 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D51F3D280B3C1B00995497 /* SettingsController.swift */; };
 		E1D51F40280B3C8F00995497 /* Launchable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D51F3F280B3C8F00995497 /* Launchable.swift */; };
@@ -170,6 +171,7 @@
 		E1947D3E29B52EF4002D5D15 /* files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = files.swift; sourceTree = "<group>"; };
 		E1BD6A84280E049700430EC4 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		E1BE8AD929F45A2C0001C6CF /* pmController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pmController.swift; sourceTree = "<group>"; };
+		E1D2FE872A9D0887003C89A4 /* SQLITE3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SQLITE3.swift; path = lace/Data/SQLITE3.swift; sourceTree = SOURCE_ROOT; };
 		E1D51F3B280B383D00995497 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		E1D51F3D280B3C1B00995497 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
 		E1D51F3F280B3C8F00995497 /* Launchable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launchable.swift; sourceTree = "<group>"; };
@@ -404,6 +406,7 @@
 			isa = PBXGroup;
 			children = (
 				E1E3BCA72A708D9500DF6821 /* LaceAppModel.xcdatamodeld */,
+				E1D2FE872A9D0887003C89A4 /* SQLITE3.swift */,
 				E1E3BCAA2A71786800DF6821 /* types.swift */,
 				E1E3BCAC2A71D77A00DF6821 /* dataTypes.swift */,
 				E1E3BCAE2A72CFAD00DF6821 /* prickings.swift */,
@@ -589,6 +592,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E18360AD283A6F6700414F20 /* ViewApproach.swift in Sources */,
+				E1D2FE882A9D0887003C89A4 /* SQLITE3.swift in Sources */,
 				E1E3BCB12A72CFE800DF6821 /* layers.swift in Sources */,
 				E18360AB2839978900414F20 /* PrintFromData.swift in Sources */,
 				E1D72234297D8D4E005A1BBF /* RectangularButton.swift in Sources */,
