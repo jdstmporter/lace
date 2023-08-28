@@ -23,18 +23,19 @@ class PrickingSpec {
     public private(set) var name : String = "Pricking"
     public private(set) var pricking : Pricking?
     
-    public var width : Int { pricking?.width ?? 1 }
-    public var height : Int { pricking?.height ?? 1 }
+    public var width : Int32 { pricking?.width ?? 1 }
+    public var height : Int32 { pricking?.height ?? 1 }
     public var kind : LaceKind { pricking?.kind ?? .Custom }
     
     
     init() {}
-    init(pricking: Pricking) {
-        self.name=pricking.name
+    init(pricking: Pricking?) {
+        self.name=pricking?.name ?? "Pricking"
         self.pricking=pricking
     }
     convenience init(name: String) {
-        if let pricking = try? Pricking.load(name) { self.init(pricking: pricking) }
+        let pricking = try? Pricking.load(name)
+        self.init(pricking: pricking)
     }
     convenience init(url: URL) {
         self.init(name: url.lastPathComponent)
@@ -43,6 +44,11 @@ class PrickingSpec {
     func save() {
         do { try self.pricking?.save() }
         catch {}
+    }
+    
+    func reset() {
+        self.name="Pricking"
+        self.pricking=nil
     }
 }
 class PrickingManager {
@@ -130,6 +136,10 @@ struct Pricking : Storable {
     init(name : String = "Pricking", width: Int32 = 1, height : Int32 = 1, kind: LaceKind = .Custom) {
         self.init(name: name, size: GridSize(width,height),kind: kind)
         
+    }
+    init(name: String,kind: LaceKind,grid: Grid) {
+        self.init(name: name, size: grid.size, kind: kind)
+        self.grid=grid
     }
  
     var size : GridSize { self.grid.size }

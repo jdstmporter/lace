@@ -8,6 +8,10 @@
 import Foundation
 import AppKit
 
+extension UUID {
+    static var Null : UUID { UUID(uuid: UUID_NULL) }
+}
+
 class CreatePrickingWindow : NSWindow, LaunchableItem {
     typealias Handler = (NSApplication.ModalResponse) -> Void
     enum PrickingError : Error {
@@ -25,7 +29,7 @@ class CreatePrickingWindow : NSWindow, LaunchableItem {
     @IBOutlet var height : NSTextField!
     
     var uuid = UUID.Null
-    var pricking = PrickingSpec()
+    var pricking = Pricking()
     
     func initialise(locked : Bool = false) {
         laceKindButton.load(LaceKind.self)
@@ -36,8 +40,8 @@ class CreatePrickingWindow : NSWindow, LaunchableItem {
     
     func reset() {
         self.pricking.reset()
-        width.integerValue = self.pricking.width
-        height.integerValue = self.pricking.height
+        width.intValue = self.pricking.width
+        height.intValue = self.pricking.height
         name.stringValue = self.pricking.name
         laceKindButton.selectItem(withTitle: self.pricking.kind.name)
     }
@@ -55,11 +59,11 @@ class CreatePrickingWindow : NSWindow, LaunchableItem {
     
     @IBAction func go(_ button : Any) {
         let name = self.name.stringValue
-        let width = self.width.integerValue
-        let height = self.height.integerValue
+        let width = self.width.intValue
+        let height = self.height.intValue
         let kind = LaceKind(self.laceKindButton.titleOfSelectedItem)
         
-        self.pricking = PrickingSpec(name: name, width: width, height: height, kind: kind)
+        self.pricking = Pricking(name: name, width: width, height: height, kind: kind)
         self.sheetParent?.endSheet(self, returnCode: .OK)
     }
     
@@ -70,7 +74,7 @@ class CreatePrickingWindow : NSWindow, LaunchableItem {
     
     
     
-    func start(host : NSWindow) async throws -> PrickingSpec {
+    func start(host : NSWindow) async throws -> Pricking {
         return try await withCheckedThrowingContinuation { continuation in
             host.beginSheet(self) { result in
                 switch result {
@@ -85,7 +89,7 @@ class CreatePrickingWindow : NSWindow, LaunchableItem {
         }
     }
     
-    static func start(host : PrickingSpecifier) async throws -> PrickingSpec {
+    static func start(host : PrickingSpecifier) async throws -> Pricking {
         guard let w=host.window, let win = CreatePrickingWindow.launch(locked: host.isLocked)
         else { throw PrickingError.nilreturn  }
         return try await win.start(host: w)

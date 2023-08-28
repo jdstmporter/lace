@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import SQLite3
 
 
 
@@ -50,5 +50,16 @@ enum FileError : BaseError {
     case CannotPickLoadFile
     case CannotPickSaveFile
     case CannotCreateDestination
+}
+
+enum SQLiteError : BaseError {
+    case GeneralError(Int32)
+    case CannotOpenDatabase
+    case CannotPrepareQueryStatement
+    case UnknownDataType(Int32)
+    
+    static func wrap(_ code : Int32) throws {
+        if code != SQLITE_OK { throw SQLiteError.GeneralError(code) }
+    }
 }
 

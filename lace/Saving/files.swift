@@ -19,6 +19,7 @@ protocol Serialiser {
     static func decode(_ data : Data) throws -> T
 }
 
+/*
 extension Serialiser {
     
     public func url(_ name: String) -> URL {
@@ -37,6 +38,7 @@ extension Serialiser {
         return u
     }
 }
+ 
 
 public class JSONSerialiser<T> : Serialiser where T : Codable {
     static func encode(_ item: T) throws -> Data {
@@ -62,6 +64,8 @@ public class PListSerialiser<T> : Serialiser where T : Codable {
         return try decoder.decode(T.self, from: data)
     }
 }
+ 
+ */
 
 
 

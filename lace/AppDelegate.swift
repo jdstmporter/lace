@@ -8,9 +8,20 @@
 import Cocoa
 import UniformTypeIdentifiers
 
+extension NSApplication {
+    
+    var dataHandler : DataHandler? {
+        guard let d = self.delegate as? AppDelegate else { return nil }
+        return d.handler
+    }
+    
+}
+
+
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    public private(set) var handler : DataHandler?
    
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var pmController: ProjectManagerController!
@@ -24,12 +35,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         Defaults.load()
-        FilePaths.load()
+        
         
         Task {
-            let bootstrap = CoreDataBootStrap(model: "LaceModel")
+            let bootstrap = CoreDataBootStrap(model: "LaceAppModel")
             let handler : DataHandler? = await bootstrap.connect()
-            pmController.setDataSource(handler: handler)
+            self.pmController.setDataSource(handler: handler)
+            self.handler=handler
         }
     }
     
@@ -106,7 +118,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
          
          
 
-         FilePaths.shutdown()
+    
          Defaults.shutdown()
     }
 

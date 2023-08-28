@@ -44,7 +44,12 @@ class HeaderView : NSTableHeaderCell {
 
 }
 
-
+extension Pricking {
+    init(_ dp : DataPricking) {
+        let grid = dp.getGrid()
+        self.init(name: dp.name ?? "Default",kind: dp.laceKind,grid: grid)
+    }
+}
 
 class ProjectManagerController : NSViewController, NSTabViewDelegate {
     
@@ -54,7 +59,7 @@ class ProjectManagerController : NSViewController, NSTabViewDelegate {
     var dataState = Trivalent<DataHandler>()
     var handler : DataHandler? = nil
     var initialised : Bool = false
-    var prickings : [PrickingSpec] = []
+    var prickings : [Pricking] = []
     
     private func specifier(_ spec : DataState) -> PrickingSpecifier? {
         self.tabs.tabViewItems[spec.rawValue].view as? PrickingSpecifier
@@ -62,21 +67,21 @@ class ProjectManagerController : NSViewController, NSTabViewDelegate {
     
     func reload() {
         if let handler=self.handler {
-            let d : [PrickingData] = (try? handler.getAll()) ?? []
-            self.prickings = d.compactMap { PrickingSpec($0) }
+            let d : [DataPricking] = (try? handler.getAll()) ?? []
+            self.prickings = d.compactMap { Pricking($0) }
         }
         else { self.prickings=[] }
     }
     
-    func save(_ item : PrickingSpec) throws {
+    func save(_ item : Pricking) throws {
         guard let handler=self.handler else { return }
-        var obj : PrickingData = try handler.getOrCreate { $0.uuid==item.uuid }
+        var obj : DataPricking = try handler.getOrCreate { $0.uuid==item.uuid }
         item.update(obj)
         handler.commit()
     }
-    func delete(_ item : PrickingSpec) {
+    func delete(_ item : Pricking) {
         guard let handler=self.handler else { return }
-        handler.delete(PrickingData.self) { $0.uuid==item.uuid }
+        handler.delete(DataPricking.self) { $0.uuid==item.uuid }
         handler.commit()
     }
     
