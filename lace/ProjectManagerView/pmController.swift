@@ -44,12 +44,7 @@ class HeaderView : NSTableHeaderCell {
 
 }
 
-extension Pricking {
-    init(_ dp : DataPricking) {
-        let grid = dp.getGrid()
-        self.init(name: dp.name ?? "Default",kind: dp.laceKind,grid: grid)
-    }
-}
+
 
 class ProjectManagerController : NSViewController, NSTabViewDelegate {
     

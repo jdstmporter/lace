@@ -45,32 +45,14 @@ extension NSTableColumn {
 }
 
 
-extension PrickingSpec {
-    func format(for c: Columns) -> String {
-        switch c {
-        case .name:
-            return self.name
-        case .width:
-            return "\(self.width)"
-        case .height:
-            return "\(self.height)"
-        case .kind:
-            return  self.kind.str
-        default:
-            return "-"
-        }
-    }
-    
-    
-}
 
 class PrickingSpecifier : NSControl {
     
     
-    var pricking = PrickingSpec()
+    var pricking = PrickingSpecification()
     
     var isLocked : Bool { false }
-    func loadData(_ d : [PrickingSpec]) {}
+    func loadData(_ d : [PrickingSpecification]) {}
     
     @IBAction func createNew(_ sender : Any) {
         Task {
@@ -88,8 +70,8 @@ class PrickingSpecifier : NSControl {
     
     
     
-    func processRequest(_ p : PrickingSpec?,isNew: Bool) {
-        self.pricking = p ?? PrickingSpec()
+    func processRequest(_ p : PrickingSpecification?,isNew: Bool) {
+        self.pricking = p ?? PrickingSpecification()
         guard let s = self.action else { return }
         _ = self.target?.perform(s, with: self)
         
@@ -116,7 +98,7 @@ class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSo
     static let cellID = NSUserInterfaceItemIdentifier("Prickings")
     static let NonName : [Columns] = [.width,.height,.kind]
 
-    var data : [PrickingSpec] = []
+    var data : [PrickingSpecification] = []
     var widths : [Columns:CGFloat] = [:]
     var textFont : NSFont { NSFont.systemFont(ofSize: 10) }
  
@@ -162,7 +144,7 @@ class GotStorageView : PrickingSpecifier, NSTableViewDelegate, NSTableViewDataSo
         //data = []
     }
     
-    override func loadData(_ d : [PrickingSpec]) {
+    override func loadData(_ d : [PrickingSpecification]) {
         self.data=d
         Task {
             await MainActor.run { self.prickings.reloadData() }

@@ -8,20 +8,12 @@
 import Cocoa
 import UniformTypeIdentifiers
 
-extension NSApplication {
-    
-    var dataHandler : DataHandler? {
-        guard let d = self.delegate as? AppDelegate else { return nil }
-        return d.handler
-    }
-    
-}
 
 
 @main
 class AppDelegate: NSObject, NSApplicationDelegate {
 
-    public private(set) var handler : DataHandler?
+    
    
     @IBOutlet weak var window: NSWindow!
     @IBOutlet weak var pmController: ProjectManagerController!
@@ -37,12 +29,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         Defaults.load()
         
         
-        Task {
-            let bootstrap = CoreDataBootStrap(model: "LaceAppModel")
-            let handler : DataHandler? = await bootstrap.connect()
-            self.pmController.setDataSource(handler: handler)
-            self.handler=handler
-        }
+        
     }
     
     /*

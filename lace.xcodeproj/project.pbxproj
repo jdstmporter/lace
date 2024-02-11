@@ -22,7 +22,6 @@
 		E11B73AA28FC993A005AC2C9 /* pricker32.png in Resources */ = {isa = PBXBuildFile; fileRef = E11B73A628FC993A005AC2C9 /* pricker32.png */; };
 		E11B73AB28FC993A005AC2C9 /* pricker64.png in Resources */ = {isa = PBXBuildFile; fileRef = E11B73A728FC993A005AC2C9 /* pricker64.png */; };
 		E11B73AC28FC993A005AC2C9 /* pricker1024.png in Resources */ = {isa = PBXBuildFile; fileRef = E11B73A828FC993A005AC2C9 /* pricker1024.png */; };
-		E11DC4202AAD18AF00DC78D3 /* db.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11DC41F2AAD18AF00DC78D3 /* db.swift */; };
 		E11EDC08295A687600B8E957 /* points.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11EDC07295A687600B8E957 /* points.swift */; };
 		E11EDC0A295A695400B8E957 /* lines.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11EDC09295A695400B8E957 /* lines.swift */; };
 		E11EDC0C295A69B400B8E957 /* sizes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E11EDC0B295A69B400B8E957 /* sizes.swift */; };
@@ -65,12 +64,10 @@
 		E18360AD283A6F6700414F20 /* ViewApproach.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18360AC283A6F6700414F20 /* ViewApproach.swift */; };
 		E18360AF283A94A300414F20 /* Printing.xib in Resources */ = {isa = PBXBuildFile; fileRef = E18360AE283A94A300414F20 /* Printing.xib */; };
 		E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18360B0283A950600414F20 /* PrintingPanel.swift */; };
-		E18AD46C2A9D3261002BF46B /* pkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18AD46B2A9D3261002BF46B /* pkHandler.swift */; };
 		E1947D3F29B52EF4002D5D15 /* files.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1947D3E29B52EF4002D5D15 /* files.swift */; };
 		E1BD6A85280E049700430EC4 /* Colours.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BD6A84280E049700430EC4 /* Colours.swift */; };
 		E1BE8ADA29F45A2C0001C6CF /* pmController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1BE8AD929F45A2C0001C6CF /* pmController.swift */; };
 		E1CF9AB9299707E200E8509A /* Atomics in Frameworks */ = {isa = PBXBuildFile; productRef = E1CF9AB8299707E200E8509A /* Atomics */; };
-		E1D2FE882A9D0887003C89A4 /* SQLITE3.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D2FE872A9D0887003C89A4 /* SQLITE3.swift */; };
 		E1D2FE8A2A9D0E84003C89A4 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E18360872828036900414F20 /* libsqlite3.tbd */; };
 		E1D51F3C280B383D00995497 /* Preferences.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1D51F3B280B383D00995497 /* Preferences.xib */; };
 		E1D51F3E280B3C1B00995497 /* SettingsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D51F3D280B3C1B00995497 /* SettingsController.swift */; };
@@ -85,16 +82,7 @@
 		E1DFD09B2932DC690075D971 /* decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DFD09A2932DC690075D971 /* decodable.swift */; };
 		E1DFD09E293802DD0075D971 /* enums.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1DFD09D293802DD0075D971 /* enums.swift */; };
 		E1E3BCA62A6D9E1600DF6821 /* Files.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCA52A6D9E1600DF6821 /* Files.swift */; };
-		E1E3BCA92A708D9500DF6821 /* LaceAppModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCA72A708D9500DF6821 /* LaceAppModel.xcdatamodeld */; };
-		E1E3BCAB2A71786800DF6821 /* types.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCAA2A71786800DF6821 /* types.swift */; };
-		E1E3BCAD2A71D77A00DF6821 /* dataTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCAC2A71D77A00DF6821 /* dataTypes.swift */; };
-		E1E3BCAF2A72CFAD00DF6821 /* prickings.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCAE2A72CFAD00DF6821 /* prickings.swift */; };
-		E1E3BCB12A72CFE800DF6821 /* layers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCB02A72CFE800DF6821 /* layers.swift */; };
-		E1E3BCB32A72D02F00DF6821 /* lines_CD.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCB22A72D02F00DF6821 /* lines_CD.swift */; };
-		E1E3BCB52A73310F00DF6821 /* grids.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCB42A73310F00DF6821 /* grids.swift */; };
 		E1E3BCB62A733BB500DF6821 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E13574A72826E39A005D84D6 /* CoreData.framework */; };
-		E1E3BCDD2A76BE0400DF6821 /* DataHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCDB2A76BE0300DF6821 /* DataHandler.swift */; };
-		E1E3BCDE2A76BE0400DF6821 /* CoreDataBootStrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E3BCDC2A76BE0300DF6821 /* CoreDataBootStrap.swift */; };
 		E1E731B42972B23800C4B850 /* Combine.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E731B32972B23800C4B850 /* Combine.framework */; };
 		E1EBD81A283D7A9900D8E10C /* NSSizeExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBD819283D7A9900D8E10C /* NSSizeExtensions.swift */; };
 		E1EBD81C284149A200D8E10C /* Calc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EBD81B284149A200D8E10C /* Calc.swift */; };
@@ -123,7 +111,6 @@
 		E11B73A628FC993A005AC2C9 /* pricker32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pricker32.png; path = lace/Assets.xcassets/pricker32.png; sourceTree = "<group>"; };
 		E11B73A728FC993A005AC2C9 /* pricker64.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pricker64.png; path = lace/Assets.xcassets/pricker64.png; sourceTree = "<group>"; };
 		E11B73A828FC993A005AC2C9 /* pricker1024.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pricker1024.png; path = lace/Assets.xcassets/pricker1024.png; sourceTree = "<group>"; };
-		E11DC41F2AAD18AF00DC78D3 /* db.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = db.swift; sourceTree = "<group>"; };
 		E11EDC07295A687600B8E957 /* points.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = points.swift; sourceTree = "<group>"; };
 		E11EDC09295A695400B8E957 /* lines.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lines.swift; sourceTree = "<group>"; };
 		E11EDC0B295A69B400B8E957 /* sizes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = sizes.swift; sourceTree = "<group>"; };
@@ -173,11 +160,9 @@
 		E18360AC283A6F6700414F20 /* ViewApproach.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewApproach.swift; sourceTree = "<group>"; };
 		E18360AE283A94A300414F20 /* Printing.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Printing.xib; sourceTree = "<group>"; };
 		E18360B0283A950600414F20 /* PrintingPanel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrintingPanel.swift; sourceTree = "<group>"; };
-		E18AD46B2A9D3261002BF46B /* pkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pkHandler.swift; sourceTree = "<group>"; };
 		E1947D3E29B52EF4002D5D15 /* files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = files.swift; sourceTree = "<group>"; };
 		E1BD6A84280E049700430EC4 /* Colours.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colours.swift; sourceTree = "<group>"; };
 		E1BE8AD929F45A2C0001C6CF /* pmController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = pmController.swift; sourceTree = "<group>"; };
-		E1D2FE872A9D0887003C89A4 /* SQLITE3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SQLITE3.swift; path = lace/Data/SQLITE3.swift; sourceTree = SOURCE_ROOT; };
 		E1D2FE892A9D0C4F003C89A4 /* schemata.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = schemata.md; sourceTree = "<group>"; };
 		E1D51F3B280B383D00995497 /* Preferences.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Preferences.xib; sourceTree = "<group>"; };
 		E1D51F3D280B3C1B00995497 /* SettingsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsController.swift; sourceTree = "<group>"; };
@@ -193,22 +178,12 @@
 		E1DFD09A2932DC690075D971 /* decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = decodable.swift; sourceTree = "<group>"; };
 		E1DFD09D293802DD0075D971 /* enums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = enums.swift; sourceTree = "<group>"; };
 		E1E3BCA52A6D9E1600DF6821 /* Files.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Files.swift; sourceTree = "<group>"; };
-		E1E3BCA82A708D9500DF6821 /* LaceAppModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LaceAppModel.xcdatamodel; sourceTree = "<group>"; };
-		E1E3BCAA2A71786800DF6821 /* types.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = types.swift; sourceTree = "<group>"; };
-		E1E3BCAC2A71D77A00DF6821 /* dataTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dataTypes.swift; sourceTree = "<group>"; };
-		E1E3BCAE2A72CFAD00DF6821 /* prickings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = prickings.swift; sourceTree = "<group>"; };
-		E1E3BCB02A72CFE800DF6821 /* layers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = layers.swift; sourceTree = "<group>"; };
-		E1E3BCB22A72D02F00DF6821 /* lines_CD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = lines_CD.swift; sourceTree = "<group>"; };
-		E1E3BCB42A73310F00DF6821 /* grids.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = grids.swift; sourceTree = "<group>"; };
 		E1E3BCD62A7424C500DF6821 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		E1E3BCDB2A76BE0300DF6821 /* DataHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataHandler.swift; sourceTree = "<group>"; };
-		E1E3BCDC2A76BE0300DF6821 /* CoreDataBootStrap.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataBootStrap.swift; sourceTree = "<group>"; };
 		E1E731B32972B23800C4B850 /* Combine.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Combine.framework; path = System/Library/Frameworks/Combine.framework; sourceTree = SDKROOT; };
 		E1EBD819283D7A9900D8E10C /* NSSizeExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSSizeExtensions.swift; sourceTree = "<group>"; };
 		E1EBD81B284149A200D8E10C /* Calc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Calc.swift; sourceTree = "<group>"; };
 		E1EBD81D2844021500D8E10C /* Errors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Errors.swift; sourceTree = "<group>"; };
 		E1F525DD29F08E710032D4E3 /* Trivalent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trivalent.swift; sourceTree = "<group>"; };
-		E1FD01862AB640260077BD7E /* LaceAppModel 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "LaceAppModel 2.xcdatamodel"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,14 +213,6 @@
 				E106B00729CE78A200B840B1 /* schema.xsd */,
 			);
 			path = xml;
-			sourceTree = "<group>";
-		};
-		E11DC41E2AAD189C00DC78D3 /* SQLite */ = {
-			isa = PBXGroup;
-			children = (
-				E11DC41F2AAD18AF00DC78D3 /* db.swift */,
-			);
-			path = SQLite;
 			sourceTree = "<group>";
 		};
 		E11EDC06295A685500B8E957 /* Persist */ = {
@@ -412,7 +379,6 @@
 		E18AD46A2A9D311E002BF46B /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				E18AD46B2A9D3261002BF46B /* pkHandler.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -420,8 +386,6 @@
 		E1947D4029C3D5C0002D5D15 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
-				E1E3BCDC2A76BE0300DF6821 /* CoreDataBootStrap.swift */,
-				E1E3BCDB2A76BE0300DF6821 /* DataHandler.swift */,
 				E1BAC01E2A099BB7005DA5E7 /* DataModel */,
 				E1F525DD29F08E710032D4E3 /* Trivalent.swift */,
 				E1E3BCA52A6D9E1600DF6821 /* Files.swift */,
@@ -432,16 +396,7 @@
 		E1BAC01E2A099BB7005DA5E7 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
-				E11DC41E2AAD189C00DC78D3 /* SQLite */,
 				E18AD46A2A9D311E002BF46B /* Data */,
-				E1E3BCA72A708D9500DF6821 /* LaceAppModel.xcdatamodeld */,
-				E1D2FE872A9D0887003C89A4 /* SQLITE3.swift */,
-				E1E3BCAA2A71786800DF6821 /* types.swift */,
-				E1E3BCAC2A71D77A00DF6821 /* dataTypes.swift */,
-				E1E3BCAE2A72CFAD00DF6821 /* prickings.swift */,
-				E1E3BCB02A72CFE800DF6821 /* layers.swift */,
-				E1E3BCB22A72D02F00DF6821 /* lines_CD.swift */,
-				E1E3BCB42A73310F00DF6821 /* grids.swift */,
 				E1D2FE892A9D0C4F003C89A4 /* schemata.md */,
 			);
 			path = DataModel;
@@ -622,8 +577,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E18360AD283A6F6700414F20 /* ViewApproach.swift in Sources */,
-				E1D2FE882A9D0887003C89A4 /* SQLITE3.swift in Sources */,
-				E1E3BCB12A72CFE800DF6821 /* layers.swift in Sources */,
 				E18360AB2839978900414F20 /* PrintFromData.swift in Sources */,
 				E1D72234297D8D4E005A1BBF /* RectangularButton.swift in Sources */,
 				E1D51F3E280B3C1B00995497 /* SettingsController.swift in Sources */,
@@ -634,17 +587,13 @@
 				E1BD6A85280E049700430EC4 /* Colours.swift in Sources */,
 				E11EDC2D2961EAAF00B8E957 /* enumProtocols.swift in Sources */,
 				E11B739B28F4C873005AC2C9 /* threadTypes.swift in Sources */,
-				E1E3BCB52A73310F00DF6821 /* grids.swift in Sources */,
 				E1383C072808AB3D009DEEFA /* pricking.swift in Sources */,
 				E1EBD81C284149A200D8E10C /* Calc.swift in Sources */,
 				E1383C0B2809AC30009DEEFA /* filepaths.swift in Sources */,
 				E11EDC10295B7CE100B8E957 /* LaceSettings.swift in Sources */,
 				E11B739728F3242A005AC2C9 /* PLIST.swift in Sources */,
-				E1E3BCA92A708D9500DF6821 /* LaceAppModel.xcdatamodeld in Sources */,
 				E1DFD09E293802DD0075D971 /* enums.swift in Sources */,
-				E1E3BCAD2A71D77A00DF6821 /* dataTypes.swift in Sources */,
 				E11EDC0A295A695400B8E957 /* lines.swift in Sources */,
-				E1E3BCB32A72D02F00DF6821 /* lines_CD.swift in Sources */,
 				E18360B1283A950600414F20 /* PrintingPanel.swift in Sources */,
 				E1383BF627F79FC8009DEEFA /* Controller.swift in Sources */,
 				E1947D3F29B52EF4002D5D15 /* files.swift in Sources */,
@@ -652,7 +601,6 @@
 				E1383C012803787C009DEEFA /* Lines.swift in Sources */,
 				E1383BF427F79F62009DEEFA /* LaceView.swift in Sources */,
 				E1383C05280773AB009DEEFA /* UserDefaults.swift in Sources */,
-				E1E3BCAB2A71786800DF6821 /* types.swift in Sources */,
 				E1D51F40280B3C8F00995497 /* Launchable.swift in Sources */,
 				E1383BFA27F9E304009DEEFA /* Grid.swift in Sources */,
 				E1BE8ADA29F45A2C0001C6CF /* pmController.swift in Sources */,
@@ -662,7 +610,6 @@
 				E183608F282A85FB00414F20 /* Calculator.swift in Sources */,
 				E1D98FD729FD9AC900027208 /* codablePricking.swift in Sources */,
 				E11EDC0E295B4A3100B8E957 /* grid2screen.swift in Sources */,
-				E11DC4202AAD18AF00DC78D3 /* db.swift in Sources */,
 				E11EDC0C295A69B400B8E957 /* sizes.swift in Sources */,
 				E1383C092808DACC009DEEFA /* FilePicker.swift in Sources */,
 				E1383BF827F8D8D4009DEEFA /* ViewBase.swift in Sources */,
@@ -679,12 +626,8 @@
 				E17FBEE628CD3F8D00408D89 /* common.swift in Sources */,
 				E1EBD81E2844021500D8E10C /* Errors.swift in Sources */,
 				E1EBD81A283D7A9900D8E10C /* NSSizeExtensions.swift in Sources */,
-				E1E3BCDE2A76BE0400DF6821 /* CoreDataBootStrap.swift in Sources */,
 				E1DFD09B2932DC690075D971 /* decodable.swift in Sources */,
-				E18AD46C2A9D3261002BF46B /* pkHandler.swift in Sources */,
-				E1E3BCDD2A76BE0400DF6821 /* DataHandler.swift in Sources */,
 				E1DDD84B2B78409A00D53854 /* Layer.swift in Sources */,
-				E1E3BCAF2A72CFAD00DF6821 /* prickings.swift in Sources */,
 				E1836098282ED3DF00414F20 /* Printers.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -936,20 +879,6 @@
 			productName = BitArray;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		E1E3BCA72A708D9500DF6821 /* LaceAppModel.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				E1FD01862AB640260077BD7E /* LaceAppModel 2.xcdatamodel */,
-				E1E3BCA82A708D9500DF6821 /* LaceAppModel.xcdatamodel */,
-			);
-			currentVersion = E1FD01862AB640260077BD7E /* LaceAppModel 2.xcdatamodel */;
-			path = LaceAppModel.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = E1383BDB27F79C93009DEEFA /* Project object */;
 }
