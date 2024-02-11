@@ -1,33 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G419" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="DataGrid" representedClassName="DataGrid" syncable="YES" codeGenerationType="class">
-        <attribute name="grid" optional="YES" attributeType="Binary"/>
-        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataPricking" inverseName="gridData" inverseEntity="DataPricking"/>
-    </entity>
-    <entity name="DataLayer" representedClassName="DataLayer" isAbstract="YES" syncable="YES" codeGenerationType="class">
-        <attribute name="index" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="kind" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="name" attributeType="String" defaultValueString="Default layer name"/>
-        <attribute name="parent" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
-    </entity>
-    <entity name="DataLine" representedClassName="DataLine" syncable="YES" codeGenerationType="class">
-        <attribute name="endX" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="endY" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="startX" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="startY" attributeType="Integer 32" minValueString="0" defaultValueString="0" usesScalarValueType="YES"/>
-        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DataLines" inverseName="lines" inverseEntity="DataLines"/>
-    </entity>
-    <entity name="DataLines" representedClassName="DataLines" parentEntity="DataLayer" syncable="YES" codeGenerationType="class">
-        <relationship name="lines" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="DataLine" inverseName="parent" inverseEntity="DataLine"/>
-    </entity>
-    <entity name="DataPricking" representedClassName="DataPricking" syncable="YES" codeGenerationType="class">
-        <attribute name="created" attributeType="Date" defaultDateTimeInterval="-595929600" usesScalarValueType="NO"/>
+    <entity name="GridData" representedClassName="GridData" syncable="YES" codeGenerationType="class">
+        <attribute name="attribute" optional="YES"/>
+        <attribute name="data" attributeType="Binary"/>
         <attribute name="height" attributeType="Integer 32" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
-        <attribute name="kind" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="name" attributeType="String" minValueString="1" defaultValueString="Default Pricking"/>
-        <attribute name="uuid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="width" attributeType="Integer 32" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
-        <relationship name="gridData" maxCount="1" deletionRule="Cascade" destinationEntity="DataGrid" inverseName="parent" inverseEntity="DataGrid"/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PrickingData" inverseName="grid" inverseEntity="PrickingData"/>
     </entity>
-    <fetchRequest name="FetchLayers" entity="DataLayer" predicateString="parent == &quot;$UUID&quot;"/>
+    <entity name="LayerData" representedClassName="LayerData" syncable="YES" codeGenerationType="class">
+        <attribute name="data" attributeType="Binary"/>
+        <attribute name="kind" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PrickingData" inverseName="layers" inverseEntity="PrickingData"/>
+    </entity>
+    <entity name="PrickingData" representedClassName="PrickingData" syncable="YES" codeGenerationType="class">
+        <attribute name="created" attributeType="Date" defaultDateTimeInterval="716586840" usesScalarValueType="NO"/>
+        <attribute name="kind" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <attribute name="uid" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="width" optional="YES"/>
+        <relationship name="grid" maxCount="1" deletionRule="Nullify" destinationEntity="GridData" inverseName="parent" inverseEntity="GridData"/>
+        <relationship name="layers" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="LayerData" inverseName="parent" inverseEntity="LayerData"/>
+    </entity>
 </model>

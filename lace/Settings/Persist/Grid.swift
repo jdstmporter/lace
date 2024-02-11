@@ -26,29 +26,6 @@ class Grid : Codable {
     var size : GridSize
     var data : BitArray
     
-    var width : Int32 { self.size.width }
-    var height : Int32 { self.size.height }
-    var count : Int { numericCast(self.size.count) }
-    
-    public init(size : GridSize,data : BitArray) {
-        self.size=size
-        self.data=BitArray(data)
-    }
-    public convenience init(size: GridSize) {
-        let d=BitArray(nBits: numericCast(size.count))
-        self.init(size: size,data: d)
-    }
-    
-    public convenience init(width : Int32, height : Int32) {
-        self.init(size: GridSize(width,height))
-    }
-    
-    public init(width : Int32, height: Int32,data : BitArray) {
-        self.size = GridSize(width,height)
-        let n = Swift.min(numericCast(width*height),data.nBits)
-        self.data=BitArray(bytes:data.bytes,nBits: n)
-    }
-    
     
     
     // coding
@@ -70,25 +47,52 @@ class Grid : Codable {
         try values.encode(self.data, forKey: .data)
     }
     
-    // Range-based values
+    // unique initialisers
     
-    public var xRange : Range<Int32> { 0..<width }
-    public var yRange : Range<Int32> { 0..<height }
-    public var xyRange : [(Int32,Int32)] { self._apply { (x,y) in (x,y) }}
-    public var pointRange : [GridPoint] { xyRange.map { GridPoint($0.0,$0.1) } }
+    public init(size : GridSize,data : BitArray) {
+        self.size=size
+        self.data=BitArray(data)
+    }
+    public convenience init(size: GridSize) {
+        let d=BitArray(nBits: numericCast(size.count))
+        self.init(size: size,data: d)
+    }
     
-    private func _apply<T>(_ f: (Int32,Int32) -> T?) -> [T] {
+    public convenience init(width : Int, height : Int) {
+        self.init(size: GridSize(width,height))
+    }
+    
+    public init(width : Int, height: Int,data : BitArray) {
+        self.size = GridSize(width,height)
+        let n = Swift.min(numericCast(width*height),data.nBits)
+        self.data=BitArray(bytes:data.bytes,nBits: n)
+    }
+    
+    // Convenience accessors
+    
+    var width : Int { self.size.width }
+    var height : Int { self.size.height }
+    var count : Int { self.size.count }
+    
+    // ranges
+    
+    private func _apply<T>(_ f: (Int,Int) -> T?) -> [T] {
         (0..<width).flatMap { x in
             (0..<height).compactMap { y in f(x,y) }
         }
     }
     
+    public var xRange : Range<Int> { 0..<width }
+    public var yRange : Range<Int> { 0..<height }
+    public var xyRange : [(Int,Int)] { self._apply { (x,y) in (x,y) }}
+    public var pointRange : [GridPoint] { xyRange.map { GridPoint($0.0,$0.1) } }
+    
     // Indexing
     
-    private func _idx(_ x : Int32, _ y : Int32) -> Int { numericCast(x+(y*width)) }
-    private func _idx(_ p : GridPoint) -> Int { numericCast(p.x+(p.y*width)) }
+    private func _idx(_ x : Int, _ y : Int) -> Int { x+(y*width) }
+    private func _idx(_ p : GridPoint) -> Int { p.x+(p.y*width) }
     
-    public subscript(_ x : Int32, _ y : Int32) -> Bool {
+    public subscript(_ x : Int, _ y : Int) -> Bool {
         get { self.data[self._idx(x,y)] }
         set(v) { self.data[self._idx(x,y)]=v }
     }
@@ -97,15 +101,17 @@ class Grid : Codable {
         set(v) { self.data[self._idx(p)]=v }
     }
     
-    // data functions
+    // data modification functions
     
     public func flip(_ p : GridPoint) { self.data.toggle(self._idx(p.x,p.y)) }
     public func reset() { self.data=BitArray(nBits: self.count) } //Array<Bool>(repeating: false, count: size) }
     
-    public func check(_ x : Int32, _ y : Int32) -> Bool { xRange.contains(x) && yRange.contains(y) }
+    public func check(_ x : Int, _ y : Int) -> Bool { xRange.contains(x) && yRange.contains(y) }
     public func check(_ p : GridPoint) -> Bool { check(p.x,p.y) }
  
 }
+
+
 
 extension Grid {
     

@@ -8,50 +8,26 @@
 import Foundation
 import CoreData
 
-enum LayerKind : Int32, RawConstructibleEnumeration, Codable {
-    static var zero: LayerKind = .Unknown
-    
-    typealias RawValue = Int32
-    
-    case Unknown = 0
-    case Grid = 1
-    case Lines = 2
-    case Spiders = 3
-    case Gimp = 4
-    case Fans = 5
-    case Text = 6
-    
-    enum CodingKeys : String, CodingKey {
-        case value = "kind"
-    }
-    
-    func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(self.value, forKey: .value)
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        let idx = try container.decode(Int32.self, forKey: .value)
-        self = LayerKind(idx)
-    }
-    
+
+
+protocol LayerContent {
+    var binary : Data { get }
+    init?(binary : Data)
 }
 
 
-protocol PrickingLayer : Codable {
-    var index : Int { get set }
-    static var layer : LayerKind { get }
-    var name : String { get set }
+extension LayerData {
     
-}
-
-
-
-
-extension DataLayer {
+    convenience init(context moc: NSManagedObjectContext,name: String,kind : LayerKind, parent: PrickingData, data: (any LayerContent)? = nil, region: GridRect = GridRect()) {
+        self.init(context: moc)
+        self.name=name
+        self.layerKind=kind
+        self.parent=parent
+        self.region=region
+        self.data=data?.binary
+    }
     
-    func attach(to pricking: DataPricking) { self.parent=pricking.uuid }
+    func attach(to pricking: PrickingData) { self.parent=pricking }
     func detach() { self.parent=nil }
     
     var layerKind : LayerKind {
@@ -59,13 +35,38 @@ extension DataLayer {
         set { self.kind=newValue.rawValue }
     }
     
-    static func make<T>(in moc: NSManagedObjectContext,name : String="Default",kind : LayerKind,parent: DataPricking,index : Int32 = -1) -> T where T : DataLayer {
-        var item=T.init(context: moc)
-        item.name=name
-        item.layerKind=kind
-        item.index=index
-        item.parent=parent.uuid
-        return item
+    var origin: GridPoint {
+        get { GridPoint(self.offsetY,self.offsetY) }
+        set {
+            self.offsetX=newValue.x
+            self.offsetY=newValue.y
+        }
     }
+    var size: GridSize {
+        get { GridSize(self.width,self.height) }
+        set {
+            self.width=newValue.width
+            self.height=newValue.height
+        }
+    }
+    
+    var region : GridRect {
+        get { GridRect(self.origin,self.size) }
+        set {
+            self.origin=newValue.origin
+            self.size=newValue.size
+        }
+        
+    }
+    
+    func payload<T>() -> T? where T : LayerContent {
+        guard let d=self.data else { return nil }
+        return T(binary: d)
+    }
+    func payload(_ c : any LayerContent) {
+        self.data=c.binary
+    }
+    
+    
+    
 }
-

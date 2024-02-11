@@ -9,30 +9,40 @@ import Foundation
 import CoreData
 import BitArray
 
-extension DataGrid {
+extension GridData {
     
-    convenience init(context moc: NSManagedObjectContext,bits: BitArray) {
+    private func load(grid: Grid) {
+        self.width = grid.width
+        self.height = grid.height
+        self.data = grid.data.binary
+    }
+ 
+    convenience init(context moc: NSManagedObjectContext,grid: Grid) {
         self.init(context: moc)
-        self.grid=bits.binary
+        self.load(grid: grid)
     }
-    convenience init(context moc: NSManagedObjectContext,nBits: Int) {
+    convenience init(context moc: NSManagedObjectContext,size: GridSize) {
         self.init(context: moc)
-        self.grid=BitArray(nBits: nBits).binary
+        self.load(grid: Grid(size: size))
     }
     
-    func getGrid(size: GridSize) -> Grid? {
-        guard let d = self.grid else { return nil }
-        return Grid(size: size, data: BitArray(binary: d, nBits: size.count))
+    var size : GridSize {
+        get { GridSize(self.width,self.height) }
+        set {
+            self.width=newValue.width
+            self.height=newValue.height
+        }
     }
     
-    func setGrid(_ grid: Grid) {
-        self.grid=grid.data.binary
+    var grid : Grid {
+        get {
+            guard let d = self.data else { return Grid(size: self.size) }
+            return Grid(size: self.size, data: BitArray(binary: d))
+        }
+        set {
+            self.size=newValue.size
+            self.data = newValue.data.binary
+        }
     }
     
-    static func make(in moc: NSManagedObjectContext,nBits: Int) -> DataGrid {
-        DataGrid.init(context: moc,nBits: nBits)
-    }
-    static func make(in moc: NSManagedObjectContext,bits: BitArray) -> DataGrid {
-        DataGrid.init(context: moc,bits: bits)
-    }
 }

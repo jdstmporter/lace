@@ -276,7 +276,7 @@ class LaceView : ViewBase {
     var spacingInMetres : CGFloat = 0.01 // 10mm
     var liner : ExtendedLine?
     
-    func setSize(width: Int32,height: Int32) { self.setSize(GridSize(width,height)) }
+    func setSize(width: Int,height: Int) { self.setSize(GridSize(width,height)) }
     func setSize(_ size: GridSize) {
         DispatchQueue.main.async {
             self.pricking=Pricking(name: "", size: size)
@@ -433,7 +433,7 @@ class LaceView : ViewBase {
     
     func trackerCoordinate(_ event : NSEvent) -> GridPoint? {
         guard let info=event.trackingArea?.userInfo else { return nil }
-        guard let x=info["x"] as? Int32, let y=info["y"] as? Int32 else { return nil }
+        guard let x=info["x"] as? Int, let y=info["y"] as? Int else { return nil }
         return GridPoint(x, y)
     }
     

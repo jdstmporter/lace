@@ -53,12 +53,12 @@ enum FileError : BaseError {
 }
 
 enum SQLiteError : BaseError {
-    case GeneralError(Int32)
+    case GeneralError(Int)
     case CannotOpenDatabase
     case CannotPrepareQueryStatement
-    case UnknownDataType(Int32)
+    case UnknownDataType(Int)
     
-    static func wrap(_ code : Int32) throws {
+    static func wrap(_ code : Int) throws {
         if code != SQLITE_OK { throw SQLiteError.GeneralError(code) }
     }
 }

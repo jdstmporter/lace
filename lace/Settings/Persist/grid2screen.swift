@@ -19,7 +19,7 @@ struct Convert {
     
     init(_ scale : Double = 1.0) { self.scale = scale }
     
-    func pos(_ x : Int32, _ y : Int32) -> NSPoint {
+    func pos(_ x : Int, _ y : Int) -> NSPoint {
         let py = Double(y)+1.0
         let offset = 0.5*Double(y%2)
         let px = Double(x)+offset+1.0
@@ -28,7 +28,7 @@ struct Convert {
     func pos(_ p : GridPoint) -> NSPoint { self.pos(p.x,p.y) }
     
     
-    func round(_ d : Double) -> Int32 { Int32((d/scale).rounded()) }
+    func round(_ d : Double) -> Int { Int((d/scale).rounded()) }
     
     func nearest(_ p : NSPoint) -> GridPoint {
         let y = self.round(p.y)-1

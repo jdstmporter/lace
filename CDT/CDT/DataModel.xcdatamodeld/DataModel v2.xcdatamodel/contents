@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21513" systemVersion="21G419" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Layer" representedClassName="Layer" syncable="YES" codeGenerationType="class">
+        <attribute name="kind" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" attributeType="String" defaultValueString=""/>
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Pricking" inverseName="layers" inverseEntity="Pricking"/>
+        <relationship name="values" optional="YES" toMany="YES" deletionRule="Cascade" ordered="YES" destinationEntity="Listable" inverseName="parent" inverseEntity="Listable"/>
+    </entity>
+    <entity name="Listable" representedClassName="Listable" isAbstract="YES" syncable="YES" codeGenerationType="class">
+        <relationship name="parent" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Layer" inverseName="values" inverseEntity="Layer"/>
+    </entity>
+    <entity name="Point" representedClassName="Point" parentEntity="Listable" syncable="YES" codeGenerationType="class">
+        <attribute name="x" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="y" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+    <entity name="Pricking" representedClassName="Pricking" syncable="YES" codeGenerationType="class">
+        <attribute name="grid" optional="YES" attributeType="Binary"/>
+        <attribute name="height" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="uid" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="width" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="layers" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Layer" inverseName="parent" inverseEntity="Layer"/>
+    </entity>
+    <entity name="Size" representedClassName="Size" parentEntity="Listable" syncable="YES" codeGenerationType="class">
+        <attribute name="height" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="width" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES"/>
+    </entity>
+</model>

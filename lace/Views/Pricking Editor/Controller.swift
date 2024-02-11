@@ -31,8 +31,8 @@ class Controller : NSViewController {
     
     var dataState = Trivalent<DataHandler>()
     
-    var width: Int32 = 1
-    var height: Int32 = 1
+    var width: Int = 1
+    var height: Int = 1
     var path : String?
     
     var pricking : Pricking {
@@ -92,7 +92,7 @@ class Controller : NSViewController {
         }
     }
     
-    func setSize(width: Int32,height: Int32) {
+    func setSize(width: Int,height: Int) {
         self.height=height
         self.width=width
         syslog.debug("Changed to \(self.width) x \(self.height)")
@@ -103,8 +103,8 @@ class Controller : NSViewController {
     
 
     @IBAction func sizeDidChange(_ field: NSTextField?) {
-        let w  = widthField.intValue
-        let h = heightField.intValue
+        let w  = widthField.integerValue
+        let h = heightField.integerValue
         
         if w != self.width || h != self.height {
             self.setSize(width: w, height: h)

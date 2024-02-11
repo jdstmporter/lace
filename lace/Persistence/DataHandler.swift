@@ -44,6 +44,15 @@ class DataHandler {
         }
         
     }
+    func getOrCreate<T>() throws -> T where T : NSManagedObject {
+        if let result : T = (try self.getAll().first) {
+            return result
+        }
+        else {
+            return self.new()
+        }
+        
+    }
     func get<T>(predicate: (T) -> Bool) -> T? where T : NSManagedObject {
         guard let all : [T] = try? self.getAll() else { return nil }
         return all.first { predicate($0) }

@@ -10,7 +10,7 @@ import Foundation
 
 
 
-enum LaceKind : Int32, NameableEnumeration, RawConstructibleEnumeration, Codable {
+enum LaceKind : Int, NameableEnumeration, RawConstructibleEnumeration, Codable {
     
     
     
@@ -62,8 +62,8 @@ enum LaceKind : Int32, NameableEnumeration, RawConstructibleEnumeration, Codable
     }
     
     static var count : Int { LaceKind.allCases.count }
-    init(index: Int32) { self = LaceKind(index) }
-    var index : Int32 { self.value }
+    init(index: Int) { self = LaceKind(index) }
+    var index : Int { self.value }
     
     enum CodingKeys : String, CodingKey {
         case value = "kind"

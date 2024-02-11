@@ -12,15 +12,15 @@ enum DecodeError : Error {
 }
 
 struct GridPoint : CustomStringConvertible, Comparable, Equatable, Hashable, Codable {
-    let x : Int32
-    let y : Int32
+    let x : Int
+    let y : Int
     
     enum CodingKeys : CodingKey {
         case x
         case y
     }
     
-    init(_ x : Int32, _ y : Int32) {
+    init(_ x : Int, _ y : Int) {
         self.x=x
         self.y=y
     }

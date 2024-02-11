@@ -23,8 +23,8 @@ class PrickingSpec {
     public private(set) var name : String = "Pricking"
     public private(set) var pricking : Pricking?
     
-    public var width : Int32 { pricking?.width ?? 1 }
-    public var height : Int32 { pricking?.height ?? 1 }
+    public var width : Int { pricking?.width ?? 1 }
+    public var height : Int { pricking?.height ?? 1 }
     public var kind : LaceKind { pricking?.kind ?? .Custom }
     
     
@@ -100,12 +100,12 @@ class PrickingManager {
 
 
 
-struct Pricking : Storable {
+struct Pricking : Codable {
     
     var index : Int = 0
     
     var grid : Grid
-    var lines : Lines
+    var layers : [Layer]
     var scale : Double = 1.0
     
     
@@ -118,7 +118,7 @@ struct Pricking : Storable {
     
     enum CodingKeys : CodingKey {
         case grid
-        case lines
+        case layers
         case kind
         case scale
         case name
@@ -127,13 +127,13 @@ struct Pricking : Storable {
     init(name : String="Pricking", size: GridSize,kind: LaceKind = .Custom) {
         self.name=name
         self.grid=Grid(size: size)
-        self.lines=Lines()
+        self.layers=[]
         self.kind=kind
         self.scale=1.0
         self.index=0
     }
     
-    init(name : String = "Pricking", width: Int32 = 1, height : Int32 = 1, kind: LaceKind = .Custom) {
+    init(name : String = "Pricking", width: Int = 1, height : Int = 1, kind: LaceKind = .Custom) {
         self.init(name: name, size: GridSize(width,height),kind: kind)
         
     }
@@ -143,8 +143,8 @@ struct Pricking : Storable {
     }
  
     var size : GridSize { self.grid.size }
-    var width : Int32 { self.grid.width }
-    var height : Int32 { self.grid.height }
+    var width : Int { self.grid.width }
+    var height : Int { self.grid.height }
     
     
     var converter : Convert { Convert(scale) }
@@ -179,11 +179,11 @@ struct Pricking : Storable {
     func snap(_ p : NSPoint) -> GridPoint { converter.nearest(p) }
     
     mutating func append(_ line : ScreenLine) {
-        lines.append(self, line)
+        //lines.append(self, line)
         self.history.append(.Line(line))
     }
     mutating func append(_ line : GridLine) {
-        lines.append(line)
+        //lines.append(line)
     }
     mutating func append(_ point : GridPoint) {
         self.grid.flip(point)
@@ -194,22 +194,11 @@ struct Pricking : Storable {
         self.history.removeAll()
     }
     
-    mutating func undo() {
-        guard let action=self.history.last else { return }
-        switch action {
-        case .Pin(let p):
-            self.grid.flip(p)
-        case .Line(let l):
-            self.lines.append(self,l)
-        default:
-            break
-        }
-        self.history.removeLast()
-    }
+    
     
     mutating func flip(_ p : GridPoint) { grid.flip(p) }
     mutating func reset() { grid.reset() }
-    public subscript(_ x : Int32, _ y : Int32) -> Bool {
+    public subscript(_ x : Int, _ y : Int) -> Bool {
         get { self.grid[x,y] }
         set(v) { self.grid[x,y]=v }
     }
